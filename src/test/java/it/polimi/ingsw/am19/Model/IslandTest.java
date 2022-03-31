@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model;
 
+import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Testing class for testing Island class
  */
-public class TestIsland {
+public class IslandTest {
     /**
      * Test the addStudent and getStudent method
      */
     @Test
     @DisplayName("Test Add- & Get- Student")
     void testAddAndGetStudent() {
-        Island island = new Island();
+        StandardInfluence standardInfluence = new StandardInfluence();
+        Island island = new Island(standardInfluence);
         island.addStudent(PieceColor.RED);
         assertEquals(1, island.getNumOfStudent().get(PieceColor.RED));
     }
@@ -29,12 +31,13 @@ public class TestIsland {
     @Test
     @DisplayName("Test parametric constructor")
     void testParamConstructor() {
+        StandardInfluence standardInfluence = new StandardInfluence();
         Map<PieceColor, Integer> map = new HashMap<>();
         //fill the map with some students
         for(PieceColor color: PieceColor.values())
             map.put(color, 2);
 
-        Island island = new Island(map, TowerColor.BLACK, false, 2);
+        Island island = new Island(map, TowerColor.BLACK, false, standardInfluence, 2);
 
         assertEquals(2, island.getNumOfStudent().get(PieceColor.RED));
         assertEquals(2, island.getNumOfStudent().get(PieceColor.GREEN));

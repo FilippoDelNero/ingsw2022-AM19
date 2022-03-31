@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Testing class for Bag class methods
  */
-public class TestBag {
+public class BagTest {
     /**
      * Tests bag refill with an exceeding number of students of a specific color
      */
