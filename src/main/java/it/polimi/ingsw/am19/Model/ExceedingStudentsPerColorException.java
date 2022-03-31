@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model;
 
+/**
+ * Exception thrown when attempting to increase the number of students of a certain color, but the maximum number has been already reached
+ */
 public class ExceedingStudentsPerColorException extends Exception{
     public ExceedingStudentsPerColorException() {
     }

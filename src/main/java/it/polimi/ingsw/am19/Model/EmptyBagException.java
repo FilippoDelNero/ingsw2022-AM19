@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model;
 
+/**
+ * Exception thrown when trying to draw from an empty Bag
+ */
 public class EmptyBagException extends Exception{
     public EmptyBagException() {
     }
