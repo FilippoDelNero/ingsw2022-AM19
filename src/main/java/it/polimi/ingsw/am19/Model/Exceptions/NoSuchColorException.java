@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.Exceptions;
 
 /**
  * Exception thrown when a student of a certain PieceColor is not available

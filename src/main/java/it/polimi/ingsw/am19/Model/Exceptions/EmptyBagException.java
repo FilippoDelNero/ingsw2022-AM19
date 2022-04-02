@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.Exceptions;
 
 /**
  * Exception thrown when trying to draw from an empty Bag
@@ -17,9 +17,5 @@ public class EmptyBagException extends Exception{
 
     public EmptyBagException(Throwable cause) {
         super(cause);
-    }
-
-    public EmptyBagException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

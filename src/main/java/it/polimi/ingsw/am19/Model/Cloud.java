@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model;
 
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +19,6 @@ public class Cloud implements MoveStudent{
      * Keeps track of each cloud capacity (maximum number of students that can be host in every moment)
      */
     private final int hostableStudents;
-
-    /**
-     * Instantiates a cloud with its capacity
-     * @param hostableStudents represents the maximum number of students hat can be host in every moment
-     */
 
     /**
      * Keeps track of the number of students currently populating the cloud
@@ -48,17 +46,26 @@ public class Cloud implements MoveStudent{
      * @throws IllegalArgumentException when trying to put null in place of the PieceColor of the student that has to be added
      */
     @Override
-    public void addStudent (PieceColor color) throws TooManyStudentsException,IllegalArgumentException{
-        if (color == null)
-            throw new IllegalArgumentException();
+    public void addStudent (PieceColor color) throws TooManyStudentsException, IllegalArgumentException{
+        switch (color) {
+            case GREEN:
+            case RED:
+            case YELLOW:
+            case PINK:
+            case BLUE:{
+                if (currNumOfStudents == hostableStudents)
+                    throw new TooManyStudentsException("Cloud cannot host more than " + getNumOfHostableStudents());
+                else {
+                    this.currNumOfStudents ++;
+                    Integer oldValue = numOfStudents.get(color);
+                    numOfStudents.replace(color, oldValue + 1);
+                }
+            }
+            break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + color);
+        }
 
-       if (currNumOfStudents == hostableStudents)
-            throw new TooManyStudentsException("Cloud cannot host more than" + getNumOfHostableStudents());
-       else {
-           this.currNumOfStudents ++;
-           Integer oldValue = numOfStudents.get(color);
-           numOfStudents.replace(color, oldValue + 1);
-       }
     }
 
     /**
@@ -69,16 +76,24 @@ public class Cloud implements MoveStudent{
      */
     @Override
     public void removeStudent(PieceColor color) throws NoSuchColorException, IllegalArgumentException{
-        if (color == null)
-            throw new IllegalArgumentException();
-
-        Integer oldValue = numOfStudents.get(color);
-        if (oldValue > 0){
-            numOfStudents.replace(color, oldValue - 1);
-            currNumOfStudents --;
+        switch (color) {
+            case GREEN:
+            case RED:
+            case YELLOW:
+            case PINK:
+            case BLUE:{
+                Integer oldValue = numOfStudents.get(color);
+                if (oldValue > 0){
+                    numOfStudents.replace(color, oldValue - 1);
+                    currNumOfStudents --;
+                }
+                else
+                    throw new NoSuchColorException("Unable to remove a " + color + " student from Cloud. There's no student of the specified color");
+            }
+            break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + color);
         }
-        else
-            throw new NoSuchColorException("Unable to remove a " + color + " student from Cloud. There's no student of the specified color");
     }
 
     /**

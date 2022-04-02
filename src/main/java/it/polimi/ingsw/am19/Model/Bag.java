@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model;
 
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +23,8 @@ public class Bag {
     /**
      * Tells how many students of each color should the bag host at maximum
      */
-
     private final int maxStudentsPerColor;
+
     /**
      * Initializes the Bag Class instance with no students of each color
      */
@@ -37,7 +40,7 @@ public class Bag {
         boolean isEmpty = false;
 
         for (PieceColor color: numOfStudents.keySet()){
-            isEmpty = numOfStudents.get(color) == 0 ? true :  false;
+            isEmpty = numOfStudents.get(color) == 0;
 
             if (!isEmpty)
                 return false;
@@ -46,8 +49,19 @@ public class Bag {
     }
 
     private void removeStudent(PieceColor color){
-        Integer oldValue = numOfStudents.get(color);
-        numOfStudents.replace(color, oldValue - 1);
+        switch (color) {
+            case GREEN:
+            case RED:
+            case YELLOW:
+            case PINK:
+            case BLUE:{
+                Integer oldValue = numOfStudents.get(color);
+                numOfStudents.replace(color, oldValue - 1);
+            }
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + color);
+        }
     }
 
     private Integer getTotNumOfStudents(){
@@ -96,7 +110,7 @@ public class Bag {
     /**
      * Draws and deletes a student of a random color from the the bag
      * @return the color of the student picked up
-     * @throws EmptyBagException
+     * @throws EmptyBagException when trying to remove a student from an empty bag
      */
     public PieceColor drawStudent() throws EmptyBagException{
         if (this.isEmpty())
@@ -112,17 +126,30 @@ public class Bag {
      * Refills the bag with the selected number of students of the specified color
      * @param color represents the color of the students used to fill the bag
      * @param num represents the number of students to fill the bag with
-     * @throws ExceedingStudentsPerColorException when more than 26 students per color are added to the bag
+     * @throws ExceedingStudentsPerColorException when more than the fixed maximum number of students per color are added to the bag
      * @throws IllegalArgumentException when a negative number of students or a null PieceColor are passed as arguments
      */
+
     public void refillWith(PieceColor color, int num) throws ExceedingStudentsPerColorException, IllegalArgumentException {
-        if (num < 0 || color == null)
-            throw new IllegalArgumentException();
+        switch (color) {
+            case GREEN:
+            case RED:
+            case YELLOW:
+            case PINK:
+            case BLUE:
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + color);
+        }
+
+        if (num < 0)
+            throw new IllegalArgumentException("The number of students to add cannot be a negative");
 
         int newValue = numOfStudents.get(color) + num;
         if (newValue > this.maxStudentsPerColor)
-            throw new ExceedingStudentsPerColorException("You added too many " + color + " students in the bag");
+            throw new ExceedingStudentsPerColorException("You added too many " + color + " students in the bag", color);
         else
             numOfStudents.replace(color,newValue);
+
     }
 }

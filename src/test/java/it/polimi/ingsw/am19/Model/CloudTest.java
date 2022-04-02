@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am19.Model;
 
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,10 +18,6 @@ class CloudTest {
         Cloud c = new Cloud(3);
 
         assertThrows(NoSuchColorException.class,() -> c.removeStudent(PieceColor.RED));
-        assertThrows(NoSuchColorException.class,() -> c.removeStudent(PieceColor.YELLOW));
-        assertThrows(NoSuchColorException.class,() -> c.removeStudent(PieceColor.BLUE));
-        assertThrows(NoSuchColorException.class,() -> c.removeStudent(PieceColor.GREEN));
-        assertThrows(NoSuchColorException.class,() -> c.removeStudent(PieceColor.RED));
     }
 
     /**
@@ -27,12 +25,13 @@ class CloudTest {
      */
     @Test
     void removeWrongColor(){
+        //instantiating an empty cloud
         Cloud c = new Cloud(3);
-        try {
-            c.addStudent(PieceColor.RED);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+
+        //adding a red student
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.RED));
+
+        //trying to remove a yellow student
         assertThrows(NoSuchColorException.class,
                 () -> c.removeStudent(PieceColor.YELLOW));
     }
@@ -44,62 +43,18 @@ class CloudTest {
     void removeCorrectly(){
         Cloud c = new Cloud(4);
 
-        try {
-            c.addStudent(PieceColor.GREEN);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.BLUE);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.BLUE);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.GREEN));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.BLUE));
 
-        try {
-            c.removeStudent(PieceColor.GREEN);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.removeStudent(PieceColor.GREEN));
         assertEquals(0, c.getStudents().get(PieceColor.GREEN));
 
-        try {
-            c.removeStudent(PieceColor.BLUE);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.removeStudent(PieceColor.BLUE));
         assertEquals(1, c.getStudents().get(PieceColor.BLUE));
 
-        try {
-            c.removeStudent(PieceColor.BLUE);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.removeStudent(PieceColor.BLUE));
         assertEquals(0, c.getStudents().get(PieceColor.BLUE));
-    }
-
-    /**
-     * Tests removing a null PieceColor
-     */
-    @Test
-    void removeNullColor(){
-        Cloud c = new Cloud(4);
-        assertThrows(IllegalArgumentException.class,
-                () -> c.removeStudent(null));
-    }
-
-    /**
-     * Tests adding a null PieceColor
-     */
-    @Test
-    void addNullColor(){
-        Cloud c = new Cloud(4);
-        assertThrows(IllegalArgumentException.class,
-                () -> c.addStudent(null));
     }
 
     /**
@@ -109,21 +64,12 @@ class CloudTest {
     void addOnFullCloud() {
         Cloud c = new Cloud(3);
 
-        try {
-            c.addStudent(PieceColor.BLUE);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.YELLOW);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.PINK);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+        //adding as many students as the cloud's capacity
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.YELLOW));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.PINK));
+
+        //adding an extra student
         assertThrows(TooManyStudentsException.class,
                 () -> c.addStudent(PieceColor.PINK));
     }
@@ -135,21 +81,9 @@ class CloudTest {
     void getStudentsCorrectly(){
         Cloud c = new Cloud(3);
 
-        try {
-            c.addStudent(PieceColor.PINK);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.PINK);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.YELLOW);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.PINK));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.PINK));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.YELLOW));
 
         assertEquals(2, c.getStudents().get(PieceColor.PINK));
         assertEquals(1, c.getStudents().get(PieceColor.YELLOW));
@@ -159,35 +93,23 @@ class CloudTest {
     }
 
     /**
-     * Tests if removing a student from the Map returned by the CLoud's getStudents() method is an actual copy of the private attribute
+     * Tests if removing a student from the Map returned by the Cloud's getStudents() method is an actual copy of the private attribute
      */
     @Test
     void isMapCopy(){
         Cloud c = new Cloud(3);
 
-        try {
-            c.addStudent(PieceColor.PINK);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-        try {
-            c.addStudent(PieceColor.PINK);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.PINK));
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.PINK));
 
         assertEquals(2, c.getStudents().get(PieceColor.PINK));
 
-        Map<PieceColor,Integer> mapCopy = new HashMap<>();
+        Map<PieceColor,Integer> mapCopy;
         mapCopy = c.getStudents();
 
-        try {
-            c.removeStudent(PieceColor.PINK);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.removeStudent(PieceColor.PINK));
 
-        assertEquals(true, c.getStudents().get(PieceColor.PINK) != mapCopy.get(PieceColor.PINK));
+        assertTrue(c.getStudents().get(PieceColor.PINK) != mapCopy.get(PieceColor.PINK));
     }
 
     /**
@@ -200,31 +122,21 @@ class CloudTest {
         assertEquals(3, c.getNumOfHostableStudents());
     }
 
+    /**
+     * Tests the correctness of the getCurrNumStudents() method
+     */
     @Test
     void getCorrectCurrNumStudents(){
         Cloud c = new Cloud(3);
         assertEquals(0, c.getCurrNumOfStudents());
 
-        try {
-            c.addStudent(PieceColor.GREEN);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
-
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.GREEN));
         assertEquals(1, c.getCurrNumOfStudents());
 
-        try {
-            c.addStudent(PieceColor.BLUE);
-        } catch (TooManyStudentsException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.addStudent(PieceColor.BLUE));
         assertEquals(2, c.getCurrNumOfStudents());
 
-        try {
-            c.removeStudent(PieceColor.BLUE);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> c.removeStudent(PieceColor.BLUE));
         assertEquals(1,c.getCurrNumOfStudents());
     }
 }
