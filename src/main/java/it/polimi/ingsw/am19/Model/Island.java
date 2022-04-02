@@ -35,7 +35,7 @@ public class Island implements MoveStudent {
 
     /**
      * Builds a single island with no students and no mother nature
-     * @param strategy the island is created with a standard strategy
+     * @param strategy: the island is created with a standard strategy
      */
     public Island(InfluenceStrategy strategy) {
         numOfStudents = new HashMap<>();
@@ -52,6 +52,7 @@ public class Island implements MoveStudent {
      * @param map: number of students present on the island
      * @param towerColor: the tower's color
      * @param presence: presence or lack thereOf of Mother Nature
+     * @param strategy: the island is created with a strategy either default or NoEntryTile
      * @param numOfIslands: the number of Island that makes up a group
      */
     public Island(Map<PieceColor,Integer> map, TowerColor towerColor, boolean presence, InfluenceStrategy strategy, int numOfIslands) {

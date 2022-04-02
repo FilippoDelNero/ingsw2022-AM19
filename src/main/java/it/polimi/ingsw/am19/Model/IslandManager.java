@@ -10,7 +10,7 @@ public class IslandManager {
     /**
      * list storing the number of island or group of islands currently present
      */
-    private final List<Island> islands;
+    private final IslandList<Island> islands;
 
     /**
      * keeps a reference to the professorManager, it is used to calculate the influence of players
@@ -27,6 +27,8 @@ public class IslandManager {
      */
     private final InfluenceStrategy standardInfluence;
 
+    private final ListIterator<Island> iterator;
+
     /**
      * it is the maximum number of island present in a game
      */
@@ -38,19 +40,21 @@ public class IslandManager {
      */
     public IslandManager(ProfessorManager manager) {
         standardInfluence = new StandardInfluence();
-        islands = new ArrayList<>();
+        islands = new IslandList<>();
         influenceStrategy = standardInfluence;
 
         //fill the ArrayList with the initial 12 islands
         for(int i = 0; i<MAXNUMOFISLAND; i++) {
-            islands.add(i, new Island(standardInfluence));
+            islands.add(new Island(standardInfluence));
         }
+
+        iterator = islands.iterator();
         professorManager = manager;
     }
 
 
     public List<Island> getIslands() {
-        return List.copyOf(islands);
+        return islands.copy();
     }
 
     public void setInfluenceStrategy(InfluenceStrategy strategy) {
@@ -84,27 +88,17 @@ public class IslandManager {
     }
 
     /**
-     * check adjacent islands with same tower's color and merges them
+     * check if there are adjacent islands with same tower's color and merges them
      */
     private void lookForIslandsToMerge() {
-        ListIterator<Island> iterator = islands.listIterator();
         Island island1;
         Island island2;
-        iterator.next();
-        while(iterator.hasNext()) {
-            island1 = iterator.previous();
-            iterator.next();
+        for(int i = 0; i <= islands.size(); i++) {
+            island1 = iterator.next();
             island2 = iterator.next();
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
-                iterator = islands.listIterator();
-                iterator.next();
             }
-        }
-        island1 = islands.get(0);
-        island2 = iterator.previous();
-        if(island1.getTowerColor() == island2.getTowerColor()) {
-            unify(island1, island2);
         }
     }
 
@@ -138,8 +132,7 @@ public class IslandManager {
         Island newIsland = new Island(map, towerColor, true, strategy, numOfIslands);
 
         //adds the new island and deletes the old ones
-        islands.add(islands.lastIndexOf(island1), newIsland);
-        islands.remove(island1);
-        islands.remove(island2);
+        iterator.remove();
+        iterator.set(newIsland);
     }
 }
