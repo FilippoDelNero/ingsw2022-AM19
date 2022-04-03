@@ -20,13 +20,16 @@ public class IslandManager {
     /**
      * keeps the strategy that will be used to calculate players' influence
      */
-    private InfluenceStrategy influenceStrategy;
+    private InfluenceStrategy currInfluenceStrategy;
 
     /**
      * default influence strategy, it is used to reset every island strategy after use
      */
-    private final InfluenceStrategy standardInfluence;
+    private final InfluenceStrategy stdInfluenceStrategy;
 
+    /**
+     * the iterator of the list of island
+     */
     private final ListIterator<Island> iterator;
 
     /**
@@ -39,26 +42,39 @@ public class IslandManager {
      * @param manager: the match will pass a professorManager to this class
      */
     public IslandManager(ProfessorManager manager) {
-        standardInfluence = new StandardInfluence();
+        stdInfluenceStrategy = new StandardInfluence();
         islands = new IslandList<>();
-        influenceStrategy = standardInfluence;
+        currInfluenceStrategy = stdInfluenceStrategy;
 
         //fill the ArrayList with the initial 12 islands
         for(int i = 0; i<MAXNUMOFISLAND; i++) {
-            islands.add(new Island(standardInfluence));
+            islands.add(new Island(currInfluenceStrategy));
         }
 
         iterator = islands.iterator();
         professorManager = manager;
     }
 
-
+    /**
+     * getter for the islands attribute
+     * @return a List<Island> which contains a copy of the IslandList islands attribute
+     */
     public List<Island> getIslands() {
         return islands.copy();
     }
 
+    /**
+     * return an iterator for the IslandList islands
+     */
+    public ListIterator<Island> getIterator() {
+        return iterator;
+    }
+    /**
+     * setter for the currInfluenceStrategy attribute
+     * @param strategy the influence strategy corresponding to the played card
+     */
     public void setInfluenceStrategy(InfluenceStrategy strategy) {
-        this.influenceStrategy = strategy;
+        this.currInfluenceStrategy = strategy;
     }
 
     /**
@@ -77,14 +93,14 @@ public class IslandManager {
      */
     public void calculateInfluence(Island island) {
         if(!(island.getInfluenceStrategy() instanceof StandardInfluence)) {
-            island.setInfluenceStrategy(standardInfluence);
+            island.setInfluenceStrategy(stdInfluenceStrategy);
         }
         else {
-            island.setInfluenceStrategy(influenceStrategy);
+            island.setInfluenceStrategy(currInfluenceStrategy);
             island.calculateInfluence(professorManager);
             lookForIslandsToMerge();
         }
-        influenceStrategy = standardInfluence;
+        currInfluenceStrategy = stdInfluenceStrategy;
     }
 
     /**
@@ -109,8 +125,8 @@ public class IslandManager {
      */
     private void unify(Island island1, Island island2) {
         //merge the numOfStudents maps from Island1 & 2 into map
-        Map<PieceColor, Integer> map = new HashMap<>(island1.getNumOfStudent());
-        island2.getNumOfStudent().forEach((k, v) -> map.merge(k, v, Integer::sum));
+        Map<PieceColor, Integer> map = new HashMap<>(island1.getNumOfStudents());
+        island2.getNumOfStudents().forEach((k, v) -> map.merge(k, v, Integer::sum));
 
         //grab the tower's color from island1 (its the same as island2)
         TowerColor towerColor = island1.getTowerColor();
@@ -126,7 +142,7 @@ public class IslandManager {
         else if(!(island2.getInfluenceStrategy() instanceof StandardInfluence)) {
             strategy = island2.getInfluenceStrategy();
         }
-        else strategy = standardInfluence;
+        else strategy = stdInfluenceStrategy;
 
         //creates a new island
         Island newIsland = new Island(map, towerColor, true, strategy, numOfIslands);

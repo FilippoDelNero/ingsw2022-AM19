@@ -22,7 +22,7 @@ public class IslandTest {
         StandardInfluence standardInfluence = new StandardInfluence();
         Island island = new Island(standardInfluence);
         island.addStudent(PieceColor.RED);
-        assertEquals(1, island.getNumOfStudent().get(PieceColor.RED));
+        assertEquals(1, island.getNumOfStudents().get(PieceColor.RED));
     }
 
     /**
@@ -39,11 +39,11 @@ public class IslandTest {
 
         Island island = new Island(map, TowerColor.BLACK, false, standardInfluence, 2);
 
-        assertEquals(2, island.getNumOfStudent().get(PieceColor.RED));
-        assertEquals(2, island.getNumOfStudent().get(PieceColor.GREEN));
-        assertEquals(2, island.getNumOfStudent().get(PieceColor.BLUE));
-        assertEquals(2, island.getNumOfStudent().get(PieceColor.YELLOW));
-        assertEquals(2, island.getNumOfStudent().get(PieceColor.PINK));
+        assertEquals(2, island.getNumOfStudents().get(PieceColor.RED));
+        assertEquals(2, island.getNumOfStudents().get(PieceColor.GREEN));
+        assertEquals(2, island.getNumOfStudents().get(PieceColor.BLUE));
+        assertEquals(2, island.getNumOfStudents().get(PieceColor.YELLOW));
+        assertEquals(2, island.getNumOfStudents().get(PieceColor.PINK));
         assert(island.getTowerColor() == TowerColor.BLACK);
         assert(!island.isMotherNaturePresent());
         assertEquals(2, island.getNumOfIslands());

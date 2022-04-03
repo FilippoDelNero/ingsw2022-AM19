@@ -64,10 +64,18 @@ public class Island implements MoveStudent {
         this.numOfIslands = numOfIslands;
     }
 
+    /**
+     * setter for the towerColor attribute
+     * @param towerColor the color of the tower you want on this island
+     */
     public void setTowerColor(TowerColor towerColor) {
         this.towerColor = towerColor;
     }
 
+    /**
+     * getter for the towerColor attribute
+     * @return the color of the tower present on the island
+     */
     public TowerColor getTowerColor() {
         return towerColor;
     }
@@ -87,7 +95,11 @@ public class Island implements MoveStudent {
         //not supported on an island at the moment
     }
 
-    public Map<PieceColor, Integer> getNumOfStudent() {
+    /**
+     * getter for numOfStudents attribute
+     * @return a map containing all the student present on the island
+     */
+    public Map<PieceColor, Integer> getNumOfStudents() {
         return Map.copyOf(numOfStudents);
     }
 
@@ -98,22 +110,42 @@ public class Island implements MoveStudent {
         influenceStrategy.calculateInfluence(numOfStudents, towerColor, numOfIslands, manager);
     }
 
+    /**
+     * setter for the influenceStrategy attribute
+     * @param strategy the influence strategy of the played card
+     */
     public void setInfluenceStrategy(InfluenceStrategy strategy) {
         this.influenceStrategy = strategy;
     }
 
+    /**
+     * getter for the influenceStrategy attribute
+     * @return the current influence strategy
+     */
     public InfluenceStrategy getInfluenceStrategy() {
         return this.influenceStrategy;
     }
 
+    /**
+     * getter for presenceOfMotherNature attribute
+     * @return true if motherNature is placed on this island, false otherwise
+     */
     public boolean isMotherNaturePresent() {
         return presenceOfMotherNature;
     }
 
+    /**
+     * setter for the presenceOfMotherNature attribute
+     * @param presenceOfMotherNature will be set to false if MN is leaving the island, true if she's landing on it
+     */
     public void setPresenceOfMotherNature(boolean presenceOfMotherNature) {
         this.presenceOfMotherNature = presenceOfMotherNature;
     }
 
+    /**
+     * getter for the numOfIslands attribute
+     * @return the number of islands that makes up this group
+     */
     public int getNumOfIslands() {
         return numOfIslands;
     }
