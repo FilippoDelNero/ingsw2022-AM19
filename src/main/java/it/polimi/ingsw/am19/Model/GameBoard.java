@@ -108,10 +108,10 @@ public class GameBoard implements MoveStudent {
      * Setter to add or subtract the num of Towers available
      * @param numOfTowers num of tower to add (or subtract)
      */
-    public void setNumOfTowers(int numOfTowers) throws TooManyTowersException {
+    public void setNumOfTowers(int numOfTowers) {
         int newValue = this.numOfTowers + numOfTowers;
-        if(newValue>maxNumOfTowers)
-            throw new TooManyTowersException("The number of tower cannot be over " + maxNumOfTowers);
+        /*if(newValue>maxNumOfTowers)
+            throw new TooManyTowersException("The number of tower cannot be over " + maxNumOfTowers);*/
         this.numOfTowers=newValue;
     }
 

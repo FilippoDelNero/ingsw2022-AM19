@@ -101,6 +101,14 @@ public class Player {
     }
 
     /**
+     * Getter of the towerColor of the player
+     * @return a TowerColor
+     */
+    public TowerColor getTowerColor() {
+        return towerColor;
+    }
+
+    /**
      * Getter the list of the HelperCard not used yet
      * @return the ArrayList of the HelperCard not used yet
      */

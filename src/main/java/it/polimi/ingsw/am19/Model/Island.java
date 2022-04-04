@@ -106,8 +106,16 @@ public class Island implements MoveStudent {
     /**
      * calculate the influence of each player on this island according to the strategy set
      */
-    public void calculateInfluence(ProfessorManager manager) {
-        influenceStrategy.calculateInfluence(numOfStudents, towerColor, numOfIslands, manager);
+    public boolean calculateInfluence(ProfessorManager manager) {
+        Player newOwner = null;
+        newOwner = influenceStrategy.calculateInfluence(numOfStudents, towerColor, numOfIslands, manager);
+        //if the ownership is not changed return false
+        if(newOwner == null)
+            return false;
+        //if the owner has changed, change it
+        this.towerColor = newOwner.getTowerColor();
+        manager.getGameboards().get(newOwner).setNumOfTowers(-numOfIslands);
+        return true;
     }
 
     /**

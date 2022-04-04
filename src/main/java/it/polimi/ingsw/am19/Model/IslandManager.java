@@ -92,13 +92,16 @@ public class IslandManager {
      * @param island is the island upon which the influence will be calculated
      */
     public void calculateInfluence(Island island) {
+        boolean changes;
+
         if(!(island.getInfluenceStrategy() instanceof StandardInfluence)) {
             island.setInfluenceStrategy(stdInfluenceStrategy);
         }
         else {
             island.setInfluenceStrategy(currInfluenceStrategy);
-            island.calculateInfluence(professorManager);
-            lookForIslandsToMerge();
+            changes = island.calculateInfluence(professorManager);
+            if(changes)
+                lookForIslandsToMerge();
         }
         currInfluenceStrategy = stdInfluenceStrategy;
     }

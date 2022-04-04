@@ -3,7 +3,7 @@ import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
+//TODO WHO WILL CHANGE BACK THE PROFESSORMANAGER STRATEGY TO DEFAULT ONCE A PLAYER'S TURN HAS ENDED?
 public class ProfessorManager {
     /**
      * a map where a professor for each color is associated with its owner
@@ -16,7 +16,8 @@ public class ProfessorManager {
     private Map<Player, GameBoard> gameboards;
 
     /**
-     *
+     * the current strategy set
+     * the strategy will be used to check the ownership of a professor
      */
     private CheckProfessorStrategy currentStrategy;
 
@@ -35,6 +36,14 @@ public class ProfessorManager {
      */
     public void setGameboards(Map<Player, GameBoard> map) {
         this.gameboards = map;
+    }
+
+    /**
+     * getter for the gameboards attribute
+     * @return a map player->gameboard
+     */
+    public Map<Player, GameBoard> getGameboards() {
+        return gameboards;
     }
 
     /**
