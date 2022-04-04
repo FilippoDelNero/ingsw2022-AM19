@@ -24,7 +24,7 @@ class IslandManagerTest {
         IslandManager manager = new IslandManager(professorManager);
         assertEquals(12, manager.getIslands().size());
     }
-    
+
     /**
      *
      */
@@ -32,9 +32,9 @@ class IslandManagerTest {
     void testCalculateInfluence() {
         //--ISLAND PART--
         ProfessorManager manager = new ProfessorManager();
-        IslandManager islandmanager = new IslandManager(manager);
-        islandmanager.getIslands().get(0).addStudent(PieceColor.RED);
-        islandmanager.getIslands().get(1).addStudent(PieceColor.GREEN);
+        IslandManager islandManager = new IslandManager(manager);
+        islandManager.getIslands().get(0).addStudent(PieceColor.RED);
+        islandManager.getIslands().get(1).addStudent(PieceColor.GREEN);
 
         //--PROFESSOR MANAGER PART--
         Map<Player, GameBoard> GB = new HashMap<>();
@@ -71,11 +71,11 @@ class IslandManagerTest {
         manager.checkProfessor(PieceColor.PINK, player2);
 
         //--CHECK IF EVERYTHING IS OK PART
-        islandmanager.calculateInfluence(islandmanager.getIslands().get(0));
-        assertEquals(TowerColor.BLACK, islandmanager.getIslands().get(0).getTowerColor());
+        islandManager.calculateInfluence(islandManager.getIslands().get(0));
+        assertEquals(TowerColor.BLACK, islandManager.getIslands().get(0).getTowerColor());
         assertEquals(7, gameBoard1.getNumOfTowers());
-        islandmanager.calculateInfluence(islandmanager.getIslands().get(1));
-        assertEquals(11, islandmanager.getIslands().size());
+        islandManager.calculateInfluence(islandManager.getIslands().get(1));
+        assertEquals(11, islandManager.getIslands().size());
         assertEquals(6, gameBoard1.getNumOfTowers());
     }
 
