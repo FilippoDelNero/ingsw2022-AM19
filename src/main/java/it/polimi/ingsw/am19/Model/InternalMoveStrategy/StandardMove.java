@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am19.Model.InternalMoveStrategy;
 
+import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+import it.polimi.ingsw.am19.Model.GameBoard;
 import it.polimi.ingsw.am19.Model.PieceColor;
 
 import java.util.HashMap;
@@ -12,8 +14,7 @@ import java.util.HashMap;
 public class StandardMove implements InternalMoveStrategy{
     /**
      * Standard strategy
-     * @param entrance the gameBoard entrance
-     * @param diningRoom the gameBoard DiningHall
+     * @param gameBoard the gameBoard to manage
      * @param color the student's color to move
      * @param maxStudentInEntrance max num of Student hospitable in the entrance
      * @param maxStudentInDiningRoom max num of Student hospitable in the diningHall
@@ -21,15 +22,20 @@ public class StandardMove implements InternalMoveStrategy{
      * @throws TooManyStudentsException if the diningHall has max number of the color if we try to add
      */
     @Override
-    public void moveStudentToDiningRoom(HashMap<PieceColor, Integer> entrance, HashMap<PieceColor, Integer> diningRoom, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws NoSuchColorException, TooManyStudentsException {
+    public void moveStudentToDiningRoom(GameBoard gameBoard, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws NoSuchColorException, TooManyStudentsException, InsufficientCoinException {
         switch (color) {
             case GREEN, RED, YELLOW, PINK, BLUE -> {
-                Integer oldValue = entrance.get(color);
+                Integer oldValue = gameBoard.getEntrance().get(color);
+                Integer newValue;
                 if (oldValue > 0) {
-                    entrance.replace(color, oldValue - 1);
-                    int studentInDiningRoom = diningRoom.get(color);
-                    if (studentInDiningRoom < maxStudentInDiningRoom)
-                        diningRoom.replace(color,studentInDiningRoom + 1);
+                    gameBoard.getEntrance().replace(color, oldValue - 1);
+                    int studentInDiningRoom = gameBoard.getDiningRoom().get(color);
+                    if (studentInDiningRoom < maxStudentInDiningRoom){
+                        gameBoard.getDiningRoom().replace(color,studentInDiningRoom + 1);
+                        newValue=gameBoard.getDiningRoom().get(color);
+                        if(newValue%3 ==0)
+                            gameBoard.getPlayer().addCoins(1);
+                    }
                     else
                         throw new TooManyStudentsException("You already have 10 student of " + color + " in your DiningRoom");
                 } else

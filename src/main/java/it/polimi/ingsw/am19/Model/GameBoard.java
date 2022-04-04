@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model;
 
+import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyTowersException;
@@ -105,6 +106,14 @@ public class GameBoard implements MoveStudent {
     }
 
     /**
+     * Getter for the player, used to add coins from standard Strategy of InternalMove
+     * @return the player instance associated with the gameBoard
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
      * Setter to add or subtract the num of Towers available
      * @param numOfTowers num of tower to add (or subtract)
      */
@@ -167,7 +176,13 @@ public class GameBoard implements MoveStudent {
         }
     }
 
-    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException {
-        moveStrategy.moveStudentToDiningRoom(this.entrance, this.diningRoom, color, maxEntranceStudent,maxDiningRoomStudent);
+    /**
+     * Method to move student from entrance to DiningHall, using a strategy pattern
+     * @param color the student's color to move
+     * @throws NoSuchColorException when we pass an unexpected color
+     * @throws TooManyStudentsException when we try to add the 11th student of a color
+     */
+    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException, InsufficientCoinException {
+        moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
 }

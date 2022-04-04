@@ -148,4 +148,22 @@ class GameBoardTest {
         assertEquals(0,gameBoard.getEntrance().get(PieceColor.BLUE));
         assertEquals(1,gameBoard.getDiningRoom().get(PieceColor.BLUE));
     }
+
+    @Test
+    @DisplayName("Testing add coins when move student to DiningRoom")
+    void addCoins() {
+        Player player= new Player("Dennis",TowerColor.BLACK, WizardFamily.KING);
+        assertEquals(0,player.getCoins());
+        GameBoard gameBoard = new GameBoard(player,8,null,7);
+        assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
+        assertEquals(3,gameBoard.getEntrance().get(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertEquals(0,gameBoard.getEntrance().get(PieceColor.BLUE));
+        assertEquals(3,gameBoard.getDiningRoom().get(PieceColor.BLUE));
+        assertEquals(1,player.getCoins());
+    }
 }
