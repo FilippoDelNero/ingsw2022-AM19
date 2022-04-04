@@ -17,7 +17,7 @@ public class Player {
     /**
      * List of HelperCard still available to use
      */
-    private final ArrayList<HelperCard> helperDeck;
+    private ArrayList<HelperCard> helperDeck;
 
     /**
      * Last HelperCard used
@@ -27,7 +27,7 @@ public class Player {
     /**
      * The TowerColor associated to the player
      */
-    private final TowerColor towerColor;
+    private TowerColor towerColor;
 
     /**
      * Balance coins for the Expert Matches
@@ -37,7 +37,7 @@ public class Player {
     /**
      * The Wizard Family of HelperCard associated to the player
      */
-    private final WizardFamily wizardFamily;
+    private WizardFamily wizardFamily;
 
     /**
      * Constructor for a player of a normal Match
@@ -93,12 +93,40 @@ public class Player {
     }
 
     /**
+     * Constructor for a player of a normal Match
+     * @param nickname Name of the player
+     */
+    public Player(String nickname) {
+        this.nickname = nickname;
+        this.towerColor = null;
+        this.wizardFamily = null;
+        this.currentCard = null;
+    }
+
+    /**
      * Getter of the nickname of the players
      * @return a string with the nickname
      */
     public String getNickname() {
         return nickname;
     }
+
+    /**
+     * Getter of the towerColor of the player
+     * @return a TowerColor
+     */
+    public TowerColor getTowerColor() {
+        return towerColor;
+    }
+
+    /**
+     * Setter of the towerColor of the player
+     * @param color the tower's color
+     */
+    public void setTowerColor(TowerColor color) {
+        this.towerColor = color;
+    }
+
 
     /**
      * Getter the list of the HelperCard not used yet
@@ -122,6 +150,25 @@ public class Player {
      */
     public WizardFamily getWizardFamily() {
         return wizardFamily;
+    }
+
+    /**
+     * set the wizard family and create a deck
+     * @param family the wizardFamily chosen by the player
+     */
+    public void setWizardFamily(WizardFamily family) {
+        this.wizardFamily = family;
+        ArrayList<HelperCard> helperDeck = new ArrayList<>();
+        int numOfStep;
+        int nextRoundOrder=0;
+        for(numOfStep=1;numOfStep<6;numOfStep++){
+            nextRoundOrder+=1;
+            helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
+            nextRoundOrder+=1;
+            helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
+        }
+
+        this.helperDeck = helperDeck;
     }
 
     /**
