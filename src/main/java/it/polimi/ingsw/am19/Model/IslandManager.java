@@ -64,11 +64,21 @@ public class IslandManager {
     }
 
     /**
-     * return an iterator for the IslandList islands
+     * return a reference to iterator for the IslandList islands
+     * @return return an iterator
      */
     public ListIterator<Island> getIterator() {
         return iterator;
     }
+
+    /**
+     * return a new iterator for the IslandList islands
+     * @return a new iterator
+     */
+    public  ListIterator<Island> getNewIterator() {
+        return islands.iterator();
+    }
+
     /**
      * setter for the currInfluenceStrategy attribute
      * @param strategy the influence strategy corresponding to the played card
