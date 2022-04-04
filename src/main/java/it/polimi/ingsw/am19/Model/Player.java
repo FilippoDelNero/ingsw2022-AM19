@@ -101,14 +101,6 @@ public class Player {
     }
 
     /**
-     * Getter of the towerColor of the player
-     * @return a TowerColor
-     */
-    public TowerColor getTowerColor() {
-        return towerColor;
-    }
-
-    /**
      * Getter the list of the HelperCard not used yet
      * @return the ArrayList of the HelperCard not used yet
      */
@@ -156,9 +148,9 @@ public class Player {
     public void addCoins(int coins) throws InsufficientCoinException {
         int newValue;
         if(coins<0){
-           newValue= this.coins + coins;
-           if(newValue<0)
-               throw new InsufficientCoinException("You haven't enough coins");
+            newValue= this.coins + coins;
+            if(newValue<0)
+                throw new InsufficientCoinException("You haven't enough coins");
         }
         this.coins += coins;
     }
@@ -172,5 +164,13 @@ public class Player {
             throw new UnavailableCardException("HelperCard not available on your Helper Deck");
         setCurrentCard(helperCard);
         this.helperDeck.remove(helperCard);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (!(o instanceof Player))
+            return false;
+        Player p = (Player) o;
+        return (nickname == p.nickname);
     }
 }

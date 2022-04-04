@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class StandardMovementTest {
     /**
-     * Tests thes default Strategy for moving
+     * Tests the default Strategy for moving
      */
     @Test
     void testStandardMovement() {
