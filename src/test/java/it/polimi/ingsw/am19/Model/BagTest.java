@@ -87,4 +87,30 @@ public class BagTest {
         Bag b2 = Bag.getBagInstance();
         assertTrue(b1 == b2);
     }
+
+    @Test
+    void getCorrectNumOfTotStudents(){
+        Bag b = Bag.getBagInstance();
+
+        try {
+            b.refillWith(PieceColor.PINK, 10);
+        } catch (ExceedingStudentsPerColorException e) {
+            e.printStackTrace();
+        }
+        assertEquals(10,b.getTotNumOfStudents());
+        try {
+            b.drawStudent();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+        assertEquals(9,b.getTotNumOfStudents());
+
+        for (int i = 0; i < 9; i++){
+            try {
+                b.drawStudent();
+            } catch (EmptyBagException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

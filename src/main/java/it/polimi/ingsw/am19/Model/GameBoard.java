@@ -185,4 +185,22 @@ public class GameBoard implements MoveStudent {
     public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException, InsufficientCoinException {
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
+
+    //TODO new metohod: add test for this moethod
+    public int getDiningRoomNumOfStud(){
+        int tot = 0;
+        for (PieceColor color: diningRoom.keySet()){
+            tot += diningRoom.get(color);
+        }
+        return tot;
+    }
+
+    //TODO new metohod: add test for this moethod
+    public int getEntranceNumOfStud(){
+        int tot = 0;
+        for (PieceColor color: entrance.keySet()){
+            tot += entrance.get(color);
+        }
+        return tot;
+    }
 }

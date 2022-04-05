@@ -64,8 +64,8 @@ public class Bag {
         }
     }
 
-    private Integer getTotNumOfStudents(){
-        Integer tot = 0;
+    public int getTotNumOfStudents(){
+        int tot = 0;
         for (PieceColor color: numOfStudents.keySet()){
             tot += numOfStudents.get(color);
         }
@@ -90,7 +90,6 @@ public class Bag {
             currentProb += weightsByColor.get(color);
             if (sortedProb < currentProb){
                 chosenColor = color;
-                return color;
             }
         }
      return chosenColor;
