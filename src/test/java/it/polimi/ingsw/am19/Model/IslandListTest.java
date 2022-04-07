@@ -1,14 +1,19 @@
 package it.polimi.ingsw.am19.Model;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * testing class for IslandList
+ */
 public class IslandListTest {
+    /**
+     * testing the first alternative constructor
+     * it takes a list and return an IslandList with the same elements
+     */
     @Test
     public void testAltConstructor() {
         List<Integer> ls = new ArrayList<>();
@@ -25,6 +30,23 @@ public class IslandListTest {
         }
     }
 
+    /**
+     * testing the second alternative constructor
+     * it takes a int as a parameter and build an IslandList of that length
+     */
+    @Test
+    public void testSizeConstructor() {
+        //I am just testing the the constructor is broken, but i can't test that the list created is 5 long
+        IslandList<Integer> list = new IslandList<>(5);
+        for(int i = 0; i < 5; i++) {
+            list.add(i);
+        }
+        assertEquals(5, list.size());
+    }
+
+    /**
+     * testing the next() method of the iterator in normal condition
+     */
     @Test
     public void testNext() {
         IslandList<Integer> list = new IslandList<>();
@@ -46,6 +68,29 @@ public class IslandListTest {
         }
     }
 
+    /**
+     * testing the next() method of the iterator on an empty list
+     */
+    @Test
+    public void testNextExceptional() {
+        IslandList<Integer> list = new IslandList<>();
+        ListIterator<Integer> itr = list.iterator();
+        assertThrows(NoSuchElementException.class, itr::next);
+    }
+
+    /**
+     * testing the nextIndex() method of the iterator on an empty list
+     */
+    @Test
+    public void testNextIndexExceptional() {
+        IslandList<Integer> list = new IslandList<>();
+        ListIterator<Integer> itr = list.iterator();
+        assertThrows(NoSuchElementException.class, itr::nextIndex);
+    }
+
+    /**
+     * testing the previous() method of the iterator in normal condition
+     */
     @Test
     public void testPrevious() {
         IslandList<Integer> list = new IslandList<>();
@@ -67,6 +112,29 @@ public class IslandListTest {
         }
     }
 
+    /**
+     * testing the previous() method of the iterator on an empty list
+     */
+    @Test
+    public void testPreviousExceptional() {
+        IslandList<Integer> list = new IslandList<>();
+        ListIterator<Integer> itr = list.iterator();
+        assertThrows(NoSuchElementException.class, itr::previous);
+    }
+
+    /**
+     * testing the previousIndex() method of the iterator on an empty list
+     */
+    @Test
+    public void testPreviousIndexExceptional() {
+        IslandList<Integer> list = new IslandList<>();
+        ListIterator<Integer> itr = list.iterator();
+        assertThrows(NoSuchElementException.class, itr::previousIndex);
+    }
+
+    /**
+     * testing the remove() method of the iterator in normal condition
+     */
     @Test
     public void testNormalRemove() {
         IslandList<Integer> list = new IslandList<>();
@@ -96,6 +164,9 @@ public class IslandListTest {
         }
     }
 
+    /**
+     * testing the remove() method of the iterator on an empty list
+     */
     @Test
     public void testExceptionalRemove() {
         IslandList<Integer> list = new IslandList<>();
@@ -103,6 +174,9 @@ public class IslandListTest {
         assertThrows(NoSuchElementException.class, itr::remove);
     }
 
+    /**
+     * testing the add() method of the iterator on an empty list
+     */
     @Test
     public void testAdd() {
         IslandList<Integer> list = new IslandList<>();
@@ -112,6 +186,9 @@ public class IslandListTest {
         assertEquals(1, itr.next());
     }
 
+    /**
+     * testing the add() method of the iterator in normal condition
+     */
     @Test
     public void testAddToNonEmptyList() {
         IslandList<Integer> list = new IslandList<>();
@@ -124,6 +201,9 @@ public class IslandListTest {
         assertEquals(0, itr.next());
     }
 
+    /**
+     * testing the set() method of the iterator in normal condition
+     */
     @Test
     public void testSet() {
         IslandList<Integer> list = new IslandList<>();
@@ -134,5 +214,16 @@ public class IslandListTest {
         itr.set(1);
         assertEquals(1, list.size());
         assertEquals(1, itr.next());
+    }
+
+    /**
+     * testing the set() method of the iterator on an empty list
+     */
+    @Test
+    public void testSetExceptional() {
+        IslandList<Integer> list = new IslandList<>();
+        ListIterator<Integer> itr = list.iterator();
+        Integer newInteger = 1;
+        assertThrows(NoSuchElementException.class, () -> itr.set(newInteger));
     }
 }

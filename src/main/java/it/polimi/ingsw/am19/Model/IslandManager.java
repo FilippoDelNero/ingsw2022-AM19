@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
+import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import java.util.*;
 
@@ -88,6 +89,14 @@ public class IslandManager {
     }
 
     /**
+     * getter for the currInfluenceStrategy attribute
+     * @return the strategy currently set
+     */
+    public InfluenceStrategy getInfluenceStrategy() {
+        return currInfluenceStrategy;
+    }
+
+    /**
      * this method is used to set directly the strategy of an given island.
      * this method should be used only by the NoEntryTileCard
      * @param island the island of which i want to change strategy
@@ -149,10 +158,10 @@ public class IslandManager {
 
         //check for already implemented strategies
         InfluenceStrategy strategy;
-        if(!(island1.getInfluenceStrategy() instanceof StandardInfluence)) {
+        if(island1.getInfluenceStrategy() instanceof NoEntryTileInfluence) {
             strategy = island1.getInfluenceStrategy();
         }
-        else if(!(island2.getInfluenceStrategy() instanceof StandardInfluence)) {
+        else if(island2.getInfluenceStrategy() instanceof NoEntryTileInfluence) {
             strategy = island2.getInfluenceStrategy();
         }
         else strategy = stdInfluenceStrategy;
