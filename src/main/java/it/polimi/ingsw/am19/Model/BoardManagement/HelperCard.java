@@ -1,8 +1,11 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
+
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 
 /**
  * Class for manage a Helper Card, with its 2 value: NextRoundOrder e MaxNumOfStep
  */
+
 public class HelperCard {
     private final WizardFamily wizardFamily;
     private final int nextRoundOrder;
@@ -26,6 +29,14 @@ public class HelperCard {
 
     public int getMaxNumOfSteps() {
         return maxNumOfSteps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HelperCard that = (HelperCard) o;
+        return nextRoundOrder == that.nextRoundOrder && maxNumOfSteps == that.maxNumOfSteps;
     }
 
 }

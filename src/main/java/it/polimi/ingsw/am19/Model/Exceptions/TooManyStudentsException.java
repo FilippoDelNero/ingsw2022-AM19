@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
-import it.polimi.ingsw.am19.Model.PieceColor;
-
 /**
  * Exception thrown when trying to add an extra student on an already full object
  */

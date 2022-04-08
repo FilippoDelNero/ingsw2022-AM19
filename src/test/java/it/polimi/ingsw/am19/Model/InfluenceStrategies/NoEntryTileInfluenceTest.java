@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am19.Model.InfluenceStrategies;
 
-import it.polimi.ingsw.am19.Model.PieceColor;
-import it.polimi.ingsw.am19.Model.ProfessorManager;
+import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -10,6 +13,15 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NoEntryTileInfluenceTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      *
      */

@@ -1,15 +1,27 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CloudTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Tests removing students of all different colors from a cloud which has actually no students on it
      */

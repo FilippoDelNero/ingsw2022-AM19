@@ -1,6 +1,11 @@
 package it.polimi.ingsw.am19.Model.InfluenceStrategies;
 
-import it.polimi.ingsw.am19.Model.*;
+import it.polimi.ingsw.am19.Model.BoardManagement.*;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -10,6 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StandardInfluenceTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * test the influence calculation of a previously NON-owned island
      */

@@ -1,7 +1,15 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
+import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.ChangeIfEqualCheckProfessor;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.CheckProfessorStrategy;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -10,7 +18,15 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfessorManagerTest {
-
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     @Test
     void setGameboards() {
         ProfessorManager manager = new ProfessorManager();

@@ -1,7 +1,11 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
+import it.polimi.ingsw.am19.Model.Utilities.IslandList;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+
 import java.util.*;
 
 /**

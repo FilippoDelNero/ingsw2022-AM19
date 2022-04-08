@@ -1,8 +1,14 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.*;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.PlusTwoInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,6 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
  * Testing class for testing IslandManager class
  */
 class IslandManagerTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * test the island getter
      */

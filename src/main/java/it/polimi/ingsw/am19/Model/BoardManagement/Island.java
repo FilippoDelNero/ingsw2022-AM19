@@ -1,5 +1,8 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,4 +161,12 @@ public class Island implements MoveStudent {
         return numOfIslands;
     }
 
+    //TODO new metohod: add test for this moethod
+    public int getTotStudents(){
+        int tot = 0;
+        for (PieceColor color: numOfStudents.keySet()){
+            tot += numOfStudents.get(color);
+        }
+        return tot;
+    }
 }

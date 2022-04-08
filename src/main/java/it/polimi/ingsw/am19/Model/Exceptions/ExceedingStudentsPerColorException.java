@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
-import it.polimi.ingsw.am19.Model.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 /**
  * Exception thrown when attempting to increase the number of students of a certain color, but the maximum number has been already reached

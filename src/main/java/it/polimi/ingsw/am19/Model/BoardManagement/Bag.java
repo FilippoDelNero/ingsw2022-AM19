@@ -1,7 +1,8 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -149,6 +150,10 @@ public class Bag {
             throw new ExceedingStudentsPerColorException("You added too many " + color + " students in the bag", color);
         else
             numOfStudents.replace(color,newValue);
+    }
 
+    public void removeAll() throws EmptyBagException {
+        while(!isEmpty())
+            bagInstance.drawStudent();
     }
 }

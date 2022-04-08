@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.*;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.HashMap;
 import java.util.Map;

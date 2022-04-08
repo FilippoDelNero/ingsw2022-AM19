@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am19.Model.MovementStrategies;
 
-import it.polimi.ingsw.am19.Model.Island;
+import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 
 import java.util.ListIterator;
 

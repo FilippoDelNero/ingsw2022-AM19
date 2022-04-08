@@ -1,7 +1,9 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.ChangeIfEqualCheckProfessor;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.CheckProfessorStrategy;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
@@ -9,6 +11,10 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.MovementStrategies.MovementStrategy;
 import it.polimi.ingsw.am19.Model.MovementStrategies.PlusTwoMovement;
 import it.polimi.ingsw.am19.Model.MovementStrategies.StandardMovement;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -18,6 +24,15 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MotherNatureTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Tests the impossibility of generating multiple MotherNature instances
      */
@@ -41,15 +56,15 @@ class MotherNatureTest {
         motherNature.setIslandManager(islandManager);
         Island island1 = islandManager.getIterator().next();
 
-        //position not assigned yet
-        assertNull(motherNature.getCurrPosition());
-
         try {
             //setting the initial position
             motherNature.setCurrPosition(island1);
         } catch (IllegalIslandException e) {
             e.printStackTrace();
+            fail();
         }
+
+
 
         assertSame(motherNature.getCurrPosition(),island1);
     }

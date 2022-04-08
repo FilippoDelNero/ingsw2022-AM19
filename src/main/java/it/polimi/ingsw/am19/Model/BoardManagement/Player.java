@@ -1,9 +1,13 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class for managing Player
@@ -17,7 +21,7 @@ public class Player {
     /**
      * List of HelperCard still available to use
      */
-    private ArrayList<HelperCard> helperDeck;
+    private List<HelperCard> helperDeck;
 
     /**
      * Last HelperCard used
@@ -32,7 +36,7 @@ public class Player {
     /**
      * Balance coins for the Expert Matches
      */
-    private int coins=0;
+    private int coins = 0;
 
     /**
      * The Wizard Family of HelperCard associated to the player
@@ -41,7 +45,7 @@ public class Player {
 
     /**
      * Constructor for a player of a normal Match
-     * @param nickname Name of the player
+     * @param nickname name of the player
      * @param towerColor color of the tower of this player
      * @param wizardFamily family of HelperCard of this player
      */
@@ -51,7 +55,7 @@ public class Player {
         this.wizardFamily = wizardFamily;
         this.currentCard = null;
 
-        ArrayList<HelperCard> helperDeck = new ArrayList<>();
+        this.helperDeck = new ArrayList<>();
         int numOfStep;
         int nextRoundOrder=0;
         for(numOfStep=1;numOfStep<6;numOfStep++){
@@ -60,8 +64,6 @@ public class Player {
             nextRoundOrder+=1;
             helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
         }
-
-        this.helperDeck = helperDeck;
 
     }
 
@@ -79,7 +81,7 @@ public class Player {
         this.coins=coins;
         this.currentCard = null;
 
-        ArrayList<HelperCard> helperDeck = new ArrayList<>();
+        this.helperDeck = new ArrayList<>();
         int numOfStep;
         int nextRoundOrder=0;
         for(numOfStep=1;numOfStep<6;numOfStep++){
@@ -89,7 +91,6 @@ public class Player {
             helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
         }
 
-        this.helperDeck = helperDeck;
     }
 
     /**
@@ -132,7 +133,7 @@ public class Player {
      * Getter the list of the HelperCard not used yet
      * @return the ArrayList of the HelperCard not used yet
      */
-    public ArrayList<HelperCard> getHelperDeck() {
+    public List<HelperCard> getHelperDeck() {
         return helperDeck;
     }
 
@@ -218,6 +219,6 @@ public class Player {
         if (!(o instanceof Player))
             return false;
         Player p = (Player) o;
-        return (nickname == p.nickname);
+        return (Objects.equals(nickname, p.nickname));
     }
 }

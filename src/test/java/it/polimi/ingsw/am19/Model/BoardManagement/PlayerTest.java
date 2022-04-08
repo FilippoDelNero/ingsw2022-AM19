@@ -1,7 +1,13 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +20,22 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test for the Player class
  */
 class PlayerTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Testing the getter of player's nickname
      */
     @Test
     @DisplayName("Testing getter nickname")
     void getNickname() {
-        Player players1 = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        Player players1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         assertEquals("Dennis", players1.getNickname());
     }
 

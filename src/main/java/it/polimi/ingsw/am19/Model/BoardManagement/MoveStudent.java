@@ -1,7 +1,8 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 /**
  * Interface declaring methods fot adding and removing a students of a specified color

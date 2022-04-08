@@ -3,10 +3,8 @@ package it.polimi.ingsw.am19.Model.InternalMoveStrategy;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
-import it.polimi.ingsw.am19.Model.GameBoard;
-import it.polimi.ingsw.am19.Model.PieceColor;
-
-import java.util.HashMap;
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 /**
  * Standard move strategy to move student from entrance to diningHall

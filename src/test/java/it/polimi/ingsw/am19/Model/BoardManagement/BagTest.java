@@ -1,16 +1,28 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import static it.polimi.ingsw.am19.Model.Bag.*;
+import static it.polimi.ingsw.am19.Model.BoardManagement.Bag.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * Testing class for Bag class methods
  */
 public class BagTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Tests bag refill with an exceeding number of students of a specific color
      */
@@ -32,6 +44,7 @@ public class BagTest {
         }
         assertThrows(ExceedingStudentsPerColorException.class,
                 () -> bag.refillWith(PieceColor.YELLOW,1));
+
     }
 
     /**
@@ -50,8 +63,7 @@ public class BagTest {
     @Test
     void drawFromEmptyBag(){
         Bag bag = getBagInstance();
-        assertThrows(EmptyBagException.class,
-                () -> bag.drawStudent());
+        assertThrows(EmptyBagException.class, bag::drawStudent);
     }
 
     /**
@@ -69,7 +81,7 @@ public class BagTest {
         assertDoesNotThrow(() -> bag.refillWith(PieceColor.GREEN, 10));
 
         //drawing all the students previously put inside the bag
-        int tot =  0 + 26 + 2 + 15 + 10;
+        int tot = 26 + 2 + 15 + 10;
         for (int iter = 0; iter < tot; iter++)
             assertDoesNotThrow(() -> System.out.println(bag.drawStudent()));
 
@@ -85,7 +97,7 @@ public class BagTest {
     void multipleBagInstances(){
         Bag b1 = Bag.getBagInstance();
         Bag b2 = Bag.getBagInstance();
-        assertTrue(b1 == b2);
+        assertSame(b1, b2);
     }
 
     @Test
@@ -96,21 +108,11 @@ public class BagTest {
             b.refillWith(PieceColor.PINK, 10);
         } catch (ExceedingStudentsPerColorException e) {
             e.printStackTrace();
+            fail();
         }
         assertEquals(10,b.getTotNumOfStudents());
-        try {
-            b.drawStudent();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        assertDoesNotThrow(() -> b.drawStudent());
         assertEquals(9,b.getTotNumOfStudents());
 
-        for (int i = 0; i < 9; i++){
-            try {
-                b.drawStudent();
-            } catch (EmptyBagException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

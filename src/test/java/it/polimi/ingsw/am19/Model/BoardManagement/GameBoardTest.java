@@ -1,9 +1,15 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
+import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
-import it.polimi.ingsw.am19.Model.Exceptions.TooManyTowersException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.ReverseMove;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +19,22 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test for the class GameBoard
  */
 class GameBoardTest {
-
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Testing getter for entrance
      */
     @Test
     @DisplayName("Testing getter for entrance")
     void getEntrance() {
-        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        Player player = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         GameBoard gameboard = new GameBoard(player,8,null,7);
         for(PieceColor color: PieceColor.values())
             assertEquals(0,gameboard.getEntrance().get(color));

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am19.Model.InfluenceStrategies;
-import it.polimi.ingsw.am19.Model.PieceColor;
-import it.polimi.ingsw.am19.Model.Player;
-import it.polimi.ingsw.am19.Model.ProfessorManager;
-import it.polimi.ingsw.am19.Model.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
 import java.util.HashMap;
 import java.util.Map;

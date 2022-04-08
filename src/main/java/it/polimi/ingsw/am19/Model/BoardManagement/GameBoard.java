@@ -1,12 +1,11 @@
-package it.polimi.ingsw.am19.Model;
+package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
-import it.polimi.ingsw.am19.Model.Exceptions.TooManyTowersException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.InternalMoveStrategy;
-import it.polimi.ingsw.am19.Model.InternalMoveStrategy.ReverseMove;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.HashMap;
 
