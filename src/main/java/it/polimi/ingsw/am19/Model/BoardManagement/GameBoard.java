@@ -113,14 +113,21 @@ public class GameBoard implements MoveStudent {
     }
 
     /**
+     * Getter for the professor manager
+     * @return the professor manager instance
+     */
+    public ProfessorManager getProfessor() {
+        return professor;
+    }
+
+    /**
      * Setter to add or subtract the num of Towers available
      * @param numOfTowers num of tower to add (or subtract)
      */
     public void setNumOfTowers(int numOfTowers) {
-        int newValue = this.numOfTowers + numOfTowers;
         /*if(newValue>maxNumOfTowers)
             throw new TooManyTowersException("The number of tower cannot be over " + maxNumOfTowers);*/
-        this.numOfTowers=newValue;
+        this.numOfTowers = this.numOfTowers + numOfTowers;
     }
 
     /**

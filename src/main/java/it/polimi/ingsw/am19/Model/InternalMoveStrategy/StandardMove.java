@@ -31,6 +31,7 @@ public class StandardMove implements InternalMoveStrategy{
                     if (studentInDiningRoom < maxStudentInDiningRoom){
                         gameBoard.getDiningRoom().replace(color,studentInDiningRoom + 1);
                         newValue=gameBoard.getDiningRoom().get(color);
+                        gameBoard.getProfessor().checkProfessor(color, gameBoard.getPlayer());
                         if(newValue%3 ==0)
                             gameBoard.getPlayer().addCoins(1);
                     }

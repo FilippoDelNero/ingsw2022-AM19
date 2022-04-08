@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -34,8 +36,14 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing getter for entrance")
     void getEntrance() {
-        Player player = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
-        GameBoard gameboard = new GameBoard(player,8,null,7);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameboard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameboard);
+        professorManager.setGameboards(map);
+
+
         for(PieceColor color: PieceColor.values())
             assertEquals(0,gameboard.getEntrance().get(color));
         assertDoesNotThrow(()-> gameboard.addStudent(PieceColor.BLUE));
@@ -61,7 +69,13 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing getter of DiningRoom")
     void getDiningRoom() {
-        GameBoard gameBoard = new GameBoard(null,8,null, 7);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertEquals(1,gameBoard.getEntrance().get(PieceColor.BLUE));
         assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
@@ -75,7 +89,14 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing getNumOfTowers")
     void getNumOfTowers() {
-        GameBoard gameBoard = new GameBoard(null,8,null,8);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
+
         assertEquals(8,gameBoard.getNumOfTowers());
         assertDoesNotThrow(()->gameBoard.setNumOfTowers(-3));
         assertEquals(5,gameBoard.getNumOfTowers());
@@ -87,8 +108,16 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing setter of NumTowers")
     void setNumOfTowers() {
-        GameBoard gameBoard = new GameBoard(null,8,null,8);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertEquals(8,gameBoard.getNumOfTowers());
+
+
         /*assertDoesNotThrow(()->gameBoard.setNumOfTowers(-3));
         assertEquals(5,gameBoard.getNumOfTowers());
         assertThrows(TooManyTowersException.class,()->gameBoard.setNumOfTowers(4));*/
@@ -100,7 +129,13 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing setter of moveStrategy")
     void setMoveStrategy() {
-        GameBoard gameBoard = new GameBoard(null,8,null, 7);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertEquals(1,gameBoard.getEntrance().get(PieceColor.BLUE));
         assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
@@ -119,7 +154,13 @@ class GameBoardTest {
     @DisplayName("Testing addStudent")
     void addStudent() {
         Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
-        GameBoard gameboard = new GameBoard(player,8,null,7);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameboard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameboard);
+        professorManager.setGameboards(map);
+
+
         assertDoesNotThrow(()-> gameboard.addStudent(PieceColor.BLUE));
         assertDoesNotThrow(()-> gameboard.addStudent(PieceColor.BLUE));
         assertDoesNotThrow(()-> gameboard.addStudent(PieceColor.GREEN));
@@ -140,7 +181,13 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing remove student from entrance")
     void removeStudent() {
-        GameBoard gameBoard = new GameBoard(null,8,null,7);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertThrows(NoSuchColorException.class,()->gameBoard.removeStudent(PieceColor.BLUE));
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertEquals(1,gameBoard.getEntrance().get(PieceColor.BLUE));
@@ -155,7 +202,13 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing move student")
     void moveStudentToDiningRoom() {
-        GameBoard gameBoard = new GameBoard(null,8,null, 7);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertEquals(1,gameBoard.getEntrance().get(PieceColor.BLUE));
         assertDoesNotThrow(()->gameBoard.moveStudentToDiningRoom(PieceColor.BLUE));
@@ -166,9 +219,14 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing add coins when move student to DiningRoom")
     void addCoins() {
-        Player player= new Player("Dennis",TowerColor.BLACK, WizardFamily.KING);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+        map.put(player,gameBoard);
+        professorManager.setGameboards(map);
+
         assertEquals(0,player.getCoins());
-        GameBoard gameBoard = new GameBoard(player,8,null,7);
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
         assertDoesNotThrow(()-> gameBoard.addStudent(PieceColor.BLUE));
@@ -179,5 +237,32 @@ class GameBoardTest {
         assertEquals(0,gameBoard.getEntrance().get(PieceColor.BLUE));
         assertEquals(3,gameBoard.getDiningRoom().get(PieceColor.BLUE));
         assertEquals(1,player.getCoins());
+    }
+
+    @Test
+    @DisplayName("Testing set professor")
+    void checkProfessor(){
+        Player player1 = new Player("Dennis",TowerColor.BLACK, WizardFamily.KING);
+        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard1 = new GameBoard(player1,8,professorManager,7);
+        GameBoard gameBoard2 = new GameBoard(player2,8, professorManager,7);
+        HashMap<Player,GameBoard> map = new HashMap<>();
+        map.put(player1,gameBoard1);
+        map.put(player2,gameBoard2);
+        professorManager.setGameboards(map);
+
+        assertDoesNotThrow(()-> gameBoard1.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard1.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertEquals(player1,professorManager.getOwner(PieceColor.BLUE));
+
+        assertDoesNotThrow(()-> gameBoard2.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard2.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertEquals(player1,professorManager.getOwner(PieceColor.BLUE));
+
+        assertDoesNotThrow(()-> gameBoard2.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(()->gameBoard2.moveStudentToDiningRoom(PieceColor.BLUE));
+        assertEquals(player2,professorManager.getOwner(PieceColor.BLUE));
+
     }
 }
