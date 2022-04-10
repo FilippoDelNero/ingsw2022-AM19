@@ -125,6 +125,7 @@ public class MotherNature {
      * @throws IllegalNumOfStepsException when passing an illegal number of steps
      */
     public void move(int numOfSteps) throws IllegalNumOfStepsException {
+        //TODO PERCHÈ CI SONO DUE IF, POSSIAMO COLLASSARLI IN UNO SOLO?
         if (numOfSteps == 0)
             throw new IllegalNumOfStepsException("Trying to make MotherNature move an illegal number of steps. Number of steps passed:" + numOfSteps, numOfSteps);
 

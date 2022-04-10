@@ -11,12 +11,12 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
 
-public class TwoPlayersMatch extends AbstractMatch {
+public class ThreePlayersMatch extends AbstractMatch {
     /**
-     * Builds a new Match for 2 player
+     * Builds a new Match for 3 player
      */
-    public TwoPlayersMatch() {
-        super(2);
+    public ThreePlayersMatch() {
+        super(3);
     }
 
     /**
@@ -88,15 +88,15 @@ public class TwoPlayersMatch extends AbstractMatch {
     }
 
     private void initializeClouds() {
-        for (int i = 0; i < 2; i++) {
-            getClouds().add(new Cloud(3));
+        for (int i = 0; i < 3; i++) {
+            getClouds().add(new Cloud(4));
         }
     }
 
     private void initializeGameBoards(Bag bag){
         for (Player player: getPlanningPhaseOrder()){
-            GameBoard board = new GameBoard(player,8,getProfessorManager(),7);
-            for (int i = 0; i < 7; i++){
+            GameBoard board = new GameBoard(player,6,getProfessorManager(),9);
+            for (int i = 0; i < 9; i++){
                 try {
                     PieceColor color = bag.drawStudent();
                     board.addStudent(color);
@@ -109,5 +109,5 @@ public class TwoPlayersMatch extends AbstractMatch {
         Map<Player, GameBoard> gameBoards = getGameBoards();
         getProfessorManager().setGameboards(gameBoards);
     }
- }
+}
 

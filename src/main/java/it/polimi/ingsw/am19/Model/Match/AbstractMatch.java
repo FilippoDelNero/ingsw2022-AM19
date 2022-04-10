@@ -66,10 +66,12 @@ public abstract class AbstractMatch extends Observable implements Match {
      * Is a List of the available WizardFamilies
      */
     final List<WizardFamily> wizardFamilies;
+
     /**
      * Is a List of the available TowerColors
      */
     final List<TowerColor> towerColors;
+
     /**
      * Saves the already played HelperCards
      */
@@ -134,6 +136,13 @@ public abstract class AbstractMatch extends Observable implements Match {
      */
     @Override
     public void updatePlanningPhaseOrder(){
+        int firstPlayerIndex = planningPhaseOrder.lastIndexOf(actionPhaseOrder.get(0));
+        int whereToInsert = 0;
+        for(int i = firstPlayerIndex; i < planningPhaseOrder.size(); i++) {
+            Player playerToShift = planningPhaseOrder.remove(i);
+            planningPhaseOrder.add(whereToInsert, playerToShift);
+            whereToInsert++;
+        }
     }
 
     /**
@@ -173,6 +182,19 @@ public abstract class AbstractMatch extends Observable implements Match {
     }
 
     /**
+     * method to allow the current player to move a student from his game-board's entrance to the dining room
+     * @param color the student's color you want to move
+     * @throws NoSuchColorException when we pass an unexpected color
+     * @throws InsufficientCoinException when we try to add the 11th student of a color
+     * @throws TooManyStudentsException ?
+     */
+    //TODO PERCHÈ TIRA LA INSUFFICIENT_COIN_EXCEPTION?
+    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, InsufficientCoinException, TooManyStudentsException {
+        GameBoard currPlayerGameBoard = gameBoards.get(currPlayer);
+        currPlayerGameBoard.moveStudentToDiningRoom(color);
+    }
+
+    /**
      * Makes a player play a new HelperCard
      * @param card is the card to play
      * @param player is the player that will play the card
@@ -207,43 +229,51 @@ public abstract class AbstractMatch extends Observable implements Match {
 
     }
 
-    public int getNumOfPlayers() {
-        return numOfPlayers;
+    /**
+     * Removes all the HelperCards from the List of the already used ones in the previous turn
+     */
+    public void resetAlreadyPlayedCards(){
+        int size = alreadyPlayedCards.size();
+        for (int i = 0; i < size; i++){
+            alreadyPlayedCards.remove(0);
+        }
     }
 
-    public List<Player> getPlanningPhaseOrder() {
-        return planningPhaseOrder;
+    /**
+     * Moves Mother Nature
+     * @param steps the numbers of step you want to move Mother Nature of
+     * @throws IllegalNumOfStepsException the number of steps in either < 0 or > than what allowed by the card
+     */
+    public void moveMotherNature(int steps, Player player) throws IllegalNumOfStepsException {
+        int maxNumOfSteps = player.getCurrentCard().getMaxNumOfSteps();
+        if(steps > maxNumOfSteps)
+            throw new IllegalNumOfStepsException("Trying to move MotherNature further than what's allowed which is" + maxNumOfSteps);
+        else
+            motherNature.move(steps);
     }
-
-    public List<Player> getActionPhaseOrder() {
-        return actionPhaseOrder;
+    //TODO MA ALLA FINE NON AVEVAMO DETTO CHE QUESTA COSA L'AVREBBE FATTA IL CONTROLLER E CHE AL MODEL SAREBBE ARRIVATO UN PLAYER GIÀ FORMATO?
+    /**
+     * set the color's tower for a player
+     * @param towerColor the color chosen by a player
+     * @param player the player choosing said color
+     */
+    public void setTowerColors(TowerColor towerColor, Player player) {
+        //TODO PERCHè FACCIAMO UN FOR E NON DIRETTAMENTE PLAYER.SET_TOWER_COLOR?
+        for (Player p: planningPhaseOrder){
+            if (p.equals(player)){
+                p.setTowerColor(towerColor);
+            }
+        }
+        this.towerColors.remove(towerColor);
     }
-
-    public Map<Player, GameBoard> getGameBoards() {
-        return gameBoards;
-    }
-
-    public List<Cloud> getClouds() {
-        return clouds;
-    }
-
-    public IslandManager getIslandManager() {
-        return islandManager;
-    }
-
-    public Bag getBag() {
-        return bag;
-    }
-
-    public MotherNature getMotherNature() {
-        return motherNature;
-    }
-
-    public ProfessorManager getProfessorManager() {
-        return professorManager;
-    }
-
+    //TODO MA ALLA FINE NON AVEVAMO DETTO CHE QUESTA COSA L'AVREBBE FATTA IL CONTROLLER E CHE AL MODEL SAREBBE ARRIVATO UN PLAYER GIÀ FORMATO?
+    /**
+     * set the wizard family for a player
+     * @param wizardFamily the wizard chosen by a player
+     * @param player the player choosing said wizard
+     */
     public void setWizardFamily(WizardFamily wizardFamily,Player player){
+        //TODO PERCHè FACCIAMO UN FOR E NON DIRETTAMENTE PLAYER.SET_TOWER_COLOR?
         for (Player p: planningPhaseOrder){
             if (p.equals(player)){
                 p.setWizardFamily(wizardFamily);
@@ -252,37 +282,107 @@ public abstract class AbstractMatch extends Observable implements Match {
         this.wizardFamilies.remove(wizardFamily);
     }
 
-    public List<WizardFamily> getWizardFamilies(){
-        return this.wizardFamilies;
-    }
-
-    public List<TowerColor> getTowerColors() {
-        return this.towerColors;
-    }
-
-    public void setTowerColors(TowerColor towerColor, Player player) {
-        for (Player p: planningPhaseOrder){
-            if (p.equals(player)){
-                p.setTowerColor(towerColor);
-            }
-        }
-        this.towerColors.remove(towerColor);
-    }
-
-    public List<HelperCard> getAlreadyPlayedCards() {
-        return this.alreadyPlayedCards;
-    }
-
+    /**
+     * setter for the alreadyPlayedCards attribute
+     * @param alreadyPlayedCards a list containing the helper cards played during the current turn
+     */
     public void setAlreadyPlayedCards(List<HelperCard> alreadyPlayedCards) {
         this.alreadyPlayedCards = alreadyPlayedCards;
     }
 
     /**
-     * Removes all the HelperCards from the List of the already used ones in the previous turn
+     * getter for number of players
+     * @return the number of player currently playing
      */
-    public void resetAlreadyPlayedCards(){
-        for (HelperCard card : alreadyPlayedCards){
-            alreadyPlayedCards.remove(card);
-        }
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    /**
+     * getter for planningPhaseOrder
+     * @return the players in the order in which they'll play the next planning phase
+     */
+    public List<Player> getPlanningPhaseOrder() {
+        return planningPhaseOrder;
+    }
+
+    /**
+     * getter for actionPhaseOrder
+     * @return the players in the order in which they'll play the next action phase
+     */
+    public List<Player> getActionPhaseOrder() {
+        return actionPhaseOrder;
+    }
+
+    /**
+     * getter for gameBoards attribute
+     * @return a map that link each player to its game-board
+     */
+    public Map<Player, GameBoard> getGameBoards() {
+        return gameBoards;
+    }
+
+    /**
+     * getter for the clouds attribute
+     * @return the list containing all the clouds in the game
+     */
+    public List<Cloud> getClouds() {
+        return clouds;
+    }
+
+    /**
+     * getter for the islandManager attribute
+     * @return a reference to the islandManager
+     */
+    public IslandManager getIslandManager() {
+        return islandManager;
+    }
+
+    /**
+     * getter for the bag attribute
+     * @return a reference to the bag
+     */
+    public Bag getBag() {
+        return bag;
+    }
+
+    /**
+     * getter for the motherNature attribute
+     * @return a reference to the motherNature
+     */
+    public MotherNature getMotherNature() {
+        return motherNature;
+    }
+
+    /**
+     * getter for the professorManager attribute
+     * @return a reference to the professorManager
+     */
+    public ProfessorManager getProfessorManager() {
+        return professorManager;
+    }
+
+    /**
+     * getter for the wizardFamilies attribute
+     * @return a list containing the remaining wizard families in the game
+     */
+    public List<WizardFamily> getWizardFamilies(){
+        return this.wizardFamilies;
+    }
+
+    /**
+     * getter for the towerColors attribute
+     * @return a list containing the remaining tower's colors in the game
+     */
+    public List<TowerColor> getTowerColors() {
+        return this.towerColors;
+    }
+
+    /**
+     * getter for the alreadyPlayedCards attribute
+     * @return the list containing the cards played in a given turn
+     */
+    public List<HelperCard> getAlreadyPlayedCards() {
+        return this.alreadyPlayedCards;
     }
 }

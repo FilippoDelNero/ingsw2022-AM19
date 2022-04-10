@@ -29,9 +29,11 @@ public class NoTowersInfluence implements InfluenceStrategy {
         //calculate influence from student
         for(PieceColor color : numOfStudents.keySet()) {
             Player player = manager.getOwner(color);
-            oldInfluenceValue = influenceMap.get(player);
-            newInfluenceValue = oldInfluenceValue + numOfStudents.get(color);
-            influenceMap.put(player, newInfluenceValue);
+            if(player != null) {
+                oldInfluenceValue = influenceMap.get(player);
+                newInfluenceValue = oldInfluenceValue + numOfStudents.get(color);
+                influenceMap.put(player, newInfluenceValue);
+            }
         }
 
         //check if owner needs to change

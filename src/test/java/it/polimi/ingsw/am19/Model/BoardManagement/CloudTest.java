@@ -1,15 +1,12 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CloudTest {
@@ -121,7 +118,7 @@ class CloudTest {
 
         assertDoesNotThrow(() -> c.removeStudent(PieceColor.PINK));
 
-        assertTrue(c.getStudents().get(PieceColor.PINK) != mapCopy.get(PieceColor.PINK));
+        assertNotSame(c.getStudents().get(PieceColor.PINK), mapCopy.get(PieceColor.PINK));
     }
 
     /**
