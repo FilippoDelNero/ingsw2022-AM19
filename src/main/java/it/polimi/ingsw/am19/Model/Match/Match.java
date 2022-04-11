@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am19.Model.Match;
 
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
-import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
-import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
-import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Model.Exceptions.*;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.BoardManagement.MoveStudent;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -16,35 +13,35 @@ public interface Match {
     /**
      * Sets up all the game components for a new Match
      */
-    public void initializeMatch();
+    void initializeMatch();
 
     /**
      * Adds a Player to the current Match
      * @param player represents the Player to add
      */
-    public void addPlayer(Player player);
+    void addPlayer(Player player);
 
     /**
      * Returns the current Player for the current Match
      * @return the current Player
      */
-    public Player getCurrPlayer();
+    Player getCurrPlayer();
 
     /**
-     * Updates the current Player  for the current Match
-     * @param player
+     * Updates the current Player for the current Match
+     * @param player the player that will perform its turn
      */
-    public void setCurrPlayer(Player player);
+    void setCurrPlayer(Player player);
 
     /**
      * Updates the order of Players according to their played HelperCard
      */
-    public void updatePlanningPhaseOrder();
+    void updatePlanningPhaseOrder();
 
     /**
      * Refills the Clouds with their maximum capacity
      */
-    public void refillClouds() throws EmptyBagException, TooManyStudentsException;
+    void refillClouds() throws EmptyBagException, TooManyStudentsException;
 
     /**
      * Moves a student of a specified PieceColor from a component to another
@@ -52,11 +49,27 @@ public interface Match {
      * @param from represents the place where the movement starts
      * @param to represents the final destination of the movement
      */
-    public void moveStudent(PieceColor color, MoveStudent from, MoveStudent to);
+    void moveStudent(PieceColor color, MoveStudent from, MoveStudent to);
 
     /**
      * Updates the current player's played HelperCard
      * @param helperCard represents the chosen HelperCard
      */
-    public void useHelperCard(HelperCard helperCard, Player player) throws UnavailableCardException, IllegalCardOptionException;
+    void useHelperCard(HelperCard helperCard) throws UnavailableCardException, IllegalCardOptionException;
+
+    /**
+     * Moves Mother Nature
+     * @param steps the numbers of step you want to move Mother Nature of
+     * @throws IllegalNumOfStepsException the number of steps in either < 0 or > than what allowed by the card
+     */
+    void moveMotherNature(int steps) throws IllegalNumOfStepsException;
+
+    /**
+     * method to allow the current player to move a student from his game-board's entrance to the dining room
+     * @param color the student's color you want to move
+     * @throws NoSuchColorException when we pass an unexpected color
+     * @throws InsufficientCoinException when we try to add the 11th student of a color
+     * @throws TooManyStudentsException ?
+     */
+    void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, InsufficientCoinException, TooManyStudentsException;
 }

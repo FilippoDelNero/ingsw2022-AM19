@@ -161,7 +161,10 @@ public class Island implements MoveStudent {
         return numOfIslands;
     }
 
-    //TODO new metohod: add test for this moethod
+    /**
+     * get the total number of student present on the island
+     * @return the sum of students of each color present on the island
+     */
     public int getTotStudents(){
         int tot = 0;
         for (PieceColor color: numOfStudents.keySet()){

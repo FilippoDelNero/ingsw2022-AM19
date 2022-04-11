@@ -110,7 +110,9 @@ public abstract class AbstractMatch extends Observable implements Match {
     @Override
     public void addPlayer(Player player) {
         //TODO THE CONTROLLER SHOULD CHECK THE NICKNAMES TO AVOID DOUBLES
-        planningPhaseOrder.add(player);
+        if(planningPhaseOrder.size() < numOfPlayers) {
+            planningPhaseOrder.add(player);
+        }
     }
 
     /**
@@ -197,19 +199,18 @@ public abstract class AbstractMatch extends Observable implements Match {
     /**
      * Makes a player play a new HelperCard
      * @param card is the card to play
-     * @param player is the player that will play the card
      * @throws UnavailableCardException when the specified card is not available in the Player's deck
      * @throws IllegalCardOptionException when a card is chosen but it has been played by another Player and could have been replaced by another unused card
      */
     @Override
-    public void useHelperCard(HelperCard card, Player player) throws UnavailableCardException, IllegalCardOptionException {
+    public void useHelperCard(HelperCard card) throws UnavailableCardException, IllegalCardOptionException {
         if (alreadyPlayedCards.contains(card)){
-            for (HelperCard helperCard: player.getHelperDeck()) {
+            for (HelperCard helperCard: currPlayer.getHelperDeck()) {
                 if (!alreadyPlayedCards.contains(helperCard))
                     throw new IllegalCardOptionException("Cannot play a card that has already been played by another player");
             }
         }
-        player.useHelperCard(card);
+        currPlayer.useHelperCard(card);
         alreadyPlayedCards.add(card);
 
         int target = card.getNextRoundOrder();
@@ -222,10 +223,10 @@ public abstract class AbstractMatch extends Observable implements Match {
                     index = iterator.nextIndex();
                 }
             }
-            actionPhaseOrder.add(index, player);
+            actionPhaseOrder.add(index, currPlayer);
         }
         else
-            actionPhaseOrder.add(0,player);
+            actionPhaseOrder.add(0,currPlayer);
 
     }
 
@@ -234,8 +235,8 @@ public abstract class AbstractMatch extends Observable implements Match {
      */
     public void resetAlreadyPlayedCards(){
         int size = alreadyPlayedCards.size();
-        for (int i = 0; i < size; i++){
-            alreadyPlayedCards.remove(0);
+        if (size > 0) {
+            alreadyPlayedCards.subList(0, size).clear();
         }
     }
 
@@ -244,41 +245,31 @@ public abstract class AbstractMatch extends Observable implements Match {
      * @param steps the numbers of step you want to move Mother Nature of
      * @throws IllegalNumOfStepsException the number of steps in either < 0 or > than what allowed by the card
      */
-    public void moveMotherNature(int steps, Player player) throws IllegalNumOfStepsException {
-        int maxNumOfSteps = player.getCurrentCard().getMaxNumOfSteps();
+    public void moveMotherNature(int steps) throws IllegalNumOfStepsException {
+        int maxNumOfSteps = currPlayer.getCurrentCard().getMaxNumOfSteps();
         if(steps > maxNumOfSteps)
             throw new IllegalNumOfStepsException("Trying to move MotherNature further than what's allowed which is" + maxNumOfSteps);
         else
             motherNature.move(steps);
     }
-    //TODO MA ALLA FINE NON AVEVAMO DETTO CHE QUESTA COSA L'AVREBBE FATTA IL CONTROLLER E CHE AL MODEL SAREBBE ARRIVATO UN PLAYER GIÀ FORMATO?
+
     /**
      * set the color's tower for a player
      * @param towerColor the color chosen by a player
      * @param player the player choosing said color
      */
     public void setTowerColors(TowerColor towerColor, Player player) {
-        //TODO PERCHè FACCIAMO UN FOR E NON DIRETTAMENTE PLAYER.SET_TOWER_COLOR?
-        for (Player p: planningPhaseOrder){
-            if (p.equals(player)){
-                p.setTowerColor(towerColor);
-            }
-        }
+        player.setTowerColor(towerColor);
         this.towerColors.remove(towerColor);
     }
-    //TODO MA ALLA FINE NON AVEVAMO DETTO CHE QUESTA COSA L'AVREBBE FATTA IL CONTROLLER E CHE AL MODEL SAREBBE ARRIVATO UN PLAYER GIÀ FORMATO?
+
     /**
      * set the wizard family for a player
      * @param wizardFamily the wizard chosen by a player
      * @param player the player choosing said wizard
      */
     public void setWizardFamily(WizardFamily wizardFamily,Player player){
-        //TODO PERCHè FACCIAMO UN FOR E NON DIRETTAMENTE PLAYER.SET_TOWER_COLOR?
-        for (Player p: planningPhaseOrder){
-            if (p.equals(player)){
-                p.setWizardFamily(wizardFamily);
-            }
-        }
+        player.setWizardFamily(wizardFamily);
         this.wizardFamilies.remove(wizardFamily);
     }
 

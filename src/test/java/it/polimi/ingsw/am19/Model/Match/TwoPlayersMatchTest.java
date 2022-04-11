@@ -92,6 +92,36 @@ class TwoPlayersMatchTest {
     }
 
     /**
+     * testing trying to add an extra player
+     */
+    @Test
+    void testTooManyPlayer() {
+        Player pExtra = new Player("Phil");
+        Player p1 = new Player("Laura");
+        Player p2 = new Player ("Dennis");
+
+        AbstractMatch m = new TwoPlayersMatch();
+
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        assertEquals(2, m.getPlanningPhaseOrder().size());
+
+        m.addPlayer(pExtra);
+        assertEquals(2, m.getPlanningPhaseOrder().size());
+        assertEquals("Laura", m.getPlanningPhaseOrder().get(0).getNickname());
+        assertEquals("Dennis", m.getPlanningPhaseOrder().get(1).getNickname());
+
+        m.setTowerColors(TowerColor.BLACK, p1);
+        m.setWizardFamily(WizardFamily.SHAMAN, p1);
+
+        m.setTowerColors(TowerColor.WHITE, p2);
+        m.setWizardFamily(WizardFamily.KING, p2);
+
+        m.setTowerColors(TowerColor.WHITE, pExtra);
+        m.setWizardFamily(WizardFamily.KING, pExtra);
+    }
+
+    /**
      * Tests assigning and removing from the list of available TowerColors the ones chosen for each Player
      */
     @Test
@@ -249,7 +279,7 @@ class TwoPlayersMatchTest {
      */
     @Test
     void testActionPhaseOrder(){
-        Player p1 = new Player("Phil",TowerColor.WHITE,WizardFamily.SHAMAN);
+        Player p1 = new Player("Phil",TowerColor.BLACK,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
 
         p1.getHelperDeck().removeAll(new ArrayList<>(p1.getHelperDeck()));
@@ -267,19 +297,13 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        try{
-            m.useHelperCard(card2,p2);
-        }catch (UnavailableCardException | IllegalCardOptionException e) {
-            e.printStackTrace();
-            fail();
-        }
+        m.setCurrPlayer(p2);
 
-        try{
-            m.useHelperCard(card1,p1);
-        }catch (UnavailableCardException | IllegalCardOptionException e) {
-            e.printStackTrace();
-            fail();
-        }
+        assertDoesNotThrow(() -> m.useHelperCard(card2));
+
+        m.setCurrPlayer(p1);
+
+        assertDoesNotThrow(() -> m.useHelperCard(card1));
 
         System.out.println("Order of players in the next round:");
         for (Player p : m.getActionPhaseOrder()){
@@ -292,7 +316,7 @@ class TwoPlayersMatchTest {
      */
     @Test
     void testUseAlreadyUsedCard(){
-        Player p1 = new Player("Phil",TowerColor.WHITE,WizardFamily.SHAMAN);
+        Player p1 = new Player("Phil",TowerColor.BLACK,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
 
         p1.getHelperDeck().removeAll(new ArrayList<>(p1.getHelperDeck()));
@@ -313,17 +337,16 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        try{
-            m.useHelperCard(card1,p1);
-        }catch (UnavailableCardException | IllegalCardOptionException e) {
-            e.printStackTrace();
-            fail();
-        }
+        m.setCurrPlayer(p1);
+
+        assertDoesNotThrow(() -> m.useHelperCard(card1));
+
+        m.setCurrPlayer(p2);
+
         assertThrows(IllegalCardOptionException.class,
-                () -> m.useHelperCard(card2,p2));
+                () -> m.useHelperCard(card2));
     }
 
-    //TODO FURTHER TESTING OF THIS METHOD WILL BE NEEDED WHEN THE THREEPLAYERSMATCH WILL BE READY
     /**
      * Testing the sorting of the players for next turn's planning phase
      */
@@ -331,7 +354,7 @@ class TwoPlayersMatchTest {
     void testSortingOutPlanningPhase() {
         //create two players
         Player p1 = new Player("Phil", TowerColor.WHITE, WizardFamily.SHAMAN);
-        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
         //create a match for two players
         AbstractMatch m = new TwoPlayersMatch();
         //initialize the match
@@ -339,8 +362,10 @@ class TwoPlayersMatchTest {
         m.addPlayer(p2);
         m.initializeMatch();
         //the two players play a card each
-        assertDoesNotThrow(() -> m.useHelperCard(p1.getHelperDeck().get(6), p1));
-        assertDoesNotThrow(() -> m.useHelperCard(p2.getHelperDeck().get(0), p2));
+        m.setCurrPlayer(p1);
+        assertDoesNotThrow(() -> m.useHelperCard(p1.getHelperDeck().get(6)));
+        m.setCurrPlayer(p2);
+        assertDoesNotThrow(() -> m.useHelperCard(p2.getHelperDeck().get(0)));
         //check that the action phase order is as expected
         assertEquals(p1, m.getActionPhaseOrder().get(1));
         assertEquals(p2, m.getActionPhaseOrder().get(0));
@@ -357,7 +382,7 @@ class TwoPlayersMatchTest {
     @Test
     void testRefillClouds() {
         Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
-        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
 
         AbstractMatch m = new TwoPlayersMatch();
 
@@ -382,7 +407,7 @@ class TwoPlayersMatchTest {
      */
     @Test
     void testMoveStudent() {
-        Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
 
         AbstractMatch m = new TwoPlayersMatch();
@@ -420,7 +445,7 @@ class TwoPlayersMatchTest {
     @Test
     void testMoveStudentInsideGameboard() {
         Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
-        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
 
         AbstractMatch m = new TwoPlayersMatch();
 
@@ -455,7 +480,7 @@ class TwoPlayersMatchTest {
      */
     @Test
     void testMotherNatureMovement() {
-        Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
         HelperCard helperCard = p1.getHelperDeck().get(9);
 
@@ -466,13 +491,15 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        assertDoesNotThrow(() ->  m.useHelperCard(helperCard, p1));
+        m.setCurrPlayer(p1);
+
+        assertDoesNotThrow(() ->  m.useHelperCard(helperCard));
 
         MotherNature motherNature = m.getMotherNature();
         Island currPos = motherNature.getCurrPosition();
         assertTrue(currPos.isMotherNaturePresent());
 
-        assertDoesNotThrow(() -> m.moveMotherNature(3, p1));
+        assertDoesNotThrow(() -> m.moveMotherNature(3));
 
         Island nextPos = motherNature.getCurrPosition();
         assertFalse(currPos.isMotherNaturePresent());
@@ -486,7 +513,7 @@ class TwoPlayersMatchTest {
     @Test
     void testMotherNatureMovementInvalid() {
         Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
-        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
         HelperCard helperCard = p1.getHelperDeck().get(9);
 
         AbstractMatch m = new TwoPlayersMatch();
@@ -496,13 +523,15 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        assertDoesNotThrow(() ->  m.useHelperCard(helperCard, p1));
+        m.setCurrPlayer(p1);
+
+        assertDoesNotThrow(() ->  m.useHelperCard(helperCard));
 
         MotherNature motherNature = m.getMotherNature();
         Island currPos = motherNature.getCurrPosition();
         assertTrue(currPos.isMotherNaturePresent());
 
-        assertThrows(IllegalNumOfStepsException.class, () -> m.moveMotherNature(7, p1));
+        assertThrows(IllegalNumOfStepsException.class, () -> m.moveMotherNature(7));
 
         assertTrue(currPos.isMotherNaturePresent());
     }

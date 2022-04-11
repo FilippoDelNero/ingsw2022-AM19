@@ -203,4 +203,39 @@ public class ThreePlayersMatchTest {
                 assertEquals(1, island.getTotStudents());
         }
     }
+
+    /**
+     * Testing the sorting of the players for next turn's planning phase
+     */
+    @Test
+    void testSortingOutPlanningPhase() {
+        //create three players
+        Player p1 = new Player("Phil", TowerColor.WHITE, WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        //create a match for three players
+        AbstractMatch m = new ThreePlayersMatch();
+        //initialize the match
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+        //the three players play a card each
+        m.setCurrPlayer(p1);
+        assertDoesNotThrow(() -> m.useHelperCard(p1.getHelperDeck().get(3)));
+        m.setCurrPlayer(p2);
+        assertDoesNotThrow(() -> m.useHelperCard(p2.getHelperDeck().get(0)));
+        m.setCurrPlayer(p3);
+        assertDoesNotThrow(() -> m.useHelperCard(p3.getHelperDeck().get(6)));
+        //check that the action phase order is as expected
+        assertEquals(p1, m.getActionPhaseOrder().get(1));
+        assertEquals(p2, m.getActionPhaseOrder().get(0));
+        assertEquals(p3, m.getActionPhaseOrder().get(2));
+        //sort out the next planning phase order
+        m.updatePlanningPhaseOrder();
+        //check that the next planning phase order is as expected
+        assertEquals(p1, m.getPlanningPhaseOrder().get(2));
+        assertEquals(p2, m.getPlanningPhaseOrder().get(0));
+        assertEquals(p3, m.getPlanningPhaseOrder().get(1));
+    }
 }

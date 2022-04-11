@@ -192,7 +192,6 @@ public class GameBoard implements MoveStudent {
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
 
-    //TODO new metohod: add test for this moethod
     public int getDiningRoomNumOfStud(){
         int tot = 0;
         for (PieceColor color: diningRoom.keySet()){
@@ -201,7 +200,6 @@ public class GameBoard implements MoveStudent {
         return tot;
     }
 
-    //TODO new metohod: add test for this moethod
     public int getEntranceNumOfStud(){
         int tot = 0;
         for (PieceColor color: entrance.keySet()){
