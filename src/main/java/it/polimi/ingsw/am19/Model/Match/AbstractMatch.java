@@ -184,14 +184,12 @@ public abstract class AbstractMatch extends Observable implements Match {
     }
 
     /**
-     * method to allow the current player to move a student from his game-board's entrance to the dining room
+     * method to allow the current player to move a student from his GameBoard's entrance to the dining room
      * @param color the student's color you want to move
      * @throws NoSuchColorException when we pass an unexpected color
-     * @throws InsufficientCoinException when we try to add the 11th student of a color
-     * @throws TooManyStudentsException ?
+     * @throws TooManyStudentsException when trying to add an extra student to an already full dining room
      */
-    //TODO PERCHÈ TIRA LA INSUFFICIENT_COIN_EXCEPTION?
-    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, InsufficientCoinException, TooManyStudentsException {
+    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException {
         GameBoard currPlayerGameBoard = gameBoards.get(currPlayer);
         currPlayerGameBoard.moveStudentToDiningRoom(color);
     }
@@ -243,7 +241,7 @@ public abstract class AbstractMatch extends Observable implements Match {
     /**
      * Moves Mother Nature
      * @param steps the numbers of step you want to move Mother Nature of
-     * @throws IllegalNumOfStepsException the number of steps in either < 0 or > than what allowed by the card
+     * @throws IllegalNumOfStepsException when trying to move mother Nature counter clock wise or when trying to make it not move at all
      */
     public void moveMotherNature(int steps) throws IllegalNumOfStepsException {
         int maxNumOfSteps = currPlayer.getCurrentCard().getMaxNumOfSteps();

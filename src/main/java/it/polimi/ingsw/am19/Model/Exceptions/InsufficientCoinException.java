@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
+/**
+ * Exception thrown when a Player is trying to pay an amount of coins for playing a CharacterCard, but he has not enough coins to do it
+ */
 public class InsufficientCoinException extends Exception{
     public InsufficientCoinException() {
     }

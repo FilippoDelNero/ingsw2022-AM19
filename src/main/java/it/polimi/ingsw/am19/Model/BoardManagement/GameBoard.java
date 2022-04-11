@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.InternalMoveStrategy;
@@ -188,7 +187,7 @@ public class GameBoard implements MoveStudent {
      * @throws NoSuchColorException when we pass an unexpected color
      * @throws TooManyStudentsException when we try to add the 11th student of a color
      */
-    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException, InsufficientCoinException {
+    public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException{
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
 

@@ -189,18 +189,23 @@ public class Player {
     }
 
     /**
-     * Method to add(or subtract) coins
-     * @param coins How many coins add (if positive) or subtract (if negative)
-     * @throws InsufficientCoinException Exception if we could go in a negative balance
+     * Adds the specified amount of coins to the Player
+     * @param amount is the amount of coins to add
      */
-    public void addCoins(int coins) throws InsufficientCoinException {
-        int newValue;
-        if(coins<0){
-            newValue= this.coins + coins;
-            if(newValue<0)
-                throw new InsufficientCoinException("You haven't enough coins");
-        }
-        this.coins += coins;
+    public void addCoins(int amount){
+        this.coins += amount;
+    }
+
+    /**
+     * Removes the specified amount of coins from the Player's balance
+     * @param amount the amount of coins to subtract
+     * @throws InsufficientCoinException when trying to remove more coins then the available ones
+     */
+    public void removeCoins(int amount) throws InsufficientCoinException {
+        int newValue = this.coins - amount;
+        if(newValue < 0)
+            throw new InsufficientCoinException("You haven't enough coins");
+        this.coins = newValue;
     }
 
     /**
@@ -214,6 +219,11 @@ public class Player {
         this.helperDeck.remove(helperCard);
     }
 
+    /**
+     * Decides if two Players have the same nickname
+     * @param o the Player to compare with this
+     * @return true if the nickname is the same, false when it is not
+     */
     @Override
     public boolean equals(Object o){
         if (!(o instanceof Player))

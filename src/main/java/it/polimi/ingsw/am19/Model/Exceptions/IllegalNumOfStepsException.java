@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
 /**
- * Exception thrown when trying to move mother Nature counter clock wise
+ * Exception thrown when trying to move mother Nature counter clock wise or when trying to make it not move at all
  */
 public class IllegalNumOfStepsException extends Exception{
     private int numOfSteps;

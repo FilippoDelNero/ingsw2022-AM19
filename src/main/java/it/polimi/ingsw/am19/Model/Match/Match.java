@@ -40,6 +40,8 @@ public interface Match {
 
     /**
      * Refills the Clouds with their maximum capacity
+     * @throws EmptyBagException when no more students are available in the Bag
+     * @throws TooManyStudentsException when trying to add more students than the actual capacity
      */
     void refillClouds() throws EmptyBagException, TooManyStudentsException;
 
@@ -54,6 +56,8 @@ public interface Match {
     /**
      * Updates the current player's played HelperCard
      * @param helperCard represents the chosen HelperCard
+     * @throws UnavailableCardException when trying to choose an HelperCard that is not available in the deck
+     * @throws IllegalCardOptionException thrown when an HelperCard is chosen but it has been played by another Player and could have been replaced by another unused HelperCard
      */
     void useHelperCard(HelperCard helperCard) throws UnavailableCardException, IllegalCardOptionException;
 

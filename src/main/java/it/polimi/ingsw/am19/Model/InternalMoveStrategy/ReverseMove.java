@@ -19,7 +19,7 @@ public class ReverseMove implements InternalMoveStrategy{
      * @throws NoSuchColorException if the diningHall has max number of the color if we try to add
      */
     @Override
-    public void moveStudentToDiningRoom(GameBoard gameBoard, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws TooManyStudentsException, NoSuchColorException {
+    public void moveStudentToDiningRoom(GameBoard gameBoard, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws NoSuchColorException, TooManyStudentsException {
         switch (color) {
             case GREEN, RED, YELLOW, PINK, BLUE -> {
                 Integer oldValue = gameBoard.getDiningRoom().get(color);

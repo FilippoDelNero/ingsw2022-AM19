@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
+/**
+ * Exception thrown when trying to add more Towers than possible to a GameBoard
+ */
 public class TooManyTowersException extends Exception{
     public TooManyTowersException() {
     }

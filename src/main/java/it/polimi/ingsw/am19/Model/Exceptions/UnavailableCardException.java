@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Model.Exceptions;
 
+/**
+ * Exception thrown when trying to choose an HelperCard that is not available in the deck
+ */
 public class UnavailableCardException extends Exception{
     public UnavailableCardException() {
     }

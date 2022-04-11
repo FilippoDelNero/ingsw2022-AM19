@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Model.InternalMoveStrategy;
 
-import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
@@ -20,7 +19,7 @@ public class StandardMove implements InternalMoveStrategy{
      * @throws TooManyStudentsException if the diningHall has max number of the color if we try to add
      */
     @Override
-    public void moveStudentToDiningRoom(GameBoard gameBoard, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws NoSuchColorException, TooManyStudentsException, InsufficientCoinException {
+    public void moveStudentToDiningRoom(GameBoard gameBoard, PieceColor color, int maxStudentInEntrance, int maxStudentInDiningRoom) throws NoSuchColorException, TooManyStudentsException {
         switch (color) {
             case GREEN, RED, YELLOW, PINK, BLUE -> {
                 Integer oldValue = gameBoard.getEntrance().get(color);
@@ -32,7 +31,7 @@ public class StandardMove implements InternalMoveStrategy{
                         gameBoard.getDiningRoom().replace(color,studentInDiningRoom + 1);
                         newValue=gameBoard.getDiningRoom().get(color);
                         gameBoard.getProfessor().checkProfessor(color, gameBoard.getPlayer());
-                        if(newValue%3 ==0)
+                        if(newValue % 3 == 0)
                             gameBoard.getPlayer().addCoins(1);
                     }
                     else
