@@ -51,7 +51,7 @@ public interface Match {
      * @param from represents the place where the movement starts
      * @param to represents the final destination of the movement
      */
-    void moveStudent(PieceColor color, MoveStudent from, MoveStudent to);
+    void moveStudent(PieceColor color, MoveStudent from, MoveStudent to) throws NoSuchColorException, TooManyStudentsException;
 
     /**
      * Updates the current player's played HelperCard

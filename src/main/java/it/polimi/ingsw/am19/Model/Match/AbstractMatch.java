@@ -170,16 +170,17 @@ public abstract class AbstractMatch extends Observable implements Match {
      */
     //TODO Handle Exception -> idea: if the destination is full -> rollback
     @Override
-    public void moveStudent(PieceColor color, MoveStudent from, MoveStudent to) {
+    public void moveStudent(PieceColor color, MoveStudent from, MoveStudent to) throws NoSuchColorException, TooManyStudentsException {
         try {
             from.removeStudent(color);
         } catch (NoSuchColorException e) {
-            e.printStackTrace();
+            throw new NoSuchColorException(e.getMessage(),e.getCause());
         }
         try {
             to.addStudent(color);
         } catch (TooManyStudentsException e) {
-            e.printStackTrace();
+            from.addStudent(color);
+            throw new TooManyStudentsException(e.getMessage(),e.getCause());
         }
     }
 

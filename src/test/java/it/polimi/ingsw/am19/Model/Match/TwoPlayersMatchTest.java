@@ -403,47 +403,10 @@ class TwoPlayersMatchTest {
     }
 
     /**
-     * testing the movement of a student
-     */
-    @Test
-    void testMoveStudent() {
-        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
-        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
-
-        AbstractMatch m = new TwoPlayersMatch();
-
-        m.addPlayer(p1);
-        m.addPlayer(p2);
-
-        m.initializeMatch();
-
-        Island island = m.getIslandManager().getIslands().get(0);
-        GameBoard gameBoard = m.getGameBoards().get(p1);
-        PieceColor student;
-
-        //grab a student of a color, surely can be done in a better way, but i can't figure it out
-        if(gameBoard.getEntrance().get(PieceColor.RED) > 0)
-            student = PieceColor.RED;
-        else if(gameBoard.getEntrance().get(PieceColor.BLUE) > 0)
-            student = PieceColor.BLUE;
-        else if(gameBoard.getEntrance().get(PieceColor.GREEN) > 0)
-            student = PieceColor.GREEN;
-        else if(gameBoard.getEntrance().get(PieceColor.YELLOW) > 0)
-            student = PieceColor.YELLOW;
-        else
-            student = PieceColor.PINK;
-
-        m.moveStudent(student, gameBoard, island);
-        assertEquals(6, gameBoard.getEntranceNumOfStud());
-        assertTrue(island.getTotStudents() > 0);
-        assertTrue(island.getNumOfStudents().get(student) > 0);
-    }
-
-    /**
      * testing moving a student from the entrance to the dining room of a gameboard
      */
     @Test
-    void testMoveStudentInsideGameboard() {
+    void testMoveStudentInsideGameBoard() {
         Player p1 = new Player("Phil", TowerColor.WHITE,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.BLACK, WizardFamily.KING);
 
@@ -534,5 +497,92 @@ class TwoPlayersMatchTest {
         assertThrows(IllegalNumOfStepsException.class, () -> m.moveMotherNature(7));
 
         assertTrue(currPos.isMotherNaturePresent());
+    }
+
+    /**
+     * testing the movement of a student
+     */
+    @Test
+    public void testMoveStudent() {
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+
+        AbstractMatch m = new TwoPlayersMatch();
+
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+
+        m.initializeMatch();
+
+        Island island = m.getIslandManager().getIslands().get(0);
+        GameBoard gameBoard = m.getGameBoards().get(p1);
+
+        gameBoard.getEntrance().replace(PieceColor.PINK,1);
+        int oldEntrance = gameBoard.getEntranceNumOfStud();
+        int oldIsland = island.getTotStudents();
+
+        assertDoesNotThrow(() -> m.moveStudent(PieceColor.PINK, gameBoard, island));
+        assertEquals(oldEntrance - 1 ,gameBoard.getEntranceNumOfStud());
+        assertEquals(oldIsland + 1 ,island.getTotStudents());
+    }
+
+    /**
+     * testing the movement of a student from a place that contains no student of the specified PieceColor
+     */
+    @Test
+    public void testInvalidMoveStudent() {
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+
+        AbstractMatch m = new TwoPlayersMatch();
+
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+
+        m.initializeMatch();
+
+        Island island = m.getIslandManager().getIslands().get(0);
+        GameBoard gameBoard = m.getGameBoards().get(p1);
+
+        gameBoard.getEntrance().replace(PieceColor.GREEN,0);
+        int oldEntrance = gameBoard.getEntranceNumOfStud();
+        int oldIsland = island.getTotStudents();
+
+        assertThrows(NoSuchColorException.class,
+                () -> m.moveStudent(PieceColor.GREEN, gameBoard, island));
+        assertEquals(oldEntrance ,gameBoard.getEntranceNumOfStud());
+        assertEquals(oldIsland ,island.getTotStudents());
+    }
+
+    /**
+     * testing the movement of a student from a place to another that is already out of space
+     */
+    @Test
+    public void testInvalidDestinationMovement() {
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+
+        AbstractMatch m = new TwoPlayersMatch();
+
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+
+        m.initializeMatch();
+
+        Island island = m.getIslandManager().getIslands().get(0);
+        GameBoard gameBoard = m.getGameBoards().get(p1);
+
+        gameBoard.getEntrance().replace(PieceColor.YELLOW,7);
+        gameBoard.getEntrance().replace(PieceColor.PINK,0);
+        gameBoard.getEntrance().replace(PieceColor.BLUE,0);
+        gameBoard.getEntrance().replace(PieceColor.GREEN,0);
+        gameBoard.getEntrance().replace(PieceColor.RED,0);
+        int oldEntrance = gameBoard.getEntranceNumOfStud();
+        int oldIsland = island.getTotStudents();
+
+        assertThrows(TooManyStudentsException.class,
+                () -> m.moveStudent(PieceColor.YELLOW, island, gameBoard));
+        assertEquals(oldEntrance ,gameBoard.getEntranceNumOfStud(),"entrance failure");
+        assertEquals(oldIsland + 1,island.getTotStudents(), "island failure");
     }
 }

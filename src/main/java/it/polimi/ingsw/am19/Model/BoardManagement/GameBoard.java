@@ -180,7 +180,6 @@ public class GameBoard implements MoveStudent {
             default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
     }
-    //TODO PERCHÈ TIRA LA INSUFFICIENT_COIN_EXCEPTION?
     /**
      * Method to move student from entrance to DiningHall, using a strategy pattern
      * @param color the student's color to move
