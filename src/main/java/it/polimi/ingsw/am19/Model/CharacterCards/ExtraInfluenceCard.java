@@ -5,6 +5,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.IslandManager;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.util.List;
+
 public class ExtraInfluenceCard extends AbstractCharacterCard {
 
     private final IslandManager islandManager;
@@ -21,8 +23,8 @@ public class ExtraInfluenceCard extends AbstractCharacterCard {
     }
 
     @Override
-    public void activateEffect(Island island, PieceColor color) {
-        super.activateEffect(island, color);
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+        super.activateEffect(island, color,pieceColorList);
         this.islandManager.calculateInfluence(island);
         this.active = false;
     }

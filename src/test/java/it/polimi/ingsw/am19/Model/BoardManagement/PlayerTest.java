@@ -5,6 +5,7 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,6 +98,7 @@ class PlayerTest {
     @DisplayName("Testing addCoins")
     void testAddCoins(){
         Player p = new Player("Dennis",TowerColor.WHITE,WizardFamily.SHAMAN,1);
+        p.setCoinManager(new CoinManager());
         p.addCoins(10);
         assertEquals(11,p.getCoins());
     }
@@ -107,7 +109,9 @@ class PlayerTest {
     @Test
     @DisplayName("Testing removeCoins")
     public void testRemoveCoins(){
-        Player p = new Player("Laura", TowerColor.WHITE, WizardFamily.KING, 4);
+        Player p = new Player("Laura", TowerColor.WHITE, WizardFamily.KING, 0);
+        p.setCoinManager(new CoinManager());
+        p.addCoins(4);
         assertDoesNotThrow(() -> p.removeCoins(3));
         assertEquals(1, p.getCoins());
     }
@@ -118,7 +122,9 @@ class PlayerTest {
     @Test
     @DisplayName("Testing removeCoins with an exceeding amount of coins")
     public void testRemoveTooManyCoins(){
-        Player p = new Player("Laura", TowerColor.WHITE, WizardFamily.KING, 4);
+        Player p = new Player("Laura", TowerColor.WHITE, WizardFamily.KING, 0);
+        p.setCoinManager(new CoinManager());
+        p.addCoins(4);
         assertThrows(InsufficientCoinException.class,
                 () -> p.removeCoins(5));
         assertEquals(4, p.getCoins());
