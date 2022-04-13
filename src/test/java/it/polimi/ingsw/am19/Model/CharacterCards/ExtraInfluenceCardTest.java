@@ -25,10 +25,5 @@ class ExtraInfluenceCardTest {
         match.addPlayer(player2);
         match.initializeMatch();
 
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof StandardInfluence);
-        AbstractCharacterCard card = new ExtraInfluenceCard(match);
-        assertEquals(3,card.getPrice());
-        card.activateEffect(null,null);
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof PlusTwoInfluence);
     }
 }

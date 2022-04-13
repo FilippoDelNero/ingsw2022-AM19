@@ -4,6 +4,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,14 @@ public class Player {
     /**
      * Balance coins for the Expert Matches
      */
-    private int coins = 0;
+    private Integer coins;
 
     /**
      * The Wizard Family of HelperCard associated to the player
      */
     private WizardFamily wizardFamily;
+
+    private CoinManager coinManager;
 
     /**
      * Constructor for a player of a normal Match
@@ -54,6 +57,8 @@ public class Player {
         this.towerColor = towerColor;
         this.wizardFamily = wizardFamily;
         this.currentCard = null;
+        this.coins = null;
+        this.coinManager = null;
 
         this.helperDeck = new ArrayList<>();
         int numOfStep;
@@ -80,8 +85,9 @@ public class Player {
         this.wizardFamily = wizardFamily;
         this.coins=coins;
         this.currentCard = null;
+        this.coinManager = null;
 
-        this.helperDeck = new ArrayList<>();
+        ArrayList<HelperCard> helperDeck = new ArrayList<>();
         int numOfStep;
         int nextRoundOrder=0;
         for(numOfStep=1;numOfStep<6;numOfStep++){
@@ -91,6 +97,7 @@ public class Player {
             helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
         }
 
+        this.helperDeck = helperDeck;
     }
 
     /**
@@ -176,7 +183,7 @@ public class Player {
      * Getter for the balance of coins
      * @return the coins available
      */
-    public int getCoins() {
+    public Integer getCoins() {
         return coins;
     }
 
@@ -189,11 +196,20 @@ public class Player {
     }
 
     /**
+     * Setter for the expert match CoinManager
+     * @param coinManager the coin manager of the match
+     */
+    public void setCoinManager(CoinManager coinManager) {
+        this.coinManager = coinManager;
+    }
+
+    /**
      * Adds the specified amount of coins to the Player
      * @param amount is the amount of coins to add
      */
     public void addCoins(int amount){
-        this.coins += amount;
+        if(coinManager.receiveCoins(amount))
+            this.coins += amount;
     }
 
     /**
@@ -205,7 +221,8 @@ public class Player {
         int newValue = this.coins - amount;
         if(newValue < 0)
             throw new InsufficientCoinException("You haven't enough coins");
-        this.coins = newValue;
+        if(coinManager.spendCoins(amount))
+            this.coins = newValue;
     }
 
     /**
