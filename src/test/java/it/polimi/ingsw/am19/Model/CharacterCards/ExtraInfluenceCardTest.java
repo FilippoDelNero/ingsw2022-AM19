@@ -1,34 +1,54 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.InfluenceStrategies.PlusTwoInfluence;
-import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
-import it.polimi.ingsw.am19.Model.Match.Match;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtraInfluenceCardTest {
-    //TODO rifare
     @Test
-    @DisplayName("Testing Extra Influence Card")
-    void activateEffect() {
-        AbstractMatch match = new TwoPlayersMatch();
-        Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
-        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
-        match.addPlayer(player1);
-        match.addPlayer(player2);
-        match.initializeMatch();
+    void activateEffectTest() {
 
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof StandardInfluence);
-        AbstractCharacterCard card = new ExtraInfluenceCard(match);
-        assertEquals(3,card.getPrice());
-        card.activateEffect(null,null);
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof PlusTwoInfluence);
+        //--MATCH PART--
+        AbstractMatch m = new TwoPlayersMatch();
+        Player player1 = new Player("Phil", TowerColor.BLACK, WizardFamily.SHAMAN);
+        Player player2 = new Player("Dennis", TowerColor.WHITE, WizardFamily.KING);
+        m.addPlayer(player1);
+        m.addPlayer(player2);
+        m.initializeMatch();
+
+        //--GIVE PLAYER1 A PROFESSOR PART--
+        //finding the color of the student on island
+        int islandIndex = m.getIslandManager().getIslands().lastIndexOf(m.getMotherNature().getCurrPosition()) + 1;
+        Map<PieceColor, Integer> map = m.getIslandManager().getIslands().get(islandIndex).getNumOfStudents();
+        PieceColor color = null;
+        GameBoard gb1 = m.getGameBoards().get(player1);
+        for(PieceColor c : map.keySet()) {
+            if(map.get(c) != 0)
+                color = c;
+        }
+        //make sure that the player has a student of that color in its gameboard
+        gb1.getEntrance().replace(color, 1);
+        //give the player the professor
+        m.setCurrPlayer(player1);
+        PieceColor finalColor = color;
+        assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor));
+
+
+        //--CHARACTER CARD PART--
+        AbstractCharacterCard card = new ExtraInfluenceCard(m);
+
+        //--CHECK IF EVERYTHING IS OK PART --
+        card.activateEffect(m.getIslandManager().getIslands().get(islandIndex), null);
+
+
+        assertEquals(TowerColor.BLACK, m.getIslandManager().getIslands().get(islandIndex).getTowerColor());
+        assertEquals(7, gb1.getNumOfTowers());
     }
 }
