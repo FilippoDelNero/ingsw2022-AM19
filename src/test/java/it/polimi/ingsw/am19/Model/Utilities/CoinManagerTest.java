@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CoinManagerTest {
-
+    /**
+     * Testing getter for the num of available coins
+     */
     @Test
     @DisplayName("Getting available coins")
     void getAvailableCoins() {
@@ -14,6 +16,9 @@ class CoinManagerTest {
         assertEquals(20,coinManager.getAvailableCoins());
     }
 
+    /**
+     * Testing spendCoins
+     */
     @Test
     @DisplayName("Testing spendCoins")
     void spendCoins() {
@@ -27,6 +32,9 @@ class CoinManagerTest {
         assertEquals(20,coinManager.getAvailableCoins());
     }
 
+    /**
+     * Testing receiveCoins
+     */
     @Test
     @DisplayName("Testing receiveCoins")
     void receiveCoins() {

@@ -44,6 +44,9 @@ public class Player {
      */
     private WizardFamily wizardFamily;
 
+    /**
+     * CoinManager for an expert Match (it's null in the standard Game)
+     */
     private CoinManager coinManager;
 
     /**
