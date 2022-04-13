@@ -132,6 +132,7 @@ public class MotherNature {
         Island finalPosition = currMovementStrategy.move(numOfSteps, this.currPosition, islandsIterator);
         this.currPosition = finalPosition;
         islandManager.calculateInfluence(finalPosition);
+        setCurrMovementStrategy(defaultMovement);
     }
 
     /**
