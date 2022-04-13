@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.ReverseMove;
+import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -219,7 +220,8 @@ class GameBoardTest {
     @Test
     @DisplayName("Testing add coins when move student to DiningRoom")
     void addCoins() {
-        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING,0);
+        player.setCoinManager(new CoinManager());
         ProfessorManager professorManager = new ProfessorManager();
         HashMap<Player,GameBoard> map = new HashMap<>();
         GameBoard gameBoard = new GameBoard(player,8,professorManager,7);

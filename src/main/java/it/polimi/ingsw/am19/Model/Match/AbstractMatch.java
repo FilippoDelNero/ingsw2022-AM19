@@ -90,7 +90,7 @@ public abstract class AbstractMatch extends Observable implements Match {
         this.clouds = new ArrayList<>();
         this.professorManager = new ProfessorManager();
         this.islandManager = new IslandManager(professorManager);
-        this.bag = Bag.getBagInstance();
+        bag = Bag.getBagInstance();
         this.motherNature = MotherNature.getInstance();
         this.wizardFamilies = new ArrayList<>(Arrays.asList(WizardFamily.values()));
         this.towerColors = new ArrayList<>(Arrays.asList(TowerColor.values()));
@@ -167,8 +167,9 @@ public abstract class AbstractMatch extends Observable implements Match {
      * @param color represents the PieceColor of the student to move
      * @param from represents the place where the movement starts
      * @param to represents the final destination of the movement
+     * @throws NoSuchColorException when trying to move a student of a certain PieceColor from a place that does not contain any student of that PieceColor
+     * @throws TooManyStudentsException when trying to move a student on an place tha is running out of space
      */
-    //TODO Handle Exception -> idea: if the destination is full -> rollback
     @Override
     public void moveStudent(PieceColor color, MoveStudent from, MoveStudent to) throws NoSuchColorException, TooManyStudentsException {
         try {
@@ -232,6 +233,7 @@ public abstract class AbstractMatch extends Observable implements Match {
     /**
      * Removes all the HelperCards from the List of the already used ones in the previous turn
      */
+    @Override
     public void resetAlreadyPlayedCards(){
         int size = alreadyPlayedCards.size();
         if (size > 0) {
@@ -244,6 +246,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * @param steps the numbers of step you want to move Mother Nature of
      * @throws IllegalNumOfStepsException when trying to move mother Nature counter clock wise or when trying to make it not move at all
      */
+    @Override
     public void moveMotherNature(int steps) throws IllegalNumOfStepsException {
         int maxNumOfSteps = currPlayer.getCurrentCard().getMaxNumOfSteps();
         if(steps > maxNumOfSteps)
@@ -257,6 +260,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * @param towerColor the color chosen by a player
      * @param player the player choosing said color
      */
+    @Override
     public void setTowerColors(TowerColor towerColor, Player player) {
         player.setTowerColor(towerColor);
         this.towerColors.remove(towerColor);
@@ -267,6 +271,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * @param wizardFamily the wizard chosen by a player
      * @param player the player choosing said wizard
      */
+    @Override
     public void setWizardFamily(WizardFamily wizardFamily,Player player){
         player.setWizardFamily(wizardFamily);
         this.wizardFamilies.remove(wizardFamily);
@@ -276,6 +281,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * setter for the alreadyPlayedCards attribute
      * @param alreadyPlayedCards a list containing the helper cards played during the current turn
      */
+    @Override
     public void setAlreadyPlayedCards(List<HelperCard> alreadyPlayedCards) {
         this.alreadyPlayedCards = alreadyPlayedCards;
     }
@@ -284,6 +290,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for number of players
      * @return the number of player currently playing
      */
+    @Override
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
@@ -292,6 +299,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for planningPhaseOrder
      * @return the players in the order in which they'll play the next planning phase
      */
+    @Override
     public List<Player> getPlanningPhaseOrder() {
         return planningPhaseOrder;
     }
@@ -300,6 +308,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for actionPhaseOrder
      * @return the players in the order in which they'll play the next action phase
      */
+    @Override
     public List<Player> getActionPhaseOrder() {
         return actionPhaseOrder;
     }
@@ -308,14 +317,17 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for gameBoards attribute
      * @return a map that link each player to its game-board
      */
+    @Override
     public Map<Player, GameBoard> getGameBoards() {
         return gameBoards;
     }
+
 
     /**
      * getter for the clouds attribute
      * @return the list containing all the clouds in the game
      */
+    @Override
     public List<Cloud> getClouds() {
         return clouds;
     }
@@ -324,6 +336,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the islandManager attribute
      * @return a reference to the islandManager
      */
+    @Override
     public IslandManager getIslandManager() {
         return islandManager;
     }
@@ -332,6 +345,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the bag attribute
      * @return a reference to the bag
      */
+    @Override
     public Bag getBag() {
         return bag;
     }
@@ -340,6 +354,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the motherNature attribute
      * @return a reference to the motherNature
      */
+    @Override
     public MotherNature getMotherNature() {
         return motherNature;
     }
@@ -348,6 +363,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the professorManager attribute
      * @return a reference to the professorManager
      */
+    @Override
     public ProfessorManager getProfessorManager() {
         return professorManager;
     }
@@ -356,6 +372,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the wizardFamilies attribute
      * @return a list containing the remaining wizard families in the game
      */
+    @Override
     public List<WizardFamily> getWizardFamilies(){
         return this.wizardFamilies;
     }
@@ -364,6 +381,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the towerColors attribute
      * @return a list containing the remaining tower's colors in the game
      */
+    @Override
     public List<TowerColor> getTowerColors() {
         return this.towerColors;
     }
@@ -372,6 +390,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      * getter for the alreadyPlayedCards attribute
      * @return the list containing the cards played in a given turn
      */
+    @Override
     public List<HelperCard> getAlreadyPlayedCards() {
         return this.alreadyPlayedCards;
     }

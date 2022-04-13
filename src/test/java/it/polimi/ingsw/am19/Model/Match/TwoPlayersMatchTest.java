@@ -391,11 +391,7 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        try {
-            m.refillClouds();
-        } catch (EmptyBagException | TooManyStudentsException e) {
-            fail();
-        }
+        assertDoesNotThrow(()->m.refillClouds());
 
         for(Cloud c: m.getClouds()) {
             assertEquals(3, c.getCurrNumOfStudents());

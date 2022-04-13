@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests the ThreePlayerMatch Class
  */
 public class ThreePlayersMatchTest {
-
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
