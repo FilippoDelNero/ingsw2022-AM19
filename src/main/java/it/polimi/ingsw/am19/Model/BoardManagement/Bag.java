@@ -51,17 +51,11 @@ public class Bag {
 
     private void removeStudent(PieceColor color){
         switch (color) {
-            case GREEN:
-            case RED:
-            case YELLOW:
-            case PINK:
-            case BLUE:{
+            case GREEN, RED, YELLOW, PINK, BLUE -> {
                 Integer oldValue = numOfStudents.get(color);
                 numOfStudents.replace(color, oldValue - 1);
             }
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + color);
+            default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
     }
 
@@ -91,6 +85,7 @@ public class Bag {
             currentProb += weightsByColor.get(color);
             if (sortedProb < currentProb){
                 chosenColor = color;
+                return chosenColor;
             }
         }
      return chosenColor;
