@@ -8,6 +8,7 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.CharacterCards.*;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
+import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -19,25 +20,16 @@ public class ExpertMatchDecorator extends MatchDecorator{
     /**
      * A list of current available characterCards
      */
-    private List<CharacterCard> characterCards;
+    private List<AbstractCharacterCard> characterCards;
 
-    /**
-     * Is the maximum number of coins that can be used in match
-     */
-    private final int maxAmountCoins = 20;
-
-    /**
-     * A counter of the amount of coins currently available
-     */
-    private Integer availableCoins;
-
+    private final CoinManager coinManager;
     /**
      * Builds a new ExpertMatchDecorator that wraps the match passed as argument
      * @param match is the match to wrap
      */
     public ExpertMatchDecorator(AbstractMatch match) {
         super(match);
-        availableCoins = maxAmountCoins;
+        this.coinManager = new CoinManager();
         this.characterCards = new ArrayList<>();
         this.characterCards.add(new StudentToIslandCard(wrappedMatch));
         this.characterCards.add(new TakeProfessorCard(wrappedMatch));
@@ -67,7 +59,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
             thirdCardIndex = randomGenerator.nextInt(0,12);
         }
 
-        List<CharacterCard> chosenCards = new ArrayList<>();
+        List<AbstractCharacterCard> chosenCards = new ArrayList<>();
         chosenCards.add(characterCards.get(firstCardIndex));
         chosenCards.add(characterCards.get(secondCardIndex));
         chosenCards.add(characterCards.get(thirdCardIndex));
@@ -76,7 +68,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
     }
 
     private void activateInitialActions(){
-        for (CharacterCard card: characterCards){
+        for (AbstractCharacterCard card: characterCards){
             card.initialAction();
         }
     }
@@ -89,8 +81,9 @@ public class ExpertMatchDecorator extends MatchDecorator{
         wrappedMatch.initializeMatch();
         drawCharacterCards();
         activateInitialActions();
-        //TODO rivedere
+
         for (Player player: wrappedMatch.getPlanningPhaseOrder()) {
+            player.setCoinManager(coinManager);
             player.addCoins(1);
         }
     }
@@ -103,7 +96,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
      * @throws InsufficientCoinException
      */
     //TODO rivedere come richiedere parametri della activateEffect()
-    public void playCard(CharacterCard card,PieceColor color,Island island) throws InsufficientCoinException {
+    public void playCard(AbstractCharacterCard card,PieceColor color,Island island) throws InsufficientCoinException {
         Player currPlayer = wrappedMatch.getCurrPlayer();
         int cardPrice = card.getPrice();
         try {
@@ -111,26 +104,15 @@ public class ExpertMatchDecorator extends MatchDecorator{
         } catch (InsufficientCoinException e) {
             throw new InsufficientCoinException(e.getMessage(),e.getCause());
         }
-        availableCoins += cardPrice;
-        card.activateEffect(color,island);
+        currPlayer.removeCoins(cardPrice);
+        card.activateEffect(island,color);
     }
 
-    /**
-     * Returns the available coins in the game
-     * @return the available coins in the game
-     */
-    public int getAvailableCoins() {
-        return availableCoins;
-    }
-
-    /*
-    public void setAvailableCoins(int availableCoins) {
-        this.availableCoins = availableCoins;
-    }
-
-     */
-
-    public List<CharacterCard> getCharacterCards() {
+    public List<AbstractCharacterCard> getCharacterCards() {
         return characterCards;
+    }
+
+    public CoinManager getCoinManager() {
+        return coinManager;
     }
 }
