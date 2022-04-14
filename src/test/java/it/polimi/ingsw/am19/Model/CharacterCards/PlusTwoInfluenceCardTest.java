@@ -1,17 +1,35 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.PlusTwoInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * testing class for the PlusTwoInfluenceCard
+ */
 public class PlusTwoInfluenceCardTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * testing the activateEffect method
+     */
     @Test
     void activateEffectTest() {
         AbstractMatch m = new TwoPlayersMatch();
@@ -27,7 +45,7 @@ public class PlusTwoInfluenceCardTest {
 
         AbstractCharacterCard card = new PlusTwoInfluenceCard(m);
 
-        card.activateEffect(null, null);
+        card.activateEffect(null, null, null);
         assertTrue(m.getIslandManager().getInfluenceStrategy() instanceof PlusTwoInfluence);
 
         m.getIslandManager().calculateInfluence(m.getIslandManager().getIslands().get(0));

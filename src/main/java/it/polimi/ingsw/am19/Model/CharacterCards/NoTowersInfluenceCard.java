@@ -7,6 +7,8 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoTowersInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.util.List;
+
 /**
  * class representing the Centaur Card
  */
@@ -42,10 +44,11 @@ public class NoTowersInfluenceCard extends AbstractCharacterCard {
      * next time influence will be calculated on island it will be done using a NoTowerInfluence strategy
      * @param island should be null, not used
      * @param color should be null, not used
+     * @param pieceColorList should be null, not used
      */
     @Override
-    public void activateEffect(Island island, PieceColor color) {
-        super.activateEffect(island, color);
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+        super.activateEffect(island, color, pieceColorList);
         this.islandManager.setInfluenceStrategy(strategy);
         this.active = false;
     }

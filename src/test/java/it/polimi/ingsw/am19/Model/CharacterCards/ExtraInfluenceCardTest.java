@@ -1,17 +1,36 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * testing class for the ExtraInfluenceCard
+ */
 class ExtraInfluenceCardTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        try {
+            bag.removeAll();
+        } catch (EmptyBagException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * testing the activateEffect method
+     */
     @Test
     void activateEffectTest() {
 
@@ -45,7 +64,7 @@ class ExtraInfluenceCardTest {
         AbstractCharacterCard card = new ExtraInfluenceCard(m);
 
         //--CHECK IF EVERYTHING IS OK PART --
-        card.activateEffect(m.getIslandManager().getIslands().get(islandIndex), null);
+        card.activateEffect(m.getIslandManager().getIslands().get(islandIndex), null, null);
 
 
         assertEquals(TowerColor.BLACK, m.getIslandManager().getIslands().get(islandIndex).getTowerColor());

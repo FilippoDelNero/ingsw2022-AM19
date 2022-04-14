@@ -7,6 +7,8 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.util.List;
+
 //TODO SE NON RIESCO A METTERE UN DIVIETO PERCHÈ SONO FINITE LE TESSERE DEVO FARLO SAPERE A QUALCUNO?
 
 /**
@@ -50,10 +52,11 @@ public class NoEntryTileCard extends AbstractCharacterCard{
      * if available puts a No Entry Tile on an island
      * @param island the island on which a No Entry Tile should be put
      * @param color should be null, not used
+     * @param pieceColorList should be null, not used
      */
     @Override
-    public void activateEffect(Island island, PieceColor color) {
-        super.activateEffect(island, color);
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+        super.activateEffect(island, color, pieceColorList);
         if(numberOfNoEntryTiles > 0) {
             this.islandManager.setIslandInfluenceStrategy(island, strategy);
             numberOfNoEntryTiles--;
