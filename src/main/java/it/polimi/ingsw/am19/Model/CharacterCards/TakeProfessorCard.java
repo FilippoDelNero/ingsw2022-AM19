@@ -7,6 +7,7 @@ import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.Match;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import java.util.List;
+import java.util.Map;
 
 /**
  * class representing the Farmer Card
@@ -39,11 +40,20 @@ public class TakeProfessorCard extends AbstractCharacterCard{
     }
 
     /**
-     * does nothing
+     * not available for this card
      */
     @Override
     public void initialAction() {
 
+    }
+
+    /**
+     * not available for this card
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
     }
 
     /**

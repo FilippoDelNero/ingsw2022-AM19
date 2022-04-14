@@ -10,6 +10,7 @@ import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import java.util.List;
+import java.util.Map;
 
 /**
  * class representing the Minstrel Card
@@ -47,6 +48,15 @@ public class EntranceToDiningRoomCard extends AbstractCharacterCard{
     @Override
     public void initialAction() {
 
+    }
+
+    /**
+     * not available for this card
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
     }
 
     /**

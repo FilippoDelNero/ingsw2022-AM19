@@ -58,40 +58,28 @@ public class EntranceToDiningRoomCardTest {
         //--ACTION PHASE--
         m.setCurrPlayer(player1);
 
-        //find a color
-        PieceColor color = null;
+        //put all students in the entrance in a list
         GameBoard gameBoard = m.getGameBoards().get(player1);
+        ArrayList<PieceColor> pieceColorList = new ArrayList<>();
         for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
+            for(int i = 0; i < gameBoard.getEntrance().get(c); i++) {
+                pieceColorList.add(c);
+            }
         }
+
+        //find a color
+        PieceColor finalColor = pieceColorList.get(0);
         //move a student of that color
-        PieceColor finalColor = color;
         assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor));
         //again find a color
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
+        PieceColor finalColor2 = pieceColorList.get(1);
         //again move a student of that color
-        PieceColor finalColor2 = color;
         assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor2));
 
         //find two more colors from the player's entrance
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        PieceColor finalColor3 = color;
+        PieceColor finalColor3 = pieceColorList.get(2);
 
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        PieceColor finalColor4 = color;
+        PieceColor finalColor4 = pieceColorList.get(3);
 
         List<PieceColor> list = new ArrayList<>();
         list.add(finalColor3);
@@ -113,7 +101,7 @@ public class EntranceToDiningRoomCardTest {
     }
 
     /**
-     *
+     * testing the activateEffect method, trying to swap three student instead of the permitted two
      */
     @Test
     void initialActionTooManyTimes() {
@@ -139,58 +127,34 @@ public class EntranceToDiningRoomCardTest {
         //--ACTION PHASE--
         m.setCurrPlayer(player1);
 
-        //find a color
-        PieceColor color = null;
+        //put all students in the entrance in a list
         GameBoard gameBoard = m.getGameBoards().get(player1);
+        ArrayList<PieceColor> pieceColorList = new ArrayList<>();
         for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
+            for(int i = 0; i < gameBoard.getEntrance().get(c); i++) {
+                pieceColorList.add(c);
+            }
         }
+
+        //find a color
+        PieceColor finalColor = pieceColorList.get(0);
         //move a student of that color
-        PieceColor finalColor = color;
         assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor));
-
         //again find a color
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
+        PieceColor finalColor2 = pieceColorList.get(1);
         //again move a student of that color
-        PieceColor finalColor2 = color;
         assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor2));
-
-        //again find a color
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        //again move a student of that color
-        PieceColor finalColor3 = color;
+        //again again find a color
+        PieceColor finalColor3 = pieceColorList.get(2);
+        //again again move a student of that color
         assertDoesNotThrow(() -> m.moveStudentToDiningRoom(finalColor3));
 
         //find three more colors from the player's entrance
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        PieceColor finalColor4 = color;
+        PieceColor finalColor4 = pieceColorList.get(3);
 
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        PieceColor finalColor5 = color;
+        PieceColor finalColor5 = pieceColorList.get(4);
 
-        color = null;
-        for(PieceColor c : gameBoard.getEntrance().keySet()) {
-            if(gameBoard.getEntrance().get(c) != 0)
-                color = c;
-        }
-        PieceColor finalColor6 = color;
+        PieceColor finalColor6 = pieceColorList.get(5);
 
         List<PieceColor> list = new ArrayList<>();
         list.add(finalColor4);

@@ -2,11 +2,12 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+/**
+ * abstract class used to model the 12 different cards
+ */
 public abstract class AbstractCharacterCard {
     /**
      * The initial price for the CharacterCard
@@ -28,7 +29,11 @@ public abstract class AbstractCharacterCard {
      */
     private final String description;
 
-    private Character id;
+    /**
+     * id number of the card, unique for each type of card
+     */
+    private final Character id;
+
     /**
      * Constructor for a characterCards
      * @param character Character to create
@@ -78,6 +83,7 @@ public abstract class AbstractCharacterCard {
      * The effect to launch when we use a card
      * @param island references of an Island where we can change something (can be null)
      * @param color a PieceColor to use in the effect (can be null)
+     * @param pieceColorList a list containing students
      */
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList){
         if (!wasUsed)

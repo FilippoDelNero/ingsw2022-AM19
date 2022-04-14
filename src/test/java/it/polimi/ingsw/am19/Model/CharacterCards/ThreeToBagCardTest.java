@@ -45,6 +45,9 @@ class ThreeToBagCardTest {
         match.getGameBoards().get(player1).getDiningRoom().replace(PieceColor.BLUE,4);
         match.getGameBoards().get(player2).getDiningRoom().replace(PieceColor.BLUE,2);
 
+        //remove all students to avoid adding back more than 26 of the same color, this will not happen in a normal match
+        assertDoesNotThrow(() -> match.getBag().removeAll());
+
         AbstractCharacterCard card = new ThreeToBagCard(match);
         card.activateEffect(null,PieceColor.BLUE,null);
         assertEquals(1,match.getGameBoards().get(player1).getDiningRoom().get(PieceColor.BLUE));

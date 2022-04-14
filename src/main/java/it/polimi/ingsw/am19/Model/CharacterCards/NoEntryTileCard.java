@@ -6,10 +6,8 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-
 import java.util.List;
-
-//TODO SE NON RIESCO A METTERE UN DIVIETO PERCHÈ SONO FINITE LE TESSERE DEVO FARLO SAPERE A QUALCUNO?
+import java.util.Map;
 
 /**
  * class representing the Grandmother Card
@@ -46,6 +44,15 @@ public class NoEntryTileCard extends AbstractCharacterCard{
     @Override
     public void initialAction() {
         numberOfNoEntryTiles = 4;
+    }
+
+    /**
+     * not available for this card
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
     }
 
     /**
