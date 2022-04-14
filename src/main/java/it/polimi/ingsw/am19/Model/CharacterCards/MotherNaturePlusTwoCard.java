@@ -7,6 +7,7 @@ import it.polimi.ingsw.am19.Model.MovementStrategies.PlusTwoMovement;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Card to add two more step to MaxNumOfStep in this round
@@ -33,6 +34,15 @@ public class MotherNaturePlusTwoCard extends AbstractCharacterCard{
     @Override
     public void initialAction() {
 
+    }
+
+    /**
+     * Do nothing
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
     }
 
     /**

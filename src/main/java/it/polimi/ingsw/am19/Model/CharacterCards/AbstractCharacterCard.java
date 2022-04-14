@@ -4,6 +4,7 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractCharacterCard {
@@ -66,6 +67,12 @@ public abstract class AbstractCharacterCard {
      * Initial action, to launch after the card withdrawal
      */
     public abstract void initialAction();
+
+    /**
+     * Return the student hosted in the card
+     * @return the map of the students hosted (or null)
+     */
+    public abstract Map<PieceColor,Integer> getStudents();
 
     /**
      * The effect to launch when we use a card
