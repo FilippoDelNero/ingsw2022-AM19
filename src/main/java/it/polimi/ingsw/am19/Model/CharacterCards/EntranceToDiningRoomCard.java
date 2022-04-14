@@ -53,7 +53,7 @@ public class EntranceToDiningRoomCard extends AbstractCharacterCard{
      * next time influence will be calculated on island it will be done using a PlusTwoInfluence strategy
      * @param island should be null, not used
      * @param color should be null, not used
-     * @param pieceColorList should be null, not used
+     * @param pieceColorList the list of student that should be swapped, first the one the one that should go to the dining hall then the other one
      */
     @Override
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
