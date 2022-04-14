@@ -56,5 +56,6 @@ public class NoColorInfluenceCard extends AbstractCharacterCard{
         NoColorInfluence noColorInfluence = new NoColorInfluence();
         noColorInfluence.setColor(color);
         this.islandManager.setInfluenceStrategy(noColorInfluence);
+        active = false;
     }
 }

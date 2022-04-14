@@ -54,5 +54,6 @@ public class MotherNaturePlusTwoCard extends AbstractCharacterCard{
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
         super.activateEffect(island, color, pieceColorList);
         motherNature.setCurrMovementStrategy(new PlusTwoMovement());
+        active = false;
     }
 }

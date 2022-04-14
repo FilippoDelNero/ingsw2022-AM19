@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
+import it.polimi.ingsw.am19.Model.BoardManagement.MotherNature;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
@@ -25,6 +26,8 @@ class MotherNaturePlusTwoCardTest {
         } catch (EmptyBagException e) {
             e.printStackTrace();
         }
+        MotherNature motherNature = MotherNature.getInstance();
+        motherNature.setCurrMovementStrategy(motherNature.getDefaultMovement());
     }
 
     /**
@@ -39,7 +42,7 @@ class MotherNaturePlusTwoCardTest {
         match.addPlayer(player1);
         match.addPlayer(player2);
         match.initializeMatch();
-        match.getMotherNature().setCurrMovementStrategy(new StandardMovement());
+        //match.getMotherNature().setCurrMovementStrategy(new StandardMovement());
 
         assertTrue(match.getMotherNature().getCurrMovementStrategy() instanceof StandardMovement);
         MotherNaturePlusTwoCard card = new MotherNaturePlusTwoCard(match);

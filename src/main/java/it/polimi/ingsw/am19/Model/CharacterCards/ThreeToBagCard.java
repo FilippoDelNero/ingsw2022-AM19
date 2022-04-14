@@ -81,5 +81,6 @@ public class ThreeToBagCard extends AbstractCharacterCard {
                 }
             }
         }
+        active = false;
     }
 }
