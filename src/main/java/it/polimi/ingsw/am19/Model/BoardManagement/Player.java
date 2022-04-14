@@ -218,7 +218,7 @@ public class Player {
     /**
      * Removes the specified amount of coins from the Player's balance
      * @param amount the amount of coins to subtract
-     * @throws InsufficientCoinException when trying to remove more coins then the available ones
+     * @throws InsufficientCoinException when trying to remove more coins than the available ones
      */
     public void removeCoins(int amount) throws InsufficientCoinException {
         int newValue = this.coins - amount;
