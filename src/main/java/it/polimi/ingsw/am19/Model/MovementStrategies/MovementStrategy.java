@@ -1,9 +1,15 @@
 package it.polimi.ingsw.am19.Model.MovementStrategies;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Island;
-
-import java.util.ListIterator;
-
+/**
+ * Interface of the XMovement Strategy
+ * checks the validity of the number of steps the player wants to move motherNature of
+ */
 public interface MovementStrategy {
-    public Island move(int numOfSteps, Island currPosition, ListIterator<Island> islandsIterator);
+    /**
+     * Defines the check to pass before moving motherNature
+     * @param numOfSteps represents the number of steps to take
+     * @param maxNumOfSteps the number of steps permitted by the helper card played
+     * @return true if numOfSteps is lower than the max number of steps permitted by the helper card played
+     */
+    boolean check(int numOfSteps, int maxNumOfSteps);
 }

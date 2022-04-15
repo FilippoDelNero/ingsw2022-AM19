@@ -32,17 +32,8 @@ class PlusTwoMovementTest {
     void testPlusTwoMovement() {
         MovementStrategy movementStrategy = new PlusTwoMovement();
         int steps = 3;
-        ProfessorManager professorManager = new ProfessorManager();
-        IslandManager islandManager = new IslandManager(professorManager);
-        ListIterator<Island> iterator = islandManager.getIterator();
+        int maxSteps = 2;
 
-        Island start = iterator.next();
-        iterator.next();
-        iterator.next();
-        Island end = iterator.next();
-        iterator.next();
-        Island endPlusTwoSteps = iterator.next();
-
-        assertSame(endPlusTwoSteps, movementStrategy.move(steps,start,iterator));
+        assertTrue(movementStrategy.check(steps, maxSteps));
     }
 }

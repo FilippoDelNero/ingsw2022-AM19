@@ -246,10 +246,7 @@ public abstract class AbstractMatch extends Observable implements Match {
      */
     public void moveMotherNature(int steps) throws IllegalNumOfStepsException {
         int maxNumOfSteps = currPlayer.getCurrentCard().getMaxNumOfSteps();
-        if(steps > maxNumOfSteps)
-            throw new IllegalNumOfStepsException("Trying to move MotherNature further than what's allowed which is" + maxNumOfSteps);
-        else
-            motherNature.move(steps);
+        motherNature.move(steps, maxNumOfSteps);
     }
 
     /**
