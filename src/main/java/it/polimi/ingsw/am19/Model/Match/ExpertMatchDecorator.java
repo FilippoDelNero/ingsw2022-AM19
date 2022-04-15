@@ -74,7 +74,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
     }
 
     /**
-     * Calls the initializeMatch() of the wrapped AbstractMatch and draws 3 CharacterCards, activating their initial action. It also supplies the Players with a coin
+     * Calls the initializeMatch() of the wrapped AbstractMatch and draws 3 CharacterCards, activating their initial action. It also supplies each Player with CoinManager and a coin
      */
     @Override
     public void initializeMatch(){
@@ -107,10 +107,18 @@ public class ExpertMatchDecorator extends MatchDecorator{
         card.activateEffect(island,color,extraColors);
     }
 
+    /**
+     * Returns the list of the available CharacterCards
+     * @return the list of the available CharacterCards
+     */
     public List<AbstractCharacterCard> getCharacterCards() {
         return characterCards;
     }
 
+    /**
+     * Returns the CoinManager
+     * @return the CoinManager
+     */
     public CoinManager getCoinManager() {
         return coinManager;
     }

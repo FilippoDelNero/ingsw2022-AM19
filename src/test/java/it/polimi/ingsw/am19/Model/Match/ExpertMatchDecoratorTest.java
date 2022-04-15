@@ -12,10 +12,11 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for ExpertMatchDecorator
+ */
 public class ExpertMatchDecoratorTest {
     @BeforeEach
     void removeAllFromBag(){
@@ -29,6 +30,9 @@ public class ExpertMatchDecoratorTest {
         motherNature.setCurrMovementStrategy(motherNature.getDefaultMovement());
     }
 
+    /**
+     * Tests the process of wrapping an AbstractMatch, adding some expert features to it
+     */
     @Test
     public void createExpertMatch(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
@@ -39,6 +43,9 @@ public class ExpertMatchDecoratorTest {
         assertEquals(12,decorator.getCharacterCards().size());
     }
 
+    /**
+     * Tests adding a student to an expert match
+     */
     @Test
     public void addExpertPlayer(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
@@ -53,6 +60,9 @@ public class ExpertMatchDecoratorTest {
         assertEquals(p2,decorator.getPlanningPhaseOrder().get(1));
     }
 
+    /**
+     * Tests the additional initializations required by an expert match: adding coins to players and drawing some CharacterCards
+     */
     @Test
     public void testInitializeMatch(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
@@ -79,6 +89,9 @@ public class ExpertMatchDecoratorTest {
         assertNotEquals(c2, c3);
     }
 
+    /**
+     * Tests trying to make the current player play a card he can afford
+     */
     @Test
     public void testPlayAffordableCard(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
@@ -205,6 +218,9 @@ public class ExpertMatchDecoratorTest {
         assertEquals(1,p1.getCoins());
     }
 
+    /**
+     * Tests trying to make the current player play a card he cannot afford
+     */
     @Test
     public void testPlayNotAffordableCard(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();

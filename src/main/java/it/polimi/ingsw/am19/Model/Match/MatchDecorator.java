@@ -34,6 +34,10 @@ public class MatchDecorator implements Match{
         wrappedMatch.initializeMatch();
     }
 
+    /**
+     * Adds a player to the wrapped AbstractMatch
+     * @param player represents the Player to add
+     */
     @Override
     public void addPlayer(Player player) {
         wrappedMatch.addPlayer(player);
@@ -118,86 +122,155 @@ public class MatchDecorator implements Match{
         wrappedMatch.moveStudentToDiningRoom(color);
     }
 
+    /**
+     * Removes all the HelperCards from the List of the already used ones in the previous turn
+     */
     @Override
     public void resetAlreadyPlayedCards() {
         wrappedMatch.resetAlreadyPlayedCards();
     }
 
+    /**
+     * Sets the color's tower for a player of the wrapped AbstractMatch
+     * @param towerColor the color chosen by a player
+     * @param player the player choosing said color
+     */
     @Override
     public void setTowerColors(TowerColor towerColor, Player player) {
         wrappedMatch.setTowerColors(towerColor,player);
     }
 
+    /**
+     * SetA the wizard family for a player of the wrapped AbstractMatch
+     * @param wizardFamily the wizard chosen by a player
+     * @param player the player choosing said wizard
+     */
     @Override
     public void setWizardFamily(WizardFamily wizardFamily, Player player) {
         wrappedMatch.setWizardFamily(wizardFamily,player);
     }
 
+    /**
+     * Setter for the wrapped AbstractMatch's alreadyPlayedCards attribute
+     * @param alreadyPlayedCards a list containing the helper cards played during the current turn
+     */
     @Override
     public void setAlreadyPlayedCards(List<HelperCard> alreadyPlayedCards) {
         wrappedMatch.setAlreadyPlayedCards(alreadyPlayedCards);
     }
 
+    /**
+     * Getter for the number of players of the wrapped AbstractMatch
+     * @return the number of player currently playing
+     */
     @Override
     public int getNumOfPlayers() {
         return wrappedMatch.getNumOfPlayers();
     }
 
+    /**
+     * getter for planningPhaseOrder
+     * @return the players in the order in which they'll play the next planning phase
+     */
     @Override
     public List<Player> getPlanningPhaseOrder() {
         return wrappedMatch.getPlanningPhaseOrder();
     }
 
+    /**
+     * getter for wrapped AbstractMatch's actionPhaseOrder
+     * @return the players in the order in which they'll play the next action phase
+     */
     @Override
     public List<Player> getActionPhaseOrder() {
         return wrappedMatch.getActionPhaseOrder();
     }
 
+    /**
+     * getter for wrapped AbstractMatch's gameBoards attribute
+     * @return a map that link each player to its game-board
+     */
     @Override
     public Map<Player, GameBoard> getGameBoards() {
         return wrappedMatch.getGameBoards();
     }
 
+    /**
+     * getter for wrapped AbstractMatch's the clouds attribute
+     * @return the list containing all the clouds in the game
+     */
     @Override
     public List<Cloud> getClouds() {
         return wrappedMatch.getClouds();
     }
 
+    /**
+     * getter for wrapped AbstractMatch's the islandManager attribute
+     * @return a reference to the islandManager
+     */
     @Override
     public IslandManager getIslandManager() {
         return wrappedMatch.getIslandManager();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's bag attribute
+     * @return a reference to the bag
+     */
     @Override
     public Bag getBag() {
         return wrappedMatch.getBag();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's MotherNature attribute
+     * @return a reference to the motherNature
+     */
     @Override
     public MotherNature getMotherNature() {
         return wrappedMatch.getMotherNature();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's professorManager attribute
+     * @return a reference to the professorManager
+     */
     @Override
     public ProfessorManager getProfessorManager() {
         return wrappedMatch.getProfessorManager();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's wizardFamilies attribute
+     * @return a list containing the remaining wizard families in the game
+     */
     @Override
     public List<WizardFamily> getWizardFamilies() {
         return wrappedMatch.getWizardFamilies();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's towerColors attribute
+     * @return a list containing the remaining tower's colors in the game
+     */
     @Override
     public List<TowerColor> getTowerColors() {
         return wrappedMatch.getTowerColors();
     }
 
+    /**
+     * getter for the wrapped AbstractMatch's alreadyPlayedCards attribute
+     * @return the list containing the cards played in a given turn
+     */
     @Override
     public List<HelperCard> getAlreadyPlayedCards() {
         return wrappedMatch.getAlreadyPlayedCards();
     }
 
+    /**
+     * Returns a reference to the wrapped AbstractMatch
+     * @return a reference to the wrapped AbstractMatch
+     */
     public AbstractMatch getWrappedMatch() {
         return wrappedMatch;
     }
