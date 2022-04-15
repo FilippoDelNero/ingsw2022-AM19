@@ -138,7 +138,7 @@ public class ProfessorManager {
     }
 
     /**
-     * check if we are still in the same turn as when a given event happend
+     * check if we are still in the same turn as when a given event happened
      * @return true if we are in the same turn, false otherwise
      */
     private boolean isNewTurn(Player player) {

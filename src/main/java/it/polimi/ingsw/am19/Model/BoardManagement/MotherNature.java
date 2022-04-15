@@ -124,14 +124,29 @@ public class MotherNature {
      * @param numOfSteps represents the number of steps that MotherNature has to do to reach a final destination
      * @throws IllegalNumOfStepsException when passing an illegal number of steps
      */
-    public void move(int numOfSteps) throws IllegalNumOfStepsException {
-        if (numOfSteps <= 0)
+    public void move(int numOfSteps, int maxNumOfSteps) throws IllegalNumOfStepsException {
+        if ( !(numOfSteps > 0 && currMovementStrategy.check(numOfSteps, maxNumOfSteps)) )
             throw new IllegalNumOfStepsException("Trying to make MotherNature move an illegal number of steps. Number of steps passed:" + numOfSteps, numOfSteps);
 
         ListIterator<Island> islandsIterator = islandManager.getIterator();
-        Island finalPosition = currMovementStrategy.move(numOfSteps, this.currPosition, islandsIterator);
+        Island island = islandsIterator.next();
+
+        while(island != currPosition){
+            island = islandsIterator.next();
+        }
+
+        island.setPresenceOfMotherNature(false);
+        Island finalPosition = currPosition;
+
+        for(int s = 0; s < numOfSteps; s++) {
+            finalPosition = islandsIterator.next();
+        }
+
+        finalPosition.setPresenceOfMotherNature(true);
         this.currPosition = finalPosition;
+
         islandManager.calculateInfluence(finalPosition);
+
         setCurrMovementStrategy(defaultMovement);
     }
 

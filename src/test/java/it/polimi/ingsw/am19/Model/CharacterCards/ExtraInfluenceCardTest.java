@@ -45,6 +45,8 @@ class ExtraInfluenceCardTest {
         //--GIVE PLAYER1 A PROFESSOR PART--
         //finding the color of the student on island
         int islandIndex = m.getIslandManager().getIslands().lastIndexOf(m.getMotherNature().getCurrPosition()) + 1;
+        if(islandIndex > 12)
+            islandIndex = 1;
         Map<PieceColor, Integer> map = m.getIslandManager().getIslands().get(islandIndex).getNumOfStudents();
         PieceColor color = null;
         GameBoard gb1 = m.getGameBoards().get(player1);

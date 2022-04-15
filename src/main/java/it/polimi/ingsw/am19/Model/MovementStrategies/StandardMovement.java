@@ -1,33 +1,18 @@
 package it.polimi.ingsw.am19.Model.MovementStrategies;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Island;
-
-import java.util.ListIterator;
-
 /**
  * Class for managing the StandardMovement Strategy
+ * checks the validity of the number of steps the player wants to move motherNature of
  */
 public class StandardMovement implements MovementStrategy{
-    /**Defines the Strategy used for moving steps
+    /**
+     * Defines the check to pass before moving motherNature
      * @param numOfSteps represents the number of steps to take
-     * @param currPosition represents MotherNature current position
-     * @param islandsIterator represents an iterator for navigating the archipelago of Islands
-     * @return the final position reached at the end of the movement
+     * @param maxNumOfSteps the number of steps permitted by the helper card played
+     * @return true if numOfSteps is lower than the max number of steps permitted by the helper card played
      */
     @Override
-    public Island move(int numOfSteps, Island currPosition, ListIterator<Island> islandsIterator) {
-        Island island = islandsIterator.next();
-
-        while(island != currPosition){
-            island = islandsIterator.next();
-        }
-
-        island.setPresenceOfMotherNature(false);
-        Island finalPosition = null;
-        for(int steps = 0; steps < numOfSteps; steps++)
-            finalPosition = islandsIterator.next();
-
-        finalPosition.setPresenceOfMotherNature(true);
-        return finalPosition;
+    public boolean check(int numOfSteps, int maxNumOfSteps) {
+        return numOfSteps <= (maxNumOfSteps);
     }
 }

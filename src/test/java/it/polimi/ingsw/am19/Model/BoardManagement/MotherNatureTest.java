@@ -1,8 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.ChangeIfEqualCheckProfessor;
-import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.CheckProfessorStrategy;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
@@ -14,9 +11,9 @@ import it.polimi.ingsw.am19.Model.MovementStrategies.StandardMovement;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
@@ -33,6 +30,16 @@ class MotherNatureTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * reset the strategy of motherNature at end of this test class
+     */
+    @AfterAll
+    static void resetMNStrategy() {
+        MotherNature motherNature = MotherNature.getInstance();
+        motherNature.setCurrMovementStrategy(motherNature.getDefaultMovement());
+    }
+
     /**
      * Tests the impossibility of generating multiple MotherNature instances
      */
@@ -112,7 +119,7 @@ class MotherNatureTest {
 
         //Trying to move zero steps
         assertThrows(IllegalNumOfStepsException.class,
-                () -> motherNature.move(0));
+                () -> motherNature.move(0, 3));
 
         //MotherNature did not move from its initial position
         assertTrue(islandManager.getIslands().get(0).isMotherNaturePresent());
@@ -143,7 +150,7 @@ class MotherNatureTest {
 
         //Trying to move counter clockwise
         assertThrows(IllegalNumOfStepsException.class,
-                () -> motherNature.move(-3));
+                () -> motherNature.move(-3, 3));
 
         //MotherNature did not move from its initial position
         assertTrue(islandManager.getIslands().get(0).isMotherNaturePresent());
@@ -164,7 +171,6 @@ class MotherNatureTest {
 
         //--PROFESSOR MANAGER PART--
         Map<Player, GameBoard> GB = new HashMap<>();
-        CheckProfessorStrategy strategy = new ChangeIfEqualCheckProfessor();
         //create 3 players
         Player player1 = new Player("Phil", TowerColor.BLACK, WizardFamily.SHAMAN);
         Player player2 = new Player("Dennis", TowerColor.WHITE, WizardFamily.KING);
@@ -217,7 +223,7 @@ class MotherNatureTest {
 
         try {
             //Making MotherNature move 3 steps
-            motherNature.move(3);
+            motherNature.move(3, 5);
         } catch (IllegalNumOfStepsException e) {
             e.printStackTrace();
         }

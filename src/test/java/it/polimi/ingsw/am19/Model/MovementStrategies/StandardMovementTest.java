@@ -32,15 +32,7 @@ class StandardMovementTest {
     void testStandardMovement() {
         MovementStrategy movementStrategy = new StandardMovement();
         int steps = 3;
-        ProfessorManager professorManager = new ProfessorManager();
-        IslandManager islandManager = new IslandManager(professorManager);
-        ListIterator<Island> iterator = islandManager.getIterator();
-
-        Island start = iterator.next();
-        iterator.next();
-        iterator.next();
-        Island end = iterator.next();
-
-        assertSame(end, movementStrategy.move(steps,start,iterator));
+        int maxSteps = 5;
+        assertTrue(movementStrategy.check(steps, maxSteps));
     }
 }
