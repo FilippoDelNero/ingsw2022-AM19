@@ -38,9 +38,10 @@ public class Bag {
     }
 
     private boolean isEmpty(){
+        boolean isEmpty = false;
 
         for (PieceColor color: numOfStudents.keySet()){
-            boolean isEmpty = numOfStudents.get(color) == 0;
+            isEmpty = numOfStudents.get(color) == 0;
 
             if (!isEmpty)
                 return false;
@@ -83,10 +84,11 @@ public class Bag {
         for (PieceColor color: weightsByColor.keySet()){
             currentProb += weightsByColor.get(color);
             if (sortedProb < currentProb){
-                return color;
+                chosenColor = color;
+                return chosenColor;
             }
         }
-        return chosenColor;
+     return chosenColor;
     }
 
     /**

@@ -37,7 +37,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
         this.characterCards.add(new MotherNaturePlusTwoCard(wrappedMatch));
         this.characterCards.add(new NoEntryTileCard(wrappedMatch));
         this.characterCards.add(new NoTowersInfluenceCard(wrappedMatch));
-        this.characterCards.add(new ThreeStudentsToEntryCard(wrappedMatch));
+        this.characterCards.add(new ThreeStudentToEntryCard(wrappedMatch));
         this.characterCards.add(new PlusTwoInfluenceCard(wrappedMatch));
         this.characterCards.add(new NoColorInfluenceCard(wrappedMatch));
         this.characterCards.add(new StudentToHallCard(wrappedMatch));
@@ -93,10 +93,10 @@ public class ExpertMatchDecorator extends MatchDecorator{
      * @param card is the CharacterCard to be played
      * @param color is the PieceColor needed by the card to activate its effect. It is null if not needed
      * @param island is the Island needed by the card to activate its effect. It is null if not needed
-     * @throws InsufficientCoinException
+     * @throws InsufficientCoinException when trying to make the current player spend more coins than possessed
      */
     //TODO rivedere come richiedere parametri della activateEffect()
-    public void playCard(AbstractCharacterCard card,PieceColor color,Island island) throws InsufficientCoinException {
+    public void playCard(AbstractCharacterCard card,PieceColor color,Island island, List<PieceColor> extraColors) throws InsufficientCoinException {
         Player currPlayer = wrappedMatch.getCurrPlayer();
         int cardPrice = card.getPrice();
         try {
@@ -104,8 +104,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
         } catch (InsufficientCoinException e) {
             throw new InsufficientCoinException(e.getMessage(),e.getCause());
         }
-        currPlayer.removeCoins(cardPrice);
-        card.activateEffect(island,color);
+        card.activateEffect(island,color,extraColors);
     }
 
     public List<AbstractCharacterCard> getCharacterCards() {

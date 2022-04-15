@@ -8,6 +8,7 @@ import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Character Card for setting a NoColorInfluence strategy for the next calculateInfluence
@@ -36,6 +37,15 @@ public class NoColorInfluenceCard extends AbstractCharacterCard{
     }
 
     /**
+     * Do nothing
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
+    }
+
+    /**
      * Set NoColorInfluence to the IslandManager
      * @param island is never used
      * @param color color to not consider in calculate influence
@@ -46,5 +56,6 @@ public class NoColorInfluenceCard extends AbstractCharacterCard{
         NoColorInfluence noColorInfluence = new NoColorInfluence();
         noColorInfluence.setColor(color);
         this.islandManager.setInfluenceStrategy(noColorInfluence);
+        active = false;
     }
 }

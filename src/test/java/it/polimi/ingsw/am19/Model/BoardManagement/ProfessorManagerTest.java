@@ -27,6 +27,10 @@ class ProfessorManagerTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * test the correct assignment of the gameboards map to the professorManager
+     */
     @Test
     void setGameboards() {
         ProfessorManager manager = new ProfessorManager();
@@ -43,6 +47,9 @@ class ProfessorManagerTest {
         manager.setGameboards(GB);
     }
 
+    /**
+     * test to asses if the checkProfessor method is working properly with both th standard and the special strategy
+     */
     @Test
     void checkProfessor() {
         ProfessorManager manager = new ProfessorManager();
@@ -62,6 +69,8 @@ class ProfessorManagerTest {
         GB.put(player3, gameBoard3);
         //set the Gameboards attribute inside the professor manager
         manager.setGameboards(GB);
+        manager.setWhoUsedTheCard(1);
+        assertDoesNotThrow(() -> player1.useHelperCard(player1.getHelperDeck().get(0)));
 
         assertDoesNotThrow(() -> gameBoard1.addStudent(PieceColor.RED));
         assertDoesNotThrow(() -> gameBoard1.moveStudentToDiningRoom(PieceColor.RED));

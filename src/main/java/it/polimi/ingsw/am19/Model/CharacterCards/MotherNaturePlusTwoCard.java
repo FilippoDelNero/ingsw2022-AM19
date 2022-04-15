@@ -7,6 +7,7 @@ import it.polimi.ingsw.am19.Model.MovementStrategies.PlusTwoMovement;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Card to add two more step to MaxNumOfStep in this round
@@ -36,6 +37,15 @@ public class MotherNaturePlusTwoCard extends AbstractCharacterCard{
     }
 
     /**
+     * Do nothing
+     * @return null
+     */
+    @Override
+    public Map<PieceColor, Integer> getStudents() {
+        return null;
+    }
+
+    /**
      * Change the current strategy to MotherNature
      * @param island not used in this card
      * @param color not used in this card
@@ -44,5 +54,6 @@ public class MotherNaturePlusTwoCard extends AbstractCharacterCard{
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
         super.activateEffect(island, color, pieceColorList);
         motherNature.setCurrMovementStrategy(new PlusTwoMovement());
+        active = false;
     }
 }

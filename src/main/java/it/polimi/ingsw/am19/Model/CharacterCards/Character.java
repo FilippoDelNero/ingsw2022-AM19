@@ -8,7 +8,7 @@ public enum Character {
     CONTADINO(2, "Durante questo turno, prendi il controllo dei Professori anche se nella tua sala hai lo stesso numero di Studenti del giocatore che li controlla in quel momento"),
     ARALDO(3,"Scegli un'isola e calcola la maggioranza come se Madre Natura avesse terminato il suo movimento lì. In questo turno Madre Natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata"),
     POSTINO_MAGICO(1,"Puoi muovere Madre Natura fino a 2 Isole addizionali rispetto a quanto indicato sulla carta Assistente che hai giocato."),
-    NONNA_ERBE(2,"Piazza una tessera Divieto su un'Isola a tua scelta. La prima volta che Madre Natura termina il suo movimento li, rimettete la tessera Divieto sulla carta SENZA calcolare l'influenza su quell'Isola né piazzare Torri."),
+    NONNA_ERBE(2,"Piazza una tessera Divieto su un'Isola a tua scelta. La prima volta che Madre Natura termina il suo movimento lì, rimettete la tessera Divieto sulla carta SENZA calcolare l'influenza su quell'Isola né piazzare Torri."),
     CENTAURO(3,"Durante il conteggio dell'influenza su un'isola (o su un gruppo di Isole), le Torri presenti non vengono calcolate."),
     GIULLARE(1,"Puoi prendere fino a 3 Studenti da questa carta e scambiarli con altrettanti Studenti presenti nel tuo Ingresso."),
     CAVALIERE(2,"In questo turno, durante il calcolo dell'influenza hai 2 punti di influenza addizionali."),

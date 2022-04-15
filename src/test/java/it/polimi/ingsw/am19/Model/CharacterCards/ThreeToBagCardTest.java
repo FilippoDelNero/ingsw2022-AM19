@@ -3,8 +3,6 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
-import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoColorInfluence;
-import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -16,7 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NoColorInfluenceCardTest {
+/**
+ * Test the ThreeToBagCard
+ */
+class ThreeToBagCardTest {
 
     @BeforeEach
     void removeAllFromBag(){
@@ -29,10 +30,10 @@ class NoColorInfluenceCardTest {
     }
 
     /**
-     * Testing NoColorInfluenceCard effect
+     * Check the correct functioning of the card's effect
      */
     @Test
-    @DisplayName("Testing NoColorInfluenceCard")
+    @DisplayName("Testing ThreeToBagCard")
     void activateEffect() {
         AbstractMatch match = new TwoPlayersMatch();
         Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
@@ -41,25 +42,15 @@ class NoColorInfluenceCardTest {
         match.addPlayer(player2);
         match.initializeMatch();
 
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof StandardInfluence);
-        NoColorInfluenceCard card = new NoColorInfluenceCard(match);
-        card.activateEffect(null, PieceColor.BLUE,null);
-        assertTrue(match.getIslandManager().getInfluenceStrategy() instanceof NoColorInfluence);
-    }
+        match.getGameBoards().get(player1).getDiningRoom().replace(PieceColor.BLUE,4);
+        match.getGameBoards().get(player2).getDiningRoom().replace(PieceColor.BLUE,2);
 
-    @Test
-    void equals() {
-        AbstractMatch match = new TwoPlayersMatch();
-        Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
-        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
-        match.addPlayer(player1);
-        match.addPlayer(player2);
-        match.initializeMatch();
+        //remove all students to avoid adding back more than 26 of the same color, this will not happen in a normal match
+        assertDoesNotThrow(() -> match.getBag().removeAll());
 
-        AbstractCharacterCard card = new NoColorInfluenceCard(match);
-        AbstractCharacterCard card1 = new MotherNaturePlusTwoCard(match);
-        assertNotEquals(card, card1);
-        AbstractCharacterCard card2 = new NoColorInfluenceCard(match);
-        assertEquals(card2, card);
+        AbstractCharacterCard card = new ThreeToBagCard(match);
+        card.activateEffect(null,PieceColor.BLUE,null);
+        assertEquals(1,match.getGameBoards().get(player1).getDiningRoom().get(PieceColor.BLUE));
+        assertEquals(1,match.getGameBoards().get(player1).getDiningRoom().get(PieceColor.BLUE));
     }
 }

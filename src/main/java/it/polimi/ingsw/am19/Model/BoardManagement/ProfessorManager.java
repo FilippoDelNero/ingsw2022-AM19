@@ -23,12 +23,24 @@ public class ProfessorManager {
     private CheckProfessorStrategy currentStrategy;
 
     /**
+     * the default strategy used by the professor manager to check the ownership of a professor
+     */
+    private final CheckProfessorStrategy defaultStrategy;
+
+    /**
+     * the value of the nextRoundOrder of the card played by the first player
+     * this value is used to determine if we are in a new turn or not
+     */
+    private int whoUsedTheCard;
+
+    /**
      * constructs a new, empty ProfessorManager entity
      */
     public ProfessorManager() {
         professors = new HashMap<>();
         gameboards = new HashMap<>();
-        currentStrategy = new StandardCheckProfessor();
+        defaultStrategy = new StandardCheckProfessor();
+        currentStrategy = defaultStrategy;
     }
 
     /**
@@ -73,12 +85,21 @@ public class ProfessorManager {
     }
 
     /**
+     * setter for the whoUsedTheCard attribute
+     * @param value the value of the card played by the first player in a given turn
+     */
+    public void setWhoUsedTheCard(int value) {
+        whoUsedTheCard = value;
+    }
+
+    /**
      * check if a professor is still owned by a player
      * it will be called by the gameBoard after moving students from entrance to dining hall
      * @param color the color of the student added to the dining hall
      * @param player the player that has moved the student
      */
     public void checkProfessor(PieceColor color, Player player) {
+        changeStrategyIfNeeded(player);
         if(professors.get(color) == null) {
             updateProfessor(color, player);
         }
@@ -107,5 +128,23 @@ public class ProfessorManager {
     private void updateProfessor(PieceColor color, Player player) {
         professors.put(color, player);
     }
+
+    /**
+     * checks if a different strategy was set, then checks if we are still in the same turn, if not it changes it back to default
+     */
+    private void changeStrategyIfNeeded(Player player) {
+        if(currentStrategy != defaultStrategy && isNewTurn(player))
+            setCurrentStrategy(defaultStrategy);
+    }
+
+    /**
+     * check if we are still in the same turn as when a given event happend
+     * @return true if we are in the same turn, false otherwise
+     */
+    private boolean isNewTurn(Player player) {
+        int currentCardUsed = player.getCurrentCard().getNextRoundOrder();
+        return currentCardUsed != whoUsedTheCard;
+    }
+
 
 }
