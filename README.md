@@ -20,13 +20,15 @@
 | Functionality               |State                                        |
 |:----------------------------|:-------------------------------------------:|
 | Basic rules                 | 🟢 |
-| Complete rules              | 🟡 |
-| Communication Protocol      | 🔴 |
+| Complete rules              | 🟢 |
+| Communication Protocol      | 🟡 |
 | GUI                         | 🔴 |
 | CLI                         | 🔴 |
-| Advanced functionalities    | 🔴 |
+| AF 1: Character cards       | 🟢 |
+| AF 2: -                     | 🔴 |
+| AF 3: -                     | 🔴 |
 
 
-🔴
-🟢
-🟡
+🔴 Uninitiated
+🟢 Completed
+🟡 Work in progress
