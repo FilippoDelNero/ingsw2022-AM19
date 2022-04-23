@@ -4,6 +4,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -35,7 +37,7 @@ public class EntranceToDiningRoomCardTest {
      * testing the activateEffect method
      */
     @Test
-    void testActivateEffect() {
+    void testActivateEffect() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch m = new TwoPlayersMatch();
         AbstractCharacterCard card = new EntranceToDiningRoomCard(m);
 
@@ -104,7 +106,7 @@ public class EntranceToDiningRoomCardTest {
      * testing the activateEffect method, trying to swap three student instead of the permitted two
      */
     @Test
-    void initialActionTooManyTimes() {
+    void initialActionTooManyTimes() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch m = new TwoPlayersMatch();
         AbstractCharacterCard card = new EntranceToDiningRoomCard(m);
 
@@ -172,12 +174,48 @@ public class EntranceToDiningRoomCardTest {
 
         card.activateEffect(null, null, list);
 
+        //TODO controllare che l'ultimo scambio non sia avvenuto (assert equal prima e dopo effetto)
         assertEquals(3, gameBoard.getDiningRoomNumOfStud());
         assertTrue(gameBoard.getDiningRoom().get(finalColor4) > 0);
         assertTrue(gameBoard.getDiningRoom().get(finalColor5) > 0);
-        assertTrue(gameBoard.getDiningRoom().get(finalColor6) > 0);
         assertTrue(gameBoard.getEntrance().get(finalColor) > 0);
         assertTrue(gameBoard.getEntrance().get(finalColor2) > 0);
-        assertTrue(gameBoard.getEntrance().get(finalColor3) > 0);
+    }
+
+    @Test
+    void checkParameter(){
+        AbstractMatch match = new TwoPlayersMatch();
+        Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
+        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
+        match.addPlayer(player1);
+        match.addPlayer(player2);
+        match.initializeMatch();
+        match.setCurrPlayer(player1);
+
+        AbstractCharacterCard card = new EntranceToDiningRoomCard(match);
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.BLUE,0);
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.RED,1);
+        match.getGameBoards().get(player1).getDiningRoom().replace(PieceColor.BLUE,1);
+
+        //check an error pieceColorList
+        ArrayList<PieceColor> errorList = new ArrayList<>();
+        errorList.add(PieceColor.BLUE);
+        errorList.add(PieceColor.YELLOW);
+        assertThrows(NoSuchColorException.class,()->card.activateEffect(null,null,errorList));
+
+        // check a right PieceColorList
+        ArrayList<PieceColor> rightList = new ArrayList<>();
+        rightList.add(PieceColor.RED);
+        rightList.add(PieceColor.BLUE);
+        assertDoesNotThrow(()->card.activateEffect(null,null,rightList));
+
+        //check the TooMany student exception
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.BLUE,1);
+        match.getGameBoards().get(player1).getDiningRoom().replace(PieceColor.BLUE,10);
+        match.getGameBoards().get(player1).getDiningRoom().replace(PieceColor.YELLOW,1);
+        ArrayList<PieceColor> errorList2 = new ArrayList<>();
+        errorList2.add(PieceColor.BLUE);
+        errorList2.add(PieceColor.YELLOW);
+        assertThrows(TooManyStudentsException.class,()->card.activateEffect(null,null,errorList2));
     }
 }

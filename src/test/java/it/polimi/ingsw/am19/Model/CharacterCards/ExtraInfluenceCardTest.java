@@ -4,6 +4,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -32,7 +34,7 @@ class ExtraInfluenceCardTest {
      * testing the activateEffect method
      */
     @Test
-    void activateEffectTest() {
+    void activateEffectTest() throws NoSuchColorException, TooManyStudentsException {
 
         //--MATCH PART--
         AbstractMatch m = new TwoPlayersMatch();

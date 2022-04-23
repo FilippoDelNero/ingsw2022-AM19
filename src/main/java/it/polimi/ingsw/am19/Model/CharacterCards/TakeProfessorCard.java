@@ -3,6 +3,8 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.ChangeIfEqualCheckProfessor;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.Match;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -63,7 +65,7 @@ public class TakeProfessorCard extends AbstractCharacterCard{
      * @param pieceColorList should be null, not used
      */
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
         professorManager.setWhoUsedTheCard(m.getCurrPlayer().getCurrentCard().getNextRoundOrder());
         this.professorManager.setCurrentStrategy(strategy);

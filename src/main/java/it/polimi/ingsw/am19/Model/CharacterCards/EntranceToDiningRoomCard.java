@@ -9,6 +9,8 @@ import it.polimi.ingsw.am19.Model.InternalMoveStrategy.ReverseMove;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,13 +68,32 @@ public class EntranceToDiningRoomCard extends AbstractCharacterCard{
      * @param pieceColorList the list of student that should be swapped, first the one that should go to the dining hall then the other one
      */
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
 
         Player currPlayer = m.getCurrPlayer();
         GameBoard currGameBoard = m.getGameBoards().get(currPlayer);
 
-        for(int i = 0; i < pieceColorList.size() || i < 4; i += 2) {
+        // check the presence of the color
+        HashMap<PieceColor,Integer> studentInEntrance = new HashMap<>();
+        HashMap<PieceColor,Integer> studentInDining = new HashMap<>();
+        for(PieceColor color1: PieceColor.values()){
+            studentInDining.put(color1,0);
+            studentInEntrance.put(color1,0);
+        }
+        for(int i=0;i<pieceColorList.size()/2 && i<2 ;i++){
+            studentInEntrance.put(pieceColorList.get(2*i), studentInEntrance.get(pieceColorList.get(2*i))+1);
+            studentInDining.put(pieceColorList.get(2*i+1), studentInDining.get(pieceColorList.get(2*i+1))+1);
+        }
+        for(PieceColor color1: PieceColor.values()){
+            if(studentInEntrance.get(color1) > currGameBoard.getEntrance().get(color1) || studentInDining.get(color1) > currGameBoard.getDiningRoom().get(color1))
+                throw new NoSuchColorException("You don't have the " + color1 +" in your entry or dining room");
+            int newValue = currGameBoard.getDiningRoom().get(color1) + studentInEntrance.get(color1);
+            if(newValue>10)
+                throw new TooManyStudentsException("You can't add a " + color1 + " student to your dining room");
+        }
+
+        for(int i = 0; i < pieceColorList.size() && i < 4; i += 2) {
             try {
                 currGameBoard.moveStudentToDiningRoom(pieceColorList.get(i));
             } catch (NoSuchColorException | TooManyStudentsException e) {

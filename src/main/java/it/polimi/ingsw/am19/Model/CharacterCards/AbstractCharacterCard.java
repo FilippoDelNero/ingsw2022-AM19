@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +87,7 @@ public abstract class AbstractCharacterCard {
      * @param color a PieceColor to use in the effect (can be null)
      * @param pieceColorList a list containing students
      */
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList){
+    public void activateEffect (Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         if (!wasUsed)
             this.wasUsed=true;
         this.active = true;

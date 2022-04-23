@@ -136,18 +136,23 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
      * @param pieceColorList null in this case
      */
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
         this.currentPlayer = match.getCurrPlayer();
         this.gameboard = match.getGameBoards().get(currentPlayer);
-        try {
-            removeStudent(color);
-        } catch (NoSuchColorException e) {
-            e.printStackTrace();
-        }
+
+        //check parameter
+        if (students.get(color)==0)
+            throw new NoSuchColorException("No "+ color + " student present on the card");
+
+        // check if there's a free slot of this color in the dining room
         int oldValue = gameboard.getDiningRoom().get(color);
-        if (oldValue<=9)
-            gameboard.getDiningRoom().replace(color,oldValue+1);
+        if(oldValue==10)
+            throw new TooManyStudentsException("You cannot add a " + color + "student. You already have 10 " + color + " students in your hall");
+
+        removeStudent(color);
+        gameboard.getDiningRoom().replace(color,oldValue+1);
+
         try {
             addStudent(bag.drawStudent());
         } catch (TooManyStudentsException | EmptyBagException e) {

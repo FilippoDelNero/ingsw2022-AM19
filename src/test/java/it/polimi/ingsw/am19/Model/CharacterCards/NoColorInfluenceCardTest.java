@@ -3,6 +3,8 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoColorInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
@@ -33,7 +35,7 @@ class NoColorInfluenceCardTest {
      */
     @Test
     @DisplayName("Testing NoColorInfluenceCard")
-    void activateEffect() {
+    void activateEffect() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch match = new TwoPlayersMatch();
         Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);

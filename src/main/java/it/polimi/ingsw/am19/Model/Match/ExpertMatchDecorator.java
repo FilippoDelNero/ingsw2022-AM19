@@ -8,6 +8,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.CharacterCards.*;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -96,7 +98,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
      * @throws InsufficientCoinException when trying to make the current player spend more coins than possessed
      */
     //TODO rivedere come richiedere parametri della activateEffect()
-    public void playCard(AbstractCharacterCard card,PieceColor color,Island island, List<PieceColor> extraColors) throws InsufficientCoinException {
+    public void playCard(AbstractCharacterCard card,PieceColor color,Island island, List<PieceColor> extraColors) throws InsufficientCoinException, NoSuchColorException, TooManyStudentsException {
         Player currPlayer = wrappedMatch.getCurrPlayer();
         int cardPrice = card.getPrice();
         try {
@@ -104,6 +106,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
         } catch (InsufficientCoinException e) {
             throw new InsufficientCoinException(e.getMessage(),e.getCause());
         }
+        //TODO try catch, se lancio eccezione, rimborso player
         card.activateEffect(island,color,extraColors);
     }
 

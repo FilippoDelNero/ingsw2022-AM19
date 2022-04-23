@@ -5,6 +5,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
@@ -60,7 +62,7 @@ public class ThreeToBagCard extends AbstractCharacterCard {
      * @param pieceColorList null in this card
      */
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
         for(Player p: gameBoards.keySet()){
             int num = gameBoards.get(p).getDiningRoom().get(color);

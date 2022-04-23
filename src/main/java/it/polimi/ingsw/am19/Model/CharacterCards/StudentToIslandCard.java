@@ -62,8 +62,13 @@ public class StudentToIslandCard extends AbstractCharacterCard implements MoveSt
     }
 
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
+
+        //check the presence of a student of the color passed on the card
+        if (students.get(color)==0)
+            throw new NoSuchColorException("No "+ color + " student present on the card");
+
         try {
             removeStudent(color);
         } catch (NoSuchColorException e) {

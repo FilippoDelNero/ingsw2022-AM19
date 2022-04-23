@@ -104,11 +104,28 @@ public class ThreeStudentToEntryCard extends AbstractCharacterCard implements Mo
      * @param pieceColorList 0, 2 and 4 are the color of the card. 1,3,5 the index of color of the entrance
      */
     @Override
-    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) {
+    public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
 
         Player currentPlayer = match.getCurrPlayer();
         GameBoard gameboard = match.getGameBoards().get(currentPlayer);
+
+        //check parameters
+        // check the presence of the color
+        HashMap<PieceColor,Integer> studentOnCard = new HashMap<>();
+        HashMap<PieceColor,Integer> studentInEntrance = new HashMap<>();
+        for(PieceColor color1: PieceColor.values()){
+            studentOnCard.put(color1,0);
+            studentInEntrance.put(color1,0);
+        }
+        for(int i=0; i<pieceColorList.size()/2 && i<3 ;i++){
+            studentOnCard.put(pieceColorList.get(2*i), studentOnCard.get(pieceColorList.get(2*i))+1);
+            studentInEntrance.put(pieceColorList.get(2*i+1), studentInEntrance.get(pieceColorList.get(2*i+1))+1);
+        }
+        for(PieceColor color1: PieceColor.values()){
+            if(studentInEntrance.get(color1) > gameboard.getEntrance().get(color1) || studentOnCard.get(color1) > students.get(color1))
+                throw new NoSuchColorException("There isn't a " + color1 +" student in your entry or on the card");
+        }
 
 
         for(int i=0; i < pieceColorList.size()/2;i++){

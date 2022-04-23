@@ -3,6 +3,7 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
@@ -64,7 +65,7 @@ class StudentToIslandCardTest {
     }
 
     @Test
-    void activateEffect() {
+    void activateEffect() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch match = new TwoPlayersMatch();
         Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
@@ -83,6 +84,28 @@ class StudentToIslandCardTest {
         int before = match.getIslandManager().getIslands().get(0).getNumOfStudents().get(PieceColor.BLUE);
         card.activateEffect(match.getIslandManager().getIslands().get(0),PieceColor.BLUE,null);
         assertEquals(before+1,match.getIslandManager().getIslands().get(0).getNumOfStudents().get(PieceColor.BLUE));
+    }
+
+    @Test
+    void checkParameter(){
+        AbstractMatch match = new TwoPlayersMatch();
+        Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
+        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
+        match.addPlayer(player1);
+        match.addPlayer(player2);
+        match.initializeMatch();
+        match.setCurrPlayer(player1);
+
+        StudentToIslandCard card = new StudentToIslandCard(match);
+        try {
+            card.addStudent(PieceColor.BLUE);
+        } catch (TooManyStudentsException e) {
+            e.printStackTrace();
+        }
+        assertEquals(1,card.getStudents().get(PieceColor.BLUE));
+        assertEquals(0,card.getStudents().get(PieceColor.RED));
+        assertThrows(NoSuchColorException.class,()->card.activateEffect(match.getIslandManager().getIslands().get(0),PieceColor.RED,null));
+        assertDoesNotThrow(()->card.activateEffect(match.getIslandManager().getIslands().get(0),PieceColor.BLUE,null));
     }
 
     @Test

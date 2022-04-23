@@ -3,6 +3,7 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
@@ -109,7 +110,7 @@ class ThreeStudentToEntryCardTest {
     }
 
     @Test
-    void activateEffect() {
+    void activateEffect() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch match = new TwoPlayersMatch();
         Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
@@ -160,5 +161,47 @@ class ThreeStudentToEntryCardTest {
         assertEquals(1,card.getStudents().get(PieceColor.YELLOW));
         assertEquals(1,card.getStudents().get(PieceColor.RED));
         assertEquals(2,card.getStudents().get(PieceColor.PINK));
+    }
+
+    @Test
+    void checkParameter(){
+        AbstractMatch match = new TwoPlayersMatch();
+        Player player1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
+        Player player2 = new Player("Laura",TowerColor.WHITE, WizardFamily.SHAMAN);
+        match.addPlayer(player1);
+        match.addPlayer(player2);
+        match.initializeMatch();
+        match.setCurrPlayer(player1);
+
+        ThreeStudentToEntryCard card = new ThreeStudentToEntryCard(match);
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.BLUE));
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.YELLOW));
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.RED));
+        assertDoesNotThrow(() -> card.addStudent(PieceColor.PINK));
+
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.BLUE,0);
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.GREEN,3);
+        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.RED,1);
+
+        ArrayList<PieceColor> errorList = new ArrayList<>();
+        errorList.add(PieceColor.BLUE);
+        errorList.add(PieceColor.GREEN);
+        errorList.add(PieceColor.BLUE);
+        errorList.add(PieceColor.GREEN);
+        errorList.add(PieceColor.GREEN);
+        errorList.add(PieceColor.RED);
+        assertThrows(NoSuchColorException.class,()->card.activateEffect(null,null,errorList));
+
+        //try a correct list
+        ArrayList<PieceColor> rightList = new ArrayList<>();
+        rightList.add(PieceColor.BLUE);
+        rightList.add(PieceColor.GREEN);
+        rightList.add(PieceColor.BLUE);
+        rightList.add(PieceColor.GREEN);
+        rightList.add(PieceColor.BLUE);
+        rightList.add(PieceColor.RED);
+        assertDoesNotThrow(()->card.activateEffect(null,null,rightList));
     }
 }

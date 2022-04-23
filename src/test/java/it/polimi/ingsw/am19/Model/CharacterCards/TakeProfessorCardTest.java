@@ -6,6 +6,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.ChangeIfEqualCheckProfessor;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.StandardCheckProfessor;
 import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -34,7 +36,7 @@ public class TakeProfessorCardTest {
      * testing the activateEffect method
      */
     @Test
-    void testActivateEffect() {
+    void testActivateEffect() throws NoSuchColorException, TooManyStudentsException {
         AbstractMatch m = new TwoPlayersMatch();
         AbstractCharacterCard card = new TakeProfessorCard(m);
 
