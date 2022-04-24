@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
@@ -77,11 +76,9 @@ public class TwoPlayersMatch extends AbstractMatch {
         //put a student to every island except for initialIsland and oppositeToMN
         for(Island island : islandManager.getIslands()) {
             if(island != initialIsland && island != oppositeToMotherNature) {
-                try {
+                if(!bag.isEmpty()){
                     PieceColor color = bag.drawStudent();
                     island.addStudent(color);
-                } catch (EmptyBagException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -97,11 +94,13 @@ public class TwoPlayersMatch extends AbstractMatch {
         for (Player player: getPlanningPhaseOrder()){
             GameBoard board = new GameBoard(player,8,getProfessorManager(),7);
             for (int i = 0; i < 7; i++){
-                try {
-                    PieceColor color = bag.drawStudent();
-                    board.addStudent(color);
-                } catch (EmptyBagException | TooManyStudentsException e) {
-                    e.printStackTrace();
+                if(!bag.isEmpty()){
+                    try {
+                        PieceColor color = bag.drawStudent();
+                        board.addStudent(color);
+                    } catch (TooManyStudentsException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             getGameBoards().put(player,board);

@@ -2,7 +2,6 @@ package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -21,11 +20,8 @@ public class ExpertMatchDecoratorTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
+
         MotherNature motherNature = MotherNature.getInstance();
         motherNature.setCurrMovementStrategy(motherNature.getDefaultMovement());
     }

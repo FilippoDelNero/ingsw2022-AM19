@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -13,11 +12,7 @@ class CloudTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
     /**
      * Tests removing students of all different colors from a cloud which has actually no students on it

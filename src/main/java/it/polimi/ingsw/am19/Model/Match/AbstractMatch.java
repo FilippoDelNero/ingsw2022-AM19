@@ -149,15 +149,16 @@ public abstract class AbstractMatch extends Observable implements Match {
 
     /**
      * Refills all the Clouds
-     * @throws EmptyBagException when there are no students available to put on the Clouds
      * @throws TooManyStudentsException when trying to add more students than the actual Cloud capacity
      */
     @Override
-    public void refillClouds() throws EmptyBagException, TooManyStudentsException {
+    public void refillClouds() throws TooManyStudentsException {
         for (Cloud cloud: clouds){
             for (int i = 0; i < cloud.getNumOfHostableStudents(); i++){
-                PieceColor color = bag.drawStudent();
-                cloud.addStudent(color);
+                if (!bag.isEmpty()) {
+                    PieceColor color = bag.drawStudent();
+                    cloud.addStudent(color);
+                }
             }
         }
     }

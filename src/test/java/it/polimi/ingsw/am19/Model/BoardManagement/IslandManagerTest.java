@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.PlusTwoInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
@@ -23,11 +21,7 @@ class IslandManagerTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
     /**
      * test the island getter

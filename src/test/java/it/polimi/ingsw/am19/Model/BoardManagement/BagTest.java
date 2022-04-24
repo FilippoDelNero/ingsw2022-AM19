@@ -3,8 +3,6 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import static it.polimi.ingsw.am19.Model.BoardManagement.Bag.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +15,9 @@ public class BagTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
+
     /**
      * Tests bag refill with an exceeding number of students of a specific color
      */
@@ -63,7 +58,7 @@ public class BagTest {
     @Test
     void drawFromEmptyBag(){
         Bag bag = getBagInstance();
-        assertThrows(EmptyBagException.class, bag::drawStudent);
+        assertNull(bag.drawStudent());
     }
 
     /**
@@ -83,11 +78,10 @@ public class BagTest {
         //drawing all the students previously put inside the bag
         int tot = 26 + 2 + 15 + 10;
         for (int iter = 0; iter < tot; iter++)
-            assertDoesNotThrow(() -> System.out.println(bag.drawStudent()));
+            assertNotNull(bag.drawStudent());
 
         //drawing one more student
-        assertThrows(EmptyBagException.class,
-                () -> System.out.println(bag.drawStudent()));
+        assertNull(bag.drawStudent());
         }
 
     /**
@@ -111,7 +105,7 @@ public class BagTest {
             fail();
         }
         assertEquals(10,b.getTotNumOfStudents());
-        assertDoesNotThrow(() -> b.drawStudent());
+        b.drawStudent();
         assertEquals(9,b.getTotNumOfStudents());
 
     }

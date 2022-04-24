@@ -1,8 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
-import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
 import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
@@ -24,11 +21,7 @@ class PlayerTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
     /**
      * Testing the getter of player's nickname

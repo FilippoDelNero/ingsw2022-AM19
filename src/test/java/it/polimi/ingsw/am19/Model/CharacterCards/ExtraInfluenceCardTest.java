@@ -3,7 +3,6 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
@@ -23,11 +22,7 @@ class ExtraInfluenceCardTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
 
     /**

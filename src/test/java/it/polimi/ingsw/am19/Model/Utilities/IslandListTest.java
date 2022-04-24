@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am19.Model.Utilities;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
-import it.polimi.ingsw.am19.Model.Utilities.IslandList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -17,12 +15,9 @@ public class IslandListTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
+
     /**
      * testing the first alternative constructor
      * it takes a list and return an IslandList with the same elements

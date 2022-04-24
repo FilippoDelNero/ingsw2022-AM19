@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,11 +16,7 @@ public class ThreePlayersMatchTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
 
     /**

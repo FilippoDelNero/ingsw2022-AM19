@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
@@ -24,11 +23,7 @@ class MotherNatureTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
 
     /**

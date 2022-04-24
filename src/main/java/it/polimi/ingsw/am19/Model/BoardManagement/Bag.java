@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
@@ -37,7 +36,7 @@ public class Bag {
             numOfStudents.put(color, 0);
     }
 
-    private boolean isEmpty(){
+    public boolean isEmpty(){
         boolean isEmpty = false;
 
         for (PieceColor color: numOfStudents.keySet()){
@@ -105,11 +104,10 @@ public class Bag {
     /**
      * Draws and deletes a student of a random color from the the bag
      * @return the color of the student picked up
-     * @throws EmptyBagException when trying to remove a student from an empty bag
      */
-    public PieceColor drawStudent() throws EmptyBagException{
+    public PieceColor drawStudent() {
         if (this.isEmpty())
-            throw new EmptyBagException();
+            return null;
         else{
             PieceColor chosenColor = randomColorGenerator();
             removeStudent(chosenColor);
@@ -147,7 +145,7 @@ public class Bag {
             numOfStudents.replace(color,newValue);
     }
 
-    public void removeAll() throws EmptyBagException {
+    public void removeAll() {
         while(!isEmpty())
             bagInstance.drawStudent();
     }

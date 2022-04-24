@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Model.InfluenceStrategies;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -15,11 +14,7 @@ public class NoColorInfluenceTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
     /**
      * testing the NoColorInfluence points to the current player

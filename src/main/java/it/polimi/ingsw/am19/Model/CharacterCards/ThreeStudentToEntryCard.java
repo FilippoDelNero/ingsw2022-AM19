@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
@@ -84,10 +83,12 @@ public class ThreeStudentToEntryCard extends AbstractCharacterCard implements Mo
     @Override
     public void initialAction() {
         for(int i =0;i<6;i++) {
-            try {
-                addStudent(bag.drawStudent());
-            } catch (TooManyStudentsException | EmptyBagException e) {
-                e.printStackTrace();
+            if(!bag.isEmpty()){
+                try {
+                    addStudent(bag.drawStudent());
+                } catch (TooManyStudentsException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -71,11 +71,10 @@ public class MatchDecorator implements Match{
 
     /**
      * Calls the refillClouds() method of the wrapped AbstractMatch
-     * @throws EmptyBagException @throws EmptyBagException when no more students are available in the Bag
      * @throws TooManyStudentsException when trying to add more students than the actual capacity
      */
     @Override
-    public void refillClouds() throws EmptyBagException, TooManyStudentsException {
+    public void refillClouds() throws TooManyStudentsException {
         wrappedMatch.refillClouds();
     }
 

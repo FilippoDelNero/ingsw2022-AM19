@@ -3,7 +3,6 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.MoveStudent;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
@@ -48,10 +47,12 @@ public class StudentToIslandCard extends AbstractCharacterCard implements MoveSt
     @Override
     public void initialAction() {
         for(int i =0;i<4;i++) {
-            try {
-                addStudent(bag.drawStudent());
-            } catch (TooManyStudentsException | EmptyBagException e) {
-                e.printStackTrace();
+            if(!bag.isEmpty()){
+                try {
+                    addStudent(bag.drawStudent());
+                } catch (TooManyStudentsException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -75,11 +76,16 @@ public class StudentToIslandCard extends AbstractCharacterCard implements MoveSt
             e.printStackTrace();
         }
         island.addStudent(color);
-        try {
-            addStudent(bag.drawStudent());
-        } catch (TooManyStudentsException | EmptyBagException e) {
-            e.printStackTrace();
+
+        // refill if bag is not empty
+        if(!bag.isEmpty()){
+            try {
+                addStudent(bag.drawStudent());
+            } catch (TooManyStudentsException e) {
+                e.printStackTrace();
+            }
         }
+
         active = false;
     }
 

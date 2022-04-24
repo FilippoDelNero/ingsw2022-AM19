@@ -43,10 +43,9 @@ public interface Match {
 
     /**
      * Refills the Clouds with their maximum capacity
-     * @throws EmptyBagException when no more students are available in the Bag
      * @throws TooManyStudentsException when trying to add more students than the actual capacity
      */
-    void refillClouds() throws EmptyBagException, TooManyStudentsException;
+    void refillClouds() throws TooManyStudentsException;
 
     /**
      * Moves a student of a specified PieceColor from a component to another

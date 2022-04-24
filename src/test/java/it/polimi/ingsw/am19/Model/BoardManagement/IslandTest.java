@@ -1,10 +1,5 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
-import it.polimi.ingsw.am19.Model.BoardManagement.Island;
-import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -22,11 +17,7 @@ public class IslandTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
     /**
      * Test the addStudent and getStudent method

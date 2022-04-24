@@ -27,6 +27,21 @@ public abstract class AbstractCharacterCard {
     protected boolean wasUsed;
 
     /**
+     * Is true when the card require a PieceColor for the activateEffect
+     */
+    protected boolean requiringPieceColor;
+
+    /**
+     * If true when the card require an Island for the activateEffect
+     */
+    protected boolean requiringIsland;
+
+    /**
+     * If true when the card require a PieceColorList for the activateEffect
+     */
+    protected boolean requiringPieceColorList;
+
+    /**
      * A short description for the effect for the Card
      */
     private final String description;
@@ -46,6 +61,9 @@ public abstract class AbstractCharacterCard {
         this.description = character.getDescription();
         this.wasUsed = false;
         this.active = false;
+        this.requiringPieceColor = character.isRequiringPieceColor();
+        this.requiringIsland= character.isRequiringIsland();
+        this.requiringPieceColorList= character.isRequiringPieceColorList();
     }
 
     /**
@@ -68,6 +86,38 @@ public abstract class AbstractCharacterCard {
      */
     public boolean isActive() {
         return active;
+    }
+
+    /**
+     * Boolean for requiring a PieceColor to use in the activateEffect
+     * @return if we need to require a PieceColor
+     */
+    public boolean isRequiringPieceColor() {
+        return requiringPieceColor;
+    }
+
+    /**
+     * Boolean for requiring an Island to use in the activateEffect
+     * @return if we need to require an Island
+     */
+    public boolean isRequiringIsland() {
+        return requiringIsland;
+    }
+
+    /**
+     * Boolean for requiring a PieceColorList to use in the activateEffect
+     * @return if we need to require a PieceColorList
+     */
+    public boolean isRequiringPieceColorList() {
+        return requiringPieceColorList;
+    }
+
+    /**
+     * Getter for the description of the card's effect
+     * @return the string with the effect's description
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**

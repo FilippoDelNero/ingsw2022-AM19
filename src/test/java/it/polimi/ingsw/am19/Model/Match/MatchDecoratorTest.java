@@ -1,8 +1,6 @@
 package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
-import it.polimi.ingsw.am19.Model.Exceptions.EmptyBagException;
-import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -22,11 +20,7 @@ public class MatchDecoratorTest {
     @BeforeEach
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
     }
 
     /**
@@ -189,11 +183,8 @@ public class MatchDecoratorTest {
     @Test
     public void testInitializeGameBoards(){
         Bag bag = Bag.getBagInstance();
-        try {
-            bag.removeAll();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        bag.removeAll();
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
