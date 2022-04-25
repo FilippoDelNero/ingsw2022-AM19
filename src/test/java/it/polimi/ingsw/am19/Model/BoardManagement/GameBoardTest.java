@@ -90,31 +90,78 @@ class GameBoardTest {
         map.put(player,gameBoard);
         professorManager.setGameboards(map);
 
-
         assertEquals(8,gameBoard.getNumOfTowers());
-        assertDoesNotThrow(()->gameBoard.setNumOfTowers(-3));
-        assertEquals(5,gameBoard.getNumOfTowers());
+        assertFalse(gameBoard.areTowersFinished());
     }
 
     /**
-     * Testing the setter for the NumOfTowers
+     * Tests removing a tower from the GameBoard without exceptions
      */
     @Test
-    @DisplayName("Testing setter of NumTowers")
-    void setNumOfTowers() {
+    void removeTower(){
         Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
         ProfessorManager professorManager = new ProfessorManager();
-        HashMap<Player,GameBoard> map = new HashMap<>();
         GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
-        map.put(player,gameBoard);
-        professorManager.setGameboards(map);
 
-        assertEquals(8,gameBoard.getNumOfTowers());
+        assertFalse(gameBoard.areTowersFinished());
+        gameBoard.removeTower();
+        assertEquals(7,gameBoard.getNumOfTowers());
+    }
 
+    /**
+     * Tests removing a tower when there are no towers in the GameBoard
+     */
+    @Test
+    void removeTowerFromEmptyGB(){
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
 
-        /*assertDoesNotThrow(()->gameBoard.setNumOfTowers(-3));
-        assertEquals(5,gameBoard.getNumOfTowers());
-        assertThrows(TooManyTowersException.class,()->gameBoard.setNumOfTowers(4));*/
+        assertFalse(gameBoard.areTowersFinished());
+        for(int i = 0; i < 8; i++)
+            gameBoard.removeTower();
+        assertTrue(gameBoard.areTowersFinished());
+
+        //Removing towers when there are no towers available at all doesn't affect the GameBoard state
+        gameBoard.removeTower();
+        assertEquals(0,gameBoard.getNumOfTowers());
+        //Still having 0 towers
+
+        gameBoard.removeTower();
+        assertEquals(0,gameBoard.getNumOfTowers());
+        //Still having 0 towers
+
+    }
+
+    /**
+     * Tests adding a tower when the GameBoard is running out of space for towers
+     */
+    @Test
+    void addingTooManyTowers() {
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+
+        gameBoard.addTower();
+        assertEquals(8, gameBoard.getNumOfTowers());
+
+        gameBoard.addTower();
+        assertEquals(8, gameBoard.getNumOfTowers());
+    }
+
+    /**
+     * Tests adding a tower to the GameBoard when there space for new towers
+     */
+    @Test
+    public void addTower(){
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+
+        gameBoard.removeTower();
+        assertEquals(7, gameBoard.getNumOfTowers());
+        gameBoard.addTower();
+        assertEquals(8, gameBoard.getNumOfTowers());
     }
 
     /**
@@ -258,6 +305,33 @@ class GameBoardTest {
         assertDoesNotThrow(()-> gameBoard2.addStudent(PieceColor.BLUE));
         assertDoesNotThrow(()->gameBoard2.moveStudentToDiningRoom(PieceColor.BLUE));
         assertEquals(player2,professorManager.getOwner(PieceColor.BLUE));
-
     }
+
+    /**
+     * Tests getting the number of students from the dining room
+     */
+    @Test
+    public void getDiningRoomNumOfStud(){
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+
+        assertEquals(0, gameBoard.getDiningRoomNumOfStud());
+
+        gameBoard.getDiningRoom().replace(PieceColor.PINK,3);
+        assertEquals(3,gameBoard.getDiningRoomNumOfStud());
+    }
+
+    @Test
+    public void getEntranceNumOfStud(){
+        Player player = new Player("Dennis",TowerColor.BLACK,WizardFamily.KING);
+        ProfessorManager professorManager = new ProfessorManager();
+        GameBoard gameBoard = new GameBoard(player,8,professorManager,7);
+
+        assertEquals(0, gameBoard.getEntranceNumOfStud());
+
+        gameBoard.getEntrance().replace(PieceColor.YELLOW,2);
+        assertEquals(2,gameBoard.getEntranceNumOfStud());
+    }
+
 }

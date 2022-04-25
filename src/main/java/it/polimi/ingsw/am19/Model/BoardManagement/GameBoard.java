@@ -59,13 +59,13 @@ public class GameBoard implements MoveStudent {
     /**
      * Constructor for a GameBoard
      * @param player the player owner of this GameBoard
-     * @param numOfTowers set the max numOfTowers for this player (6 or 8)
+     * @param maxNumOfTowers set the max numOfTowers for this player (6 or 8)
      * @param professor references to Professor Manager to change the owner of the various Professor when needed
      */
-    public GameBoard(Player player, int numOfTowers, ProfessorManager professor, int maxEntranceStudent) {
+    public GameBoard(Player player, int maxNumOfTowers, ProfessorManager professor, int maxEntranceStudent) {
         this.player = player;
-        this.numOfTowers = numOfTowers;
-        this.maxNumOfTowers=numOfTowers;
+        this.numOfTowers = maxNumOfTowers;
+        this.maxNumOfTowers = maxNumOfTowers;
         this.professor = professor;
         this.moveStrategy = new StandardMove();
         this.maxEntranceStudent = maxEntranceStudent;
@@ -120,13 +120,23 @@ public class GameBoard implements MoveStudent {
     }
 
     /**
-     * Setter to add or subtract the num of Towers available
-     * @param numOfTowers num of tower to add (or subtract)
+     * Adds a tower to the GameBoard, only if it isn't already full
      */
-    public void setNumOfTowers(int numOfTowers) {
-        /*if(newValue>maxNumOfTowers)
-            throw new TooManyTowersException("The number of tower cannot be over " + maxNumOfTowers);*/
-        this.numOfTowers = this.numOfTowers + numOfTowers;
+    public void addTower() {
+        if (numOfTowers < maxNumOfTowers)
+            numOfTowers++;
+    }
+
+    /**
+     * Removes a tower from the GameBoard, if there's at least one. Otherwise it does nothing
+     */
+    public void removeTower(){
+        if (!areTowersFinished())
+            numOfTowers--;
+    }
+
+    boolean areTowersFinished(){
+        return numOfTowers <= 0;
     }
 
     /**
@@ -190,6 +200,10 @@ public class GameBoard implements MoveStudent {
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
 
+    /**
+     * Returns the total number of students in the dining room
+     * @return the total number of students in the dining room
+     */
     public int getDiningRoomNumOfStud(){
         int tot = 0;
         for (PieceColor color: diningRoom.keySet()){
@@ -198,6 +212,10 @@ public class GameBoard implements MoveStudent {
         return tot;
     }
 
+    /**
+     * Returns the number of students in the entrance
+     * @return the number of students in the entrance
+     */
     public int getEntranceNumOfStud(){
         int tot = 0;
         for (PieceColor color: entrance.keySet()){

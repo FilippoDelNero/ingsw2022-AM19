@@ -1,9 +1,6 @@
-package it.polimi.ingsw.am19.Model.Utilities;
+package it.polimi.ingsw.am19;
 
-import it.polimi.ingsw.am19.Controller.Observer;
-
-import java.util.List;
-
+import it.polimi.ingsw.am19.Observer;
 
 public class Observable {
     private Observer observer;

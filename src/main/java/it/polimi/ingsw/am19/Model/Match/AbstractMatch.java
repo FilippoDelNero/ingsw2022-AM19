@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am19.Model.Match;
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.Exceptions.*;
-import it.polimi.ingsw.am19.Model.Utilities.Observable;
+import it.polimi.ingsw.am19.Observable;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -75,7 +75,7 @@ public abstract class AbstractMatch extends Observable implements Match {
     /**
      * Saves the already played HelperCards
      */
-    List<HelperCard> alreadyPlayedCards ;
+    List<HelperCard> alreadyPlayedCards;
 
     /**
      * Builds a new Match with the specified number of Players
