@@ -1,15 +1,9 @@
 package it.polimi.ingsw.am19;
 
-import it.polimi.ingsw.am19.Observer;
-
 public class Observable {
-    private Observer observer;
-    
-    public void notifyObserver(){
-        observer.notify();
-    }
+    protected Observer observer;
 
-    public void setObserver(Observer observer){
+    public void addObserver(Observer observer){
         this.observer = observer;
     }
 }

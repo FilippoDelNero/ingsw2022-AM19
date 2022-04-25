@@ -1,17 +1,22 @@
 package it.polimi.ingsw.am19.Model.Match;
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.Exceptions.*;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Observable;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Observer;
 
 import java.util.*;
+
+import static it.polimi.ingsw.am19.Utilities.Notification.END_MATCH;
+import static it.polimi.ingsw.am19.Utilities.Notification.FINAL_ROUND;
 
 /**
  * Abstract Class that implements all methods shared by different kinds of Matches
  */
-public abstract class AbstractMatch extends Observable implements Match {
+public abstract class AbstractMatch extends Observable implements Match, Observer {
     /**
      * Number of Players expected
      */
@@ -78,6 +83,11 @@ public abstract class AbstractMatch extends Observable implements Match {
     List<HelperCard> alreadyPlayedCards;
 
     /**
+     * true if the final round conditions are met
+     */
+    boolean finalRound;
+
+    /**
      * Builds a new Match with the specified number of Players
      * @param num represents the number of Players that will play tha game
      */
@@ -95,6 +105,7 @@ public abstract class AbstractMatch extends Observable implements Match {
         this.wizardFamilies = new ArrayList<>(Arrays.asList(WizardFamily.values()));
         this.towerColors = new ArrayList<>(Arrays.asList(TowerColor.values()));
         this.alreadyPlayedCards = new ArrayList<>();
+        this.finalRound = false;
     }
 
     /**
@@ -391,5 +402,35 @@ public abstract class AbstractMatch extends Observable implements Match {
     @Override
     public List<HelperCard> getAlreadyPlayedCards() {
         return this.alreadyPlayedCards;
+    }
+
+    /**
+     * Return true if final round conditions previously occurred
+     * @return true if final round conditions previously occurred
+     */
+    @Override
+    public boolean isFinalRound() {
+        return finalRound;
+    }
+
+    /**
+     * Determines whether this is the final round, depending on the given parameter
+     * @param finalRound true if the final round should begin, false otherwise
+     */
+    @Override
+    public void setFinalRound(boolean finalRound) {
+        this.finalRound = finalRound;
+    }
+
+    /**
+     * Reacts to the receiving of a Notification from the observed classes
+     * @param notification is the notification type provided by the observed class
+     */
+    @Override
+    public void notify(Notification notification){
+        switch (notification){
+            case END_MATCH -> observer.notify(END_MATCH);
+            case FINAL_ROUND -> finalRound = true;
+        }
     }
 }

@@ -267,6 +267,24 @@ public class MatchDecorator implements Match{
     }
 
     /**
+     * Return true if final round conditions previously occurred in the wrapped match
+     * @return true if final round conditions previously occurred in the wrapped match
+     */
+    @Override
+    public boolean isFinalRound() {
+        return wrappedMatch.isFinalRound();
+    }
+
+    /**
+     * Determines whether this is the final round, depending on the given parameter
+     * @param finalRound true if the final round should begin, false otherwise
+     */
+    @Override
+    public void setFinalRound(boolean finalRound) {
+        wrappedMatch.setFinalRound(finalRound);
+    }
+
+    /**
      * Returns a reference to the wrapped AbstractMatch
      * @return a reference to the wrapped AbstractMatch
      */

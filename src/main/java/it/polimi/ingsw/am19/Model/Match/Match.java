@@ -177,4 +177,16 @@ public interface Match {
      * @return the list containing the cards played in a given turn
      */
     List<HelperCard> getAlreadyPlayedCards();
+
+    /**
+     * Return true if final round conditions previously occurred
+     * @return true if final round conditions previously occurred
+     */
+    boolean isFinalRound();
+
+    /**
+     * Determines whether this is the final round, depending on the given parameter
+     * @param finalRound true if the final round should begin, false otherwise
+     */
+    void setFinalRound(boolean finalRound);
 }

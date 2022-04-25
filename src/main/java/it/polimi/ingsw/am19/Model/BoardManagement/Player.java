@@ -2,9 +2,11 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
+import it.polimi.ingsw.am19.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Objects;
 /**
  * Class for managing Player
  */
-public class Player {
+public class Player extends Observable {
     /**
      * String for the nickname of a Player
      */
@@ -230,6 +232,8 @@ public class Player {
 
     /**
      * Method for use an HelperCard. Checks if it's in the HelperDeck, then remove it and calls setCurrentCard
+     * After playing the card, a check is made to the number of HelperCards left in the deck
+     * If the deck size is 0, a notification is sent to the observers to say that the final round started
      * @param helperCard the Card we want to use
      */
     public void useHelperCard(HelperCard helperCard) throws UnavailableCardException {
@@ -237,6 +241,8 @@ public class Player {
             throw new UnavailableCardException("HelperCard not available on your Helper Deck");
         setCurrentCard(helperCard);
         this.helperDeck.remove(helperCard);
+        if (helperDeck.size() == 0)
+            observer.notify(Notification.FINAL_ROUND);
     }
 
     /**

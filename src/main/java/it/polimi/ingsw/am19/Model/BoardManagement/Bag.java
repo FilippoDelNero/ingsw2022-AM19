@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Observable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.Map;
 /**
  * Singleton class for managing student drawings
  */
-public class Bag {
+public class Bag extends Observable {
     /**
      * Keeps track of the number of existing students of each color in the bag
      */
@@ -37,7 +39,7 @@ public class Bag {
     }
 
     public boolean isEmpty(){
-        boolean isEmpty = false;
+        boolean isEmpty;
 
         for (PieceColor color: numOfStudents.keySet()){
             isEmpty = numOfStudents.get(color) == 0;
@@ -103,14 +105,19 @@ public class Bag {
 
     /**
      * Draws and deletes a student of a random color from the the bag
+     * After successfully removing a student, a check is made on the number of students left
+     * If there's one student left, a notification is sent to say that this is the final round
      * @return the color of the student picked up
      */
     public PieceColor drawStudent() {
-        if (this.isEmpty())
+        if (isEmpty())
             return null;
         else{
             PieceColor chosenColor = randomColorGenerator();
             removeStudent(chosenColor);
+            if (isEmpty())
+                if (observer != null)
+                    observer.notify(Notification.FINAL_ROUND);
             return chosenColor;
         }
     }

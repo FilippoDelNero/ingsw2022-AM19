@@ -20,6 +20,8 @@ public class TwoPlayersMatch extends AbstractMatch {
 
     /**
      * Initializes all the game component for a new match to start
+     * The match reference is passed to those classes that could potentially determine the end of the match or the start of the final round
+     * In this way they can notify the occurrence of these conditions
      */
     @Override
     public void initializeMatch() {
@@ -29,13 +31,20 @@ public class TwoPlayersMatch extends AbstractMatch {
 
         //initialize the islands and put students on them
         initializeIslandManager();
+        islandManager.addObserver(this);
 
         refillBag(bag,24);
+        bag.addObserver(this);
 
         //creating two clouds with no students on them. each cloud could store up to three students
         initializeClouds();
 
         initializeGameBoards(bag);
+        for (Player player: getGameBoards().keySet()) {
+            player.addObserver(this);
+            getGameBoards().get(player).addObserver(this);
+        }
+
     }
 
     private void refillBag(Bag bag, int num) {

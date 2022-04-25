@@ -4,14 +4,16 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.InternalMoveStrategy;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Observable;
 
 import java.util.HashMap;
 
 /**
  * Class for manage the single GameBoard of each player
  */
-public class GameBoard implements MoveStudent {
+public class GameBoard extends Observable implements MoveStudent {
     /**
      * References to the player of this GameBoard
      */
@@ -128,13 +130,22 @@ public class GameBoard implements MoveStudent {
     }
 
     /**
-     * Removes a tower from the GameBoard, if there's at least one. Otherwise it does nothing
+     * Removes a tower from the GameBoard, if there's at least one
+     * Otherwise it sends a notification the observers, saying that the end match conditions occurred
      */
     public void removeTower(){
         if (!areTowersFinished())
             numOfTowers--;
+        else{
+            if (observer != null)
+                observer.notify(Notification.END_MATCH);
+        }
     }
 
+    /**
+     * Returns true if there are no more towers available, false otherwise
+     * @return true if there are no more towers available, false otherwise
+     */
     boolean areTowersFinished(){
         return numOfTowers <= 0;
     }
@@ -190,6 +201,7 @@ public class GameBoard implements MoveStudent {
             default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
     }
+
     /**
      * Method to move student from entrance to DiningHall, using a strategy pattern
      * @param color the student's color to move
