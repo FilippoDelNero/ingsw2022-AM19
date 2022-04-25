@@ -132,6 +132,30 @@ public abstract class AbstractCharacterCard {
     public abstract Map<PieceColor,Integer> getStudents();
 
     /**
+     * Sets the boolean which says whether a CharacterCard is active or not
+     * @param active is true if the card is active, false in the other case
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * Sets the boolean which says whether a CharacterCard was previously active or not
+     * @param wasUsed is true if the card was previously active, false in the other case
+     */
+    public void setWasUsed(boolean wasUsed) {
+        this.wasUsed = wasUsed;
+    }
+
+    /**
+     * Returns true if the card was previously active, false in the other case
+     * @return true if the card was previously active, false in the other case
+     */
+    public boolean wasUsed() {
+        return wasUsed;
+    }
+
+    /**
      * The effect to launch when we use a card
      * @param island references of an Island where we can change something (can be null)
      * @param color a PieceColor to use in the effect (can be null)
@@ -143,6 +167,11 @@ public abstract class AbstractCharacterCard {
         this.active = true;
     }
 
+    /**
+     * Redefines equals() method between two AbstractCharacterCards depending on their reference
+     * @param o an AbstractCharacterCard to compare to this
+     * @return true if two AbstractCharacterCards share the same reference, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
