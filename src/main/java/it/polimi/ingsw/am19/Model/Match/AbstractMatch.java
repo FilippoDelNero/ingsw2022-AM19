@@ -412,7 +412,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     public boolean isFinalRound() {
         return finalRound;
     }
-
+    
     /**
      * Determines whether this is the final round, depending on the given parameter
      * @param finalRound true if the final round should begin, false otherwise

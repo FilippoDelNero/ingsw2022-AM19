@@ -387,7 +387,7 @@ class TwoPlayersMatchTest {
 
         m.initializeMatch();
 
-        assertDoesNotThrow(()->m.refillClouds());
+        assertDoesNotThrow(m::refillClouds);
 
         for(Cloud c: m.getClouds()) {
             assertEquals(3, c.getCurrNumOfStudents());
@@ -577,4 +577,48 @@ class TwoPlayersMatchTest {
         assertEquals(oldEntrance ,gameBoard.getEntranceNumOfStud(),"entrance failure");
         assertEquals(oldIsland + 1,island.getTotStudents(), "island failure");
     }
+
+    /**
+     * Tests if the finalRound flag is set true after removing all students from the Bag
+     * It simulates the occurring of a final round condition
+     */
+    @Test
+    public void testIsFinalRound1(){
+        AbstractMatch m = new TwoPlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.initializeMatch();
+
+        assertFalse(m.isFinalRound());
+        Bag bag = m.bag;
+        bag.removeAll();
+
+        assertTrue(m.isFinalRound());
+    }
+
+    /**
+     * Tests if the finalRound flag is set true after removing all HelperCards from a player helper deck
+     * It simulates the occurring of a final round condition
+     */
+    @Test
+    public void testIsFinalRound2(){
+        AbstractMatch m = new TwoPlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.initializeMatch();
+        m.setCurrPlayer(p1);
+        assertFalse(m.isFinalRound());
+
+        List<HelperCard> helperDeck = List.copyOf(p1.getHelperDeck());
+        for(HelperCard card: helperDeck)
+            assertDoesNotThrow(() -> m.useHelperCard(card));
+
+        assertTrue(m.isFinalRound());
+    }
+
+
 }

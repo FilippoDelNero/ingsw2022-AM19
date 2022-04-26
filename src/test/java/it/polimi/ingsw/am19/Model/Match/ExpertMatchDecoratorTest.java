@@ -6,7 +6,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
@@ -206,8 +206,13 @@ public class ExpertMatchDecoratorTest {
 
             case PRINCIPESSA_VIZIATA ->{
                     //puts a student of the chosen color in the dining room
-                    PieceColor color = (new ArrayList<>(card.getStudents().keySet())).get(0);
-                    assertDoesNotThrow(() -> decorator.playCard(card, color,null, null));
+                    List<PieceColor> pieceColorList = new ArrayList<>();
+                    for(PieceColor c : card.getStudents().keySet()) {
+                        for(int i = 0; i < card.getStudents().get(c); i++) {
+                            pieceColorList.add(c);
+                        }
+                    }
+                    assertDoesNotThrow(() -> decorator.playCard(card, pieceColorList.get(0),null, null));
             }
         }
 

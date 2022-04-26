@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
@@ -174,27 +175,36 @@ class ThreeStudentToEntryCardTest {
         assertDoesNotThrow(() -> card.addStudent(PieceColor.RED));
         assertDoesNotThrow(() -> card.addStudent(PieceColor.PINK));
 
-        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.BLUE,0);
-        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.GREEN,3);
-        match.getGameBoards().get(player1).getEntrance().replace(PieceColor.RED,1);
+        // match.getGameBoards().get(player1).getEntrance().replace(PieceColor.BLUE,0);
+       // match.getGameBoards().get(player1).getEntrance().replace(PieceColor.GREEN,3);
+       // match.getGameBoards().get(player1).getEntrance().replace(PieceColor.RED,1);
+
+        //put all students in the entrance in a list
+        GameBoard gameBoard = match.getGameBoards().get(player1);
+        ArrayList<PieceColor> pieceColorList = new ArrayList<>();
+        for(PieceColor c : gameBoard.getEntrance().keySet()) {
+            for(int i = 0; i < gameBoard.getEntrance().get(c); i++) {
+                pieceColorList.add(c);
+            }
+        }
 
         ArrayList<PieceColor> errorList = new ArrayList<>();
         errorList.add(PieceColor.BLUE);
-        errorList.add(PieceColor.GREEN);
+        errorList.add(pieceColorList.get(0));
         errorList.add(PieceColor.BLUE);
+        errorList.add(pieceColorList.get(1));
         errorList.add(PieceColor.GREEN);
-        errorList.add(PieceColor.GREEN);
-        errorList.add(PieceColor.RED);
-        assertThrows(NoSuchColorException.class,()->card.activateEffect(null,null,errorList));
+        errorList.add(pieceColorList.get(2));
+        assertThrows(NoSuchColorException.class,()->card.activateEffect(null,null, errorList));
 
         //try a correct list
         ArrayList<PieceColor> rightList = new ArrayList<>();
         rightList.add(PieceColor.BLUE);
-        rightList.add(PieceColor.GREEN);
+        rightList.add(pieceColorList.get(0));
         rightList.add(PieceColor.BLUE);
-        rightList.add(PieceColor.GREEN);
+        rightList.add(pieceColorList.get(1));
         rightList.add(PieceColor.BLUE);
-        rightList.add(PieceColor.RED);
-        assertDoesNotThrow(()->card.activateEffect(null,null,rightList));
+        rightList.add(pieceColorList.get(2));
+        assertDoesNotThrow(()->card.activateEffect(null,null, rightList));
     }
 }

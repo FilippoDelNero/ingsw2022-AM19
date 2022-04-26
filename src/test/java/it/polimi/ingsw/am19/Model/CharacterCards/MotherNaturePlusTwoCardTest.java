@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Model.CharacterCards;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
+import it.polimi.ingsw.am19.Model.BoardManagement.MotherNature;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
@@ -22,6 +23,9 @@ class MotherNaturePlusTwoCardTest {
     void removeAllFromBag(){
         Bag bag = Bag.getBagInstance();
         bag.removeAll();
+
+        MotherNature motherNature = MotherNature.getInstance();
+        motherNature.setCurrMovementStrategy(motherNature.getDefaultMovement());
     }
 
     /**
