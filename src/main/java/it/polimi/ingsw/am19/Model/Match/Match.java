@@ -185,8 +185,8 @@ public interface Match {
     boolean isFinalRound();
 
     /**
-     * Determines whether this is the final round, depending on the given parameter
-     * @param finalRound true if the final round should begin, false otherwise
+     * Determines who is the winner of the game and returns it
+     * @return the winner of the game, null if a winner hasn't been chosen yet
      */
-    void setFinalRound(boolean finalRound);
+    List<Player> getWinner();
 }

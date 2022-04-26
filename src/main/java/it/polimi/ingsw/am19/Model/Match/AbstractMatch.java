@@ -83,9 +83,14 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     List<HelperCard> alreadyPlayedCards;
 
     /**
-     * true if the final round conditions are met
+     * Is true if the final round conditions are met
      */
     boolean finalRound;
+
+    /**
+     * Is the winner Player, null if there's no winner
+     */
+    List<Player> winners;
 
     /**
      * Builds a new Match with the specified number of Players
@@ -106,6 +111,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         this.towerColors = new ArrayList<>(Arrays.asList(TowerColor.values()));
         this.alreadyPlayedCards = new ArrayList<>();
         this.finalRound = false;
+        this.winners = new ArrayList<>();
     }
 
     /**
@@ -412,15 +418,6 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     public boolean isFinalRound() {
         return finalRound;
     }
-    
-    /**
-     * Determines whether this is the final round, depending on the given parameter
-     * @param finalRound true if the final round should begin, false otherwise
-     */
-    @Override
-    public void setFinalRound(boolean finalRound) {
-        this.finalRound = finalRound;
-    }
 
     /**
      * Reacts to the receiving of a Notification from the observed classes
@@ -429,8 +426,53 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     @Override
     public void notify(Notification notification){
         switch (notification){
-            case END_MATCH -> observer.notify(END_MATCH);
+            case END_MATCH -> {
+                for (Observer observer: observers)
+                    observer.notify(Notification.FINAL_ROUND);
+                computeWinners();
+            }
             case FINAL_ROUND -> finalRound = true;
+        }
+    }
+
+    /**
+     * Computes the winner, if there was no winner
+     * @return a list of winners. The list contains more than one Player, in case the match ended in a draw, otherwise it contains a single winning Player
+     */
+    @Override
+    public List<Player> getWinner(){
+        if (winners.isEmpty())
+            computeWinners();
+        return winners;
+    }
+
+    private void computeWinners(){
+        //num out of number of towers range
+        int minNumTowers = 9;
+
+        //check who has min number of towers in the game board
+        for(Player player: getGameBoards().keySet()) {
+            int numTowers = getGameBoards().get(player).getNumOfTowers();
+            if (numTowers < minNumTowers){
+                minNumTowers = numTowers;
+                winners = new ArrayList<>();
+                winners.add(player);
+            }
+            //in case of more player with same number of towers
+            else if(numTowers == minNumTowers){
+                for (Player winner: List.copyOf(winners)){
+                    int winnerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(winner);
+                    int playerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(player);
+
+                    if (playerNumProfessors > winnerNumProfessors){
+                        winners = new ArrayList<>();
+                        winners.add(player);
+                    }
+                    //in case of more player with same number of professors, the number of winners is multiple
+                    else if (playerNumProfessors == winnerNumProfessors)
+                        winners.add(player);
+                }
+            }
         }
     }
 }

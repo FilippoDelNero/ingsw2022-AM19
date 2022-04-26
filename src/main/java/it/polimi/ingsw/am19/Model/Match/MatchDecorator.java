@@ -276,12 +276,12 @@ public class MatchDecorator implements Match{
     }
 
     /**
-     * Determines whether this is the final round, depending on the given parameter
-     * @param finalRound true if the final round should begin, false otherwise
+     * Computes the winner, if there was no winner
+     * @return a list of winners. The list contains more than one Player, in case the match ended in a draw, otherwise it contains a single winning Player
      */
     @Override
-    public void setFinalRound(boolean finalRound) {
-        wrappedMatch.setFinalRound(finalRound);
+    public List<Player> getWinner() {
+        return wrappedMatch.getWinner();
     }
 
     /**

@@ -3,6 +3,7 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Utilities.IslandList;
+import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -145,7 +146,8 @@ public class IslandManager extends Observable {
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
                 if (getIslands().size() == 3)
-                    observer.notify(Notification.END_MATCH);
+                    for (Observer observer: observers)
+                        observer.notify(Notification.FINAL_ROUND);
             }
         }
     }

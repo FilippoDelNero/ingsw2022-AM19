@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
+import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -242,7 +243,8 @@ public class Player extends Observable {
         setCurrentCard(helperCard);
         this.helperDeck.remove(helperCard);
         if (helperDeck.size() == 0)
-            observer.notify(Notification.FINAL_ROUND);
+            for (Observer observer: observers)
+                observer.notify(Notification.FINAL_ROUND);
     }
 
     /**

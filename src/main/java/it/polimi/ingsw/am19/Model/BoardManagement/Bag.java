@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
+import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Observable;
@@ -116,8 +117,9 @@ public class Bag extends Observable {
             PieceColor chosenColor = randomColorGenerator();
             removeStudent(chosenColor);
             if (isEmpty())
-                if (observer != null)
-                    observer.notify(Notification.FINAL_ROUND);
+                if (!observers.isEmpty())
+                    for (Observer observer: observers)
+                        observer.notify(Notification.FINAL_ROUND);
             return chosenColor;
         }
     }

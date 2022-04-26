@@ -620,5 +620,20 @@ class TwoPlayersMatchTest {
         assertTrue(m.isFinalRound());
     }
 
+    /**
+     * Tests the winning of the player with the lower number of towers in his game board
+     */
+    @Test
+    public void testGetWinner(){
+        AbstractMatch m = new TwoPlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.initializeMatch();
 
+        m.getGameBoards().get(p1).removeTower();
+        assertEquals(1,m.getWinner().size());
+        assertEquals(p1,m.getWinner().get(0));
+    }
 }

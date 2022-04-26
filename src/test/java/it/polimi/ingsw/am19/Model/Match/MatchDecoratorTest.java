@@ -572,4 +572,22 @@ public class MatchDecoratorTest {
         assertTrue(decorator.isFinalRound());
     }
 
+    /**
+     * Tests the winning of the player with the lower number of towers in his game board
+     */
+    @Test
+    public void testGetWinner(){
+        AbstractMatch m = new TwoPlayersMatch();
+        MatchDecorator decorator = new MatchDecorator(m);
+
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        decorator.addPlayer(p1);
+        decorator.addPlayer(p2);
+        decorator.initializeMatch();
+
+        decorator.getGameBoards().get(p1).removeTower();
+        assertEquals(1,decorator.getWinner().size());
+        assertEquals(p1,decorator.getWinner().get(0));
+    }
 }

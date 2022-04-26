@@ -107,6 +107,7 @@ public class ThreePlayersMatch extends AbstractMatch {
                         PieceColor color = bag.drawStudent();
                         board.addStudent(color);
                     } catch (TooManyStudentsException e) {
+                        //TODO modificare, non va stampato lo stack trace
                         e.printStackTrace();
                     }
                 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.BeforeEach;
@@ -231,5 +232,114 @@ public class ThreePlayersMatchTest {
         assertEquals(p1, m.getPlanningPhaseOrder().get(2));
         assertEquals(p2, m.getPlanningPhaseOrder().get(0));
         assertEquals(p3, m.getPlanningPhaseOrder().get(1));
+    }
+
+    /**
+     * Tests the winning of the player with the lower number of towers in his game board
+     * Game does not end in a draw
+     */
+    @Test
+    public void testGetWinner(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        m.getGameBoards().get(p3).removeTower();
+        assertEquals(5, m.getGameBoards().get(p3).getNumOfTowers());
+
+        m.getGameBoards().get(p2).removeTower();
+        assertEquals(5, m.getGameBoards().get(p2).getNumOfTowers());
+
+        m.getGameBoards().get(p2).removeTower();
+        assertEquals(4, m.getGameBoards().get(p2).getNumOfTowers());
+
+        assertEquals(1,m.getWinner().size());
+        assertEquals(p2,m.getWinner().get(0));
+    }
+
+    /**
+     * Tests the winning of two players in a draw. The winners share the same number of towers and the same number of professors
+     */
+    @Test
+    public void testEndMatchInADraw(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        m.getGameBoards().get(p3).removeTower();
+        assertEquals(5, m.getGameBoards().get(p3).getNumOfTowers());
+
+        m.getGameBoards().get(p2).removeTower();
+        assertEquals(5, m.getGameBoards().get(p2).getNumOfTowers());
+
+        m.getProfessorManager().getProfessors().put(PieceColor.BLUE,p2);
+        m.getProfessorManager().getProfessors().put(PieceColor.RED,p3);
+
+        assertEquals(2,m.getWinner().size());
+        assertTrue(m.getWinner().contains(p2));
+        assertTrue(m.getWinner().contains(p3));
+    }
+
+    /**
+     * Tests the winning of a Player. The winner share the same number of towers with another Player, but has a greater number of professors
+     */
+    @Test
+    public void testEndMatchWithProfNumber(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        m.getGameBoards().get(p3).removeTower();
+        assertEquals(5, m.getGameBoards().get(p3).getNumOfTowers());
+
+        m.getGameBoards().get(p2).removeTower();
+        assertEquals(5, m.getGameBoards().get(p2).getNumOfTowers());
+
+        m.getProfessorManager().getProfessors().put(PieceColor.RED,p3);
+
+        assertEquals(1,m.getWinner().size());
+        assertEquals(p3,m.getWinner().get(0));
+    }
+
+    /**
+     * Tests the winning of a Player. The winner share the same number of towers with another Player, but has a greater number of professors
+     * This time the order of evaluation of parameters is different, so the getWinner() method follows another path
+     */
+    @Test
+    public void testEndMatchWithProfNum(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        m.getGameBoards().get(p1).removeTower();
+        assertEquals(5, m.getGameBoards().get(p1).getNumOfTowers());
+
+        m.getGameBoards().get(p2).removeTower();
+        assertEquals(5, m.getGameBoards().get(p2).getNumOfTowers());
+
+        m.getProfessorManager().getProfessors().put(PieceColor.RED,p2);
+
+        assertEquals(1,m.getWinner().size());
+        assertEquals(p2,m.getWinner().get(0));
     }
 }

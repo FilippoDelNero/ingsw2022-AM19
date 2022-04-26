@@ -146,5 +146,25 @@ public class ProfessorManager {
         return currentCardUsed != whoUsedTheCard;
     }
 
+    /**
+     * Returns the number of professors owned by the selected player
+     * @param player is the player whose number of professors owned needs to be returned
+     * @return number of professors owned by the selected player
+     */
+    public int getNumProfessorsByPlayer(Player player){
+        int numProfessors = 0;
+        for(PieceColor color: professors.keySet()){
+            if(getOwner(color).equals(player))
+                numProfessors++;
+        }
+        return numProfessors;
+    }
 
+    /**
+     * Returns a map containing the association between PieceColor and Player owner
+     * @return a map containing the association between PieceColor and Player owner
+     */
+    public Map<PieceColor, Player> getProfessors() {
+        return professors;
+    }
 }
