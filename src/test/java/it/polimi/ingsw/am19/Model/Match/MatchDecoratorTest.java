@@ -4,7 +4,7 @@ import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
@@ -18,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class MatchDecoratorTest {
     @BeforeEach
-    void removeAllFromBag(){
-        Bag bag = Bag.getBagInstance();
-        bag.removeAll();
+    void removeAllFromBag() {
+        Bag.getBagInstance().removeAll();
     }
 
     /**
@@ -39,6 +38,8 @@ public class MatchDecoratorTest {
      */
     @Test
     public void addPlayer(){
+
+
         AbstractMatch wrappedMatch = new ThreePlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -60,6 +61,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void initializeTowers(){
+
         AbstractMatch wrappedMatch = new ThreePlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -92,6 +94,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void initializeWizardFamilies(){
+
         AbstractMatch wrappedMatch = new ThreePlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -120,6 +123,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void getNumOfPlayers() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -131,6 +135,8 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testGetAndSetForAlreadyPlayedHC() {
+
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -160,6 +166,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testTooManyPlayer() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -182,6 +189,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testInitializeGameBoards(){
+
         Bag bag = Bag.getBagInstance();
         bag.removeAll();
 
@@ -216,6 +224,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testInitializeClouds(){
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -244,23 +253,24 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testInitializeIslands(){
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
         Player p1 = new Player("Phil");
         Player p2 = new Player("Laura");
 
-        wrappedMatch.addPlayer(p1);
-        wrappedMatch.setTowerColors(TowerColor.BLACK, p1);
-        wrappedMatch.setWizardFamily(WizardFamily.SHAMAN, p1);
+        decorator.addPlayer(p1);
+        decorator.setTowerColors(TowerColor.BLACK, p1);
+        decorator.setWizardFamily(WizardFamily.SHAMAN, p1);
 
-        wrappedMatch.addPlayer(p2);
-        wrappedMatch.setTowerColors(TowerColor.WHITE, p2);
-        wrappedMatch.setWizardFamily(WizardFamily.KING, p2);
+        decorator.addPlayer(p2);
+        decorator.setTowerColors(TowerColor.WHITE, p2);
+        decorator.setWizardFamily(WizardFamily.KING, p2);
 
-        wrappedMatch.initializeMatch();
-        IslandManager islandManager = wrappedMatch.getIslandManager();
-        MotherNature motherNature = wrappedMatch.getMotherNature();
+        decorator.initializeMatch();
+        IslandManager islandManager = decorator.getIslandManager();
+        MotherNature motherNature = decorator.getMotherNature();
 
         Island MNposition = motherNature.getCurrPosition();
         assertNotNull(MNposition);
@@ -293,6 +303,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testActionPhaseOrder(){
+
         Player p1 = new Player("Phil",TowerColor.BLACK,WizardFamily.SHAMAN);
         Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
 
@@ -331,6 +342,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testSortingOutPlanningPhase() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -362,6 +374,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testRefillClouds() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -385,6 +398,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testMoveStudentInsideGameBoard() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -422,6 +436,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testMotherNatureMovement() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -454,6 +469,7 @@ public class MatchDecoratorTest {
      */
     @Test
     public void testMoveStudent() {
+
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         MatchDecorator decorator = new MatchDecorator(wrappedMatch);
 
@@ -512,4 +528,66 @@ public class MatchDecoratorTest {
         assertNotNull(decorator.getProfessorManager());
     }
 
+    /**
+     * Tests if the finalRound flag is set true in the wrapped match after removing all students from the Bag
+     * It simulates the occurring of a final round condition
+     */
+    @Test
+    public void testIsFinalRound1(){
+        AbstractMatch m = new TwoPlayersMatch();
+        MatchDecorator decorator = new MatchDecorator(m);
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        decorator.addPlayer(p1);
+        decorator.addPlayer(p2);
+        decorator.initializeMatch();
+
+        assertFalse(decorator.isFinalRound());
+        Bag bag = decorator.getBag();
+        bag.removeAll();
+
+        assertTrue(decorator.isFinalRound());
+    }
+
+    /**
+     * Tests if the finalRound flag is set true in the wrappedMatch after removing all HelperCards from a player helper deck
+     * It simulates the occurring of a final round condition
+     */
+    @Test
+    public void testIsFinalRound2(){
+        AbstractMatch m = new TwoPlayersMatch();
+        MatchDecorator decorator = new MatchDecorator(m);
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        decorator.addPlayer(p1);
+        decorator.addPlayer(p2);
+        decorator.initializeMatch();
+        decorator.setCurrPlayer(p1);
+        assertFalse(decorator.isFinalRound());
+
+        List<HelperCard> helperDeck = List.copyOf(p1.getHelperDeck());
+        for(HelperCard card: helperDeck)
+            assertDoesNotThrow(() -> decorator.useHelperCard(card));
+
+        assertTrue(decorator.isFinalRound());
+    }
+
+    /**
+     * Tests the winning of the player with the lower number of towers in his game board
+     */
+    @Test
+    public void testGetWinner(){
+        AbstractMatch m = new TwoPlayersMatch();
+        MatchDecorator decorator = new MatchDecorator(m);
+
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        decorator.addPlayer(p1);
+        decorator.addPlayer(p2);
+        decorator.initializeMatch();
+
+        decorator.getGameBoards().get(p1).removeTower();
+        assertEquals(1,decorator.getWinner().size());
+        assertEquals(p1,decorator.getWinner().get(0));
+    }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model.InfluenceStrategies;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -115,7 +116,7 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy {
      * @param manager the professor manager of the match
      * @return returns the new player owning the island, if nothing changed this method will return null
      */
-    Player returnOwner(int numOfIslands, ProfessorManager manager) {
+    Player returnOwner(int numOfIslands, ProfessorManager manager){
         //return the owner, if no changes than return null
         //if the island ownership hasn't changed do nothing and return null
         if(newOwner == oldOwner) {
@@ -127,9 +128,15 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy {
                 if(player != newOwner && Objects.equals(influenceMap.get(player), influenceMap.get(newOwner)))
                     return null;
             }
+
             //if there is a player with a clear majority the island changes ownership, return the new owner
-            if(oldOwner != null)
-                manager.getGameboards().get(oldOwner).setNumOfTowers(+numOfIslands); //but first give the towers back to the old owner
+            if(oldOwner != null){
+
+                // but first give the towers back to the old owner
+                GameBoard gameBoard = manager.getGameboards().get(oldOwner);
+                for (int i = 0; i < numOfIslands; i++)
+                    gameBoard.addTower();
+            }
             return newOwner;
         }
     }

@@ -4,14 +4,17 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.InternalMoveStrategy;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
+import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Observable;
 
 import java.util.HashMap;
 
 /**
  * Class for manage the single GameBoard of each player
  */
-public class GameBoard implements MoveStudent {
+public class GameBoard extends Observable implements MoveStudent {
     /**
      * References to the player of this GameBoard
      */
@@ -59,13 +62,13 @@ public class GameBoard implements MoveStudent {
     /**
      * Constructor for a GameBoard
      * @param player the player owner of this GameBoard
-     * @param numOfTowers set the max numOfTowers for this player (6 or 8)
+     * @param maxNumOfTowers set the max numOfTowers for this player (6 or 8)
      * @param professor references to Professor Manager to change the owner of the various Professor when needed
      */
-    public GameBoard(Player player, int numOfTowers, ProfessorManager professor, int maxEntranceStudent) {
+    public GameBoard(Player player, int maxNumOfTowers, ProfessorManager professor, int maxEntranceStudent) {
         this.player = player;
-        this.numOfTowers = numOfTowers;
-        this.maxNumOfTowers=numOfTowers;
+        this.numOfTowers = maxNumOfTowers;
+        this.maxNumOfTowers = maxNumOfTowers;
         this.professor = professor;
         this.moveStrategy = new StandardMove();
         this.maxEntranceStudent = maxEntranceStudent;
@@ -120,13 +123,32 @@ public class GameBoard implements MoveStudent {
     }
 
     /**
-     * Setter to add or subtract the num of Towers available
-     * @param numOfTowers num of tower to add (or subtract)
+     * Adds a tower to the GameBoard, only if it isn't already full
      */
-    public void setNumOfTowers(int numOfTowers) {
-        /*if(newValue>maxNumOfTowers)
-            throw new TooManyTowersException("The number of tower cannot be over " + maxNumOfTowers);*/
-        this.numOfTowers = this.numOfTowers + numOfTowers;
+    public void addTower() {
+        if (numOfTowers < maxNumOfTowers)
+            numOfTowers++;
+    }
+
+    /**
+     * Removes a tower from the GameBoard, if there's at least one
+     * Otherwise it sends a notification the observers, saying that the end match conditions occurred
+     */
+    public void removeTower(){
+        if (!areTowersFinished())
+            numOfTowers--;
+        else{
+            for (Observer observer: observers)
+                observer.notify(Notification.END_MATCH);
+        }
+    }
+
+    /**
+     * Returns true if there are no more towers available, false otherwise
+     * @return true if there are no more towers available, false otherwise
+     */
+    boolean areTowersFinished(){
+        return numOfTowers <= 0;
     }
 
     /**
@@ -180,6 +202,7 @@ public class GameBoard implements MoveStudent {
             default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
     }
+
     /**
      * Method to move student from entrance to DiningHall, using a strategy pattern
      * @param color the student's color to move
@@ -190,6 +213,10 @@ public class GameBoard implements MoveStudent {
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
     }
 
+    /**
+     * Returns the total number of students in the dining room
+     * @return the total number of students in the dining room
+     */
     public int getDiningRoomNumOfStud(){
         int tot = 0;
         for (PieceColor color: diningRoom.keySet()){
@@ -198,6 +225,10 @@ public class GameBoard implements MoveStudent {
         return tot;
     }
 
+    /**
+     * Returns the number of students in the entrance
+     * @return the number of students in the entrance
+     */
     public int getEntranceNumOfStud(){
         int tot = 0;
         for (PieceColor color: entrance.keySet()){

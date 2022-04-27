@@ -177,4 +177,16 @@ public interface Match {
      * @return the list containing the cards played in a given turn
      */
     List<HelperCard> getAlreadyPlayedCards();
+
+    /**
+     * Return true if final round conditions previously occurred
+     * @return true if final round conditions previously occurred
+     */
+    boolean isFinalRound();
+
+    /**
+     * Determines who is the winner of the game and returns it
+     * @return the winner of the game, null if a winner hasn't been chosen yet
+     */
+    List<Player> getWinner();
 }

@@ -96,18 +96,34 @@ public class ExpertMatchDecorator extends MatchDecorator{
      * @param color is the PieceColor needed by the card to activate its effect. It is null if not needed
      * @param island is the Island needed by the card to activate its effect. It is null if not needed
      * @throws InsufficientCoinException when trying to make the current player spend more coins than possessed
+     * @throws TooManyStudentsException when the card effect cannot be successfully activated due to full destination for students
+     * @throws NoSuchColorException when the card effect cannot be successfully activated due to incorrect PieceColor
      */
-    //TODO rivedere come richiedere parametri della activateEffect()
+
     public void playCard(AbstractCharacterCard card,PieceColor color,Island island, List<PieceColor> extraColors) throws InsufficientCoinException, NoSuchColorException, TooManyStudentsException {
         Player currPlayer = wrappedMatch.getCurrPlayer();
+        boolean wasUsed = card.wasUsed();
         int cardPrice = card.getPrice();
         try {
             currPlayer.removeCoins(cardPrice);
         } catch (InsufficientCoinException e) {
             throw new InsufficientCoinException(e.getMessage(),e.getCause());
         }
-        //TODO try catch, se lancio eccezione, rimborso player
-        card.activateEffect(island,color,extraColors);
+
+        try{
+            card.activateEffect(island,color,extraColors);
+        } catch (TooManyStudentsException e){
+            currPlayer.addCoins(cardPrice);
+            card.setActive(false);
+            card.setWasUsed(wasUsed);
+            throw new TooManyStudentsException(e.getMessage(),e.getCause());
+        }
+        catch (NoSuchColorException e){
+            currPlayer.addCoins(cardPrice);
+            card.setActive(false);
+            card.setWasUsed(wasUsed);
+            throw new NoSuchColorException(e.getMessage(),e.getCause());
+        }
     }
 
     /**

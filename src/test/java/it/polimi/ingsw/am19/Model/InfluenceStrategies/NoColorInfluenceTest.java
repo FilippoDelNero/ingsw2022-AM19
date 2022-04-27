@@ -41,8 +41,10 @@ public class NoColorInfluenceTest {
         Player player3 = new Player("Laura", TowerColor.GREY, WizardFamily.WARRIOR);
         //create 3 gameboard, one for each player
         GameBoard gameBoard1 = new GameBoard(player1, 8, manager, 7);
-        GameBoard gameBoard2 = new GameBoard(player2, 7, manager, 7);
+        GameBoard gameBoard2 = new GameBoard(player2, 8, manager, 7);
         GameBoard gameBoard3 = new GameBoard(player3, 8, manager, 7);
+        gameBoard2.removeTower();
+
         //associate a board to a player
         GB.put(player1, gameBoard1);
         GB.put(player2, gameBoard2);

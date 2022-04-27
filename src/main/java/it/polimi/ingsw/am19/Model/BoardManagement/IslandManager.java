@@ -3,15 +3,18 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.StandardInfluence;
 import it.polimi.ingsw.am19.Model.Utilities.IslandList;
+import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Observable;
 
 import java.util.*;
 
 /**
  * This class is used by the MatchXPlayer class to manage the islands
  */
-public class IslandManager {
+public class IslandManager extends Observable {
     /**
      * list storing the number of island or group of islands currently present
      */
@@ -131,6 +134,8 @@ public class IslandManager {
 
     /**
      * check if there are adjacent islands with same tower's color and merges them
+     * after merging together two islands, a check is made to the number of Islands in the archipelago
+     * if the number is 3, a notification si sent to the observers to say that an end match conditions is now verified
      */
     private void lookForIslandsToMerge() {
         Island island1;
@@ -140,6 +145,9 @@ public class IslandManager {
             island2 = iterator.next();
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
+                if (getIslands().size() == 3)
+                    for (Observer observer: observers)
+                        observer.notify(Notification.FINAL_ROUND);
             }
         }
     }

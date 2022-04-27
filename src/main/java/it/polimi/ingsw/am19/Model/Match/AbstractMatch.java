@@ -1,17 +1,22 @@
 package it.polimi.ingsw.am19.Model.Match;
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.Exceptions.*;
-import it.polimi.ingsw.am19.Model.Utilities.Observable;
+import it.polimi.ingsw.am19.Utilities.Notification;
+import it.polimi.ingsw.am19.Observable;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Observer;
 
 import java.util.*;
+
+import static it.polimi.ingsw.am19.Utilities.Notification.END_MATCH;
+import static it.polimi.ingsw.am19.Utilities.Notification.FINAL_ROUND;
 
 /**
  * Abstract Class that implements all methods shared by different kinds of Matches
  */
-public abstract class AbstractMatch extends Observable implements Match {
+public abstract class AbstractMatch extends Observable implements Match, Observer {
     /**
      * Number of Players expected
      */
@@ -75,7 +80,17 @@ public abstract class AbstractMatch extends Observable implements Match {
     /**
      * Saves the already played HelperCards
      */
-    List<HelperCard> alreadyPlayedCards ;
+    List<HelperCard> alreadyPlayedCards;
+
+    /**
+     * Is true if the final round conditions are met
+     */
+    boolean finalRound;
+
+    /**
+     * Is the winner Player, null if there's no winner
+     */
+    List<Player> winners;
 
     /**
      * Builds a new Match with the specified number of Players
@@ -95,6 +110,8 @@ public abstract class AbstractMatch extends Observable implements Match {
         this.wizardFamilies = new ArrayList<>(Arrays.asList(WizardFamily.values()));
         this.towerColors = new ArrayList<>(Arrays.asList(TowerColor.values()));
         this.alreadyPlayedCards = new ArrayList<>();
+        this.finalRound = false;
+        this.winners = new ArrayList<>();
     }
 
     /**
@@ -391,5 +408,71 @@ public abstract class AbstractMatch extends Observable implements Match {
     @Override
     public List<HelperCard> getAlreadyPlayedCards() {
         return this.alreadyPlayedCards;
+    }
+
+    /**
+     * Return true if final round conditions previously occurred
+     * @return true if final round conditions previously occurred
+     */
+    @Override
+    public boolean isFinalRound() {
+        return finalRound;
+    }
+
+    /**
+     * Reacts to the receiving of a Notification from the observed classes
+     * @param notification is the notification type provided by the observed class
+     */
+    @Override
+    public void notify(Notification notification){
+        switch (notification){
+            case END_MATCH -> {
+                for (Observer observer: observers)
+                    observer.notify(Notification.FINAL_ROUND);
+                computeWinners();
+            }
+            case FINAL_ROUND -> finalRound = true;
+        }
+    }
+
+    /**
+     * Computes the winner, if there was no winner
+     * @return a list of winners. The list contains more than one Player, in case the match ended in a draw, otherwise it contains a single winning Player
+     */
+    @Override
+    public List<Player> getWinner(){
+        if (winners.isEmpty())
+            computeWinners();
+        return winners;
+    }
+
+    private void computeWinners(){
+        //num out of number of towers range
+        int minNumTowers = 9;
+
+        //check who has min number of towers in the game board
+        for(Player player: getGameBoards().keySet()) {
+            int numTowers = getGameBoards().get(player).getNumOfTowers();
+            if (numTowers < minNumTowers){
+                minNumTowers = numTowers;
+                winners = new ArrayList<>();
+                winners.add(player);
+            }
+            //in case of more player with same number of towers
+            else if(numTowers == minNumTowers){
+                for (Player winner: List.copyOf(winners)){
+                    int winnerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(winner);
+                    int playerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(player);
+
+                    if (playerNumProfessors > winnerNumProfessors){
+                        winners = new ArrayList<>();
+                        winners.add(player);
+                    }
+                    //in case of more player with same number of professors, the number of winners is multiple
+                    else if (playerNumProfessors == winnerNumProfessors)
+                        winners.add(player);
+                }
+            }
+        }
     }
 }

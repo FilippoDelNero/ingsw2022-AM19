@@ -267,6 +267,24 @@ public class MatchDecorator implements Match{
     }
 
     /**
+     * Return true if final round conditions previously occurred in the wrapped match
+     * @return true if final round conditions previously occurred in the wrapped match
+     */
+    @Override
+    public boolean isFinalRound() {
+        return wrappedMatch.isFinalRound();
+    }
+
+    /**
+     * Computes the winner, if there was no winner
+     * @return a list of winners. The list contains more than one Player, in case the match ended in a draw, otherwise it contains a single winning Player
+     */
+    @Override
+    public List<Player> getWinner() {
+        return wrappedMatch.getWinner();
+    }
+
+    /**
      * Returns a reference to the wrapped AbstractMatch
      * @return a reference to the wrapped AbstractMatch
      */
