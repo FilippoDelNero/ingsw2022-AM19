@@ -67,7 +67,7 @@ public class TakeProfessorCard extends AbstractCharacterCard{
     @Override
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color, pieceColorList);
-        professorManager.setWhoUsedTheCard(m.getCurrPlayer().getCurrentCard().getNextRoundOrder());
+        professorManager.setWhoUsedTheCard(m.getCurrPlayer(), m.getCurrPlayer().getCurrentCard().getNextRoundOrder());
         this.professorManager.setCurrentStrategy(strategy);
         this.active = false;
     }

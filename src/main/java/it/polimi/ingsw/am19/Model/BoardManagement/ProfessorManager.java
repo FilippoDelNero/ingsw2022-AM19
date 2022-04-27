@@ -28,10 +28,16 @@ public class ProfessorManager {
     private final CheckProfessorStrategy defaultStrategy;
 
     /**
+     * the player the played the Character Card
+     * this value is used to determine if we are in a new turn or not
+     */
+    private Player whoUsedTheCard;
+
+    /**
      * the value of the nextRoundOrder of the card played by the first player
      * this value is used to determine if we are in a new turn or not
      */
-    private int whoUsedTheCard;
+    private int HelperCardOfWhoUsedTheCard;
 
     /**
      * constructs a new, empty ProfessorManager entity
@@ -88,8 +94,9 @@ public class ProfessorManager {
      * setter for the whoUsedTheCard attribute
      * @param value the value of the card played by the first player in a given turn
      */
-    public void setWhoUsedTheCard(int value) {
-        whoUsedTheCard = value;
+    public void setWhoUsedTheCard(Player player, int value) {
+        whoUsedTheCard = player;
+        HelperCardOfWhoUsedTheCard = value;
     }
 
     /**
@@ -142,8 +149,7 @@ public class ProfessorManager {
      * @return true if we are in the same turn, false otherwise
      */
     private boolean isNewTurn(Player player) {
-        int currentCardUsed = player.getCurrentCard().getNextRoundOrder();
-        return currentCardUsed != whoUsedTheCard;
+        return whoUsedTheCard != player || HelperCardOfWhoUsedTheCard != player.getCurrentCard().getNextRoundOrder();
     }
 
 

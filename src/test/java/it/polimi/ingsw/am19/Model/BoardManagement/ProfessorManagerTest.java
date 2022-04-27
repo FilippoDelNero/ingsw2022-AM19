@@ -61,7 +61,7 @@ class ProfessorManagerTest {
         GB.put(player3, gameBoard3);
         //set the Gameboards attribute inside the professor manager
         manager.setGameboards(GB);
-        manager.setWhoUsedTheCard(1);
+        manager.setWhoUsedTheCard(player1, 1);
         assertDoesNotThrow(() -> player1.useHelperCard(player1.getHelperDeck().get(0)));
 
         assertDoesNotThrow(() -> gameBoard1.addStudent(PieceColor.RED));
