@@ -2,15 +2,18 @@ package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.MotherNaturePlusTwoCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.StudentToHallCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.StudentToIslandCard;
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.util.ArrayList;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -86,12 +89,37 @@ public class ExpertMatchDecoratorTest {
     }
 
     /**
-     * Tests trying to make the current player play a card he can afford
+     * Tests playing successfully a character card during an expert game
      */
     @Test
     public void testPlayAffordableCard(){
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
+        AbstractCharacterCard card = new MotherNaturePlusTwoCard(wrappedMatch);
+
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        decorator.addPlayer(p1);
+
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        decorator.addPlayer(p2);
+        int cardPrice = card.getPrice();
+        decorator.initializeMatch();
+        decorator.setCurrPlayer(p1);
+        p1.addCoins(cardPrice);
+
+        assertDoesNotThrow(() -> decorator.playCard(card, null, null, null));
+        assertEquals(1,p1.getCoins());
+    }
+
+    /**
+     * Tests making the current player play a character card he can afford in case tha playCard() method throws an exception
+     */
+    @Test
+    public void testPlayCardWithException(){
+        AbstractMatch wrappedMatch = new TwoPlayersMatch();
+        ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
+        AbstractCharacterCard card = new StudentToHallCard(wrappedMatch);
+        card.getStudents().replace(PieceColor.RED,1);
 
         Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
         decorator.addPlayer(p1);
@@ -102,121 +130,42 @@ public class ExpertMatchDecoratorTest {
         decorator.initializeMatch();
         decorator.setCurrPlayer(p1);
 
-        AbstractCharacterCard card = decorator.getCharacterCards().get(0);
         int cardPrice = card.getPrice();
-        Island island = decorator.getIslandManager().getIslands().get(0);
-
         p1.addCoins(cardPrice);
-        switch(card.getId()){
-            case LADRO ->
-                    //up to 3 students of the chosen color need to be removed from everybody's dining room
-                    assertDoesNotThrow(() -> decorator.playCard(card, PieceColor.YELLOW,null, null));
+        int playerWallet = p1.getCoins();
 
-            case ARALDO ->
-                    //calculates influence on the island chosen
-                    assertDoesNotThrow(() ->decorator.playCard(card,null,island, null));
+        decorator.getGameBoards().get(p1).getDiningRoom().replace(PieceColor.RED,10);
+        assertThrows(TooManyStudentsException.class,
+                () -> decorator.playCard(card, PieceColor.RED, null, null));
+        assertEquals(playerWallet,p1.getCoins());
+    }
 
-            case MONACO -> {
-                    //is one of the colors fof the students one the card
-                    PieceColor color = (new ArrayList<>(card.getStudents().keySet())).get(0);
-                    assertDoesNotThrow(() -> decorator.playCard(card,PieceColor.BLUE,null, null));
-            }
-            case FUNGARO ->
-                    //the color chosen will not be taken into account while computing influence
-                    assertDoesNotThrow(() -> decorator.playCard(card,PieceColor.GREEN,null, null));
+    /**
+     * Tests making the current player play a character card he can afford in case tha playCard() method throws another type of exception
+     */
+    @Test
+    public void testPlayCardWithAnotherException(){
+        AbstractMatch wrappedMatch = new TwoPlayersMatch();
+        ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
+        AbstractCharacterCard card = new StudentToIslandCard(wrappedMatch);
+        card.getStudents().replace(PieceColor.RED,0);
 
-            case CENTAURO ->
-                    //towers will not be taken into account while computing influence on the chosen island
-                    assertDoesNotThrow(() -> decorator.playCard(card,null,island, null));
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        decorator.addPlayer(p1);
 
-            case GIULLARE ->{
-                    //replace the entrance of the currentPlayer with a custom map
-                    decorator.getGameBoards().get(p1).getEntrance().replace(PieceColor.BLUE,3);
-                    decorator.getGameBoards().get(p1).getEntrance().replace(PieceColor.GREEN,2);
-                    decorator.getGameBoards().get(p1).getEntrance().replace(PieceColor.YELLOW,2);
-                    decorator.getGameBoards().get(p1).getEntrance().replace(PieceColor.RED,0);
-                    decorator.getGameBoards().get(p1).getEntrance().replace(PieceColor.PINK,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        decorator.addPlayer(p2);
 
-                    //replace students on the card
-                    card.getStudents().replace(PieceColor.BLUE,0);
-                    card.getStudents().replace(PieceColor.GREEN,0);
-                    card.getStudents().replace(PieceColor.YELLOW,0);
-                    card.getStudents().replace(PieceColor.RED,3);
-                    card.getStudents().replace(PieceColor.PINK,3);
+        decorator.initializeMatch();
+        decorator.setCurrPlayer(p1);
 
-                    //swapping list:
-                    ArrayList<PieceColor> swapStud = new ArrayList<>();
-                    swapStud.add(PieceColor.PINK);
-                    swapStud.add(PieceColor.BLUE);
-                    swapStud.add(PieceColor.RED);
-                    swapStud.add(PieceColor.GREEN);
-                    swapStud.add(PieceColor.RED);
-                    swapStud.add(PieceColor.YELLOW);
+        int cardPrice = card.getPrice();
+        p1.addCoins(cardPrice);
+        int playerWallet = p1.getCoins();
 
-                    assertDoesNotThrow(() -> decorator.playCard(card,null,null, swapStud));
-            }
-            case CAVALIERE ->
-                    //additional 2 points while calculating influence
-                    assertDoesNotThrow(() -> decorator.playCard(card, null,null, null));
-
-            case CONTADINO ->
-                    //takes the control over a professor under new conditions
-                    assertDoesNotThrow(() -> decorator.playCard(card, null,null, null));
-
-            case NONNA_ERBE ->
-                    //needs an island to put a no entry tile on
-                    assertDoesNotThrow(() -> decorator.playCard(card, null,island, null));
-
-            case MENESTRELLO -> {
-                    //put all students in the entrance in a list
-                    GameBoard gameBoard = decorator.getGameBoards().get(p1);
-                    List<PieceColor> studentToSwap = new ArrayList<>();
-                    for(PieceColor c : gameBoard.getEntrance().keySet()) {
-                        for(int i = 0; i < gameBoard.getEntrance().get(c); i++) {
-                            studentToSwap.add(c);
-                        }
-                    }
-
-                    //find a color
-                    PieceColor finalColor = studentToSwap.get(0);
-                    //move a student of that color
-                    assertDoesNotThrow(() -> decorator.moveStudentToDiningRoom(finalColor));
-                    //again find a color
-                    PieceColor finalColor2 = studentToSwap.get(1);
-                    //again move a student of that color
-                    assertDoesNotThrow(() -> decorator.moveStudentToDiningRoom(finalColor2));
-
-                    //find two more colors from the player's entrance
-                    PieceColor finalColor3 = studentToSwap.get(2);
-
-                    PieceColor finalColor4 = studentToSwap.get(3);
-
-                    List<PieceColor> list = new ArrayList<>();
-                    list.add(finalColor3);
-                    list.add(finalColor);
-                    list.add(finalColor4);
-                    list.add(finalColor2);
-
-                    assertDoesNotThrow(() -> decorator.playCard(card, null,null, list));
-            }
-
-            case POSTINO_MAGICO ->
-                    //makes mother nature able to move an additional number of steps
-                    assertDoesNotThrow(() -> decorator.playCard(card, null,null, null));
-
-            case PRINCIPESSA_VIZIATA ->{
-                    //puts a student of the chosen color in the dining room
-                    List<PieceColor> pieceColorList = new ArrayList<>();
-                    for(PieceColor c : card.getStudents().keySet()) {
-                        for(int i = 0; i < card.getStudents().get(c); i++) {
-                            pieceColorList.add(c);
-                        }
-                    }
-                    assertDoesNotThrow(() -> decorator.playCard(card, pieceColorList.get(0),null, null));
-            }
-        }
-
-        assertEquals(1,p1.getCoins());
+        assertThrows(NoSuchColorException.class,
+                () -> decorator.playCard(card, PieceColor.RED, null, null));
+        assertEquals(playerWallet,p1.getCoins());
     }
 
     /**
