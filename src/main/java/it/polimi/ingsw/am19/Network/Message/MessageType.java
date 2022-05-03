@@ -5,17 +5,12 @@ package it.polimi.ingsw.am19.Network.Message;
  */
 public enum MessageType {
     //login message
-    NEW_MATCH,
     ASK_NUM_PLAYERS,
     NUM_PLAYERS,
     ASK_EXPERT_MATCH,
     MATCH_TYPE,
-    ASK_NICKNAME,
-    LOGIN_NICKNAME,
-    ASK_TOWER_COLOR,
-    LOGIN_TOWER_COLOR,
-    ASK_WIZARD_FAMILY,
-    LOGIN_WIZARD_FAMILY,
+    ASK_LOGIN_INFO,
+    REPLY_LOGIN_INFO,
 
     //resume a match
     ASK_RESUME_MATCH,
@@ -24,18 +19,15 @@ public enum MessageType {
 
     //character card message
     PLAY_CHARACTER_CARD,
-    REQUEST_COLOR,
-    REQUEST_ISLAND,
-    REQUEST_COLOR_LIST,
-    CHOSEN_COLOR_LIST,
+    ASK_CHARACTER_PARAMETER,
+    REPLY_CHARACTER_PARAMETER,
 
     //planning phase
     PLAYABLE_HELPER_CARD,
     PLAY_HELPER_CARD,
 
     //action phase part 1
-    CHOSEN_COLOR,
-    WHERE_MOVE,
+    ENTRANCE_MOVE,
     ENTRANCE_TO_ISLAND,
     ENTRANCE_TO_DINING_ROOM,
 
