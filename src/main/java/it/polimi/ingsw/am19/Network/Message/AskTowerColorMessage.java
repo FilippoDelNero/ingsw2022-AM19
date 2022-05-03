@@ -4,6 +4,10 @@ import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
 import java.util.List;
 
+/**
+ * Message for ask a TowerColor for a new Player
+ * Contains the list with the TowerColor still available
+ */
 public class AskTowerColorMessage extends Message {
     private final List<TowerColor> towerColorAvailable;
 

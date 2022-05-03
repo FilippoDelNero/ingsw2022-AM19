@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskExpertMatch. Contains a boolean if the match have to be expert
+ */
 public class ReplyMatchTypeMessage extends Message {
     private final boolean isExpertMatch;
 

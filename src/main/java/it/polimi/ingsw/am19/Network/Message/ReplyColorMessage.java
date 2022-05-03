@@ -2,6 +2,9 @@ package it.polimi.ingsw.am19.Network.Message;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+/**
+ * Reply to AskColor. Contains the PieceColor chosen
+ */
 public class ReplyColorMessage extends Message {
     private final PieceColor colorChosen;
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskHelperCard with the nextRoundOrderChosen
+ */
 public class ReplyHelperCardMessage extends Message {
     private final int nextRoundOrderChosen;
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskCloud. Contains the num of the Cloud chosen
+ */
 public class ReplyCloudMessage extends Message {
     private final int cloudChosen;
 

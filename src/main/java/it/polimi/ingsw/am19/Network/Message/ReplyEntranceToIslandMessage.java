@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskWhereMove when the player want to move the student on an Island
+ * Contains the num of the Island chosen
+ */
 public class ReplyEntranceToIslandMessage extends Message {
     private final int island;
 
