@@ -16,6 +16,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <sonar.exclusions>**/HelloController.java</sonar.exclusions>
         <sonar.exclusions>**/HelloApplication.java</sonar.exclusions>
+        <sonar.exclusions>**/Network/**/*</sonar.exclusions>
+        <sonar.exclusions>**/Utilities/**/*</sonar.exclusions>
+        <sonar.exclusions>**/View/**/*</sonar.exclusions>
     </properties>
 
     <dependencies>

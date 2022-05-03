@@ -10,8 +10,6 @@ public class GenericMessage extends Message{
 
     @Override
     public String toString() {
-        return "GenericMessage{" +
-                "message='" + message + '\'' +
-                '}';
+        return message;
     }
 }

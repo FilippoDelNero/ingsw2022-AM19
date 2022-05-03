@@ -14,4 +14,6 @@ module it.polimi.ingsw.am19 {
     exports it.polimi.ingsw.am19;
     exports it.polimi.ingsw.am19.Utilities;
     opens it.polimi.ingsw.am19.Utilities to javafx.fxml;
+    exports it.polimi.ingsw.am19.Network.Server;
+    opens it.polimi.ingsw.am19.Network.Server to javafx.fxml;
 }
