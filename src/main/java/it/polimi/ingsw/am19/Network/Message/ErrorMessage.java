@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Error message. Send by server, the client only has to print the string 'error'
+ * No reply expected
+ */
 public class ErrorMessage extends Message{
     private final String error;
 

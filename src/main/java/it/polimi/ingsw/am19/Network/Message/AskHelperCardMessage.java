@@ -2,6 +2,10 @@ package it.polimi.ingsw.am19.Network.Message;
 
 import java.util.Arrays;
 
+/**
+ * Message for ask an helperCard to use in the planning phase.
+ * Contains an array with the nextRoundOrder of the card still available for the current player of this phase
+ */
 public class AskHelperCardMessage extends Message {
     private final int [] playableHelperCard;
 

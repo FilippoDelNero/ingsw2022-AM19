@@ -2,6 +2,9 @@ package it.polimi.ingsw.am19.Network.Message;
 
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
+/**
+ * Reply to AskTowerColor. Have to contain a TowerColor still available
+ */
 public class ReplyTowerColorMessage extends Message {
     private final TowerColor colorChosen;
 

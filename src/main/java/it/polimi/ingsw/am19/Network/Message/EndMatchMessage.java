@@ -2,6 +2,10 @@ package it.polimi.ingsw.am19.Network.Message;
 
 import java.util.Arrays;
 
+/**
+ * Message sent at the end of a match.
+ * Contains the array with the name of winners (in case of tie in a 3-players match)
+ */
 public class EndMatchMessage extends Message {
     private final String[] winners;
 

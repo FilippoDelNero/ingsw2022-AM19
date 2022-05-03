@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskMotherNatureStep. Contains the num of step choose by the player
+ */
 public class ReplyMotherNatureStepMessage extends Message {
     private final int step;
 

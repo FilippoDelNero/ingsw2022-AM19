@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskResumeMatch if we have to resume the last match
+ */
 public class ReplyResumeMatch extends Message {
     private final boolean resuming;
 

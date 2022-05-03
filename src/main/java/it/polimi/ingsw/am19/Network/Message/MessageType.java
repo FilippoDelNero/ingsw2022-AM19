@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am19.Network.Message;
 
 /**
- * Enum for the type of message. It avoids the use of instance of
+ * Enum for the type of message. It avoids the use of 'instance of'
  */
 public enum MessageType {
     //login message
@@ -12,7 +12,6 @@ public enum MessageType {
     MATCH_TYPE,
     ASK_NICKNAME,
     LOGIN_NICKNAME,
-    LOGIN_REPLY,
     ASK_TOWER_COLOR,
     LOGIN_TOWER_COLOR,
     ASK_WIZARD_FAMILY,

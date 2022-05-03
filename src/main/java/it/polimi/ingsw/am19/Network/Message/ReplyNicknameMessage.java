@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Reply to AskNickname. Contains a new nickname choose by a player
+ */
 public class ReplyNicknameMessage extends Message {
     private final String nicknameChosen;
 

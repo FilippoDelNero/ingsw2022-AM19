@@ -4,6 +4,10 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
 import java.util.List;
 
+/**
+ * Reply to AskColorList.
+ * Contains the list of PieceColor to use in the activateEffect
+ */
 public class ReplyColorListMessage extends Message {
     private final List<PieceColor> pieceColorList;
 

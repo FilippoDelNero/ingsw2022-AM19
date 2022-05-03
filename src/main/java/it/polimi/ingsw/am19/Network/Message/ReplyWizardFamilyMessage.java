@@ -2,6 +2,9 @@ package it.polimi.ingsw.am19.Network.Message;
 
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 
+/**
+ * Reply to AskWizardFamily. Have to contain a WizardFamily still available
+ */
 public class ReplyWizardFamilyMessage extends Message {
     private final WizardFamily wizardFamilyChosen;
 

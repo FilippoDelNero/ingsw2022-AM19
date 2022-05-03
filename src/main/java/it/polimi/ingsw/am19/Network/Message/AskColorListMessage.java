@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+/**
+ * Message for ask a PieceColor List for the activateEffect of some CharacterCards
+ * Contains an int with the max length for the list
+ */
 public class AskColorListMessage extends Message {
     private final int lengthList;
 
