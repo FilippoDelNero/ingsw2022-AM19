@@ -1,11 +1,12 @@
 package it.polimi.ingsw.am19.View.Cli;
 
+import it.polimi.ingsw.am19.View.View;
+
 import java.io.PrintStream;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-public class Cli {
+public class Cli implements View {
     private final PrintStream printer;
     Thread inputThread;
 
@@ -29,21 +30,21 @@ public class Cli {
         return input;
     }
 
-    public boolean askResumeMatch() throws ExecutionException {
-        String input;
-        while(true) {
-            printer.println("Welcome, do you want to resume an old match? [y/n]");
-
-            input = readLine();
-
-            if(input.equals("y"))
-                return true;
-            else if(input.equals("n"))
-                return false;
-        }
+    @Override
+    public void init() {
+        printer.println("#######                                           ");
+        printer.println("#       #####  #   #   ##   #    # ##### #  ####  ");
+        printer.println("#       #    #  # #   #  #  ##   #   #   # #      ");
+        printer.println("#####   #    #   #   #    # # #  #   #   #  ####  ");
+        printer.println("#       #####    #   ###### #  # #   #   #      # ");
+        printer.println("#       #   #    #   #    # #   ##   #   # #    # ");
+        printer.println("####### #    #   #   #    # #    #   #   #  ####  ");
+        printer.println("\n");
+        printer.println("Welcome!");
     }
 
-    public void genericPrint(String toPrint) {
-        printer.println(toPrint);
+    @Override
+    public void error(String errorMsg) {
+        printer.println(errorMsg);
     }
 }
