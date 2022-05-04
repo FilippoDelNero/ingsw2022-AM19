@@ -6,17 +6,10 @@ import static java.lang.Thread.sleep;
 
 public class ExecutableServer {
     public static void main(String[] args) {
-        boolean bool = true;
-        Server server = new Server(1236); //this will be passed as argument
-        while(bool) {
+        Server server = new Server(1237); //this will be passed as argument
+        while(true) {
         server.connect();
-        bool = false;
         }
-        try {
-            sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        server.sendMessageToAll(new AskResumeMatchMessage());
+
     }
 }

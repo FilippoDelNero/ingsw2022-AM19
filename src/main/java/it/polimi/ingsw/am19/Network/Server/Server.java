@@ -14,6 +14,8 @@ public class Server {
 
     private final ExecutorService pool;
 
+    private final LoginManager loginManager;
+
     private final List<ClientManager> managers;
 
     public Server(int port) {
@@ -22,6 +24,7 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.loginManager = new LoginManager();
         managers = new ArrayList<>();
         pool = Executors.newCachedThreadPool();
     }
@@ -30,6 +33,7 @@ public class Server {
         ClientManager clientManager;
         pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket));
         managers.add(clientManager);
+        loginManager.login(clientManager);
     }
 
     public void sendMessageToAll(Message msg) {

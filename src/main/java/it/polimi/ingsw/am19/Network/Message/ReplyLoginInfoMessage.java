@@ -5,20 +5,13 @@ import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
 
 public class ReplyLoginInfoMessage extends Message {
-    private final String nickname;
     private final TowerColor towerColor;
     private final WizardFamily wizardFamily;
-    private ClientManager clientManager = null;
 
     public ReplyLoginInfoMessage(String nickname, TowerColor towerColor, WizardFamily wizardFamily) {
-        super(null, MessageType.REPLY_LOGIN_INFO);
-        this.nickname = nickname;
+        super(nickname, MessageType.REPLY_LOGIN_INFO);
         this.towerColor = towerColor;
         this.wizardFamily = wizardFamily;
-    }
-
-    public void setClientManager(ClientManager clientManager) {
-        this.clientManager = clientManager;
     }
 
     public TowerColor getTowerColor() {
@@ -29,17 +22,13 @@ public class ReplyLoginInfoMessage extends Message {
         return wizardFamily;
     }
 
-    public ClientManager getClientManager() {
-        return clientManager;
-    }
 
     @Override
     public String toString() {
         return "ReplyLoginInfoMessage{" +
-                "nickname='" + nickname + '\'' +
+                "nickname='" + getNickname() + '\'' +
                 ", towercolor=" + towerColor +
                 ", wizardFamily=" + wizardFamily +
-                ", clientManager=" + clientManager +
                 '}';
     }
 }

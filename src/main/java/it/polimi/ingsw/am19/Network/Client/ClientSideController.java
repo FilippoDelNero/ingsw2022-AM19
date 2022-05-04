@@ -31,4 +31,27 @@ public class ClientSideController {
             e.printStackTrace();
         }
     }
+
+    private void askLoginInfo(AskLoginInfoMessage msg){
+        String nickname;
+        TowerColor towercolor;
+        WizardFamily wizardFamily;
+        try {
+            nickname = view.askNickname();
+            towercolor = view.askTowerColor(msg.getTowerColorsAvailable());
+            wizardFamily = view.askWizardFamily(msg.getWizardFamiliesAvailable());
+            myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void generic(GenericMessage msg) {
+        view.genericPrint(msg.toString());
+    }
+
+    private void error(ErrorMessage msg) {
+        view.error(msg.toString());
+        communicate(previousMsg);
+    }
 }
