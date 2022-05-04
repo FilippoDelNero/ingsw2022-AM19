@@ -58,7 +58,7 @@ public class Client {
                         Message msg;
                         try {
                             msg = (Message) input.readObject();
-                            cli.genericPrint(msg.toString());
+                            //cli.genericPrint(msg.toString());
                             myController.communicate(msg);
                             //TODO CHANGE THIS, TO WHOM SHOULD I SEND THE RECEIVED MESSAGE
                             //System.out.println("client: " + msg.toString());

@@ -59,11 +59,12 @@ public class ClientManager implements Runnable{
         while(!Thread.currentThread().isInterrupted()) {
             try {
                 Message msg = (Message) input.readObject();
-                if(!(msg.getMessageType() == MessageType.PING_MESSAGE))
-                    myServer.receiveMessage(msg);
                 if(msg.getMessageType() == MessageType.PING_MESSAGE)
                     myTimer.reset();
-
+                else if(msg.getMessageType() == MessageType.RESUME_MATCH ||
+                        msg.getMessageType() == MessageType.REPLY_CREATE_MATCH ||
+                        msg.getMessageType() == MessageType.REPLY_LOGIN_INFO)
+                    myServer.MessageToLoginManager(msg);
             } catch (IOException | ClassNotFoundException e) {
                 close();
             }

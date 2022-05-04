@@ -32,18 +32,35 @@ public class Cli {
         return input;
     }
 
-    public boolean askResumeMatch() throws ExecutionException {
+    public void init() {
+        printer.println("######## ########  ##    ##    ###    ##    ## ######## ####  ###### ");
+        printer.println("##       ##     ##  ##  ##    ## ##   ###   ##    ##     ##  ##    ## ");
+        printer.println("##       ##     ##   ####    ##   ##  ####  ##    ##     ##  ##       ");
+        printer.println("######   ########     ##    ##     ## ## ## ##    ##     ##   ######  ");
+        printer.println("##       ##   ##      ##    ######### ##  ####    ##     ##        ## ");
+        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##     ##  ##    ## ");
+        printer.println("######## ##     ##    ##    ##     ## ##    ##    ##    ####  ######  ");
+        printer.println("\n");
+        printer.println("Welcome!\n\n");
+    }
+
+    public int newMatchNumOfPlayers() throws ExecutionException {
         String input;
-        while(true) {
-            printer.println("Welcome, do you want to resume an old match? [y/n]");
-
+        printer.println("There are no matches to resume, we will create a new one:");
+        do {
+            printer.println("How many players? [2, 3]");
             input = readLine();
+        } while(!input.equals("2") && !input.equals("3"));
+        return Integer.parseInt(input);
+    }
 
-            if(input.equals("y"))
-                return true;
-            else if(input.equals("n"))
-                return false;
-        }
+    public boolean newMatchIsExpert() throws ExecutionException {
+        String input;
+        do  {
+            printer.println("Do you want to play an expert match? [yes, no]");
+            input = readLine();
+        } while (!input.equals("yes") && !input.equals("no"));
+        return input.equals("yes");
     }
 
     public String askNickname() throws ExecutionException {
