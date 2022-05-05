@@ -5,6 +5,8 @@ package it.polimi.ingsw.am19.Network.Message;
  */
 public enum MessageType {
     //login message
+    ASK_LOGIN_FIRST_PLAYER,
+    REPLY_CREATE_MATCH,
     ASK_NUM_PLAYERS,
     NUM_PLAYERS,
     ASK_EXPERT_MATCH,

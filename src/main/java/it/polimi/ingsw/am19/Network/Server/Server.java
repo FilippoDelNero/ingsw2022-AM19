@@ -14,6 +14,8 @@ public class Server {
 
     private final ExecutorService pool;
 
+    private final LoginManager loginManager;
+
     private final List<ClientManager> managers;
 
     public Server(int port) {
@@ -22,6 +24,7 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.loginManager = new LoginManager();
         managers = new ArrayList<>();
         pool = Executors.newCachedThreadPool();
     }
@@ -30,19 +33,13 @@ public class Server {
         ClientManager clientManager;
         pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket));
         managers.add(clientManager);
+        loginManager.login(clientManager);
     }
 
-    public void sendMessageToAll(Message msg) {
-        System.out.println("sto inviando un messaggio");
-        for(ClientManager clientManager : managers) {
-            clientManager.sendMessage(msg);
-        }
-    }
+    public void MessageToLoginManager(Message msg) {
 
-    public void receiveMessage(Message msg) {
-        //TODO CHANGE THIS, MASSAGES WILL GO TO THE CONTROLLER
-        System.out.println("ricevuto: " + msg.toString());
-        this.sendMessageToAll(msg);
+        System.out.println(msg.toString());
+        loginManager.setAnswerFromClient(msg);
     }
 
 

@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ExecutableClient {
     public static void main(String[] args) {
-        Client client = new Client("0.0.0.0", 1236); //this will be passed as argument. The id should be a random number
+        Client client = new Client("0.0.0.0", 1237); //this will be passed as argument. The id should be a random number
         client.startPinging();
         client.receiveMessage();
 

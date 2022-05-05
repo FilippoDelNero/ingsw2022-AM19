@@ -3,26 +3,27 @@ package it.polimi.ingsw.am19.Network.Message;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Message for asking the login info of a player
  */
 public class AskLoginInfoMessage extends Message {
-    private final List<TowerColor> towerColorsAvailable;
-    private final List<WizardFamily> wizardFamiliesAvailable;
+    private final ArrayList<TowerColor> towerColorsAvailable;
+    private final ArrayList<WizardFamily> wizardFamiliesAvailable;
 
-    public AskLoginInfoMessage(List<TowerColor> towerColorsAvailable, List<WizardFamily> wizardFamiliesAvailable) {
+    public AskLoginInfoMessage(ArrayList<TowerColor> towerColorsAvailable, ArrayList<WizardFamily> wizardFamiliesAvailable) {
         super("server", MessageType.ASK_LOGIN_INFO);
         this.towerColorsAvailable = towerColorsAvailable;
         this.wizardFamiliesAvailable = wizardFamiliesAvailable;
     }
 
-    public List<TowerColor> getTowerColorsAvailable() {
+    public ArrayList<TowerColor> getTowerColorsAvailable() {
         return towerColorsAvailable;
     }
 
-    public List<WizardFamily> getWizardFamiliesAvailable() {
+    public ArrayList<WizardFamily> getWizardFamiliesAvailable() {
         return wizardFamiliesAvailable;
     }
 

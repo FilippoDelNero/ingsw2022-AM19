@@ -18,7 +18,7 @@ public class ClientManager implements Runnable{
 
     private ObjectOutputStream output;
 
-    private final Timer myTimer;
+    private Timer myTimer;
 
     private final int id;
 
@@ -61,10 +61,10 @@ public class ClientManager implements Runnable{
                 Message msg = (Message) input.readObject();
                 if(msg.getMessageType() == MessageType.PING_MESSAGE)
                     myTimer.reset();
-                else if(msg.getMessageType() == MessageType.LOGIN_NICKNAME)
-                    ;
-                else
-                    myServer.receiveMessage(msg);
+                else if(msg.getMessageType() == MessageType.RESUME_MATCH ||
+                        msg.getMessageType() == MessageType.REPLY_CREATE_MATCH ||
+                        msg.getMessageType() == MessageType.REPLY_LOGIN_INFO)
+                    myServer.MessageToLoginManager(msg);
             } catch (IOException | ClassNotFoundException e) {
                 close();
             }
