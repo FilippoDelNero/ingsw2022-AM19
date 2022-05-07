@@ -2,7 +2,7 @@ package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Network.Message.Message;
 import it.polimi.ingsw.am19.Network.Message.PingMessage;
-import it.polimi.ingsw.am19.View.Cli.Cli;
+import it.polimi.ingsw.am19.View.View;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,20 +13,41 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * client class, handles connection to server
+ */
 public class Client {
+    /** the controller used to manage incoming messages and send correct replies */
     private final ClientSideController myController;
-    private final Cli cli;
-    private final Socket socket; //socket con cui mi connetto al server
-    private final ObjectInputStream input; //stream sul quale posso mandare oggetti serializzati
-    private final ObjectOutputStream output; //stream sul quale posso ricevere oggetti serializzati
-    private final ExecutorService thread;    //ExecutorService usato per creare un pool di threads composto in realtà
-    // da un singolo thread, esso verrà usato per leggere i messaggi in maniera asincrona
+
+    /** socket used to connect to the server */
+    private final Socket socket;
+
+    /** stream used to receive serialized objects */
+    private final ObjectInputStream input;
+
+    /** stream used to send serialized objects */
+    private final ObjectOutputStream output;
+
+    /**
+     * ExecutorService used to create a thread pool, a single thread pool will be used
+     * this thread will be used to read incoming messages
+     */
+    private final ExecutorService thread;
+
+    /**
+     * ScheduledExecutorService used to create a thread pool, a single thread pool will be used
+     * this scheduledThread will be used to ping asynchronously the server
+     */
     private final ScheduledExecutorService scheduledThread;
 
-    //costruttore, serve passargli l'indirizzo del server e il numero di porta
-    public Client(String hostName, int portNumber) {
-        cli = new Cli();
-        myController = new ClientSideController(this, cli);
+    /**
+     * class constructor
+     * @param hostName the ip address of the server
+     * @param portNumber the port number at which the client should connect to
+     */
+    public Client(String hostName, int portNumber, View view) {
+        myController = new ClientSideController(this, view);
         thread = Executors.newSingleThreadExecutor();
         scheduledThread = Executors.newSingleThreadScheduledExecutor();
 
@@ -38,11 +59,12 @@ public class Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        cli.genericPrint("sono un client e sono connesso ad un server");
-        //System.out.println("sono un client e sono connesso ad un server");
-
     }
 
+    /**
+     * method used to send messages to the server
+     * @param msg the messages that needs to be sent
+     */
     public void sendMessage(Message msg) {
         try {
             output.writeObject(msg);
@@ -51,6 +73,9 @@ public class Client {
         }
     }
 
+    /**
+     * method used to receive messages from the server asynchronously
+     */
     public void receiveMessage() {
         thread.execute( () ->
                 {
@@ -58,10 +83,7 @@ public class Client {
                         Message msg;
                         try {
                             msg = (Message) input.readObject();
-                            //cli.genericPrint(msg.toString());
                             myController.communicate(msg);
-                            //TODO CHANGE THIS, TO WHOM SHOULD I SEND THE RECEIVED MESSAGE
-                            //System.out.println("client: " + msg.toString());
                         } catch (IOException | ClassNotFoundException e) {
                             disconnect();
                         }
@@ -70,6 +92,9 @@ public class Client {
         );
     }
 
+    /**
+     * method to disconnect from the server, should be called before killing the client
+     */
     public void disconnect() {
         stopPinging();
         thread.shutdownNow();
@@ -84,10 +109,16 @@ public class Client {
         }
     }
 
+    /**
+     * method to start pinging the server
+     */
     public void startPinging() {
         scheduledThread.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 1, 1, TimeUnit.SECONDS);
     }
 
+    /**
+     * method to stop pinging the server
+     */
     public void stopPinging() {
         scheduledThread.shutdownNow();
     }

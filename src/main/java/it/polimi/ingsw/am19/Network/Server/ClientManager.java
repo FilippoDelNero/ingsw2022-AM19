@@ -9,19 +9,38 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ClientManager implements Runnable{
+/**
+ * The ClientManager is an object used to handle connection with a specific client
+ * it accept the client connection and sets up everything that is needed to communicate with it
+ */
+public class ClientManager implements Runnable {
+    /** the server that created this clientManager */
     private final Server myServer;
 
+    /** the client's socket*/
     private Socket myClient;
 
+    /** channel used to receive incoming messages*/
     private ObjectInputStream input;
 
+    /** channel used to send messages*/
     private ObjectOutputStream output;
 
-    private Timer myTimer;
+    /** Timer needed to make sure the client is still alive*/
+    private final Timer myTimer;
 
+    /**
+     * the id number used to identify the specific clientManager
+     * clientManager #1 is the first one connected
+     */
     private final int id;
 
+    /**
+     * class constructor, accept the connection and opens up input and output, starts the timer
+     * @param id a number given in chronological order to each clientManager
+     * @param server the server that created this clientManager
+     * @param socket the socket that the server is listening on
+     */
     public ClientManager(int id, Server server, ServerSocket socket) {
         this.id = id;
         myServer = server;
@@ -38,15 +57,26 @@ public class ClientManager implements Runnable{
         System.out.println("nuovo client connesso");
     }
 
+    /**
+     * getter for the id parameter
+     * @return the id of this clientManager
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * the clientManager is always listening for incoming messages
+     */
     @Override
     public void run() {
         receiveMessage();
     }
 
+    /**
+     * method used to send messages to the client this clientManager is associated with
+     * @param msg the messages we want to send
+     */
     public void sendMessage(Message msg) {
         try {
             output.writeObject(msg);
@@ -55,6 +85,9 @@ public class ClientManager implements Runnable{
         }
     }
 
+    /**
+     * method to asynchronously receive messages from the client
+     */
     public void receiveMessage() {
         while(!Thread.currentThread().isInterrupted()) {
             try {
@@ -71,6 +104,9 @@ public class ClientManager implements Runnable{
         }
     }
 
+    /**
+     * method to stop the timer, close the connection and remove this Manager from the server's list
+     */
     public void close() {
         if(!Thread.currentThread().isInterrupted()) {
             if(!myClient.isClosed()) {
@@ -84,6 +120,7 @@ public class ClientManager implements Runnable{
             if(!myTimer.isInterrupted())
                 myTimer.interrupt();
             Thread.currentThread().interrupt();
+            System.out.println("client disconnesso");
         }
     }
 

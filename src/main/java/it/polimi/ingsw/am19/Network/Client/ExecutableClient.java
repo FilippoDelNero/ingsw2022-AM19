@@ -1,29 +1,18 @@
 package it.polimi.ingsw.am19.Network.Client;
 
-import it.polimi.ingsw.am19.Network.Message.GenericMessage;
-import it.polimi.ingsw.am19.Network.Message.Message;
 import it.polimi.ingsw.am19.View.Cli.Cli;
 
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
+/**
+ * executable class, it creates a game client
+ */
 public class ExecutableClient {
     public static void main(String[] args) {
-        Client client = new Client("0.0.0.0", 1237); //this will be passed as argument. The id should be a random number
-        client.startPinging();
-        client.receiveMessage();
+        if(args.length == 2) {
+            Client client = new Client(args[0], Integer.parseInt(args[1]), new Cli()); //the last parameter must be also be a user's choice
 
-        /*do {
-            try {
-                input = cli.readLine();
-                Message msg = new GenericMessage(input);
-                client.sendMessage(msg);
-                client.receiveMessage();
-            } catch (ExecutionException e) {
-                client.disconnect();
-            }
-        } while(!Objects.equals(input, "stop"));*/
+            client.startPinging();
+            client.receiveMessage();
+        }
 
-        //client.disconnect();
     }
 }
