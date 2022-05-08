@@ -40,6 +40,9 @@ public class LoginManager {
     /** field containing the reply from the client */
     private Message answerFromClient;
 
+    /**
+     * keeps a reference to the MatchController class
+     */
     private final MatchController matchController;
 
     /**
@@ -96,11 +99,10 @@ public class LoginManager {
                     //TODO recupero nomi giocatori da file + model + controller. Le tre add sono solo per prova
                     lastMatchPlayers.add("Dennis"); lastMatchPlayers.add("Phil"); lastMatchPlayers.add("Laura");
                     addPlayerToResumingMatch(clientToAdd);
+                    sendMessageOfWait(clientToAdd);
+                    activePlayers++;
                 }
             }
-
-            sendMessageOfWait(clientToAdd);
-            activePlayers++;
         }
 
         //if the player is not the first one, but there is not a match en course
@@ -108,6 +110,8 @@ public class LoginManager {
             //if we are adding a player to a match previously interrupted
             if(isResumingMatch) {
                 addPlayerToResumingMatch(clientToAdd);
+                sendMessageOfWait(clientToAdd);
+                activePlayers++;
             }
             // if we are adding a player to a newly created match
             else {
@@ -115,9 +119,6 @@ public class LoginManager {
                         ". The match will be an expert one: " + isExpertMatch)); //Va bene?
                 addPlayerToNewMatch(clientToAdd);
             }
-
-            sendMessageOfWait(clientToAdd);
-            activePlayers++;
         }
     }
 
@@ -164,6 +165,11 @@ public class LoginManager {
         nicknames.add(nickname);
         availableWizardFamilies.remove(wizardFamily);
         availableTowerColor.remove(towerColor);
+        sendMessageOfWait(clientToAdd);
+        activePlayers++;
+
+        if (activePlayers == numOfPlayers)
+            matchController.changeState();
     }
 
     /**

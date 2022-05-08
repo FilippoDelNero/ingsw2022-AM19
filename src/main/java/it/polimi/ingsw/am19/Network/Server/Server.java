@@ -23,6 +23,9 @@ public class Server {
     /** an object used to handle the "login" phase of each player*/
     private final LoginManager loginManager;
 
+    /**
+     * keeps a reference to the MatchController class
+     */
     private final MatchController matchController;
 
     /** a list of all clientManagers created by the server*/
@@ -49,7 +52,7 @@ public class Server {
      */
     public void connect() {
         ClientManager clientManager;
-        pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket));
+        pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket, this.matchController));
         managers.add(clientManager);
         loginManager.login(clientManager);
     }

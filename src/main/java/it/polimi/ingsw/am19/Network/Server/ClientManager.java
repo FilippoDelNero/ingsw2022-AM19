@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Server;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Network.Message.Message;
 import it.polimi.ingsw.am19.Network.Message.MessageType;
 
@@ -36,12 +37,18 @@ public class ClientManager implements Runnable {
     private final int id;
 
     /**
+     * keeps a reference to the MatchController class
+     */
+    private MatchController matchController;
+
+    /**
      * class constructor, accept the connection and opens up input and output, starts the timer
      * @param id a number given in chronological order to each clientManager
      * @param server the server that created this clientManager
      * @param socket the socket that the server is listening on
+     * @param matchController the MatchController whose reference needs to be stored
      */
-    public ClientManager(int id, Server server, ServerSocket socket) {
+    public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) {
         this.id = id;
         myServer = server;
         myTimer = new Timer(this, 3000);
@@ -92,12 +99,11 @@ public class ClientManager implements Runnable {
         while(!Thread.currentThread().isInterrupted()) {
             try {
                 Message msg = (Message) input.readObject();
-                if(msg.getMessageType() == MessageType.PING_MESSAGE)
-                    myTimer.reset();
-                else if(msg.getMessageType() == MessageType.RESUME_MATCH ||
-                        msg.getMessageType() == MessageType.REPLY_CREATE_MATCH ||
-                        msg.getMessageType() == MessageType.REPLY_LOGIN_INFO)
-                    myServer.MessageToLoginManager(msg);
+                switch (msg.getMessageType()){
+                    case PING_MESSAGE -> myTimer.reset();
+                    case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);
+                    default -> matchController.inspectMessage(msg);
+                }
             } catch (IOException | ClassNotFoundException e) {
                 close();
             }
