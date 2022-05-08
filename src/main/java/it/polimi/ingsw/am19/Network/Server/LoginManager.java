@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Network.Server;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
+import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
@@ -73,7 +74,7 @@ public class LoginManager {
 
         //if the player connecting is the first one
         else if (activePlayers == 0){
-            matchController.resumeMatch();
+            //TODO controllare se ci sono match già salvati e passarlo nel messaggio, altrimenti null
             clientToAdd.sendMessage(new AskFirstPlayerMessage(null));
             waitForReply();
 
@@ -82,9 +83,11 @@ public class LoginManager {
                 case REPLY_CREATE_MATCH -> {
                     isResumingMatch = false;
                     ReplyCreateMatchMessage msg = (ReplyCreateMatchMessage) answerFromClient;
-                    //TODO qua creiamo gameController e possiamo dirgli da quanti player fare il match e la difficoltà
+
                     numOfPlayers = msg.getNumOfPlayer();
                     isExpertMatch = msg.isExpert();
+
+                    matchController.createNewMatch(numOfPlayers,isExpertMatch);
                     addPlayerToNewMatch(clientToAdd);
                 }
                 //The player wants to resume an old match
@@ -152,11 +155,15 @@ public class LoginManager {
             waitForReply();
             msg = (ReplyLoginInfoMessage) answerFromClient;
         }
-        //TODO qua posso passare il giocatore o i tre valori al gameController
-        //TODO associo nickname arrivato al client manager su GameController
-        nicknames.add(msg.getNickname());
-        availableWizardFamilies.remove(msg.getWizardFamily());
-        availableTowerColor.remove(msg.getTowerColor());
+        String nickname = msg.getNickname();
+        TowerColor towerColor = msg.getTowerColor();
+        WizardFamily wizardFamily = msg.getWizardFamily();
+
+        matchController.addPlayer(nickname,towerColor,wizardFamily);
+        matchController.setClientManager(nickname,clientToAdd);
+        nicknames.add(nickname);
+        availableWizardFamilies.remove(wizardFamily);
+        availableTowerColor.remove(towerColor);
     }
 
     /**
@@ -174,8 +181,9 @@ public class LoginManager {
             msg = (ReplyLoginInfoMessage) answerFromClient;
         }
 
-        //TODO associo nickname arrivato al client manager su GameController
-        lastMatchPlayers.remove(msg.getNickname());
+        String nickname = msg.getNickname();
+        matchController.setClientManager(nickname,clientToAdd); //TODO after implementing persistence make sure the map saved in the previous match was ignored while saving
+        lastMatchPlayers.remove(nickname);
     }
 
     /**

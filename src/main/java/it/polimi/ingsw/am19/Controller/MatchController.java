@@ -7,12 +7,11 @@ import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Network.Message.Message;
-import it.polimi.ingsw.am19.Network.Message.ReplyCreateMatchMessage;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MatchController {
     /**
@@ -36,42 +35,44 @@ public class MatchController {
     private StateType prevState;
 
     public MatchController(){
+        this.clientManagerMap = new ConcurrentHashMap<>();
         this.currState = StateType.INIT;
     }
 
     /**
      * Given the number of players and the difficulty level, it creates a new match
-     * @param msg is the message containing all the information needed to build a new match
+     * @param numOfPlayers is the numberOfPlayers that will take part to the ne match
+     * @param isExpert is the difficulty chosen for the ne match
      */
-    public void createNewMatch(Message msg){
-        int numOfPLayers = ((ReplyCreateMatchMessage) msg).getNumOfPlayer();
+    public void createNewMatch(int numOfPlayers, boolean isExpert){
         //if (inputController.checkPlayerNum(numOfPLayers)){
-            if (numOfPLayers == 2)
+            if (numOfPlayers == 2)
                 this.model = new MatchDecorator(new TwoPlayersMatch());
-            else if (numOfPLayers == 3){
+            else if (numOfPlayers == 3){
                 this.model = new MatchDecorator(new ThreePlayersMatch());
             }
         //}
 
-        if (((ReplyCreateMatchMessage) msg).isExpert())
+        if (isExpert)
             this.model = new ExpertMatchDecorator(model.getWrappedMatch());
     }
 
     private boolean checkOldMatches(){
         //TODO  look for saved matches
-        //return this.model != null;
-        return false; //TODO to be removed
+        return this.model != null;
     }
 
     /**
-     * If there's an old match saved, it resumes it
-     * Otherwise it does nothing
+     * If there's an old match saved, it returns its reference.
+     * Otherwise it returns null
      */
-    public void resumeMatch(){
+    public MatchDecorator resumeMatch(){
         if (checkOldMatches()){
-            //return this.model;
-            //TODO restore an old match
+            //TODO properly restore an old match
+            return this.model;
             }
+        else
+            return null;
     }
 
     /**
@@ -100,5 +101,9 @@ public class MatchController {
     public List<String> getNicknamesFromResumedMatch(){
         return model.getPlanningPhaseOrder().stream()
                 .map(Player::getNickname).toList();
+    }
+
+    public MatchDecorator getModel() {
+        return model;
     }
 }
