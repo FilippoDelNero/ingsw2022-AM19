@@ -17,16 +17,16 @@
 ### Progress:
 
 
-| Functionality               |State                                        |
-|:----------------------------|:-------------------------------------------:|
-| Basic rules                 | 🟢 |
-| Complete rules              | 🟢 |
-| Communication Protocol      | 🟡 |
-| GUI                         | 🔴 |
-| CLI                         | 🔴 |
-| AF 1: Character cards       | 🟢 |
-| AF 2: -                     | 🔴 |
-| AF 3: -                     | 🔴 |
+| Functionality          |State                                        |
+|:-----------------------|:-------------------------------------------:|
+| Basic rules            | 🟢 |
+| Complete rules         | 🟢 |
+| Communication Protocol | 🟡 |
+| GUI                    | 🔴 |
+| CLI                    | 🟡 |
+| AF 1: Character cards  | 🟢 |
+| AF 2: Persistence      | 🟡 |
+| AF 3: -                | 🔴 |
 
 
 🔴 Uninitiated
