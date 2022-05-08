@@ -50,11 +50,11 @@ public class ExpertMatchDecoratorTest {
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
         assertEquals(p1,decorator.getPlanningPhaseOrder().get(0));
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
         assertEquals(p2,decorator.getPlanningPhaseOrder().get(1));
     }
@@ -67,10 +67,10 @@ public class ExpertMatchDecoratorTest {
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
 
         assertEquals(20,decorator.getCoinManager().getAvailableCoins());
@@ -97,10 +97,10 @@ public class ExpertMatchDecoratorTest {
         ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
         AbstractCharacterCard card = new MotherNaturePlusTwoCard(wrappedMatch);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
         int cardPrice = card.getPrice();
         decorator.initializeMatch();
@@ -121,10 +121,10 @@ public class ExpertMatchDecoratorTest {
         AbstractCharacterCard card = new StudentToHallCard(wrappedMatch);
         card.getStudents().replace(PieceColor.RED,1);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
 
         decorator.initializeMatch();
@@ -150,10 +150,10 @@ public class ExpertMatchDecoratorTest {
         AbstractCharacterCard card = new StudentToIslandCard(wrappedMatch);
         card.getStudents().replace(PieceColor.RED,0);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
 
         decorator.initializeMatch();
@@ -176,10 +176,10 @@ public class ExpertMatchDecoratorTest {
         AbstractMatch wrappedMatch = new TwoPlayersMatch();
         ExpertMatchDecorator decorator = new ExpertMatchDecorator(wrappedMatch);
 
-        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING,0);
+        Player p1 = new Player("Dennis", TowerColor.BLACK, WizardFamily.KING);
         decorator.addPlayer(p1);
 
-        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH,0);
+        Player p2 = new Player("Phil", TowerColor.WHITE, WizardFamily.WITCH);
         decorator.addPlayer(p2);
 
         decorator.initializeMatch();

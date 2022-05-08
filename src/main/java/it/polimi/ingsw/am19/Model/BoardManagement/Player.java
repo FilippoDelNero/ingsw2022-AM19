@@ -75,7 +75,6 @@ public class Player extends Observable {
             nextRoundOrder+=1;
             helperDeck.add(new HelperCard(wizardFamily,nextRoundOrder,numOfStep));
         }
-
     }
 
     /**
@@ -89,7 +88,7 @@ public class Player extends Observable {
         this.nickname = nickname;
         this.towerColor = towerColor;
         this.wizardFamily = wizardFamily;
-        this.coins=coins;
+        this.coins = coins;
         this.currentCard = null;
         this.coinManager = null;
 
@@ -112,9 +111,6 @@ public class Player extends Observable {
      */
     public Player(String nickname) {
         this.nickname = nickname;
-        this.towerColor = null;
-        this.wizardFamily = null;
-        this.currentCard = null;
     }
 
     /**
@@ -207,6 +203,13 @@ public class Player extends Observable {
      */
     public void setCoinManager(CoinManager coinManager) {
         this.coinManager = coinManager;
+    }
+
+    /**
+     * Initializes Player's balance in case of an expert match
+     */
+    public void initializeCoins(){
+        this.coins = 0;
     }
 
     /**

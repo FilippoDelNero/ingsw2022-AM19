@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Server;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
@@ -38,12 +39,15 @@ public class LoginManager {
     /** field containing the reply from the client */
     private Message answerFromClient;
 
+    private final MatchController matchController;
+
     /**
      * class constructor, sets the number of active players to 0 and number of player to 10,
      * this last value will be overwritten by the first player
      * new lists containing all possible wizardFamilies and towerColors are created
      */
-    public LoginManager() {
+    public LoginManager(MatchController matchController) {
+        this.matchController = matchController;
         activePlayers = 0;
         numOfPlayers = 10;
 
@@ -69,7 +73,7 @@ public class LoginManager {
 
         //if the player connecting is the first one
         else if (activePlayers == 0){
-            //TODO controllare se ci sono match già salvati e passarlo nel messaggio, altrimenti null
+            matchController.resumeMatch();
             clientToAdd.sendMessage(new AskFirstPlayerMessage(null));
             waitForReply();
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Server;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Network.Message.Message;
 
 import java.io.IOException;
@@ -22,6 +23,8 @@ public class Server {
     /** an object used to handle the "login" phase of each player*/
     private final LoginManager loginManager;
 
+    private final MatchController matchController;
+
     /** a list of all clientManagers created by the server*/
     private final List<ClientManager> managers;
 
@@ -35,7 +38,8 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.loginManager = new LoginManager();
+        this.matchController = new MatchController();
+        this.loginManager = new LoginManager(matchController);
         managers = new ArrayList<>();
         pool = Executors.newCachedThreadPool();
     }

@@ -85,6 +85,7 @@ public class ExpertMatchDecorator extends MatchDecorator{
         activateInitialActions();
 
         for (Player player: wrappedMatch.getPlanningPhaseOrder()) {
+            player.initializeCoins();
             player.setCoinManager(coinManager);
             player.addCoins(1);
         }
