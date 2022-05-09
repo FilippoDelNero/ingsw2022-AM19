@@ -44,20 +44,17 @@ public class MatchController {
     private StateType currState;
 
     /**
-     * Keeps memory of the previous match state
-     */
-    private StateType prevState;
-
-    /**
      * Is the nickname of the current player
      */
     private String currPlayer;
+
+    private RoundsManager roundsManager;
 
     public MatchController(){
         this.clientManagerMap = new ConcurrentHashMap<>();
         this.reducer = new Reducer();
         this.currState = StateType.LOGIN;
-        this.prevState = StateType.LOGIN;
+        this.roundsManager = new RoundsManager(clientManagerMap, model);
     }
 
     /**
@@ -130,20 +127,21 @@ public class MatchController {
      * Updates current and previous match state
      */
     public void changeState(){
-        prevState = currState;
-        switch (prevState){
+        switch (currState){
             case LOGIN -> {
                 currState = StateType.IN_PROGRESS;
                 init();
+                inProgress();
             }
             case IN_PROGRESS -> currState = StateType.END_MATCH;
+            case END_MATCH -> endMatch();
         }
     }
 
     /**
      * At the beginning of the "in progress" state, it initialises the match
      */
-    public void init(){
+    private void init(){
         model.initializeMatch();
         sendBroadcastMessage(new GenericMessage("The match has started"));
         try {
@@ -185,11 +183,56 @@ public class MatchController {
         }
     }
 
+    private void sendMessage(String receiver,Message msg){
+        clientManagerMap.get(receiver).sendMessage(msg);
+    }
+
+    private void sendMessageExcept(String playerToExclude,Message msg){
+        clientManagerMap.keySet().stream()
+                .filter(nickname -> !nickname.equals(playerToExclude))
+                .map(clientManagerMap::get)
+                .forEach(client -> client.sendMessage(msg));
+    }
+
     /**
      * It receives a message to inspect
      * @param msg is the message that needs to be inspected
      */
     public void inspectMessage(Message msg){
         //TODO complete
+    }
+
+    private void inProgress(){
+        while(roundsManager.hasNextRound()){
+            List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
+                    .map(Player::getNickname)
+                    .toList();
+            roundsManager.changePhase(new PlanningPhase(planningPhaseOrder)); //now it's planning phase
+
+            try {
+                model.refillClouds();
+            } catch (TooManyStudentsException e) {
+                sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
+                disconnectAll();
+            }
+        }
+        changeState(); //match ends spontaneously
+    }
+
+    public String getCurrPlayer(){
+        return model.getCurrPlayer().getNickname();
+    }
+
+    public void setCurrPlayer(){
+        Player newCurrPlayer = model.getPlanningPhaseOrder().get(0);
+        model.setCurrPlayer(newCurrPlayer);
+        this.currPlayer = newCurrPlayer.getNickname();
+    }
+
+    private void endMatch(){
+        List<String> winners = model.getWinner().stream()
+                .map(Player::getNickname)
+                .toList();
+        sendBroadcastMessage(new EndMatchMessage(winners));
     }
 }
