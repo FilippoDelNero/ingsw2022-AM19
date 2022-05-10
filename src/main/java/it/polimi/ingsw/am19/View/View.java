@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Network.Client.Cache;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -10,6 +11,11 @@ import java.util.concurrent.ExecutionException;
  * Interface to allow the ClientSideController to use indifferently a gui or a cli
  */
 public interface View {
+    /**
+     * setter for the cache containg the view objects
+     */
+    void setViewCache(Cache viewCache);
+
     /**
      * method to display an introductory splash screen
      */
@@ -52,4 +58,10 @@ public interface View {
      * @param toPrint the content that needs to be print
      */
     void genericPrint(String toPrint);
+
+    /**
+     * method used to print the entire game view
+     * @param nickname the nickname of the player who owns the view
+     */
+    void PrintView(String nickname);
 }

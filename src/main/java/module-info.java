@@ -16,5 +16,10 @@ module it.polimi.ingsw.am19 {
     opens it.polimi.ingsw.am19.Utilities to javafx.fxml;
     exports it.polimi.ingsw.am19.Network.Server;
     opens it.polimi.ingsw.am19.Network.Server to javafx.fxml;
+
     exports it.polimi.ingsw.am19.Network.Message;
+    exports it.polimi.ingsw.am19.Network.ReducedObjects;
+    exports it.polimi.ingsw.am19.Model.BoardManagement;
+    exports it.polimi.ingsw.am19.Model.Utilities;
+    exports it.polimi.ingsw.am19.Model.CharacterCards;
 }

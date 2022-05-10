@@ -1,11 +1,18 @@
 package it.polimi.ingsw.am19.View.Cli;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Network.Client.Cache;
+import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -15,8 +22,12 @@ import java.util.concurrent.FutureTask;
 public class Cli implements View {
     /** used to print out content to the user */
     private final PrintStream printer;
-    /** single thread used to asynchronously */
-    Thread inputThread;
+
+    /** single thread used to asynchronously read user input*/
+    Thread inputThread; //TODO forse dovrebbe essere privato e final o forse solo un campo di readLine?
+
+    /** cache used to store objects to be displayed on the view*/
+    private Cache cache;
 
     /**
      * class constructor
@@ -46,6 +57,15 @@ public class Cli implements View {
     }
 
     /**
+     * setter for the viewCache
+     * @param viewCache the cache this view will pull data from
+     */
+    @Override
+    public void setViewCache(Cache viewCache) {
+        this.cache = viewCache;
+    }
+
+    /**
      * method to display an introductory splash screen
      */
     @Override
@@ -58,7 +78,7 @@ public class Cli implements View {
         printer.println("##       ##    ##     ##    ##     ## ##   ###    ##     ##  ##    ## ");
         printer.println("######## ##     ##    ##    ##     ## ##    ##    ##    ####  ######  ");
         printer.println("\n");
-        printer.println("Welcome!\n\n");
+        printer.println("Welcome!\n");
     }
 
     /**
@@ -86,8 +106,8 @@ public class Cli implements View {
         do  {
             printer.println("Do you want to play an expert match? [yes, no]");
             input = readLine();
-        } while (!input.equals("yes") && !input.equals("no"));
-        return input.equals("yes");
+        } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
+        return input.equalsIgnoreCase("yes");
     }
 
     /**
@@ -112,7 +132,7 @@ public class Cli implements View {
         String input;
         WizardFamily wizardFamily = null;
         do {
-            printer.println("Choose a Wizard Family from" + availableWizardFamilies);
+            printer.println("Choose a Wizard Family from " + availableWizardFamilies);
             input=readLine();
             switch (input.toLowerCase()) {
                 case "warrior" -> wizardFamily=WizardFamily.WARRIOR;
@@ -134,7 +154,7 @@ public class Cli implements View {
         String input;
         TowerColor towerColor = null;
         do {
-            printer.println("Choose a Tower's color from" + availableTowerColor);
+            printer.println("Choose a Tower's color from " + availableTowerColor);
             input=readLine();
             switch (input.toLowerCase()) {
                 case "black" -> towerColor = TowerColor.BLACK;
@@ -152,5 +172,45 @@ public class Cli implements View {
     @Override
     public void genericPrint(String toPrint) {
         printer.println(toPrint);
+    }
+
+    /**
+     * method used to print the entire game view
+     * @param nickname the nickname of the player who owns the view
+     */
+    @Override
+    public void PrintView(String nickname) {
+        String s = "";
+        printer.flush(); //TODO NON FUNZIONA
+
+        if(cache.getCharacterCards() != null) {
+            printer.println("Character cards: ");
+            for(Character c : cache.getCharacterCards()) {
+                s = s.concat(c.toString());
+                s = s.concat("  ");
+            }
+            printer.println(s + '\n');
+        }
+
+        printer.println("The Clouds: ");
+        for(Map<PieceColor, Integer> m : cache.getClouds())
+            printer.println(m.toString());
+
+
+        printer.println("\nYour Deck: ");
+        s = "| ";
+        for(HelperCard hc : cache.getHelperDeck()) {
+            s = s.concat(hc.toString());
+            s = s.concat(" | ");
+        }
+        printer.println(s);
+
+        printer.println("\nEach Player's GameBoard: ");
+        for(ReducedGameBoard rgb : cache.getGameBoards())
+            printer.println(rgb.toString()); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+
+        printer.println("\nThe Majestic Archipelago of Eryantis: ");
+        for(ReducedIsland isle : cache.getIslands())
+            printer.println(isle.toString());
     }
 }

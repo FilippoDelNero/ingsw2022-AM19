@@ -1,18 +1,23 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
+import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
-import it.polimi.ingsw.am19.Network.Message.GenericMessage;
-import it.polimi.ingsw.am19.Network.Message.Message;
+import it.polimi.ingsw.am19.Network.Message.*;
+import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Network.ReducedObjects.Reducer;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +32,11 @@ public class MatchController {
      * Associates every nickname with the corresponding ClientManager
      */
     private final Map<String, ClientManager> clientManagerMap;
+
+    /**
+     * Object used to prepare Model's parts to be sent over the network
+     */
+    private final Reducer reducer;
 
     /**
      * Saves the current match state
@@ -45,6 +55,7 @@ public class MatchController {
 
     public MatchController(){
         this.clientManagerMap = new ConcurrentHashMap<>();
+        this.reducer = new Reducer();
         this.currState = StateType.LOGIN;
         this.prevState = StateType.LOGIN;
     }
@@ -141,7 +152,16 @@ public class MatchController {
             sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
             disconnectAll();
         }
-        //sendBroadcastMessage(new GenericMessage("Clouds have been refilled"));
+        //Sends information to the model to be displayed
+        if(model instanceof ExpertMatchDecorator)
+            sendBroadcastMessage(new UpdateCardsMessage(reducer.reduceHelperCards(model.getPlanningPhaseOrder()), reducer.reduceCharacterCards(((ExpertMatchDecorator) model).getCharacterCards())));
+        else
+            sendBroadcastMessage(new UpdateCardsMessage(reducer.reduceHelperCards(model.getPlanningPhaseOrder())));
+        sendBroadcastMessage(new UpdateCloudMessage(reducer.reduceClouds(model.getClouds())));
+        sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+        sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
+        //TODO line below is possibly not necessary, can be done directly client side
+        sendBroadcastMessage(new GenericMessage("Clouds have been refilled"));
     }
 
     /**
@@ -150,10 +170,7 @@ public class MatchController {
     private void disconnectAll(){
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
-            //TODO when phil will fix everything, delete it
-            synchronized (cm){
                 cm.close();
-            }
         }
     }
 
@@ -164,10 +181,7 @@ public class MatchController {
     private void sendBroadcastMessage(Message msg){
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
-            //TODO synchronization will be deleted, when the problem will be fixed on the server side
-            synchronized (cm){
                 cm.sendMessage(msg);
-            }
         }
     }
 

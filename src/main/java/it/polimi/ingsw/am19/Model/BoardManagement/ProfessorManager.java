@@ -2,9 +2,9 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.*;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-//TODO WHO WILL CHANGE BACK THE PROFESSORMANAGER STRATEGY TO DEFAULT ONCE A PLAYER'S TURN HAS ENDED?
 public class ProfessorManager {
     /**
      * a map where a professor for each color is associated with its owner
@@ -172,5 +172,19 @@ public class ProfessorManager {
      */
     public Map<PieceColor, Player> getProfessors() {
         return professors;
+    }
+
+    /**
+     * method to get all professors owned by a given player
+     * @param player the player we want to know which professors he owns
+     * @return the colors of the professors owned by the given player
+     */
+    public ArrayList<PieceColor> getProfessorsByPlayer(Player player) {
+        ArrayList<PieceColor> list = new ArrayList<>();
+        for(PieceColor p : professors.keySet()){
+            if(professors.get(p) == player)
+                list.add(p);
+        }
+        return list;
     }
 }

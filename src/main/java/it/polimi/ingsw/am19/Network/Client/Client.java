@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Network.Message.Message;
+import it.polimi.ingsw.am19.Network.Message.MessageType;
 import it.polimi.ingsw.am19.Network.Message.PingMessage;
 import it.polimi.ingsw.am19.View.View;
 

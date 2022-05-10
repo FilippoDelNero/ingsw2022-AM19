@@ -49,5 +49,11 @@ public enum MessageType {
     GENERIC_MESSAGE,
 
     //ping
-    PING_MESSAGE
+    PING_MESSAGE,
+
+    //Update-view related
+    UPDATE_CLOUDS,
+    UPDATE_GAMEBOARDS,
+    UPDATE_ISLANDS,
+    UPDATE_CARDS
 }

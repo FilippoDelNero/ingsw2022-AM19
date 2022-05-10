@@ -3,8 +3,12 @@ package it.polimi.ingsw.am19.Network.Client;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
+import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -14,13 +18,16 @@ public class ClientSideController {
     /** reference to the client, necessary to be able to send back replies to the server */
     private final Client myClient;
 
-    /** reference to the view, used to communicate with the user*/
+    /** reference to the view, used to communicate with the user */
     private final View view;
 
-    /** nickname chosen by the user, used to sign outgoing messages*/
+    /** cache used to store objects to be displayed on the view */
+    private final Cache cache;
+
+    /** nickname chosen by the user, used to sign outgoing messages */
     private String nickname;
 
-    /** a references to the second to last message, used to recover from errors*/
+    /** a references to the second to last message, used to recover from errors */
     private Message previousMsg;
 
     /**
@@ -31,6 +38,8 @@ public class ClientSideController {
     public ClientSideController(Client client, View view) {
         myClient = client;
         this.view = view;
+        cache = new Cache();
+        view.setViewCache(cache);
         view.init();
     }
 
@@ -44,10 +53,14 @@ public class ClientSideController {
         if(!(type == MessageType.ERROR_MESSAGE))
             previousMsg = msg;
         switch (type) {
-            case ASK_LOGIN_FIRST_PLAYER -> askLoginFirstPlayer( (AskFirstPlayerMessage) msg);
+            case ASK_LOGIN_FIRST_PLAYER -> askLoginFirstPlayer((AskFirstPlayerMessage) msg);
             case ASK_LOGIN_INFO -> askLoginInfo((AskLoginInfoMessage) msg);
             case ERROR_MESSAGE -> error((ErrorMessage) msg);
             case GENERIC_MESSAGE -> generic((GenericMessage) msg);
+            case UPDATE_CLOUDS -> updateCloud((UpdateCloudMessage) msg);
+            case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
+            case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
+            case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
         }
     }
 
@@ -88,6 +101,59 @@ public class ClientSideController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
+     */
+    private void updateCloud(UpdateCloudMessage msg) {
+        cache.setClouds(msg.getClouds());
+    }
+
+    /**
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
+     */
+    private void updateGameBoards(UpdateGameBoardsMessage msg) {
+        List<ReducedGameBoard> list = cache.getGameBoards();
+        if(list != null) {
+            list.removeAll(msg.getList());
+            list.addAll(msg.getList());
+        }
+        else {
+            list = new ArrayList<>(msg.getList());
+        }
+        cache.setGameBoards(list);
+    }
+
+    /**
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
+     */
+    private void updateIslands(UpdateIslandsMessage msg) { //TODO RIVEDERE COME MANTENERE L'ORDINE ANCHE NEL CASO IN CUI VENGA SOSTITUITA UNA SOLA ISOLA
+        List<ReducedIsland> list = cache.getIslands();
+        if(list != null) {
+            list.removeAll(msg.getList());
+            list.addAll(msg.getList());
+        }
+        else {
+            list = new ArrayList<>(msg.getList());
+        }
+        cache.setIslands(list);
+        view.PrintView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
+    }
+
+    /**
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
+     */
+    private void updateCards(UpdateCardsMessage msg) {
+        cache.setHelperDeck(msg.getHelperCardsMap().get(nickname));
+        if(msg.getCharacterCardList() != null)
+            cache.setCharacterCards(msg.getCharacterCardList());
+        else
+            cache.setCharacterCards(null);
     }
 
     /**

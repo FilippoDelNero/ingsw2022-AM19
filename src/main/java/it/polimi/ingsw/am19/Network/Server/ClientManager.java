@@ -2,7 +2,6 @@ package it.polimi.ingsw.am19.Network.Server;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Network.Message.Message;
-import it.polimi.ingsw.am19.Network.Message.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,6 +14,12 @@ import java.net.Socket;
  * it accept the client connection and sets up everything that is needed to communicate with it
  */
 public class ClientManager implements Runnable {
+    /** keeps a reference to the MatchController class */
+    private final MatchController matchController;
+
+    /** Timer needed to make sure the client is still alive*/
+    private final Timer myTimer;
+
     /** the server that created this clientManager */
     private final Server myServer;
 
@@ -27,19 +32,23 @@ public class ClientManager implements Runnable {
     /** channel used to send messages*/
     private ObjectOutputStream output;
 
-    /** Timer needed to make sure the client is still alive*/
-    private final Timer myTimer;
+    /**
+     * lock object used to synchronized on the inputStream
+     * done this way because we need to synchronize on a final object
+     */
+    private final Object lockToReceive;
+
+    /**
+     * lock object used to synchronized on the outputStream
+     * done this way because we need to synchronize on a final object
+     */
+    private final Object lockToSend;
 
     /**
      * the id number used to identify the specific clientManager
      * clientManager #1 is the first one connected
      */
     private final int id;
-
-    /**
-     * keeps a reference to the MatchController class
-     */
-    private MatchController matchController;
 
     /**
      * class constructor, accept the connection and opens up input and output, starts the timer
@@ -50,16 +59,23 @@ public class ClientManager implements Runnable {
      */
     public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) {
         this.id = id;
+        this.matchController = matchController;
+
         myServer = server;
         myTimer = new Timer(this, 3000);
+
+        lockToReceive = new Object();
+        lockToSend = new Object();
+
         try {
-            myClient = socket.accept(); //si mette in attesa di una connessione, quando arriva la accetto
+            myClient = socket.accept(); //accepts the connection
             output = new ObjectOutputStream(myClient.getOutputStream());
             output.flush();
             input = new ObjectInputStream(myClient.getInputStream());
         } catch (IOException e) {
             server.removeClient(this);
         }
+
         myTimer.start();
         System.out.println("nuovo client connesso");
     }
@@ -85,10 +101,12 @@ public class ClientManager implements Runnable {
      * @param msg the messages we want to send
      */
     public void sendMessage(Message msg) {
-        try {
-            output.writeObject(msg);
-        } catch (IOException e) {
-            close();
+        synchronized (lockToSend) {
+            try {
+                output.writeObject(msg);
+            } catch (IOException e) {
+                close();
+            }
         }
     }
 
@@ -97,15 +115,17 @@ public class ClientManager implements Runnable {
      */
     public void receiveMessage() {
         while(!Thread.currentThread().isInterrupted()) {
-            try {
-                Message msg = (Message) input.readObject();
-                switch (msg.getMessageType()){
-                    case PING_MESSAGE -> myTimer.reset();
-                    case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);
-                    default -> matchController.inspectMessage(msg);
+            synchronized (lockToReceive) {
+                try {
+                    Message msg = (Message) input.readObject();
+                    switch (msg.getMessageType()){
+                        case PING_MESSAGE -> myTimer.reset();
+                        case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);
+                        default -> matchController.inspectMessage(msg);
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    close();
                 }
-            } catch (IOException | ClassNotFoundException e) {
-                close();
             }
         }
     }
@@ -115,6 +135,11 @@ public class ClientManager implements Runnable {
      */
     public void close() {
         if(!Thread.currentThread().isInterrupted()) {
+            Thread.currentThread().interrupt();
+
+            if(!myTimer.isInterrupted())
+                myTimer.interrupt();
+
             if(!myClient.isClosed()) {
                 try {
                     myClient.close();
@@ -123,9 +148,7 @@ public class ClientManager implements Runnable {
                 }
                 myServer.removeClient(this);
             }
-            if(!myTimer.isInterrupted())
-                myTimer.interrupt();
-            Thread.currentThread().interrupt();
+
             System.out.println("client disconnesso");
         }
     }

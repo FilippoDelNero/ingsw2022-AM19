@@ -58,8 +58,8 @@ public class Timer extends Thread {
      */
     public void timeout() {
         if(!Thread.currentThread().isInterrupted()) {
-            myClientManager.close();
             Thread.currentThread().interrupt();
+            myClientManager.close();
         }
     }
 }

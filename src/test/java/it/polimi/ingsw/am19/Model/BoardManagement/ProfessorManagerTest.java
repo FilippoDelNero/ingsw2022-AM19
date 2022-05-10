@@ -90,5 +90,6 @@ class ProfessorManagerTest {
 
         manager.checkProfessor(PieceColor.RED, player1);
         assertEquals(player1, manager.getOwner(PieceColor.RED));
+        assertTrue(manager.getProfessorsByPlayer(player1).contains(PieceColor.RED));
     }
 }

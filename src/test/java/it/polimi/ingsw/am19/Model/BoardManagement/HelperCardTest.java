@@ -22,7 +22,7 @@ class HelperCardTest {
     @Test
     @DisplayName("Testing getNextRound")
     void getNextRoundOrder() {
-        HelperCard card=new HelperCard(WizardFamily.KING,5,3);
+        HelperCard card = new HelperCard(WizardFamily.KING,5,3);
         assertEquals(5, card.getNextRoundOrder());
     }
 
@@ -32,7 +32,17 @@ class HelperCardTest {
     @Test
     @DisplayName("Testing getMaxNumOfStep")
     void getMaxNumOfSteps() {
-        HelperCard card=new HelperCard(WizardFamily.KING,5,3);
+        HelperCard card = new HelperCard(WizardFamily.KING,5,3);
         assertEquals(3, card.getMaxNumOfSteps());
+    }
+
+    /**
+     * testing getter for the WizardFamily value
+     */
+    @Test
+    @DisplayName("Testing getWizardFamily")
+    void getWizardFamily() {
+       HelperCard card = new HelperCard(WizardFamily.KING, 5, 3);
+       assertEquals(WizardFamily.KING, card.getWizardFamily());
     }
 }
