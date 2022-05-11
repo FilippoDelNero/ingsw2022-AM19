@@ -44,6 +44,7 @@ public class RoundsManager {
             sendMessageExcept(nickname,new GenericMessage("It's " + nickname + "'s turn. Please wait your turn..."));
             sendMessage(nickname,new GenericMessage((nickname + " it's your turn!")));
         }
+        currPhase.performActions();
     }
 
     public boolean hasNextRound(){

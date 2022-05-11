@@ -21,7 +21,7 @@ public class PlanningPhase implements Phase{
 
     @Override
     public void performActions() {
-
+        
     }
 
     @Override
