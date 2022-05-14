@@ -114,9 +114,13 @@ public class LoginManager {
                 activePlayers++;
             }
             // if we are adding a player to a newly created match
-            else {
-                clientToAdd.sendMessage(new GenericMessage("You will be added to a " + numOfPlayers +
-                        ". The match will be an expert one: " + isExpertMatch)); //Va bene?
+            else if(isExpertMatch){
+                clientToAdd.sendMessage(new GenericMessage("You will be added to a match of " + numOfPlayers +
+                        " players. The match difficulty will be expert..."));
+                addPlayerToNewMatch(clientToAdd);
+            }else{
+                clientToAdd.sendMessage(new GenericMessage("You will be added to a match of " + numOfPlayers +
+                        " players. The match difficulty will be easy..."));
                 addPlayerToNewMatch(clientToAdd);
             }
         }

@@ -42,7 +42,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                 List<String> actionPhaseOrder = model.getActionPhaseOrder().stream()
                         .map(Player::getNickname)
                         .toList();
-                matchController.getRoundsManager().changePhase(new PlanningPhase(actionPhaseOrder,matchController));
+                matchController.getRoundsManager().changePhase(new ActionPhase(actionPhaseOrder,matchController));
                 matchController.getRoundsManager().getCurrPhase().initPhase();
             }
         }
