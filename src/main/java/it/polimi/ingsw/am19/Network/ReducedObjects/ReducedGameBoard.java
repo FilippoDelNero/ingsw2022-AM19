@@ -35,11 +35,15 @@ public record ReducedGameBoard(String playerNickname,
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReducedGameBoard that = (ReducedGameBoard) o;
-        return Objects.equals(playerNickname, that.playerNickname);
+        return numOfTowers == that.numOfTowers &&
+                playerNickname.equals(that.playerNickname) &&
+                entrance.equals(that.entrance) &&
+                diningRoom.equals(that.diningRoom) &&
+                professors.equals(that.professors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerNickname);
+        return Objects.hash(playerNickname, entrance, diningRoom, professors, numOfTowers);
     }
 }

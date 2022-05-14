@@ -261,10 +261,10 @@ public class Cli implements View {
      */
     @Override
     public void printView(String nickname) {
-        String s = "";
         printer.flush(); //TODO NON FUNZIONA
 
         if(cache.getCharacterCards() != null) {
+            String s = "";
             printer.println("Character cards: ");
             for(Character c : cache.getCharacterCards()) {
                 s = s.concat(c.toString());
