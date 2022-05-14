@@ -479,6 +479,11 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         }
     }
 
+    /**
+     * Returns a reference to a Player given its nickname
+     * @param nickname the nickname to turn into a Player's reference
+     * @return returns  reference to a Player given its nickname
+     */
     @Override
     public Player getPlayerByNickname(String nickname){
         for(Player p : planningPhaseOrder){
@@ -486,5 +491,16 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 return p;
         }
         return null; //if it happens it's a bug
+    }
+
+    @Override
+    public List<Integer> getNonEmptyClouds(){
+        List<Integer> cloudIndexes = new ArrayList<>();
+        for (Cloud cloud : getClouds()){
+            if (!cloud.isEmpty()){
+                cloudIndexes.add(getClouds().indexOf(cloud));
+            }
+        }
+        return cloudIndexes;
     }
 }

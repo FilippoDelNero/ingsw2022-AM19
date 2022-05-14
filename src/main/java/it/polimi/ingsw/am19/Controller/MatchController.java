@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.am19.Network.Server.ClientManager;
 import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +40,16 @@ public class MatchController implements Observer{
      */
     private String currPlayer;
 
+    /**
+     * Is a reference to a RoundManager
+     */
     private RoundsManager roundsManager;
+
+    /**
+     * Is a reference to an InputController
+     */
+    private InputController inputController;
+
     private final Reducer reducer;
 
     public MatchController(){
@@ -61,6 +72,9 @@ public class MatchController implements Observer{
 
         if (isExpert)
             this.model = new ExpertMatchDecorator(model.getWrappedMatch());
+
+        model.getWrappedMatch().addObserver(this);
+        this.inputController = new InputController(this);
     }
 
     private boolean checkOldMatches(){
@@ -114,7 +128,7 @@ public class MatchController implements Observer{
     }
 
     /**
-     * Updates current and previous match state
+     * Updates current match state
      */
     public void changeState(){
         switch (currState){
@@ -129,10 +143,12 @@ public class MatchController implements Observer{
     }
 
     /**
-     * At the beginning of the "in progress" state, it initialises the match
+     * At the beginning of the in progress state, it initialises the match
      */
     private void init(){
         model.initializeMatch();
+        sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+        sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started"));
         this.roundsManager = new RoundsManager(this);
         model.getWrappedMatch().addObserver(this);
@@ -160,10 +176,20 @@ public class MatchController implements Observer{
         }
     }
 
+    /**
+     * Sends a message to a specific client
+     * @param receiver the nickname of the client
+     * @param msg the message to send
+     */
     public void sendMessage(String receiver,Message msg){
         clientManagerMap.get(receiver).sendMessage(msg);
     }
 
+    /**
+     * Sends a message to all clients except one
+     * @param playerToExclude is the client to exclude from the communication
+     * @param msg is the message to send
+     */
     public void sendMessageExcept(String playerToExclude,Message msg){
         clientManagerMap.keySet().stream()
                 .filter(nickname -> !nickname.equals(playerToExclude))
@@ -179,6 +205,9 @@ public class MatchController implements Observer{
         roundsManager.getCurrPhase().inspectMessage(msg);
     }
 
+    /**
+     * At the beginning of a new round, it begins from the PlanningPhase
+     */
     private void inProgress(){
         List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
                 .map(Player::getNickname)
@@ -188,15 +217,26 @@ public class MatchController implements Observer{
         roundsManager.getCurrPhase().initPhase();
     }
 
+    /**
+     * Gets model's current player
+     * @return model's current player
+     */
     public String getCurrPlayer(){
         return model.getCurrPlayer().getNickname();
     }
 
+    /**
+     * Sets model's current player given its nickname
+     * @param nickname is the nickname of the new current player
+     */
     public void setCurrPlayer(String nickname){
        Player player = model.getPlayerByNickname(nickname);
        model.setCurrPlayer(player);
     }
 
+    /**
+     * After an end match condition occurred, it simulates the end of the match
+     */
     private void endMatch(){
         List<String> winners = model.getWinner().stream()
                 .map(Player::getNickname)
@@ -204,10 +244,18 @@ public class MatchController implements Observer{
         sendBroadcastMessage(new EndMatchMessage(winners));
     }
 
+    /**
+     * Returns the map that binds a nickname to its corresponding ClientManager
+     * @return the map that binds a nickname to its corresponding ClientManager
+     */
     public Map<String, ClientManager> getClientManagerMap() {
         return clientManagerMap;
     }
 
+    /**
+     * Returns a reference to the RoundsManager
+     * @return a reference to the RoundsManager
+     */
     public RoundsManager getRoundsManager() {
         return roundsManager;
     }
@@ -223,6 +271,15 @@ public class MatchController implements Observer{
 
             case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
                     new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+            case END_MATCH -> changeState();
         }
+    }
+
+    /**
+     * Returns a reference to the InputController
+     * @return a reference to the InputController
+     */
+    public InputController getInputController() {
+        return inputController;
     }
 }

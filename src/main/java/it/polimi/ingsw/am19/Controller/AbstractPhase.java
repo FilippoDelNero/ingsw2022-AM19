@@ -10,11 +10,13 @@ public class AbstractPhase {
     //private final Reducer reducer;
     protected final MatchDecorator model;
     protected final MatchController matchController;
+    protected final InputController inputController;
 
     public AbstractPhase(MatchController matchController) {
         this.clientManagerMap = matchController.getClientManagerMap();
         this.model = matchController.getModel();
         this.matchController = matchController;
+        this.inputController = matchController.getInputController();
     }
 
 }

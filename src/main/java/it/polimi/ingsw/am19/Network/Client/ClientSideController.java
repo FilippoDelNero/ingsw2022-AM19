@@ -148,12 +148,12 @@ public class ClientSideController {
             }
             if (color == null)
                 communicate(previousMsg);
-            else if(input.contains("island") || input.contains(" i ") || input.contains("isle")) {
+            else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
                 input = input.replaceAll("[^0-9]+", " ");
                 islandNum = (Integer.parseInt(input.trim())) - 1;
                 myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
             }
-            else if(input.contains("dining") || input.contains("room") || input.contains(" d "))
+            else if(input.contains("dining") || input.contains("room") || input.contains(" d"))
                 myClient.sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, color));
             else
                 communicate(previousMsg);

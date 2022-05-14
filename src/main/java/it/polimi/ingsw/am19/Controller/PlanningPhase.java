@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
@@ -8,7 +9,6 @@ import it.polimi.ingsw.am19.Network.Message.*;
 
 import java.util.List;
 import java.util.ListIterator;
-import java.util.stream.Collectors;
 
 public class PlanningPhase extends AbstractPhase implements Phase{
     private final List<String> playersOrder;
@@ -22,28 +22,28 @@ public class PlanningPhase extends AbstractPhase implements Phase{
 
     @Override
     public void inspectMessage(Message msg) {
-        if (msg.getMessageType() == MessageType.PLAY_HELPER_CARD){
-            ReplyHelperCardMessage message = (ReplyHelperCardMessage) msg;
-            try {
-                model.useHelperCard(message.getHelperCard());
-            } catch (UnavailableCardException | IllegalCardOptionException e) {
-                matchController.sendMessage(message.getNickname(),new ErrorMessage(message.getNickname(),"Invalid card choice"));
-
-                /*matchController.sendMessage(message.getNickname(), new AskHelperCardMessage(
-                        model.getCurrPlayer().getHelperDeck()));*/
-            }
-            if (iterator.hasNext()){
-                String nextPlayer = iterator.next();
-                matchController.setCurrPlayer(nextPlayer);
-                performPhase(nextPlayer);
-            }
-
-            else{
-                List<String> actionPhaseOrder = model.getActionPhaseOrder().stream()
-                        .map(Player::getNickname)
-                        .toList();
-                matchController.getRoundsManager().changePhase(new ActionPhase(actionPhaseOrder,matchController));
-                matchController.getRoundsManager().getCurrPhase().initPhase();
+        if (inputController.checkSender(msg)) {
+            if (msg.getMessageType() == MessageType.PLAY_HELPER_CARD) {
+                ReplyHelperCardMessage message = (ReplyHelperCardMessage) msg;
+                HelperCard helperCard = message.getHelperCard();
+                try {
+                    model.useHelperCard(helperCard);
+                } catch (UnavailableCardException | IllegalCardOptionException e) {
+                    matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice"));
+                }
+                matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
+                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps()));
+                if (iterator.hasNext()) {
+                    String nextPlayer = iterator.next();
+                    matchController.setCurrPlayer(nextPlayer);
+                    performPhase(nextPlayer);
+                } else {
+                    List<String> actionPhaseOrder = model.getActionPhaseOrder().stream()
+                            .map(Player::getNickname)
+                            .toList();
+                    matchController.getRoundsManager().changePhase(new ActionPhase(actionPhaseOrder, matchController));
+                    matchController.getRoundsManager().getCurrPhase().initPhase();
+                }
             }
         }
     }
