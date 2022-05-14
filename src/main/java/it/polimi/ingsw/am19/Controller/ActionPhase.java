@@ -2,6 +2,8 @@ package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
+import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
+import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
 
@@ -26,21 +28,40 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 case ENTRANCE_TO_DINING_ROOM -> {
                     ReplyEntranceToDiningRoomMessage message = (ReplyEntranceToDiningRoomMessage) msg;
                     PieceColor color = message.getColorChosen();
-                    if (inputController.checkIsInEntrance(color)) {
-                        numOfMovedStudents++;
+                    //if (inputController.checkIsInEntrance(color)) {
+                        try {
+                            model.moveStudentToDiningRoom(color);
+                        } catch (NoSuchColorException | TooManyStudentsException e) {
+                            matchController.sendMessage(matchController.getCurrPlayer(),
+                                    new ErrorMessage("server","You can't move a " + color + " student to your dining room"));
+                            return;
+                        }
+                    matchController.sendMessage(matchController.getCurrPlayer(), new GenericMessage(""+model.getGameBoards().get(model.getPlayerByNickname("lau")).getEntrance().toString()));
+                    numOfMovedStudents++;
                         if (numOfMovedStudents < 3)
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
                         else if (numOfMovedStudents == 3) {
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
                         }
-                    }
+                    //}
                 }
 
                 case ENTRANCE_TO_ISLAND -> {
                     ReplyEntranceToIslandMessage message = (ReplyEntranceToIslandMessage) msg;
                     PieceColor color = message.getColorChosen();
                     int islandIndex = message.getIsland();
-                    if (inputController.checkIsInEntrance(color) && inputController.checkIsInArchipelago(islandIndex)){
+                    if (//inputController.checkIsInEntrance(color) &&
+                            inputController.checkIsInArchipelago(islandIndex)){
+                        try {
+                            matchController.sendMessage(matchController.getCurrPlayer(), new GenericMessage(""+model.getGameBoards().get(model.getPlayerByNickname("lau")).getEntrance().toString()));
+                            model.moveStudent(color,model.getGameBoards().get(
+                                    model.getPlayerByNickname(matchController.getCurrPlayer())
+                            ), model.getIslandManager().getIslands().get(islandIndex));
+                        } catch (NoSuchColorException | TooManyStudentsException e) {
+                            matchController.sendMessage(matchController.getCurrPlayer(),
+                                    new ErrorMessage("server","You can't move a " + color + " student to island "+ islandIndex));
+                            return;
+                        }
                         numOfMovedStudents++;
                         if (numOfMovedStudents < 3)
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());

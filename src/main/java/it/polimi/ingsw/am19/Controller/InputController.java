@@ -33,14 +33,15 @@ public class InputController {
      * In case of absence, it sends an error message
      * @param color the color to look for in the entrance
      */
+    /*
     boolean checkIsInEntrance(PieceColor color){
         GameBoard gameBoard = model.getGameBoards().get(model.getPlayerByNickname(matchController.getCurrPlayer()));
         if (!gameBoard.getEntrance().containsKey(color)){
-            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","You don't have" + color.name() +" in your entrance"));
+            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","You don't have" + color.name() + " in your entrance"));
             return false;
         }
         return true;
-    }
+    }*/
 
     /**
      * Given an island index, it checks whether the corresponding Island is part of the archipelago

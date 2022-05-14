@@ -31,7 +31,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
                     matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice"));
                 }
-                matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + "played card number: " +
+                matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
                         helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps()));
                 if (iterator.hasNext()) {
                     String nextPlayer = iterator.next();
