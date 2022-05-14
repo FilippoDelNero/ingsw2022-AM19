@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
@@ -54,9 +55,6 @@ public interface View {
      */
     TowerColor askTowerColor (List<TowerColor> availableTowerColor) throws ExecutionException;
 
-
-    String askEntranceMove() throws ExecutionException;
-
     /**
      * method used to ask the step that MotherNature have to do in clockwise
      * @return the num of step
@@ -75,5 +73,7 @@ public interface View {
      * method used to print the entire game view
      * @param nickname the nickname of the player who owns the view
      */
-    void PrintView(String nickname);
+    void printView(String nickname);
+
+    HelperCard askHelperCard(List<HelperCard> helperDeck) throws ExecutionException;
 }

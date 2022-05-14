@@ -1,28 +1,27 @@
 package it.polimi.ingsw.am19.Controller;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
-import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
-import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Network.Message.*;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Network.Message.EndMatchMessage;
+import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
+import it.polimi.ingsw.am19.Network.Message.Message;
 import it.polimi.ingsw.am19.Network.ReducedObjects.Reducer;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
+import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MatchController {
+public class MatchController{
     /**
      * Keeps a reference to the game model
      */
@@ -34,30 +33,22 @@ public class MatchController {
     private final Map<String, ClientManager> clientManagerMap;
 
     /**
-     * Object used to prepare Model's parts to be sent over the network
-     */
-    private final Reducer reducer;
-
-    /**
      * Saves the current match state
      */
     private StateType currState;
-
-    /**
-     * Keeps memory of the previous match state
-     */
-    private StateType prevState;
 
     /**
      * Is the nickname of the current player
      */
     private String currPlayer;
 
+    private RoundsManager roundsManager;
+    private final Reducer reducer;
+
     public MatchController(){
         this.clientManagerMap = new ConcurrentHashMap<>();
-        this.reducer = new Reducer();
         this.currState = StateType.LOGIN;
-        this.prevState = StateType.LOGIN;
+        this.reducer = new Reducer();
     }
 
     /**
@@ -130,44 +121,31 @@ public class MatchController {
      * Updates current and previous match state
      */
     public void changeState(){
-        prevState = currState;
-        switch (prevState){
+        switch (currState){
             case LOGIN -> {
                 currState = StateType.IN_PROGRESS;
                 init();
+                inProgress();
             }
             case IN_PROGRESS -> currState = StateType.END_MATCH;
+            case END_MATCH -> endMatch();
         }
     }
 
     /**
      * At the beginning of the "in progress" state, it initialises the match
      */
-    public void init(){
+    private void init(){
         model.initializeMatch();
         sendBroadcastMessage(new GenericMessage("The match has started"));
-        try {
-            model.refillClouds();
-        } catch (TooManyStudentsException e) {
-            sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
-            disconnectAll();
-        }
-        //Sends information to the model to be displayed
-        if(model instanceof ExpertMatchDecorator)
-            sendBroadcastMessage(new UpdateCardsMessage(reducer.reduceHelperCards(model.getPlanningPhaseOrder()), reducer.reduceCharacterCards(((ExpertMatchDecorator) model).getCharacterCards())));
-        else
-            sendBroadcastMessage(new UpdateCardsMessage(reducer.reduceHelperCards(model.getPlanningPhaseOrder())));
-        sendBroadcastMessage(new UpdateCloudMessage(reducer.reduceClouds(model.getClouds())));
-        sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
-        sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
-        //TODO line below is possibly not necessary, can be done directly client side
-        sendBroadcastMessage(new GenericMessage("Clouds have been refilled"));
+        this.roundsManager = new RoundsManager(this);
     }
 
     /**
      * Disconnects all clients
      */
-    private void disconnectAll(){
+    public void disconnectAll(){
+        sendBroadcastMessage(new GenericMessage("You will be disconnected due to internal errors"));
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
                 cm.close();
@@ -178,11 +156,22 @@ public class MatchController {
      * Sends a broadcast message
      * @param msg is the message to send in broadcast
      */
-    private void sendBroadcastMessage(Message msg){
+    public void sendBroadcastMessage(Message msg){
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
-                cm.sendMessage(msg);
+            cm.sendMessage(msg);
         }
+    }
+
+    public void sendMessage(String receiver,Message msg){
+        clientManagerMap.get(receiver).sendMessage(msg);
+    }
+
+    public void sendMessageExcept(String playerToExclude,Message msg){
+        clientManagerMap.keySet().stream()
+                .filter(nickname -> !nickname.equals(playerToExclude))
+                .map(clientManagerMap::get)
+                .forEach(client -> client.sendMessage(msg));
     }
 
     /**
@@ -190,6 +179,39 @@ public class MatchController {
      * @param msg is the message that needs to be inspected
      */
     public void inspectMessage(Message msg){
-        //TODO complete
+        roundsManager.getCurrPhase().inspectMessage(msg);
+    }
+
+    private void inProgress(){
+        List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
+                .map(Player::getNickname)
+                .toList();
+        roundsManager.changePhase(new PlanningPhase(planningPhaseOrder,this)); //now it's planning phase
+        sendBroadcastMessage(new GenericMessage("Round " + roundsManager.getRoundNum()));
+        roundsManager.getCurrPhase().initPhase();
+    }
+
+    public String getCurrPlayer(){
+        return model.getCurrPlayer().getNickname();
+    }
+
+    public void setCurrPlayer(String nickname){
+       Player player = model.getPlayerByNickname(nickname);
+       model.setCurrPlayer(player);
+    }
+
+    private void endMatch(){
+        List<String> winners = model.getWinner().stream()
+                .map(Player::getNickname)
+                .toList();
+        sendBroadcastMessage(new EndMatchMessage(winners));
+    }
+
+    public Map<String, ClientManager> getClientManagerMap() {
+        return clientManagerMap;
+    }
+
+    public RoundsManager getRoundsManager() {
+        return roundsManager;
     }
 }

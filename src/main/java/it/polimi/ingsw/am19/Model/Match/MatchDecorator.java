@@ -292,4 +292,9 @@ public class MatchDecorator implements Match, Serializable {
     public AbstractMatch getWrappedMatch() {
         return wrappedMatch;
     }
+
+    @Override
+    public Player getPlayerByNickname(String nickname){
+        return wrappedMatch.getPlayerByNickname(nickname);
+    }
 }

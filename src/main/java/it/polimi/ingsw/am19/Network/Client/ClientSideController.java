@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
@@ -67,6 +68,7 @@ public class ClientSideController {
             case ENTRANCE_MOVE -> askEntranceMove();
             case HOW_MANY_STEP_MN -> askMotherNatureStep((AskMotherNatureStepMessage)msg);
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
+            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
         }
     }
 
@@ -211,7 +213,7 @@ public class ClientSideController {
             list = new ArrayList<>(msg.getList());
         }
         cache.setIslands(list);
-        view.PrintView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
+        view.printView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
     }
 
     /**
@@ -238,5 +240,16 @@ public class ClientSideController {
     private void error(ErrorMessage msg) {
         view.genericPrint(msg.toString());
         communicate(previousMsg);
+    }
+
+    private void showHelperOptions(AskHelperCardMessage msg){
+        List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
+        HelperCard helperCard = null;
+        try {
+            helperCard = view.askHelperCard(cardOptions);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
     }
 }
