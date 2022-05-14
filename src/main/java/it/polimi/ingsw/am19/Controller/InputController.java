@@ -55,4 +55,12 @@ public class InputController {
         }
         return true;
     }
+
+    boolean checkCloudIndex(int cloudIndex){
+        if (!model.getNonEmptyClouds().contains(cloudIndex)){
+            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","Invalid cloud number"));
+            return false;
+        }
+        return true;
+    }
 }

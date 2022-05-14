@@ -270,6 +270,7 @@ public class MatchController implements Observer{
 
             case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
                     new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+            case END_MATCH -> changeState();
         }
     }
 

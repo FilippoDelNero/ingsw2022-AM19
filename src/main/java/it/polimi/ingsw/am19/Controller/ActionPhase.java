@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
+import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
@@ -15,11 +17,13 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private final List<String> playersOrder;
     private final ListIterator<String> iterator;
     private int numOfMovedStudents = 0;
+    private final int MAX_NUM_STUDENTS;
 
     public ActionPhase(List<String> playersOrder,MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator = playersOrder.listIterator();
+        this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
     }
 
     @Override
@@ -38,9 +42,9 @@ public class ActionPhase extends AbstractPhase implements Phase{
                             return;
                         }
                         numOfMovedStudents++;
-                        if (numOfMovedStudents < 3)
+                        if (numOfMovedStudents < MAX_NUM_STUDENTS)
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-                        else if (numOfMovedStudents == 3) {
+                        else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
                         }
                     //}
@@ -62,14 +66,15 @@ public class ActionPhase extends AbstractPhase implements Phase{
                             return;
                         }
                         numOfMovedStudents++;
-                        if (numOfMovedStudents < 3)
+                        if (numOfMovedStudents < MAX_NUM_STUDENTS)
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-                        else if (numOfMovedStudents == 3) {
+                        else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
                         }
                     }
                 }
-                case HOW_MANY_STEP_MN -> {
+                case MN_STEP -> {
+                    numOfMovedStudents = 0;
                     ReplyMotherNatureStepMessage message = (ReplyMotherNatureStepMessage) msg;
                     try {
                         model.moveMotherNature(message.getStep());
@@ -79,6 +84,43 @@ public class ActionPhase extends AbstractPhase implements Phase{
                         return;
                     }
                     matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
+                }
+
+                case CHOSEN_CLOUD -> {
+                    ReplyCloudMessage message = (ReplyCloudMessage) msg;
+                    int cloudIndex = message.getCloudChosen();
+                    if (inputController.checkCloudIndex(cloudIndex)){
+                        Cloud cloud = model.getClouds().get(cloudIndex);
+                        GameBoard gameBoard = model.getGameBoards().get(model.getCurrPlayer());
+                        for (PieceColor color: PieceColor.values()){
+                            while (cloud.getStudents().get(color) != 0) {
+                                try {
+                                    model.moveStudent(color,cloud,gameBoard);
+                                } catch (NoSuchColorException | TooManyStudentsException e) {
+                                    matchController.disconnectAll();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    if (iterator.hasNext()) {
+                        String nextPlayer = iterator.next();
+                        matchController.setCurrPlayer(nextPlayer);
+                        performPhase(nextPlayer);
+                    } else {
+                        //TODO salvataggio partita
+                        model.resetAlreadyPlayedCards();
+                        model.updatePlanningPhaseOrder();
+                        if (matchController.getRoundsManager().hasNextRound() && !model.isFinalRound()) {
+                            List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
+                                    .map(Player::getNickname)
+                                    .toList();
+                            matchController.getRoundsManager().changePhase(new PlanningPhase(planningPhaseOrder, matchController));
+                            matchController.getRoundsManager().getCurrPhase().initPhase();
+                        }
+                        else
+                            matchController.changeState();
+                    }
                 }
             }
         }
