@@ -65,9 +65,9 @@ public class ClientSideController {
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
-            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
+            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage) msg);
             case ENTRANCE_MOVE -> askEntranceMove();
-            case HOW_MANY_STEP_MN -> askMotherNatureStep((AskMotherNatureStepMessage)msg);
+            case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
         }
     }
@@ -150,7 +150,7 @@ public class ClientSideController {
                 communicate(previousMsg);
             else if(input.contains("island") || input.contains(" i ") || input.contains("isle")) {
                 input = input.replaceAll("[^0-9]+", " ");
-                islandNum = Integer.parseInt(input.trim());
+                islandNum = (Integer.parseInt(input.trim())) - 1;
                 myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
             }
             else if(input.contains("dining") || input.contains("room") || input.contains(" d "))
@@ -165,14 +165,13 @@ public class ClientSideController {
     /**
      * The method is called when a AskMotherNatureStepMessage comes in
      * it ask and send the num of step
-     * @param msg the AskMotherNatureStep sent by server
      */
-    private void askMotherNatureStep(AskMotherNatureStepMessage msg){
+    private void askMotherNatureStep(){
         int step;
         try {
             view.printView(nickname);
-            step= view.askMotherNatureStep();
-            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname,step));
+            step = view.askMotherNatureStep();
+            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -232,7 +231,6 @@ public class ClientSideController {
             list = new ArrayList<>(msg.getList());
         }
         cache.setIslands(list);
-        view.printView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
     }
 
     /**
