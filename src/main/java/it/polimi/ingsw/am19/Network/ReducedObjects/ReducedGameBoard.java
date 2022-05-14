@@ -23,7 +23,7 @@ public record ReducedGameBoard(String playerNickname,
 
     @Override
     public String toString() {
-        return "Gameboard of " + playerNickname + ":\n" +
+        return "Gameboard of " + playerNickname.toUpperCase() + ":\n" +
                 "entrance: " + entrance + '\n' +
                 "diningRoom: " + diningRoom + '\n' +
                 "professors: " + professors + '\n' +

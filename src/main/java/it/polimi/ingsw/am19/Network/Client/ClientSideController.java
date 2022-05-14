@@ -206,7 +206,7 @@ public class ClientSideController {
      * @param msg the UpdateGameBoardsMessage sent by the server
      */
     private void updateGameBoards(UpdateGameBoardsMessage msg) {
-        List<ReducedGameBoard> list = cache.getGameBoards();
+        /*List<ReducedGameBoard> list = cache.getGameBoards();
         if(list != null) {
             list.removeAll(msg.getList());
             list.addAll(msg.getList());
@@ -214,7 +214,8 @@ public class ClientSideController {
         else {
             list = new ArrayList<>(msg.getList());
         }
-        cache.setGameBoards(list);
+        cache.setGameBoards(list);*/
+        cache.setGameBoards(msg.getList());
     }
 
     /**
@@ -222,7 +223,7 @@ public class ClientSideController {
      * @param msg the UpdateIslandsMessage sent by the server
      */
     private void updateIslands(UpdateIslandsMessage msg) { //TODO RIVEDERE COME MANTENERE L'ORDINE ANCHE NEL CASO IN CUI VENGA SOSTITUITA UNA SOLA ISOLA
-        List<ReducedIsland> list = cache.getIslands();
+        /* List<ReducedIsland> list = cache.getIslands();
         if(list != null) {
             list.removeAll(msg.getList());
             list.addAll(msg.getList());
@@ -230,7 +231,8 @@ public class ClientSideController {
         else {
             list = new ArrayList<>(msg.getList());
         }
-        cache.setIslands(list);
+        cache.setIslands(list);*/
+        cache.setIslands(msg.getList());
     }
 
     /**

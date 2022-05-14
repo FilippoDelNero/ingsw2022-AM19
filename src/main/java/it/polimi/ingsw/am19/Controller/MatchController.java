@@ -61,8 +61,6 @@ public class MatchController implements Observer{
 
         if (isExpert)
             this.model = new ExpertMatchDecorator(model.getWrappedMatch());
-
-        model.getWrappedMatch().addObserver(this);
     }
 
     private boolean checkOldMatches(){
@@ -137,6 +135,7 @@ public class MatchController implements Observer{
         model.initializeMatch();
         sendBroadcastMessage(new GenericMessage("The match has started"));
         this.roundsManager = new RoundsManager(this);
+        model.getWrappedMatch().addObserver(this);
     }
 
     /**
