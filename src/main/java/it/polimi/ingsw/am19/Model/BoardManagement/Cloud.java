@@ -4,13 +4,14 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Class that represents a cloud tile. It can host a prefixed num of students of various colors that can be moved in and out
  */
-public class Cloud implements MoveStudent {
+public class Cloud implements MoveStudent, Serializable {
     /**
      * Keeps track of the number of students of each color on the cloud
      */

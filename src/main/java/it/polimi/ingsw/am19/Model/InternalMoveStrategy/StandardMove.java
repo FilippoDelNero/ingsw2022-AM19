@@ -5,10 +5,12 @@ import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.io.Serializable;
+
 /**
  * Standard move strategy to move student from entrance to diningHall
  */
-public class StandardMove implements InternalMoveStrategy{
+public class StandardMove implements InternalMoveStrategy, Serializable {
     /**
      * Standard strategy
      * @param gameBoard the gameBoard to manage

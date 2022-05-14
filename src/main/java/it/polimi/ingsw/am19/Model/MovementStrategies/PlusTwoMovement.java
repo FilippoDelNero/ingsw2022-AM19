@@ -1,10 +1,12 @@
 package it.polimi.ingsw.am19.Model.MovementStrategies;
 
+import java.io.Serializable;
+
 /**
  * Class for managing the PlusTwoMovement Strategy
  * checks the validity of the number of steps the player wants to move motherNature of
  */
-public class PlusTwoMovement implements MovementStrategy{
+public class PlusTwoMovement implements MovementStrategy, Serializable {
     /**
      * Defines the check to pass before moving motherNature, two extra steps are allowed
      * @param numOfSteps represents the number of steps to take

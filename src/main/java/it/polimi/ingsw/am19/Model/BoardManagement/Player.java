@@ -9,6 +9,7 @@ import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Model.Utilities.CoinManager;
 import it.polimi.ingsw.am19.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,7 @@ import java.util.Objects;
 /**
  * Class for managing Player
  */
-public class Player extends Observable {
+public class Player extends Observable implements Serializable {
     /**
      * String for the nickname of a Player
      */

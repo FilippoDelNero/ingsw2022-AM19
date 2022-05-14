@@ -6,13 +6,14 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Class for wrapping an AbstractMatch and adding some extra properties
  */
-public class MatchDecorator implements Match{
+public class MatchDecorator implements Match, Serializable {
     /**
      * Saves a reference to the wrapped AbstractMatch
      */

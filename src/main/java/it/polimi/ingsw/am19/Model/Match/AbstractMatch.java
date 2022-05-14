@@ -8,6 +8,7 @@ import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Observer;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.am19.Utilities.Notification.END_MATCH;
@@ -16,7 +17,7 @@ import static it.polimi.ingsw.am19.Utilities.Notification.FINAL_ROUND;
 /**
  * Abstract Class that implements all methods shared by different kinds of Matches
  */
-public abstract class AbstractMatch extends Observable implements Match, Observer {
+public abstract class AbstractMatch extends Observable implements Match, Observer, Serializable {
     /**
      * Number of Players expected
      */

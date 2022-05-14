@@ -62,6 +62,8 @@ public class ClientSideController {
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
+            case HOW_MANY_STEP_MN -> askMotherNatureStep((AskMotherNatureStepMessage)msg);
+            case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
             case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
         }
     }
@@ -100,6 +102,36 @@ public class ClientSideController {
             towercolor = view.askTowerColor(msg.getTowerColorsAvailable());
             wizardFamily = view.askWizardFamily(msg.getWizardFamiliesAvailable());
             myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The method is called when a AskMotherNatureStepMessage comes in
+     * it ask and send the num of step
+     * @param msg the AskMotherNatureStep sent by server
+     */
+    private void askMotherNatureStep(AskMotherNatureStepMessage msg){
+        int step;
+        try {
+            step= view.askMotherNatureStep();
+            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname,step));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The method is called when a AskCloudMessage comes in
+     * it ask and send the num of cloud chosen
+     * @param msg the AskCloudMessage sent by server
+     */
+    private void askCloud(AskCloudMessage msg){
+        int cloudChosen;
+        try {
+            cloudChosen= view.askCloud(msg.getCloudAvailable());
+            myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
         } catch (ExecutionException e) {
             e.printStackTrace();
         }

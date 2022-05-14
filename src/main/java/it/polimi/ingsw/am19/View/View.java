@@ -60,6 +60,14 @@ public interface View {
     TowerColor askTowerColor(List<TowerColor> availableTowerColor) throws ExecutionException;
 
     /**
+     * method used to ask the step that MotherNature have to do in clockwise
+     * @return the num of step
+     */
+    int askMotherNatureStep() throws ExecutionException;
+
+    int askCloud(int [] cloudAvailable) throws ExecutionException;
+
+    /**
      * method used to display a generic message (error messages as well) to the user
      *
      * @param toPrint the content that needs to be print
