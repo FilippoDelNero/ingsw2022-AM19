@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.View;
 
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
@@ -52,6 +53,9 @@ public interface View {
      * @return the tower's color chosen by the user
      */
     TowerColor askTowerColor (List<TowerColor> availableTowerColor) throws ExecutionException;
+
+
+    String askEntranceMove() throws ExecutionException;
 
     /**
      * method used to display a generic message (error messages as well) to the user

@@ -11,6 +11,7 @@ import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -155,7 +156,7 @@ public class Cli implements View {
         TowerColor towerColor = null;
         do {
             printer.println("Choose a Tower's color from " + availableTowerColor);
-            input=readLine();
+            input = readLine();
             switch (input.toLowerCase()) {
                 case "black" -> towerColor = TowerColor.BLACK;
                 case "white" -> towerColor = TowerColor.WHITE;
@@ -163,6 +164,14 @@ public class Cli implements View {
             }
         } while(!availableTowerColor.contains(towerColor));
         return towerColor;
+    }
+
+    @Override
+    public String askEntranceMove() throws ExecutionException {
+        String input;
+        printer.println("Which color do you want to move and where? [e.g. RED island 1]");
+        input = readLine();
+        return input.toLowerCase();
     }
 
     /**
@@ -192,25 +201,22 @@ public class Cli implements View {
             printer.println(s + '\n');
         }
 
-        printer.println("The Clouds: ");
-        for(Map<PieceColor, Integer> m : cache.getClouds())
-            printer.println(m.toString());
-
-
-        printer.println("\nYour Deck: ");
-        s = "| ";
-        for(HelperCard hc : cache.getHelperDeck()) {
-            s = s.concat(hc.toString());
-            s = s.concat(" | ");
+        if(cache.getClouds() != null) {
+            printer.println("The Clouds: ");
+            for(Map<PieceColor, Integer> m : cache.getClouds())
+                printer.println(m.toString());
         }
-        printer.println(s);
 
-        printer.println("\nEach Player's GameBoard: ");
-        for(ReducedGameBoard rgb : cache.getGameBoards())
-            printer.println(rgb.toString()); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+        if(cache.getGameBoards() != null) {
+            printer.println("\nEach Player's GameBoard: ");
+            for(ReducedGameBoard rgb : cache.getGameBoards())
+                printer.println(rgb.toString()); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+        }
 
-        printer.println("\nThe Majestic Archipelago of Eryantis: ");
-        for(ReducedIsland isle : cache.getIslands())
-            printer.println(isle.toString());
+        if(cache.getIslands() != null) {
+            printer.println("\nThe Majestic Archipelago of Eryantis: ");
+            for(ReducedIsland isle : cache.getIslands())
+                printer.println(isle.toString());
+        }
     }
 }

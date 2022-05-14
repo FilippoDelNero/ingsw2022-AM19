@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.Network.Client;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
@@ -21,9 +20,6 @@ public class Cache { //Non sono sicuro sia il package giusto
 
     /** a list of "islands" */
     private List<ReducedIsland> islands;
-
-    /** a list of HelperCard representing the deck of the player */
-    private List<HelperCard> helperDeck;
 
     /** a list, if present, of "characterCards" */
     private List<Character> characterCards;
@@ -74,22 +70,6 @@ public class Cache { //Non sono sicuro sia il package giusto
      */
     public void setIslands(List<ReducedIsland> islands) {
         this.islands = islands;
-    }
-
-    /**
-     * getter for the HelperDeck attribute
-     * @return a list of HelperCard
-     */
-    public List<HelperCard> getHelperDeck() {
-        return helperDeck;
-    }
-
-    /**
-     * setter for the HelperDeck attribute
-     * @param helperDeck a list of HelperCard
-     */
-    public void setHelperDeck(List<HelperCard> helperDeck) {
-        this.helperDeck = helperDeck;
     }
 
     /**

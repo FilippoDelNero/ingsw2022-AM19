@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Client;
 
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
@@ -8,7 +9,9 @@ import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -61,6 +64,7 @@ public class ClientSideController {
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
+            case ENTRANCE_MOVE -> askEntranceMove();
         }
     }
 
@@ -98,6 +102,40 @@ public class ClientSideController {
             towercolor = view.askTowerColor(msg.getTowerColorsAvailable());
             wizardFamily = view.askWizardFamily(msg.getWizardFamiliesAvailable());
             myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void askEntranceMove() {
+        String input;
+        int islandNum;
+        PieceColor color = null;
+
+        String[] colorsString = {"red", "green", "blue", "yellow", "pink"};
+        PieceColor[] colorsPC = {PieceColor.RED, PieceColor.GREEN, PieceColor.BLUE, PieceColor.YELLOW, PieceColor.PINK};
+        Map<String, PieceColor> colors = new HashMap<>();
+        for(int i = 0; i < 5; i++) {
+            colors.put(colorsString[i], colorsPC[i]);
+        }
+
+        try {
+            input = view.askEntranceMove();
+            for(String s : colors.keySet()) {
+                if(input.contains(s))
+                    color = colors.get(s);
+            }
+            if (color == null)
+                communicate(previousMsg);
+            else if(input.contains("island") || input.contains(" i ") || input.contains("isle")) {
+                input = input.replaceAll("[^0-9]+", " ");
+                islandNum = Integer.parseInt(input.trim());
+                myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
+            }
+            else if(input.contains("dining") || input.contains("room") || input.contains(" d "))
+                myClient.sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, color));
+            else
+                communicate(previousMsg);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -149,11 +187,7 @@ public class ClientSideController {
      * @param msg the UpdateCardsMessage sent by the server
      */
     private void updateCards(UpdateCardsMessage msg) {
-        cache.setHelperDeck(msg.getHelperCardsMap().get(nickname));
-        if(msg.getCharacterCardList() != null)
             cache.setCharacterCards(msg.getCharacterCardList());
-        else
-            cache.setCharacterCards(null);
     }
 
     /**
