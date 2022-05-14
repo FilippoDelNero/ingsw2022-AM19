@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * message used to update the clouds
  */
-public class UpdateCloudMessage extends Message {
+public class UpdateCloudsMessage extends Message {
     /** a list of the maps inside the clouds */
     private final List<Map<PieceColor, Integer>> clouds;
 
@@ -16,7 +16,7 @@ public class UpdateCloudMessage extends Message {
      * constructor
      * @param list the list of maps found inside the clouds
      */
-    public UpdateCloudMessage(List<Map<PieceColor, Integer>> list) {
+    public UpdateCloudsMessage(List<Map<PieceColor, Integer>> list) {
         super("server", MessageType.UPDATE_CLOUDS);
         this.clouds = list;
     }

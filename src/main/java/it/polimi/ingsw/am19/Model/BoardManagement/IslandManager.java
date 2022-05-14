@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * This class is used by the MatchXPlayer class to manage the islands
  */
-public class IslandManager extends Observable implements Serializable {
+public class IslandManager extends Observable implements Observer, Serializable {
     /**
      * list storing the number of island or group of islands currently present
      */
@@ -57,7 +57,9 @@ public class IslandManager extends Observable implements Serializable {
 
         //fill the ArrayList with the initial 12 islands
         for(int i = 0; i<MAXNUMOFISLAND; i++) {
-            islands.add(new Island(currInfluenceStrategy));
+            Island isle = new Island(currInfluenceStrategy);
+            isle.addObserver(this);
+            islands.add(isle);
         }
 
         iterator = islands.iterator();
@@ -114,6 +116,9 @@ public class IslandManager extends Observable implements Serializable {
         island.setInfluenceStrategy(strategy);
     }
 
+    /**
+     * setter for the Iterator attribute
+     */
     public void setIterator() {
         this.iterator = islands.iterator();
     }
@@ -151,8 +156,7 @@ public class IslandManager extends Observable implements Serializable {
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
                 if (getIslands().size() == 3)
-                    for (Observer observer: observers)
-                        observer.notify(Notification.FINAL_ROUND);
+                    notifyObservers(Notification.FINAL_ROUND);
             }
         }
     }
@@ -185,9 +189,21 @@ public class IslandManager extends Observable implements Serializable {
 
         //creates a new island
         Island newIsland = new Island(map, towerColor, true, strategy, numOfIslands);
+        newIsland.addObserver(this);
 
         //adds the new island and deletes the old ones
         iterator.remove();
         iterator.set(newIsland);
+    }
+
+    /**
+     * reacts to notifications from the islands
+     */
+    @Override
+    public void notify(Notification notification) {
+        switch (notification) {
+            case UPDATE_ISLANDS -> notifyObservers(Notification.UPDATE_ISLANDS);
+            case UPDATE_GAMEBOARDS -> notifyObservers(Notification.UPDATE_GAMEBOARDS);
+        }
     }
 }

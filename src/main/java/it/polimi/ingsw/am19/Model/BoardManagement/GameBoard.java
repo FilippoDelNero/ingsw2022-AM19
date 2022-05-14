@@ -136,12 +136,12 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
      * Otherwise it sends a notification the observers, saying that the end match conditions occurred
      */
     public void removeTower(){
-        if (!areTowersFinished())
+        if (!areTowersFinished()) {
             numOfTowers--;
-        else{
-            for (Observer observer: observers)
-                observer.notify(Notification.END_MATCH);
+            notifyObservers(Notification.UPDATE_GAMEBOARDS);
         }
+        else
+            notifyObservers(Notification.END_MATCH);
     }
 
     /**
@@ -178,6 +178,7 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
                 else {
                     Integer oldValue = entrance.get(color);
                     entrance.replace(color, oldValue + 1);
+                    notifyObservers(Notification.UPDATE_GAMEBOARDS);
                 }
             }
             default -> throw new IllegalArgumentException("Unexpected value: " + color);
@@ -197,6 +198,7 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
                 Integer oldValue = entrance.get(color);
                 if (oldValue > 0) {
                     entrance.replace(color, oldValue - 1);
+                    //observer notified by the island.addStudent() or the GameBoard.moveStudentToDiningRoom;
                 } else
                     throw new NoSuchColorException("Unable to remove a " + color + " student from Entrance. There's no student of the specified color");
             }
@@ -212,6 +214,7 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
      */
     public void moveStudentToDiningRoom(PieceColor color) throws NoSuchColorException, TooManyStudentsException{
         moveStrategy.moveStudentToDiningRoom(this, color, maxEntranceStudent,maxDiningRoomStudent);
+        notifyObservers(Notification.UPDATE_GAMEBOARDS);
     }
 
     /**
