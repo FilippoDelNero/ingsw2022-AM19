@@ -81,6 +81,18 @@ public class ClientManager implements Runnable {
     }
 
     /**
+     * Constructor used ONLY for testing purposes
+     */
+    public ClientManager() { //TODO I SHOULD USE JMOCK OR EASYMOCK TO MOCK IT INSTEAD
+        matchController = null;
+        myTimer = null;
+        myServer = null;
+        lockToSend = null;
+        lockToReceive = null;
+        id = 0;
+    }
+
+    /**
      * getter for the id parameter
      * @return the id of this clientManager
      */

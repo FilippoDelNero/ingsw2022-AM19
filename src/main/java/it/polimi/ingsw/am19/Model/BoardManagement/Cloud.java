@@ -3,6 +3,8 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.Map;
 /**
  * Class that represents a cloud tile. It can host a prefixed num of students of various colors that can be moved in and out
  */
-public class Cloud implements MoveStudent, Serializable {
+public class Cloud extends Observable implements MoveStudent, Serializable {
     /**
      * Keeps track of the number of students of each color on the cloud
      */
@@ -50,22 +52,18 @@ public class Cloud implements MoveStudent, Serializable {
     @Override
     public void addStudent (PieceColor color) throws TooManyStudentsException, IllegalArgumentException{
         switch (color) {
-            case GREEN:
-            case RED:
-            case YELLOW:
-            case PINK:
-            case BLUE:{
+            case GREEN, RED, YELLOW, PINK, BLUE -> {
                 if (currNumOfStudents == hostableStudents)
                     throw new TooManyStudentsException("Cloud cannot host more than " + getNumOfHostableStudents());
                 else {
-                    this.currNumOfStudents ++;
+                    this.currNumOfStudents++;
                     Integer oldValue = numOfStudents.get(color);
                     numOfStudents.replace(color, oldValue + 1);
+                    if(currNumOfStudents == hostableStudents) //the cloud is full, notify
+                        notifyObservers(Notification.UPDATE_CLOUDS);
                 }
             }
-            break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + color);
+            default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
 
     }
@@ -79,22 +77,17 @@ public class Cloud implements MoveStudent, Serializable {
     @Override
     public void removeStudent(PieceColor color) throws NoSuchColorException, IllegalArgumentException{
         switch (color) {
-            case GREEN:
-            case RED:
-            case YELLOW:
-            case PINK:
-            case BLUE:{
+            case GREEN, RED, YELLOW, PINK, BLUE -> {
                 Integer oldValue = numOfStudents.get(color);
-                if (oldValue > 0){
+                if (oldValue > 0) {
                     numOfStudents.replace(color, oldValue - 1);
-                    currNumOfStudents --;
-                }
-                else
+                    currNumOfStudents--;
+                    if (currNumOfStudents == 0) //all students from the cloud have been moved, notify
+                        notifyObservers(Notification.UPDATE_CLOUDS);
+                } else
                     throw new NoSuchColorException("Unable to remove a " + color + " student from Cloud. There's no student of the specified color");
             }
-            break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + color);
+            default -> throw new IllegalArgumentException("Unexpected value: " + color);
         }
     }
 

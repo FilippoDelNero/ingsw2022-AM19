@@ -38,12 +38,16 @@ public class ThreePlayersMatch extends AbstractMatch {
 
         //creating two clouds with no students on them. each cloud could store up to three students
         initializeClouds();
+        for (Cloud c : clouds)
+            c.addObserver(this);
 
         initializeGameBoards(bag);
         for (Player player: getGameBoards().keySet()){
             player.addObserver(this);
             getGameBoards().get(player).addObserver(this);
         }
+
+        motherNature.addObserver(this);
     }
 
     private void refillBag(Bag bag, int num) {

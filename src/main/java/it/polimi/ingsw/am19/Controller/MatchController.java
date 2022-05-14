@@ -1,17 +1,13 @@
 package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
 import it.polimi.ingsw.am19.Model.Match.TwoPlayersMatch;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Network.Message.EndMatchMessage;
-import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
-import it.polimi.ingsw.am19.Network.Message.GenericMessage;
-import it.polimi.ingsw.am19.Network.Message.Message;
+import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.Network.ReducedObjects.Reducer;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
 import it.polimi.ingsw.am19.Observer;
@@ -21,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MatchController{
+public class MatchController implements Observer{
     /**
      * Keeps a reference to the game model
      */
@@ -57,14 +53,16 @@ public class MatchController{
      * @param isExpert is the difficulty chosen for the new match
      */
     public void createNewMatch(int numOfPlayers, boolean isExpert){
-            if (numOfPlayers == 2)
-                this.model = new MatchDecorator(new TwoPlayersMatch());
-            else if (numOfPlayers == 3){
-                this.model = new MatchDecorator(new ThreePlayersMatch());
-            }
+        if (numOfPlayers == 2)
+            this.model = new MatchDecorator(new TwoPlayersMatch());
+        else if (numOfPlayers == 3){
+            this.model = new MatchDecorator(new ThreePlayersMatch());
+        }
 
         if (isExpert)
             this.model = new ExpertMatchDecorator(model.getWrappedMatch());
+
+        model.getWrappedMatch().addObserver(this);
     }
 
     private boolean checkOldMatches(){
@@ -213,5 +211,19 @@ public class MatchController{
 
     public RoundsManager getRoundsManager() {
         return roundsManager;
+    }
+
+    @Override
+    public void notify(Notification notification) {
+        switch (notification){
+            case UPDATE_CLOUDS -> sendBroadcastMessage(
+                    new UpdateCloudsMessage(reducer.reduceClouds(model.getClouds())));
+
+            case UPDATE_ISLANDS -> sendBroadcastMessage(
+                    new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
+
+            case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
+                    new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+        }
     }
 }
