@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * just a place holder for the No-Entry tiles
  */
-public class NoEntryTileInfluence implements InfluenceStrategy {
+public class NoEntryTileInfluence extends AbstractInfluenceStrategy implements InfluenceStrategy {
 
     /**
      * this method doesn't calculate any influence as per effect of the No-Entry Tile

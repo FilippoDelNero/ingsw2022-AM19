@@ -1,9 +1,11 @@
 package it.polimi.ingsw.am19.Model.Utilities;
 
+import java.io.Serializable;
+
 /**
  * Class to manage the max amount of coins for a single match
  */
-public class CoinManager {
+public class CoinManager implements Serializable {
     /**
      * Num of coins available
      */

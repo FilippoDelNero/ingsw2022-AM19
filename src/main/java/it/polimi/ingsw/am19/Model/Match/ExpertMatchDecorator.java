@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model.Match;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +19,7 @@ import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 /**
  * Class for wrapping an AbstractMatch to make it support additional expert match rules
  */
-public class ExpertMatchDecorator extends MatchDecorator{
+public class ExpertMatchDecorator extends MatchDecorator implements Serializable  {
     /**
      * A list of current available characterCards
      */

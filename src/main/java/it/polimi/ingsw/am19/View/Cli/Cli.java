@@ -11,6 +11,7 @@ import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -163,6 +164,54 @@ public class Cli implements View {
             }
         } while(!availableTowerColor.contains(towerColor));
         return towerColor;
+    }
+
+    /**
+     * Method used to ask the step that Mother Nature have to do in clockwise
+     * @return the num of step
+     */
+    @Override
+    public int askMotherNatureStep() throws ExecutionException {
+        String input;
+        int step=0;
+        do {
+            printer.println("How many step Mother Nature have to do in clockwise?");
+            input=readLine();
+            switch (input) {
+                case "1" -> step=1;
+                case "2" -> step=2;
+                case "3" -> step=3;
+                case "4" -> step=4;
+                case "5" -> step=5;
+                case "6" -> step=6;
+                case "7" -> step=7;
+            }
+        } while(step==0);
+        return step;
+    }
+
+    /**
+     * Method used to ask a cloud to take
+     * @param cloudAvailable the array with the num of cloud still available to take
+     * @return the index of cloud to take
+     */
+    @Override
+    public int askCloud(int[] cloudAvailable) throws ExecutionException {
+        int cloud=0;
+        String input;
+        do {
+            printer.println("Chose a cloud from " + Arrays.toString(cloudAvailable));
+            input=readLine();
+            int cloudChosen;
+            cloudChosen=Integer.parseInt(input);
+            for(int i: cloudAvailable){
+                if (cloudAvailable[i] == cloudChosen) {
+                    cloud = cloudChosen;
+                    break;
+                }
+            }
+        } while(cloud==0);
+        return cloud;
     }
 
     /**

@@ -6,13 +6,14 @@ import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Observable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Singleton class for managing student drawings
  */
-public class Bag extends Observable {
+public class Bag extends Observable implements Serializable {
     /**
      * Keeps track of the number of existing students of each color in the bag
      */

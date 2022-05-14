@@ -5,6 +5,8 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.BoardManagement.ProfessorManager;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -12,7 +14,7 @@ import java.util.Objects;
 /**
  * abstract class to group all the methods used by the various influence strategies
  */
-public abstract class AbstractInfluenceStrategy implements InfluenceStrategy {
+public abstract class AbstractInfluenceStrategy implements InfluenceStrategy, Serializable {
     /**
      * a map containing the amount of influence of each player on the island
      */

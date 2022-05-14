@@ -9,12 +9,13 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Observable;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * This class is used by the MatchXPlayer class to manage the islands
  */
-public class IslandManager extends Observable {
+public class IslandManager extends Observable implements Serializable {
     /**
      * list storing the number of island or group of islands currently present
      */
@@ -38,7 +39,7 @@ public class IslandManager extends Observable {
     /**
      * the iterator of the list of island
      */
-    private final ListIterator<Island> iterator;
+    private transient ListIterator<Island> iterator;
 
     /**
      * it is the maximum number of island present in a game
@@ -111,6 +112,10 @@ public class IslandManager extends Observable {
      */
     public void setIslandInfluenceStrategy(Island island, InfluenceStrategy strategy) {
         island.setInfluenceStrategy(strategy);
+    }
+
+    public void setIterator() {
+        this.iterator = islands.iterator();
     }
 
     /**
