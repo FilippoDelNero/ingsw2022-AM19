@@ -56,10 +56,17 @@ public interface View {
     TowerColor askTowerColor (List<TowerColor> availableTowerColor) throws ExecutionException;
 
     /**
+     * method used to ask the user which student's color wants to move and where
+     * @return the input of the player
+     */
+    String askEntranceMove() throws ExecutionException;
+
+    /**
      * method used to ask the step that MotherNature have to do in clockwise
      * @return the num of step
      */
     int askMotherNatureStep() throws ExecutionException;
+
 
     int askCloud(int [] cloudAvailable) throws ExecutionException;
 

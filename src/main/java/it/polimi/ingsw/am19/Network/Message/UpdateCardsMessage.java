@@ -1,10 +1,9 @@
 package it.polimi.ingsw.am19.Network.Message;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * message used to update the cards, both Helper and Character, or just the Helper's ones

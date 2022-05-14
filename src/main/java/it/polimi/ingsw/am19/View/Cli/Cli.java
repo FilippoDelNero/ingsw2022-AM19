@@ -12,12 +12,10 @@ import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.stream.Collectors;
 
 /**
  * class implementing a cli-style view
@@ -168,6 +166,38 @@ public class Cli implements View {
         return towerColor;
     }
 
+    public HelperCard askHelperCard(List<HelperCard> cardOptions) throws ExecutionException {
+        int chosenCardIndex;
+        List<Integer> availableIndexes = cardOptions.stream()
+                .map(HelperCard::getNextRoundOrder)
+                .toList();
+        do{
+            printer.println("Please choose a card number between those available in your deck:");
+            for (HelperCard card : cardOptions)
+                printer.println(card);
+            String index = readLine();
+            chosenCardIndex = Integer.parseInt(index);
+
+        }while(!availableIndexes.contains(chosenCardIndex));
+
+        for(HelperCard card : cardOptions)
+            if(card.getNextRoundOrder() == chosenCardIndex)
+                return card;
+        return null; //If it happens there's a bug
+    }
+
+    /**
+     * method used to ask the user which student's color wants to move and where
+     * @return the input of the player
+     */
+    @Override
+    public String askEntranceMove() throws ExecutionException {
+        String input;
+        printer.println("Which color do you want to move and where? [e.g. RED island 1]");
+        input = readLine();
+        return input.toLowerCase();
+    }
+
     /**
      * Method used to ask the step that Mother Nature have to do in clockwise
      * @return the num of step
@@ -216,14 +246,6 @@ public class Cli implements View {
         return cloud;
     }
 
-    @Override
-    public String askEntranceMove() throws ExecutionException {
-        String input;
-        printer.println("Which color do you want to move and where? [e.g. RED island 1]");
-        input = readLine();
-        return input.toLowerCase();
-    }
-
     /**
      * method used to display a generic message (error messages as well) to the user
      * @param toPrint the content that needs to be print
@@ -264,30 +286,9 @@ public class Cli implements View {
         }
 
         if(cache.getIslands() != null) {
-            printer.println("\nThe Majestic Archipelago of Eryantis: ");
+            printer.println("\nThe Majestic Archipelago of Eriantys: ");
             for(ReducedIsland isle : cache.getIslands())
                 printer.println(isle.toString());
         }
-    }
-
-
-    public HelperCard askHelperCard(List<HelperCard> cardOptions) throws ExecutionException {
-        int chosenCardIndex;
-        List<Integer> availableIndexes = cardOptions.stream()
-                .map(HelperCard::getNextRoundOrder)
-                .toList();
-        do{
-            printer.println("Please choose a card number between those available in your deck:");
-            for (HelperCard card : cardOptions)
-                printer.println(card);
-            String index = readLine();
-            chosenCardIndex = Integer.parseInt(index);
-
-        }while(!availableIndexes.contains(chosenCardIndex));
-
-        for(HelperCard card : cardOptions)
-            if(card.getNextRoundOrder() == chosenCardIndex)
-                return card;
-        return null; //If it happens there's a bug
     }
 }

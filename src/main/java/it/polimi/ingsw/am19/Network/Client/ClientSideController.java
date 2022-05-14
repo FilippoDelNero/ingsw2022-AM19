@@ -65,10 +65,10 @@ public class ClientSideController {
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
+            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
             case ENTRANCE_MOVE -> askEntranceMove();
             case HOW_MANY_STEP_MN -> askMotherNatureStep((AskMotherNatureStepMessage)msg);
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
-            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
         }
     }
 
@@ -141,6 +141,10 @@ public class ClientSideController {
         }
     }
 
+    /**
+     * Method used to ask the player where she/he wants to move which student's color
+     * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
+     */
     private void askEntranceMove() {
         String input;
         int islandNum;
