@@ -235,7 +235,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         int target = card.getNextRoundOrder();
         ListIterator<Player> iterator = actionPhaseOrder.listIterator();
         if(!actionPhaseOrder.isEmpty()) {
-            int index = actionPhaseOrder.size() - 1;
+            int index = 0;
             while (iterator.hasNext()) {
                 Player currPlayer = iterator.next();
                 if (currPlayer.getCurrentCard().getNextRoundOrder() <= target) {

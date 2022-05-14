@@ -217,21 +217,21 @@ public class ThreePlayersMatchTest {
         m.initializeMatch();
         //the three players play a card each
         m.setCurrPlayer(p1);
-        assertDoesNotThrow(() -> m.useHelperCard(p1.getHelperDeck().get(3)));
+        assertDoesNotThrow(() -> m.useHelperCard(p1.getHelperDeck().get(1)));
         m.setCurrPlayer(p2);
-        assertDoesNotThrow(() -> m.useHelperCard(p2.getHelperDeck().get(0)));
+        assertDoesNotThrow(() -> m.useHelperCard(p2.getHelperDeck().get(2)));
         m.setCurrPlayer(p3);
-        assertDoesNotThrow(() -> m.useHelperCard(p3.getHelperDeck().get(6)));
+        assertDoesNotThrow(() -> m.useHelperCard(p3.getHelperDeck().get(3)));
         //check that the action phase order is as expected
-        assertEquals(p1, m.getActionPhaseOrder().get(1));
-        assertEquals(p2, m.getActionPhaseOrder().get(0));
+        assertEquals(p1, m.getActionPhaseOrder().get(0));
+        assertEquals(p2, m.getActionPhaseOrder().get(1));
         assertEquals(p3, m.getActionPhaseOrder().get(2));
         //sort out the next planning phase order
         m.updatePlanningPhaseOrder();
         //check that the next planning phase order is as expected
-        assertEquals(p1, m.getPlanningPhaseOrder().get(2));
-        assertEquals(p2, m.getPlanningPhaseOrder().get(0));
-        assertEquals(p3, m.getPlanningPhaseOrder().get(1));
+        assertEquals(p1, m.getPlanningPhaseOrder().get(0));
+        assertEquals(p2, m.getPlanningPhaseOrder().get(1));
+        assertEquals(p3, m.getPlanningPhaseOrder().get(2));
     }
 
     /**
