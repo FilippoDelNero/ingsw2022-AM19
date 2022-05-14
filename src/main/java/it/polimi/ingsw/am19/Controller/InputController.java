@@ -49,7 +49,7 @@ public class InputController {
      * @return true if the island index is that of an Island that takes part into the archipelago, false otherwise
      */
     boolean checkIsInArchipelago(int islandIndex){
-        if (islandIndex < 0 || islandIndex > model.getIslandManager().getIslands().size()-1){
+        if (islandIndex < 1 || islandIndex > model.getIslandManager().getIslands().size()){
             matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","The island index you chose is not valid"));
             return false;
         }

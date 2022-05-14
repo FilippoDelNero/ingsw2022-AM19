@@ -196,6 +196,7 @@ public class ClientSideController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        view.printView(nickname);
     }
 
     /**
