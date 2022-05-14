@@ -13,6 +13,7 @@ public class Observable {
     }
 
     public void notifyObservers(Notification notification){
-
+        for(Observer o : observers)
+            o.notify(notification);
     }
 }

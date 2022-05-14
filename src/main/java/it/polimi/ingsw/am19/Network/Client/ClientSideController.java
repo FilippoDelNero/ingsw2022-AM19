@@ -61,7 +61,7 @@ public class ClientSideController {
             case ASK_LOGIN_INFO -> askLoginInfo((AskLoginInfoMessage) msg);
             case ERROR_MESSAGE -> error((ErrorMessage) msg);
             case GENERIC_MESSAGE -> generic((GenericMessage) msg);
-            case UPDATE_CLOUDS -> updateCloud((UpdateCloudMessage) msg);
+            case UPDATE_CLOUDS -> updateCloud((UpdateCloudsMessage) msg);
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
@@ -111,34 +111,16 @@ public class ClientSideController {
         }
     }
 
-    /**
-     * The method is called when a AskMotherNatureStepMessage comes in
-     * it ask and send the num of step
-     * @param msg the AskMotherNatureStep sent by server
-     */
-    private void askMotherNatureStep(AskMotherNatureStepMessage msg){
-        int step;
+    private void showHelperOptions(AskHelperCardMessage msg){
+        List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
+        HelperCard helperCard = null;
         try {
-            step= view.askMotherNatureStep();
-            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname,step));
+            view.printView(nickname);
+            helperCard = view.askHelperCard(cardOptions);
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * The method is called when a AskCloudMessage comes in
-     * it ask and send the num of cloud chosen
-     * @param msg the AskCloudMessage sent by server
-     */
-    private void askCloud(AskCloudMessage msg){
-        int cloudChosen;
-        try {
-            cloudChosen= view.askCloud(msg.getCloudAvailable());
-            myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
     }
 
     /**
@@ -158,6 +140,7 @@ public class ClientSideController {
         }
 
         try {
+            view.printView(nickname);
             input = view.askEntranceMove();
             for(String s : colors.keySet()) {
                 if(input.contains(s))
@@ -182,10 +165,42 @@ public class ClientSideController {
     }
 
     /**
+     * The method is called when a AskMotherNatureStepMessage comes in
+     * it ask and send the num of step
+     * @param msg the AskMotherNatureStep sent by server
+     */
+    private void askMotherNatureStep(AskMotherNatureStepMessage msg){
+        int step;
+        try {
+            view.printView(nickname);
+            step= view.askMotherNatureStep();
+            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname,step));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The method is called when a AskCloudMessage comes in
+     * it ask and send the num of cloud chosen
+     * @param msg the AskCloudMessage sent by server
+     */
+    private void askCloud(AskCloudMessage msg){
+        int cloudChosen;
+        try {
+            view.printView(nickname);
+            cloudChosen= view.askCloud(msg.getCloudAvailable());
+            myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * method to update the clouds on the cache
      * @param msg the UpdateCloudMessage sent by the server
      */
-    private void updateCloud(UpdateCloudMessage msg) {
+    private void updateCloud(UpdateCloudsMessage msg) {
         cache.setClouds(msg.getClouds());
     }
 
@@ -246,16 +261,5 @@ public class ClientSideController {
     private void error(ErrorMessage msg) {
         view.genericPrint(msg.toString());
         communicate(previousMsg);
-    }
-
-    private void showHelperOptions(AskHelperCardMessage msg){
-        List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
-        HelperCard helperCard = null;
-        try {
-            helperCard = view.askHelperCard(cardOptions);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
     }
 }

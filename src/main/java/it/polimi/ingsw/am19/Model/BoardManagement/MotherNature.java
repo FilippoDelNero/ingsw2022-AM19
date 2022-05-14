@@ -4,6 +4,8 @@ import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.MovementStrategies.MovementStrategy;
 import it.polimi.ingsw.am19.Model.MovementStrategies.StandardMovement;
+import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.ListIterator;
 /**
  * Singleton class that models mother nature tile, it can visit
  */
-public class MotherNature implements Serializable {
+public class MotherNature extends Observable implements Serializable {
     /**
      * Keeps a reference to the an island manager
      */
@@ -149,6 +151,7 @@ public class MotherNature implements Serializable {
         islandManager.calculateInfluence(finalPosition);
 
         setCurrMovementStrategy(defaultMovement);
+        notifyObservers(Notification.UPDATE_ISLANDS);
     }
 
     /**

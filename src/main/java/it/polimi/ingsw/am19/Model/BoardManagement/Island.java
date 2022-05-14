@@ -2,6 +2,8 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.Map;
 /**
  * This class models an island or a group of them
  */
-public class Island implements MoveStudent, Serializable {
+public class Island extends Observable implements MoveStudent, Serializable {
 
     /**
      * contains the number of students for each colour present on a island
@@ -92,6 +94,8 @@ public class Island implements MoveStudent, Serializable {
     public void addStudent(PieceColor color) {
         int oldValue = numOfStudents.get(color);
         numOfStudents.replace(color, oldValue + 1);
+        notifyObservers(Notification.UPDATE_ISLANDS);
+        notifyObservers(Notification.UPDATE_GAMEBOARDS);
     }
 
     @Override
