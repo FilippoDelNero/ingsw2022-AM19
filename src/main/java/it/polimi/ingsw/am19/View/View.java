@@ -68,7 +68,7 @@ public interface View {
     int askMotherNatureStep() throws ExecutionException;
 
 
-    int askCloud(int [] cloudAvailable) throws ExecutionException;
+    int askCloud(List<Integer> cloudAvailable) throws ExecutionException;
 
     /**
      * method used to display a generic message (error messages as well) to the user

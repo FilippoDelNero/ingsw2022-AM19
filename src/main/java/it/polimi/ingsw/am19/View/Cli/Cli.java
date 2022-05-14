@@ -228,22 +228,15 @@ public class Cli implements View {
      * @return the index of cloud to take
      */
     @Override
-    public int askCloud(int[] cloudAvailable) throws ExecutionException {
-        int cloud=0;
+    public int askCloud(List<Integer> cloudAvailable) throws ExecutionException {
+        int cloudChosen;
         String input;
         do {
-            printer.println("Chose a cloud from " + Arrays.toString(cloudAvailable));
+            printer.println("Chose a cloud from " + cloudAvailable);
             input=readLine();
-            int cloudChosen;
             cloudChosen=Integer.parseInt(input);
-            for(int i: cloudAvailable){
-                if (cloudAvailable[i] == cloudChosen) {
-                    cloud = cloudChosen;
-                    break;
-                }
-            }
-        } while(cloud==0);
-        return cloud;
+        } while(!cloudAvailable.contains(cloudChosen));
+        return cloudChosen;
     }
 
     /**
