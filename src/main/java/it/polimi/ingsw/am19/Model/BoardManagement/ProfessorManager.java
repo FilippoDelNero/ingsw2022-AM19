@@ -2,10 +2,11 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.CheckProfessorStrategy.*;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-public class ProfessorManager {
+public class ProfessorManager implements Serializable {
     /**
      * a map where a professor for each color is associated with its owner
      */

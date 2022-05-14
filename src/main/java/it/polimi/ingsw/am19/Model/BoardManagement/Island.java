@@ -3,13 +3,14 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * This class models an island or a group of them
  */
-public class Island implements MoveStudent {
+public class Island implements MoveStudent, Serializable {
 
     /**
      * contains the number of students for each colour present on a island

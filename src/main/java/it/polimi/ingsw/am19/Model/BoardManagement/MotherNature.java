@@ -5,13 +5,14 @@ import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.MovementStrategies.MovementStrategy;
 import it.polimi.ingsw.am19.Model.MovementStrategies.StandardMovement;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ListIterator;
 
 /**
  * Singleton class that models mother nature tile, it can visit
  */
-public class MotherNature {
+public class MotherNature implements Serializable {
     /**
      * Keeps a reference to the an island manager
      */

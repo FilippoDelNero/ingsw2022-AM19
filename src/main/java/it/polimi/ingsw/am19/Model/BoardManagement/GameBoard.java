@@ -9,12 +9,13 @@ import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Observable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Class for manage the single GameBoard of each player
  */
-public class GameBoard extends Observable implements MoveStudent {
+public class GameBoard extends Observable implements MoveStudent, Serializable {
     /**
      * References to the player of this GameBoard
      */

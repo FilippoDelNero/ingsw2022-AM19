@@ -4,13 +4,15 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * abstract class used to model the 12 different cards
  */
-public abstract class AbstractCharacterCard {
+public abstract class AbstractCharacterCard implements Serializable {
     /**
      * The initial price for the CharacterCard
      */

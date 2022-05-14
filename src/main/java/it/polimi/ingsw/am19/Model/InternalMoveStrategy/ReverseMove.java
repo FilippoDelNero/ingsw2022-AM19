@@ -5,10 +5,12 @@ import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class ReverseMove implements InternalMoveStrategy{
+public class ReverseMove implements InternalMoveStrategy, Serializable {
     /**
      *
      * @param gameBoard the gameBoard to manage

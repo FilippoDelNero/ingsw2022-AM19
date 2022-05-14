@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Model.Utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -10,7 +11,7 @@ import java.util.NoSuchElementException;
  * it is a circular list
  * @param <T> the object the list will host
  */
-public class IslandList<T> implements Iterable<T>{
+public class IslandList<T> implements Serializable, Iterable<T>{
     /**
      * a list of T
      */
