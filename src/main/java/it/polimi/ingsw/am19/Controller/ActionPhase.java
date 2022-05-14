@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
+import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -36,8 +37,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
                                     new ErrorMessage("server","You can't move a " + color + " student to your dining room"));
                             return;
                         }
-                    matchController.sendMessage(matchController.getCurrPlayer(), new GenericMessage(""+model.getGameBoards().get(model.getPlayerByNickname("lau")).getEntrance().toString()));
-                    numOfMovedStudents++;
+                        numOfMovedStudents++;
                         if (numOfMovedStudents < 3)
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
                         else if (numOfMovedStudents == 3) {
@@ -53,7 +53,6 @@ public class ActionPhase extends AbstractPhase implements Phase{
                     if (//inputController.checkIsInEntrance(color) &&
                             inputController.checkIsInArchipelago(islandIndex)){
                         try {
-                            matchController.sendMessage(matchController.getCurrPlayer(), new GenericMessage(""+model.getGameBoards().get(model.getPlayerByNickname("lau")).getEntrance().toString()));
                             model.moveStudent(color,model.getGameBoards().get(
                                     model.getPlayerByNickname(matchController.getCurrPlayer())
                             ), model.getIslandManager().getIslands().get(islandIndex));
@@ -69,6 +68,17 @@ public class ActionPhase extends AbstractPhase implements Phase{
                             matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
                         }
                     }
+                }
+                case HOW_MANY_STEP_MN -> {
+                    ReplyMotherNatureStepMessage message = (ReplyMotherNatureStepMessage) msg;
+                    try {
+                        model.moveMotherNature(message.getStep());
+                    } catch (IllegalNumOfStepsException e) {
+                        matchController.sendMessage(matchController.getCurrPlayer(),
+                                new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps"));
+                        return;
+                    }
+                    matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
                 }
             }
         }

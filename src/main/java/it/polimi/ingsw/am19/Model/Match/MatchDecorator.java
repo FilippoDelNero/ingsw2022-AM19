@@ -297,4 +297,9 @@ public class MatchDecorator implements Match, Serializable {
     public Player getPlayerByNickname(String nickname){
         return wrappedMatch.getPlayerByNickname(nickname);
     }
+
+    @Override
+    public List<Integer> getNonEmptyClouds(){
+        return wrappedMatch.getNonEmptyClouds();
+    }
 }

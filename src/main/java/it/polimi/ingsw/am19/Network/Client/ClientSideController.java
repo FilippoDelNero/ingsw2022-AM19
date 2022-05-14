@@ -146,10 +146,8 @@ public class ClientSideController {
                 if(input.contains(s))
                     color = colors.get(s);
             }
-            if (color == null){
+            if (color == null)
                 communicate(previousMsg);
-                return;
-            }
             else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
                 input = input.replaceAll("[^0-9]+", " ");
                 islandNum = Integer.parseInt(input.trim());
@@ -234,7 +232,6 @@ public class ClientSideController {
             list = new ArrayList<>(msg.getList());
         }
         cache.setIslands(list);
-        view.printView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
     }
 
     /**

@@ -191,4 +191,6 @@ public interface Match {
     List<Player> getWinner();
 
     Player getPlayerByNickname(String nickname);
+
+    List<Integer> getNonEmptyClouds();
 }

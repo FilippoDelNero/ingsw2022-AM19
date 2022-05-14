@@ -114,4 +114,12 @@ public class Cloud extends Observable implements MoveStudent, Serializable {
     public int getNumOfHostableStudents(){
         return this.hostableStudents;
     }
+
+    /**
+     * Returns true if the cloud has no students on it, false otherwise
+     * @return true if the cloud has no students on it, false otherwise
+     */
+    public boolean isEmpty(){
+        return this.currNumOfStudents == 0;
+    }
 }
