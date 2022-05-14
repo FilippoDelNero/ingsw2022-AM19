@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Client;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
@@ -61,6 +62,7 @@ public class ClientSideController {
             case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
+            case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage)msg);
         }
     }
 
@@ -141,7 +143,7 @@ public class ClientSideController {
             list = new ArrayList<>(msg.getList());
         }
         cache.setIslands(list);
-        view.PrintView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
+        view.printView(nickname); //TODO SICURAMENTE QUESTO METODO NON VA QUA
     }
 
     /**
@@ -172,5 +174,16 @@ public class ClientSideController {
     private void error(ErrorMessage msg) {
         view.genericPrint(msg.toString());
         communicate(previousMsg);
+    }
+
+    private void showHelperOptions(AskHelperCardMessage msg){
+        List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
+        HelperCard helperCard = null;
+        try {
+            helperCard = view.askHelperCard(cardOptions);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
     }
 }

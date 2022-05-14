@@ -291,4 +291,9 @@ public class MatchDecorator implements Match{
     public AbstractMatch getWrappedMatch() {
         return wrappedMatch;
     }
+
+    @Override
+    public Player getPlayerByNickname(String nickname){
+        return wrappedMatch.getPlayerByNickname(nickname);
+    }
 }

@@ -58,6 +58,6 @@ public class HelperCard implements Serializable {
 
     @Override
     public String toString() {
-        return (nextRoundOrder + " " + maxNumOfSteps);
+        return ("Card number: " + nextRoundOrder + ", " + "mother nature steps: " + maxNumOfSteps);
     }
 }

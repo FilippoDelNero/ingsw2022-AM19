@@ -189,4 +189,6 @@ public interface Match {
      * @return the winner of the game, null if a winner hasn't been chosen yet
      */
     List<Player> getWinner();
+
+    Player getPlayerByNickname(String nickname);
 }

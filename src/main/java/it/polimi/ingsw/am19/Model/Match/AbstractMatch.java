@@ -475,4 +475,13 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
             }
         }
     }
+
+    @Override
+    public Player getPlayerByNickname(String nickname){
+        for(Player p : planningPhaseOrder){
+            if(p.getNickname().equals(nickname))
+                return p;
+        }
+        return null; //if it happens it's a bug
+    }
 }

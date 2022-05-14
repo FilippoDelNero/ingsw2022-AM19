@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.stream.Collectors;
 
 /**
  * class implementing a cli-style view
@@ -179,7 +180,7 @@ public class Cli implements View {
      * @param nickname the nickname of the player who owns the view
      */
     @Override
-    public void PrintView(String nickname) {
+    public void printView(String nickname) {
         String s = "";
         printer.flush(); //TODO NON FUNZIONA
 
@@ -209,8 +210,29 @@ public class Cli implements View {
         for(ReducedGameBoard rgb : cache.getGameBoards())
             printer.println(rgb.toString()); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
 
-        printer.println("\nThe Majestic Archipelago of Eryantis: ");
+        printer.println("\nThe Majestic Archipelago of Eriantys: ");
         for(ReducedIsland isle : cache.getIslands())
             printer.println(isle.toString());
+    }
+
+
+    public HelperCard askHelperCard(List<HelperCard> cardOptions) throws ExecutionException {
+        int chosenCardIndex;
+        List<Integer> availableIndexes = cardOptions.stream()
+                .map(HelperCard::getNextRoundOrder)
+                .toList();
+        do{
+            printer.println("Please choose a card number between those available in your deck:");
+            for (HelperCard card : cardOptions)
+                printer.println(card);
+            String index = readLine();
+            chosenCardIndex = Integer.parseInt(index);
+
+        }while(!availableIndexes.contains(chosenCardIndex));
+
+        for(HelperCard card : cardOptions)
+            if(card.getNextRoundOrder() == chosenCardIndex)
+                return card;
+        return null; //If it happens there's a bug
     }
 }
