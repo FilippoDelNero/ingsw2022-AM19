@@ -234,7 +234,11 @@ public class Cli implements View {
         do {
             printer.println("Chose a cloud from " + cloudAvailable);
             input=readLine();
-            cloudChosen=Integer.parseInt(input);
+            try {
+                cloudChosen=Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                cloudChosen = 12; //it will never be contained, so it will be asked again
+            }
         } while(!cloudAvailable.contains(cloudChosen));
         return cloudChosen;
     }

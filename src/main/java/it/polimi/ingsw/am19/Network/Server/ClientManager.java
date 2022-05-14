@@ -116,6 +116,7 @@ public class ClientManager implements Runnable {
         synchronized (lockToSend) {
             try {
                 output.writeObject(msg);
+                output.reset();
             } catch (IOException e) {
                 close();
             }

@@ -150,7 +150,12 @@ public class ClientSideController {
                 communicate(previousMsg);
             else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
                 input = input.replaceAll("[^0-9]+", " ");
-                islandNum = (Integer.parseInt(input.trim())) - 1;
+                try {
+                    islandNum = (Integer.parseInt(input.trim())) - 1;
+                } catch (NumberFormatException e) {
+                    communicate(previousMsg);
+                    return;
+                }
                 myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
             }
             else if(input.contains("dining") || input.contains("room") || input.contains(" d"))

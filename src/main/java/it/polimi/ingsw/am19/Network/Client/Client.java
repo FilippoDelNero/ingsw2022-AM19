@@ -69,6 +69,7 @@ public class Client {
     public void sendMessage(Message msg) {
         try {
             output.writeObject(msg);
+            output.reset();
         } catch (IOException e) {
             disconnect();
         }

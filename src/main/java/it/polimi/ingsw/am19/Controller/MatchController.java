@@ -151,7 +151,6 @@ public class MatchController implements Observer{
         sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started"));
         this.roundsManager = new RoundsManager(this);
-        model.getWrappedMatch().addObserver(this);
     }
 
     /**
