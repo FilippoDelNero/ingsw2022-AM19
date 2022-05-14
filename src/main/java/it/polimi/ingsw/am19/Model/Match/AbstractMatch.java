@@ -477,6 +477,11 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         }
     }
 
+    /**
+     * Returns a reference to a Player given its nickname
+     * @param nickname the nickname to turn into a Player's reference
+     * @return
+     */
     @Override
     public Player getPlayerByNickname(String nickname){
         for(Player p : planningPhaseOrder){
