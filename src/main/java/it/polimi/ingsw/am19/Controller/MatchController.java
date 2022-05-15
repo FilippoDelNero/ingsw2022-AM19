@@ -144,7 +144,10 @@ public class MatchController implements Observer{
      * At the beginning of the in progress state, it initialises the match
      */
     private void init(){
-        model.initializeMatch();
+        if (model instanceof ExpertMatchDecorator)
+            ((ExpertMatchDecorator)model).initializeMatch();
+        else
+            model.initializeMatch();
         sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
         sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started\n"));
@@ -210,7 +213,6 @@ public class MatchController implements Observer{
                 .map(Player::getNickname)
                 .toList();
         roundsManager.changePhase(new PlanningPhase(planningPhaseOrder,this)); //now it's planning phase
-        //sendBroadcastMessage(new GenericMessage("Round " + roundsManager.getRoundNum()));
         roundsManager.getCurrPhase().initPhase();
     }
 

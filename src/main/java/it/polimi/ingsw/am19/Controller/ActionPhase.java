@@ -101,7 +101,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 ), model.getIslandManager().getIslands().get(islandIndex));
             } catch (NoSuchColorException | TooManyStudentsException e) {
                 matchController.sendMessage(matchController.getCurrPlayer(),
-                        new ErrorMessage("server","You can't move a " + color + " student to island "+ islandIndex+1+ ". Please retry\n"));
+                        new ErrorMessage("server","You can't move a " + color + " student to island "+ (islandIndex+1)+ ". Please retry\n"));
                 return;
             }
             numOfMovedStudents++;
