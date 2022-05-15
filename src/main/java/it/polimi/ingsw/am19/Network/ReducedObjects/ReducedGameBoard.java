@@ -32,13 +32,16 @@ public record ReducedGameBoard(String playerNickname,
         for(PieceColor p : PieceColor.values()) {
             if(diningRoom.get(p) != 0)
                 diningString = diningString.concat(p + "x" + diningRoom.get(p) + " ");
+            if(professors.contains(p))
+                diningString = diningString.concat("*prof* ");
         }
+        if(diningString.equals("Dining Room: "))
+            diningString = diningString.concat("empty");
 
-        return "Gameboard of " + playerNickname.toUpperCase() + ":\n" +
+        return "Gameboard of \033[48;1;7m" + playerNickname.toUpperCase() + "\u001B[0m:  " +
                 entranceString + '\n' +
                 diningString + '\n' +
-                "professors: " + professors + '\n' +
-                "numOfTowers: " + numOfTowers;
+                "Towers remaining: " + numOfTowers;
     }
 
     @Override

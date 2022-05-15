@@ -7,15 +7,12 @@ import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.Scanner;
 
 /**
  * class implementing a cli-style view
@@ -24,10 +21,10 @@ public class Cli implements View {
     /** used to print out content to the user */
     private final PrintStream printer;
 
-    /** single thread used to asynchronously read user input*/
-    Thread inputThread; //TODO forse dovrebbe essere privato e final o forse solo un campo di readLine?
+    /** used to read the user's input */
+    private final Scanner reader;
 
-    /** cache used to store objects to be displayed on the view*/
+    /** cache used to store objects to be displayed on the view */
     private Cache cache;
 
     /**
@@ -35,26 +32,7 @@ public class Cli implements View {
      */
     public Cli() {
         printer = System.out;
-    }
-
-    /**
-     * method used to read a line written by the user
-     * @return a String containing the line written by the user
-     */
-    public String readLine() throws ExecutionException {
-        FutureTask<String> futureTask = new FutureTask<>(new StdInReader());
-        inputThread = new Thread(futureTask);
-        inputThread.start();
-
-        String input = null;
-
-        try {
-            input = futureTask.get();
-        } catch (InterruptedException e) {
-            futureTask.cancel(true);
-            Thread.currentThread().interrupt();
-        }
-        return input;
+        reader = new Scanner(System.in);
     }
 
     /**
@@ -71,13 +49,13 @@ public class Cli implements View {
      */
     @Override
     public void init() {
-        printer.println("######## ########  ##    ##    ###    ##    ## ######## ####  ###### ");
-        printer.println("##       ##     ##  ##  ##    ## ##   ###   ##    ##     ##  ##    ## ");
-        printer.println("##       ##     ##   ####    ##   ##  ####  ##    ##     ##  ##       ");
-        printer.println("######   ########     ##    ##     ## ## ## ##    ##     ##   ######  ");
-        printer.println("##       ##   ##      ##    ######### ##  ####    ##     ##        ## ");
-        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##     ##  ##    ## ");
-        printer.println("######## ##     ##    ##    ##     ## ##    ##    ##    ####  ######  ");
+        printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
+        printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
+        printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
+        printer.println("######   ########     ##    ##     ## ## ## ##    ##       ##     ######   ");
+        printer.println("##       ##   ##      ##    ######### ##  ####    ##       ##           ## ");
+        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##       ##    ##    ##  ");
+        printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
         printer.println("\n");
         printer.println("Welcome!\n");
     }
@@ -87,12 +65,12 @@ public class Cli implements View {
      * @return the number of player chosen by the user
      */
     @Override
-    public int newMatchNumOfPlayers() throws ExecutionException {
+    public int newMatchNumOfPlayers() {
         String input;
         printer.println("There are no matches to resume, we will create a new one:");
         do {
             printer.println("How many players? [2, 3]");
-            input = readLine();
+            input = reader.nextLine();
         } while(!input.equals("2") && !input.equals("3"));
         return Integer.parseInt(input);
     }
@@ -102,11 +80,11 @@ public class Cli implements View {
      * @return true if the match will be an expert one, false otherwise
      */
     @Override
-    public boolean newMatchIsExpert() throws ExecutionException {
+    public boolean newMatchIsExpert() {
         String input;
         do  {
             printer.println("Do you want to play an expert match? [yes, no]");
-            input = readLine();
+            input = reader.nextLine();
         } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
         return input.equalsIgnoreCase("yes");
     }
@@ -116,10 +94,10 @@ public class Cli implements View {
      * @return a String containing the nickname
      */
     @Override
-    public String askNickname() throws ExecutionException {
+    public String askNickname() {
         String input;
         printer.println("Insert a nickname: ");
-        input = readLine();
+        input = reader.nextLine();
         return input;
     }
 
@@ -129,12 +107,12 @@ public class Cli implements View {
      * @return the wizard family chosen by the player
      */
     @Override
-    public WizardFamily askWizardFamily (List<WizardFamily> availableWizardFamilies) throws ExecutionException{
+    public WizardFamily askWizardFamily (List<WizardFamily> availableWizardFamilies) {
         String input;
         WizardFamily wizardFamily = null;
         do {
             printer.println("Choose a Wizard Family from " + availableWizardFamilies);
-            input=readLine();
+            input = reader.nextLine();
             switch (input.toLowerCase()) {
                 case "warrior" -> wizardFamily=WizardFamily.WARRIOR;
                 case "shaman" -> wizardFamily=WizardFamily.SHAMAN;
@@ -151,12 +129,12 @@ public class Cli implements View {
      * @return the tower's color chosen by the user
      */
     @Override
-    public TowerColor askTowerColor (List<TowerColor> availableTowerColor) throws ExecutionException{
+    public TowerColor askTowerColor (List<TowerColor> availableTowerColor) {
         String input;
         TowerColor towerColor = null;
         do {
             printer.println("Choose a Tower's color from " + availableTowerColor);
-            input = readLine();
+            input = reader.nextLine();
             switch (input.toLowerCase()) {
                 case "black" -> towerColor = TowerColor.BLACK;
                 case "white" -> towerColor = TowerColor.WHITE;
@@ -166,7 +144,7 @@ public class Cli implements View {
         return towerColor;
     }
 
-    public HelperCard askHelperCard(List<HelperCard> cardOptions) throws ExecutionException {
+    public HelperCard askHelperCard(List<HelperCard> cardOptions) {
         int chosenCardIndex;
         List<Integer> availableIndexes = cardOptions.stream()
                 .map(HelperCard::getNextRoundOrder)
@@ -175,8 +153,12 @@ public class Cli implements View {
             printer.println("Please choose a card number between those available in your deck:");
             for (HelperCard card : cardOptions)
                 printer.println(card);
-            String index = readLine();
-            chosenCardIndex = Integer.parseInt(index);
+            String index = reader.nextLine();
+            try {
+                chosenCardIndex = Integer.parseInt(index);
+            } catch (NumberFormatException e) {
+                chosenCardIndex = 13; //there is no card with that index, the card will always be asked again if no number is provided
+            }
 
         }while(!availableIndexes.contains(chosenCardIndex));
 
@@ -191,10 +173,10 @@ public class Cli implements View {
      * @return the input of the player
      */
     @Override
-    public String askEntranceMove() throws ExecutionException {
+    public String askEntranceMove() {
         String input;
         printer.println("Which color do you want to move and where? [e.g. RED island 1]");
-        input = readLine();
+        input = reader.nextLine();
         return input.toLowerCase();
     }
 
@@ -203,12 +185,12 @@ public class Cli implements View {
      * @return the num of step
      */
     @Override
-    public int askMotherNatureStep() throws ExecutionException {
+    public int askMotherNatureStep() {
         String input;
         int step=0;
         do {
             printer.println("How many step Mother Nature have to do in clockwise?");
-            input=readLine();
+            input = reader.nextLine();
             switch (input) {
                 case "1" -> step=1;
                 case "2" -> step=2;
@@ -228,19 +210,19 @@ public class Cli implements View {
      * @return the index of cloud to take
      */
     @Override
-    public int askCloud(List<Integer> cloudAvailable) throws ExecutionException {
+    public int askCloud(List<Integer> cloudAvailable) {
         int cloudChosen;
         String input;
         do {
             printer.println("Chose a cloud from " + cloudAvailable);
-            input=readLine();
+            input = reader.nextLine();
             try {
                 cloudChosen=Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 cloudChosen = 12; //it will never be contained, so it will be asked again
             }
         } while(!cloudAvailable.contains(cloudChosen));
-        return cloudChosen;
+        return cloudChosen - 1; //Arrays on the server side are from 0, to the user we present data starting from 1
     }
 
     /**
@@ -273,24 +255,24 @@ public class Cli implements View {
         if(cache.getClouds() != null) {
             printer.println("The Clouds: ");
             for(Map<PieceColor, Integer> m : cache.getClouds()) {
-                String s = "";
-                printer.println("cloud #" + cache.getClouds().lastIndexOf(m) + ": ");
+                int index = cache.getClouds().lastIndexOf(m) + 1;
+                String s = "cloud #" + index + ": ";
                 for(PieceColor p : PieceColor.values()) {
                     if(m.get(p) != 0)
                         s = s.concat(p + "x" + m.get(p) + " ");
                 }
-                printer.println(s);
+                printer.println(s + '\n');
             }
         }
 
         if(cache.getGameBoards() != null) {
-            printer.println("\nEach Player's GameBoard: ");
+            printer.println("Each Player's GameBoard: ");
             for(ReducedGameBoard rgb : cache.getGameBoards())
-                printer.println(rgb.toString()); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+                printer.println(rgb.toString() + '\n'); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
         }
 
         if(cache.getIslands() != null) {
-            printer.println("\nThe Majestic Archipelago of Eriantys: ");
+            printer.println("The Eriantys' Archipelago: ");
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }

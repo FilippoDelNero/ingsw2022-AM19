@@ -5,15 +5,11 @@ import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import it.polimi.ingsw.am19.View.View;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * client-side controller used to react to incoming messages
@@ -82,13 +78,9 @@ public class ClientSideController {
         int numOfPlayers;
         boolean isExpert;
         if(msg.getMatchToResume() == null) {
-            try {
-                numOfPlayers = view.newMatchNumOfPlayers();
-                isExpert = view.newMatchIsExpert();
-                myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+            numOfPlayers = view.newMatchNumOfPlayers();
+            isExpert = view.newMatchIsExpert();
+            myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
         }
         //TODO manca cosa fare in caso di else
     }
@@ -101,25 +93,21 @@ public class ClientSideController {
     private void askLoginInfo(AskLoginInfoMessage msg){
         TowerColor towercolor;
         WizardFamily wizardFamily;
-        try {
-            this.nickname = view.askNickname();
-            towercolor = view.askTowerColor(msg.getTowerColorsAvailable());
-            wizardFamily = view.askWizardFamily(msg.getWizardFamiliesAvailable());
-            myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        this.nickname = view.askNickname();
+        towercolor = view.askTowerColor(msg.getTowerColorsAvailable());
+        wizardFamily = view.askWizardFamily(msg.getWizardFamiliesAvailable());
+        myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
     }
 
+    /**
+     * shows the available HelperCards to the user and the sends he/she's answer to the server
+     * @param msg the message sent by the server containing the availableHelperCards
+     */
     private void showHelperOptions(AskHelperCardMessage msg){
         List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
-        HelperCard helperCard = null;
-        try {
-            view.printView(nickname);
-            helperCard = view.askHelperCard(cardOptions);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        HelperCard helperCard;
+        view.printView(nickname);
+        helperCard = view.askHelperCard(cardOptions);
         myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
     }
 
@@ -139,36 +127,32 @@ public class ClientSideController {
             colors.put(colorsString[i], colorsPC[i]);
         }
 
-        try {
-            view.printView(nickname);
-            input = view.askEntranceMove();
-            for(String s : colors.keySet()) {
-                if(input.contains(s))
-                    color = colors.get(s);
-            }
-            if (color == null)
-                communicate(previousMsg);
-            else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
-                input = input.replaceAll("[^0-9]+", " ");
-                try {
-                    islandNum = (Integer.parseInt(input.trim())) - 1;
-                } catch (NumberFormatException e) {
-                    communicate(previousMsg);
-                    return;
-                }
-                if(islandNum < 0 || islandNum >= cache.getIslands().size()) {
-                    communicate(previousMsg);
-                    return;
-                }
-                myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
-            }
-            else if(input.contains("dining") || input.contains("room") || input.contains(" d"))
-                myClient.sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, color));
-            else
-                communicate(previousMsg);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        view.printView(nickname);
+        input = view.askEntranceMove();
+        for(String s : colors.keySet()) {
+            if(input.contains(s))
+                color = colors.get(s);
         }
+        if (color == null)
+            communicate(previousMsg);
+        else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
+            input = input.replaceAll("[^0-9]+", " ");
+            try {
+                islandNum = (Integer.parseInt(input.trim())) - 1;
+            } catch (NumberFormatException e) {
+                communicate(previousMsg);
+                return;
+            }
+            if(islandNum < 0 || islandNum >= cache.getIslands().size()) {
+                communicate(previousMsg);
+                return;
+            }
+            myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
+        }
+        else if(input.contains("dining") || input.contains("room") || input.contains(" d"))
+            myClient.sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, color));
+        else
+            communicate(previousMsg);
     }
 
     /**
@@ -177,13 +161,9 @@ public class ClientSideController {
      */
     private void askMotherNatureStep(){
         int step;
-        try {
-            view.printView(nickname);
-            step = view.askMotherNatureStep();
-            myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        view.printView(nickname);
+        step = view.askMotherNatureStep();
+        myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
     }
 
     /**
@@ -193,14 +173,9 @@ public class ClientSideController {
      */
     private void askCloud(AskCloudMessage msg){
         int cloudChosen;
-        try {
-            view.printView(nickname);
-            cloudChosen= view.askCloud(msg.getCloudAvailable());
-            myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         view.printView(nickname);
+        cloudChosen= view.askCloud(msg.getCloudAvailable());
+        myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
     }
 
     /**
@@ -216,15 +191,6 @@ public class ClientSideController {
      * @param msg the UpdateGameBoardsMessage sent by the server
      */
     private void updateGameBoards(UpdateGameBoardsMessage msg) {
-        /*List<ReducedGameBoard> list = cache.getGameBoards();
-        if(list != null) {
-            list.removeAll(msg.getList());
-            list.addAll(msg.getList());
-        }
-        else {
-            list = new ArrayList<>(msg.getList());
-        }
-        cache.setGameBoards(list);*/
         cache.setGameBoards(msg.getList());
     }
 
@@ -233,15 +199,6 @@ public class ClientSideController {
      * @param msg the UpdateIslandsMessage sent by the server
      */
     private void updateIslands(UpdateIslandsMessage msg) { //TODO RIVEDERE COME MANTENERE L'ORDINE ANCHE NEL CASO IN CUI VENGA SOSTITUITA UNA SOLA ISOLA
-        /* List<ReducedIsland> list = cache.getIslands();
-        if(list != null) {
-            list.removeAll(msg.getList());
-            list.addAll(msg.getList());
-        }
-        else {
-            list = new ArrayList<>(msg.getList());
-        }
-        cache.setIslands(list);*/
         cache.setIslands(msg.getList());
     }
 
