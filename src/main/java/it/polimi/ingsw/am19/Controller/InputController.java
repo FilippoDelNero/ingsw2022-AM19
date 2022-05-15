@@ -1,14 +1,8 @@
 package it.polimi.ingsw.am19.Controller;
 
-import eu.hansolo.tilesfx.tools.LowerRightRegion;
-import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
-import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
 import it.polimi.ingsw.am19.Network.Message.Message;
-import it.polimi.ingsw.am19.Network.Server.ClientManager;
-
-import java.util.Map;
 
 public class InputController {
     private final MatchDecorator model;
@@ -49,8 +43,8 @@ public class InputController {
      * @return true if the island index is that of an Island that takes part into the archipelago, false otherwise
      */
     boolean checkIsInArchipelago(int islandIndex){
-        if (islandIndex < 1 || islandIndex > model.getIslandManager().getIslands().size()){
-            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","The island index you chose is not valid"));
+        if (islandIndex < 0 || islandIndex > model.getIslandManager().getIslands().size()-1){
+            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","The island index you chose is not valid. Please retry\n"));
             return false;
         }
         return true;
@@ -58,7 +52,7 @@ public class InputController {
 
     boolean checkCloudIndex(int cloudIndex){
         if (!model.getNonEmptyClouds().contains(cloudIndex)){
-            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","Invalid cloud number"));
+            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","Invalid cloud number. Please retry\n"));
             return false;
         }
         return true;

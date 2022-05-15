@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
-import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.ThreePlayersMatch;
@@ -14,7 +13,6 @@ import it.polimi.ingsw.am19.Network.Server.ClientManager;
 import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -149,7 +147,7 @@ public class MatchController implements Observer{
         model.initializeMatch();
         sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
         sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
-        sendBroadcastMessage(new GenericMessage("The match has started"));
+        sendBroadcastMessage(new GenericMessage("The match has started\n"));
         this.roundsManager = new RoundsManager(this);
     }
 
@@ -212,7 +210,7 @@ public class MatchController implements Observer{
                 .map(Player::getNickname)
                 .toList();
         roundsManager.changePhase(new PlanningPhase(planningPhaseOrder,this)); //now it's planning phase
-        sendBroadcastMessage(new GenericMessage("Round " + roundsManager.getRoundNum()));
+        //sendBroadcastMessage(new GenericMessage("Round " + roundsManager.getRoundNum()));
         roundsManager.getCurrPhase().initPhase();
     }
 
