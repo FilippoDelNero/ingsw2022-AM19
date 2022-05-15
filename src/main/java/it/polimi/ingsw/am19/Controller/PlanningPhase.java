@@ -29,10 +29,10 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                 try {
                     model.useHelperCard(helperCard);
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
-                    matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice"));
+                    matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice. Please retry\n"));
                 }
                 matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
-                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps()));
+                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n"));
                 if (iterator.hasNext()) {
                     String nextPlayer = iterator.next();
                     matchController.setCurrPlayer(nextPlayer);
@@ -55,10 +55,11 @@ public class PlanningPhase extends AbstractPhase implements Phase{
 
     @Override
     public void initPhase(){
+        matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n"));
         matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder));
         try {
             model.refillClouds();
-            matchController.sendBroadcastMessage(new GenericMessage("Clouds have been refilled.."));
+            matchController.sendBroadcastMessage(new GenericMessage("Clouds have been refilled...\n"));
         } catch (TooManyStudentsException e) {
             matchController.sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
             matchController.disconnectAll();
@@ -69,8 +70,8 @@ public class PlanningPhase extends AbstractPhase implements Phase{
     @Override
     public void performPhase(String currPlayer) {
         matchController.setCurrPlayer(currPlayer);
-        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn..."));
-        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!")));
+        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
+        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
         matchController.sendMessage(currPlayer, new AskHelperCardMessage(
                 model.getCurrPlayer().getHelperDeck()));
     }

@@ -2,7 +2,6 @@ package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
-import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
@@ -60,15 +59,15 @@ public class ActionPhase extends AbstractPhase implements Phase{
     @Override
     public void performPhase(String currPlayer) {
         matchController.setCurrPlayer(currPlayer);
-        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn..."));
-        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!")));
+        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
+        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
         matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
     }
 
     @Override
     public void initPhase() {
         String currPlayer = iterator.next();
-        matchController.sendBroadcastMessage(new GenericMessage("Action phase has started. In this phase we will follow this order:" + playersOrder));
+        matchController.sendBroadcastMessage(new GenericMessage("Action phase has started. In this phase we will follow this order:" + playersOrder+ "\n"));
         performPhase(currPlayer);
     }
 
@@ -79,7 +78,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
             model.moveStudentToDiningRoom(color);
         } catch (NoSuchColorException | TooManyStudentsException e) {
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","You can't move a " + color + " student to your dining room"));
+                    new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
             return;
         }
         numOfMovedStudents++;
@@ -102,7 +101,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 ), model.getIslandManager().getIslands().get(islandIndex));
             } catch (NoSuchColorException | TooManyStudentsException e) {
                 matchController.sendMessage(matchController.getCurrPlayer(),
-                        new ErrorMessage("server","You can't move a " + color + " student to island "+ islandIndex));
+                        new ErrorMessage("server","You can't move a " + color + " student to island "+ islandIndex+1+ ". Please retry\n"));
                 return;
             }
             numOfMovedStudents++;
@@ -120,7 +119,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
             model.moveMotherNature(message.getStep());
         } catch (IllegalNumOfStepsException e) {
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps"));
+                    new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps. Please retry \n"));
             return;
         }
         matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));

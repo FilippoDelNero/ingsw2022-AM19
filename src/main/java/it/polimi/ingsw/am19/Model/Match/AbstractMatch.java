@@ -163,6 +163,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
             planningPhaseOrder.add(whereToInsert, playerToShift);
             whereToInsert++;
         }
+        actionPhaseOrder = new ArrayList<>();
     }
 
     /**
