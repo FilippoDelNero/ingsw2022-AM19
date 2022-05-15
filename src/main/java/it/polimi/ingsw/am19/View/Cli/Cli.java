@@ -272,8 +272,15 @@ public class Cli implements View {
 
         if(cache.getClouds() != null) {
             printer.println("The Clouds: ");
-            for(Map<PieceColor, Integer> m : cache.getClouds())
-                printer.println(m.toString());
+            for(Map<PieceColor, Integer> m : cache.getClouds()) {
+                String s = "";
+                printer.println("cloud #" + cache.getClouds().lastIndexOf(m) + ": ");
+                for(PieceColor p : PieceColor.values()) {
+                    if(m.get(p) != 0)
+                        s = s.concat(p + "x" + m.get(p) + " ");
+                }
+                printer.println(s);
+            }
         }
 
         if(cache.getGameBoards() != null) {
@@ -284,8 +291,8 @@ public class Cli implements View {
 
         if(cache.getIslands() != null) {
             printer.println("\nThe Majestic Archipelago of Eriantys: ");
-            for(ReducedIsland isle : cache.getIslands())
-                printer.println(isle.toString());
+            for(int i = 0; i < cache.getIslands().size(); i++)
+                printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }
     }
 }

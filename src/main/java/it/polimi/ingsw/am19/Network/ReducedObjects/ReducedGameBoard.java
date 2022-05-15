@@ -23,9 +23,20 @@ public record ReducedGameBoard(String playerNickname,
 
     @Override
     public String toString() {
+        String entranceString = "Entrance: ";
+        for(PieceColor p : PieceColor.values()) {
+            if(entrance.get(p) != 0)
+                entranceString = entranceString.concat(p + "x" + entrance.get(p) + " ");
+        }
+        String diningString = "Dining Room: ";
+        for(PieceColor p : PieceColor.values()) {
+            if(diningRoom.get(p) != 0)
+                diningString = diningString.concat(p + "x" + diningRoom.get(p) + " ");
+        }
+
         return "Gameboard of " + playerNickname.toUpperCase() + ":\n" +
-                "entrance: " + entrance + '\n' +
-                "diningRoom: " + diningRoom + '\n' +
+                entranceString + '\n' +
+                diningString + '\n' +
                 "professors: " + professors + '\n' +
                 "numOfTowers: " + numOfTowers;
     }

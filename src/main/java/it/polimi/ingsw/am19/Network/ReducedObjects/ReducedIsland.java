@@ -33,11 +33,15 @@ public record ReducedIsland(
 
     @Override
     public String toString() { //TODO FAR CAPIRE DA QUANTE ISOLE è COMPOSTO IL GRUPPO (ICONCINA?)
-        String string = "Students: " + numOfStudents;
+        String string = "";
+        for(PieceColor p : PieceColor.values()) {
+            if(numOfStudents.get(p) != 0)
+                string = string.concat(p + "x" + numOfStudents.get(p) + " ");
+        }
         if(towerColor != null)
-            string = string.concat(towerColor.toString());
+            string = string.concat("-- " + towerColor);
         if(presenceOfMotherNature)
-            string = string.concat(" MotherNature");
+            string = string.concat(" -- MotherNature");
 
         return string;
     }

@@ -127,7 +127,7 @@ public class ClientSideController {
      * Method used to ask the player where she/he wants to move which student's color
      * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
      */
-    private void askEntranceMove() {
+    private void askEntranceMove() { //TODO VOGLIO SOLO INTERAZIONI GENERICHE NON SPECIFICHE COME SE AVESSI UNA CLI, FORSE CI SARà DA RIPENSARE QUESTO METODO
         String input;
         int islandNum;
         PieceColor color = null;
@@ -153,6 +153,10 @@ public class ClientSideController {
                 try {
                     islandNum = (Integer.parseInt(input.trim())) - 1;
                 } catch (NumberFormatException e) {
+                    communicate(previousMsg);
+                    return;
+                }
+                if(islandNum < 0 || islandNum >= cache.getIslands().size()) {
                     communicate(previousMsg);
                     return;
                 }
