@@ -124,7 +124,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
         } catch (IllegalNumOfStepsException e) {
             e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps. Please retry \n"));
+                    new ErrorMessage("server","You can't move mother nature of " + message.getStep() + " steps. Please retry\n"));
         }
     }
 

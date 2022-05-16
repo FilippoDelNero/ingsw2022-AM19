@@ -150,8 +150,8 @@ public class IslandManager extends Observable implements Observer, Serializable 
     private void lookForIslandsToMerge() {
         Island island1;
         Island island2;
+        island1 = iterator.next();
         for(int i = 0; i <= islands.size(); i++) {
-            island1 = iterator.next();
             island2 = iterator.next();
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
@@ -159,6 +159,7 @@ public class IslandManager extends Observable implements Observer, Serializable 
                     notifyObservers(Notification.FINAL_ROUND);
                 lookForIslandsToMerge();
             }
+            island1 = island2;
         }
     }
 
