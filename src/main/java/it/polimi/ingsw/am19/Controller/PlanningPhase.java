@@ -55,6 +55,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
 
     @Override
     public void initPhase(){
+        matchController.getRoundsManager().incrementPhaseNum();
         matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n"));
         matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder));
         try {

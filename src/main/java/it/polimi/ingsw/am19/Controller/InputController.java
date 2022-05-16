@@ -1,10 +1,14 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
 import it.polimi.ingsw.am19.Network.Message.Message;
+
+import java.util.List;
 
 public class InputController {
     private final MatchDecorator model;
@@ -68,5 +72,37 @@ public class InputController {
         }
         else
             return true;
+    }
+
+    boolean checkValidColor(PieceColor color){
+        switch (color){
+            case GREEN,RED,YELLOW,PINK,BLUE -> {return true;}
+            default -> {return false;}
+        }
+    }
+
+    boolean checkValidColor(List<PieceColor> colors){
+        boolean isValid = false;
+        for (PieceColor color : colors){
+            switch (color){
+                case GREEN,RED,YELLOW,PINK,BLUE -> {isValid = true;}
+                default -> {
+                    isValid = false;
+                    return false;
+                }
+            }
+        }
+        return isValid;
+    }
+
+    boolean checkAffordability(AbstractCharacterCard card){
+        if (card.getPrice() <= ((ExpertMatchDecorator)model).getCurrPlayer().getCoins()){
+            return true;
+        }
+        else{
+            matchController.sendMessage(matchController.getCurrPlayer(),
+                    new ErrorMessage("server","You can't afford " + card.getId() + " card. Please retry\n"));
+            return false;
+        }
     }
 }

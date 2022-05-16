@@ -145,7 +145,6 @@ public class MotherNature extends Observable implements Serializable {
 
         currPosition.setPresenceOfMotherNature(false);
 
-        island.setPresenceOfMotherNature(false);
         Island finalPosition = currPosition;
 
         for(int s = 0; s < numOfSteps; s++) {

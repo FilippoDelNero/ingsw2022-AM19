@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
 
@@ -19,6 +20,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private final int MAX_NUM_STUDENTS;
     private ActionPhaseSteps currStep;
     private ActionPhaseSteps prevStep;
+    private boolean cardPlayed;
 
     public ActionPhase(List<String> playersOrder,MatchController matchController) {
         super(matchController);
@@ -59,8 +61,13 @@ public class ActionPhase extends AbstractPhase implements Phase{
         return this.playersOrder;
     }
 
+    public void setCardPlayed(boolean cardPlayed) {
+        this.cardPlayed = cardPlayed;
+    }
+
     @Override
     public void performPhase(String currPlayer) {
+        this.cardPlayed = false;
         matchController.setCurrPlayer(currPlayer);
         matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
@@ -77,18 +84,25 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private void entranceToDiningRoom(ReplyEntranceToDiningRoomMessage message){
         PieceColor color = message.getColorChosen();
         //if (inputController.checkIsInEntrance(color)) {
-        try {
-            model.moveStudentToDiningRoom(color);
-        } catch (NoSuchColorException | TooManyStudentsException e) {
+        if (model instanceof ExpertMatchDecorator && !cardPlayed){
+            matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
-            return;
+                    new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
         }
-        numOfMovedStudents++;
-        if (numOfMovedStudents < MAX_NUM_STUDENTS)
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-        else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+        else{
+            try {
+                model.moveStudentToDiningRoom(color);
+            } catch (NoSuchColorException | TooManyStudentsException e) {
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
+                return;
+            }
+            numOfMovedStudents++;
+            if (numOfMovedStudents < MAX_NUM_STUDENTS)
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
+            else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+            }
         }
         //}
     }
