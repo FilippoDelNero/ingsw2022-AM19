@@ -65,6 +65,7 @@ public class ClientSideController {
             case ENTRANCE_MOVE -> askEntranceMove();
             case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
+            case END_MATCH_MESSAGE -> endMatch((EndMatchMessage) msg);
         }
     }
 
@@ -166,6 +167,11 @@ public class ClientSideController {
         myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
     }
 
+    private void endMatch(EndMatchMessage msg) {
+        view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        myClient.disconnect();
+    }
+
     /**
      * The method is called when a AskCloudMessage comes in
      * it ask and send the num of cloud chosen
@@ -224,7 +230,7 @@ public class ClientSideController {
      * @param msg the ErrorMessage sent by the server
      */
     private void error(ErrorMessage msg) {
-        view.genericPrint(msg.toString());
+        view.genericPrint("\033[31;1;4m" + msg.toString() + "\033[0m");
         communicate(previousMsg);
     }
 }

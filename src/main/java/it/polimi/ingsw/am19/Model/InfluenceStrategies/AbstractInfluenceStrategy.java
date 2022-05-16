@@ -90,14 +90,13 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy, Se
         //if there is no new current owner
         if (oldOwner == null) {
             for(Player player : influenceMap.keySet()) {
-                //if there is no new owner yet assign one
-                if(newOwner == null) {
-                    newOwner = player;
-                }
-                //check if the assigned owner is the one with more influence
-                else {
-                    if(influenceMap.get(player) > influenceMap.get(newOwner))
+                if(influenceMap.get(player) > 0) {
+                    if(newOwner == null)
                         newOwner = player;
+                    else {
+                        if(influenceMap.get(player) > influenceMap.get(newOwner))
+                            newOwner = player;
+                    }
                 }
             }
         }

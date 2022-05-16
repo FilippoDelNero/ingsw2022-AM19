@@ -30,6 +30,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                     model.useHelperCard(helperCard);
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
                     matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice. Please retry\n"));
+                    return;
                 }
                 matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
                         helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n"));

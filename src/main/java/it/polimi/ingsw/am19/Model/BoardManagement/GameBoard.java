@@ -140,6 +140,8 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
             numOfTowers--;
 
             notifyObservers(Notification.UPDATE_GAMEBOARDS);
+            if(areTowersFinished())
+                notifyObservers(Notification.END_MATCH);
         }
         else
             notifyObservers(Notification.END_MATCH);
