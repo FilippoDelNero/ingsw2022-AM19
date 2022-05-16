@@ -20,6 +20,7 @@ public enum MessageType {
     LOGIN_PLAYERS_OPTION,
 
     //character card message
+    ASK_CHARACTER_CARD,
     PLAY_CHARACTER_CARD,
     ASK_CHARACTER_PARAMETER,
     REPLY_CHARACTER_PARAMETER,
