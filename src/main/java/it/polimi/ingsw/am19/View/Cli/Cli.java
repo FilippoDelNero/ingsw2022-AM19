@@ -218,11 +218,12 @@ public class Cli implements View {
             input = reader.nextLine();
             try {
                 cloudChosen=Integer.parseInt(input);
+                cloudChosen = cloudChosen - 1; //Arrays on the server side are from 0, to the user we present data starting from 1
             } catch (NumberFormatException e) {
                 cloudChosen = 12; //it will never be contained, so it will be asked again
             }
         } while(!cloudAvailable.contains(cloudChosen));
-        return cloudChosen - 1; //Arrays on the server side are from 0, to the user we present data starting from 1
+        return cloudChosen;
     }
 
     /**

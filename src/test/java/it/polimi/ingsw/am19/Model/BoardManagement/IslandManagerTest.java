@@ -96,6 +96,55 @@ class IslandManagerTest {
     }
 
     /**
+     * test the calculation of influence on an island
+     * testing the merge of three islands with a high index
+     */
+    @Test
+    void testThreeIslandMerge() {
+        //--ISLAND PART--
+        ProfessorManager manager = new ProfessorManager();
+        IslandManager islandManager = new IslandManager(manager);
+        islandManager.getIslands().get(11).addStudent(PieceColor.RED);
+        islandManager.getIslands().get(10).addStudent(PieceColor.RED);
+        islandManager.getIslands().get(9).addStudent(PieceColor.RED);
+
+        //--PROFESSOR MANAGER PART--
+        Map<Player, GameBoard> GB = new HashMap<>();
+        //create 3 players
+        Player player1 = new Player("Phil", TowerColor.BLACK, WizardFamily.SHAMAN);
+        Player player2 = new Player("Dennis", TowerColor.WHITE, WizardFamily.KING);
+        //create 3 gameboard, one for each player
+        GameBoard gameBoard1 = new GameBoard(player1, 8, manager, 7);
+        GameBoard gameBoard2 = new GameBoard(player2, 8, manager, 7);
+        //associate a board to a player
+        GB.put(player1, gameBoard1);
+        GB.put(player2, gameBoard2);
+        //set the Gameboards attribute inside the professor manager
+        manager.setGameboards(GB);
+        //Set the professors of each player
+        assertDoesNotThrow(() -> gameBoard1.addStudent(PieceColor.RED));
+        assertDoesNotThrow(() -> gameBoard1.moveStudentToDiningRoom(PieceColor.RED));
+        manager.checkProfessor(PieceColor.RED, player1);
+        assertDoesNotThrow(() -> gameBoard1.addStudent(PieceColor.GREEN));
+        assertDoesNotThrow(() -> gameBoard1.moveStudentToDiningRoom(PieceColor.GREEN));
+        manager.checkProfessor(PieceColor.GREEN, player1);
+
+        //--CHECK IF EVERYTHING IS OK PART
+        islandManager.calculateInfluence(islandManager.getIslands().get(9));
+        assertEquals(TowerColor.BLACK, islandManager.getIslands().get(9).getTowerColor());
+        assertEquals(7, gameBoard1.getNumOfTowers());
+
+        islandManager.calculateInfluence(islandManager.getIslands().get(11));
+        assertEquals(TowerColor.BLACK, islandManager.getIslands().get(11).getTowerColor());
+        assertEquals(6, gameBoard1.getNumOfTowers());
+
+        islandManager.calculateInfluence(islandManager.getIslands().get(10));
+        assertEquals(10, islandManager.getIslands().size());
+        assertEquals(5, gameBoard1.getNumOfTowers());
+
+    }
+
+    /**
      * testing the no entry tile card
      */
     @Test

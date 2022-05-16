@@ -157,6 +157,7 @@ public class IslandManager extends Observable implements Observer, Serializable 
                 unify(island1, island2);
                 if (getIslands().size() == 3)
                     notifyObservers(Notification.FINAL_ROUND);
+                lookForIslandsToMerge();
             }
         }
     }
