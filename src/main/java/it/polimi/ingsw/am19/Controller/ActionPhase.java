@@ -71,7 +71,13 @@ public class ActionPhase extends AbstractPhase implements Phase{
         matchController.setCurrPlayer(currPlayer);
         matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
-        matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
+        if (model instanceof ExpertMatchDecorator && !cardPlayed){
+            matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+            matchController.sendMessage(matchController.getCurrPlayer(),
+                    new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+        }else{
+            matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
+        }
     }
 
     @Override
@@ -84,28 +90,21 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private void entranceToDiningRoom(ReplyEntranceToDiningRoomMessage message){
         PieceColor color = message.getColorChosen();
         //if (inputController.checkIsInEntrance(color)) {
-        if (model instanceof ExpertMatchDecorator && !cardPlayed){
-            matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+        try {
+            model.moveStudentToDiningRoom(color);
+        } catch (NoSuchColorException | TooManyStudentsException e) {
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+                    new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
+            return;
         }
-        else{
-            try {
-                model.moveStudentToDiningRoom(color);
-            } catch (NoSuchColorException | TooManyStudentsException e) {
-                matchController.sendMessage(matchController.getCurrPlayer(),
-                        new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
-                return;
-            }
-            numOfMovedStudents++;
-            if (numOfMovedStudents < MAX_NUM_STUDENTS)
-                matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-            else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
-                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
-            }
+        numOfMovedStudents++;
+        if (numOfMovedStudents < MAX_NUM_STUDENTS)
+            matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
+        else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
+            matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+        }
         }
         //}
-    }
 
     private void entranceToIsland(ReplyEntranceToIslandMessage message){
         PieceColor color = message.getColorChosen();
@@ -181,15 +180,9 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private void changeActionStep() {
         this.prevStep = currStep;
         switch (currStep){
-            case MOVE_STUD -> {
-                currStep = ActionPhaseSteps.MOVE_MN;
-            }
-            case MOVE_MN -> {
-                currStep = ActionPhaseSteps.TAKE_STUD;
-            }
-            case TAKE_STUD -> {
-
-            }
+            case MOVE_STUD -> currStep = ActionPhaseSteps.MOVE_MN;
+            case MOVE_MN -> currStep = ActionPhaseSteps.TAKE_STUD;
+            case TAKE_STUD -> {}
         }
     }
 }

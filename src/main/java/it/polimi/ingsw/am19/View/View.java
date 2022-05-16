@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
@@ -91,4 +92,6 @@ public interface View {
      * @param nickname the nickname of the player who owns the view
      */
     void printView(String nickname);
+
+     void askPlayCharacter(List<AbstractCharacterCard> characterOptions);
 }

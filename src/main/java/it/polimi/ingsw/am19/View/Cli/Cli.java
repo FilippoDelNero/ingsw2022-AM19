@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am19.View.Cli;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
+import it.polimi.ingsw.am19.Model.CharacterCards.PlusTwoInfluenceCard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -280,5 +282,15 @@ public class Cli implements View {
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }
+    }
+
+
+    public void askPlayCharacter(List<AbstractCharacterCard> charcterOptions){
+        printer.println("Do you want to play any character card?[e.g. NO or MONACO]");
+        printer.println("Options:");
+        for (AbstractCharacterCard card : charcterOptions){
+            printer.println(card.getId() + ": price:" + card.getPrice() + ", description: " + card.getDescription());
+        }
+
     }
 }

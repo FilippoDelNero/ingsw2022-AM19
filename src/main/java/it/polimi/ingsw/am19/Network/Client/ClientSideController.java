@@ -66,6 +66,7 @@ public class ClientSideController {
             case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
             case END_MATCH_MESSAGE -> endMatch((EndMatchMessage) msg);
+            case ASK_CHARACTER_CARD -> askPlayCharacter((AskPlayCharacterCardMessage)msg);
         }
     }
 
@@ -182,6 +183,10 @@ public class ClientSideController {
         view.printView(nickname);
         cloudChosen= view.askCloud(msg.getCloudAvailable());
         myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
+    }
+
+    private void askPlayCharacter(AskPlayCharacterCardMessage msg){
+        view.askPlayCharacter(msg.getAvailableCharacterCards());
     }
 
     /**
