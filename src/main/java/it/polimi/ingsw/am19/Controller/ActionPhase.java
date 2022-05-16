@@ -17,12 +17,15 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private final ListIterator<String> iterator;
     private int numOfMovedStudents = 0;
     private final int MAX_NUM_STUDENTS;
+    private ActionPhaseSteps currStep;
+    private ActionPhaseSteps prevStep;
 
     public ActionPhase(List<String> playersOrder,MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator = playersOrder.listIterator();
         this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
+        this.currStep = ActionPhaseSteps.MOVE_STUD;
     }
 
     @Override
@@ -117,12 +120,12 @@ public class ActionPhase extends AbstractPhase implements Phase{
         numOfMovedStudents = 0;
         try {
             model.moveMotherNature(message.getStep());
+            matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
         } catch (IllegalNumOfStepsException e) {
+            e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),
                     new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps. Please retry \n"));
-            return;
         }
-        matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
     }
 
     private void takeCloud(ReplyCloudMessage message){
@@ -159,5 +162,8 @@ public class ActionPhase extends AbstractPhase implements Phase{
             else
                 matchController.changeState();
         }
+    }
+    private void changeActionStep() {
+        this.prevStep = currStep;
     }
 }

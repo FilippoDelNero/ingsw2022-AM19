@@ -144,10 +144,7 @@ public class MatchController implements Observer{
      * At the beginning of the in progress state, it initialises the match
      */
     private void init(){
-        if (model instanceof ExpertMatchDecorator)
-            ((ExpertMatchDecorator)model).initializeMatch();
-        else
-            model.initializeMatch();
+        model.initializeMatch();
         sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
         sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started\n"));

@@ -132,17 +132,30 @@ public class MotherNature extends Observable implements Serializable {
             throw new IllegalNumOfStepsException("Trying to make MotherNature move an illegal number of steps. Number of steps passed:" + numOfSteps, numOfSteps);
 
         ListIterator<Island> islandsIterator = islandManager.getIterator();
-        Island island = islandsIterator.next();
+        Island island = null;
+        try {
+            island = islandsIterator.next();
+         } catch (java.util.NoSuchElementException e){
+            e.printStackTrace();
+        }
 
         while(island != currPosition){
-            island = islandsIterator.next();
+            try {
+                island = islandsIterator.next();
+            }catch(java.util.NoSuchElementException e){
+                e.printStackTrace();
+            }
         }
 
         island.setPresenceOfMotherNature(false);
         Island finalPosition = currPosition;
 
         for(int s = 0; s < numOfSteps; s++) {
-            finalPosition = islandsIterator.next();
+            try {
+                finalPosition = islandsIterator.next();
+            }catch(java.util.NoSuchElementException e){
+                e.printStackTrace();
+            }
         }
 
         finalPosition.setPresenceOfMotherNature(true);
