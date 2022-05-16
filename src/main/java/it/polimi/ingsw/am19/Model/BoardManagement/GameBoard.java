@@ -138,6 +138,7 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
     public void removeTower(){
         if (!areTowersFinished()) {
             numOfTowers--;
+
             notifyObservers(Notification.UPDATE_GAMEBOARDS);
         }
         else

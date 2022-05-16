@@ -1,26 +1,27 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
-import it.polimi.ingsw.am19.Network.Message.AskHelperCardMessage;
-import it.polimi.ingsw.am19.Network.Message.Message;
-import it.polimi.ingsw.am19.Network.Message.MessageType;
-import it.polimi.ingsw.am19.Network.Message.PlayCharacterCardMessage;
-
-import java.util.List;
+import it.polimi.ingsw.am19.Network.Message.*;
 
 public class PlayCharacterPhase extends AbstractPhase implements Phase{
     private final String currPlayer;
+    private Phase prevPhase;
     public PlayCharacterPhase(MatchController matchController) {
         super(matchController);
         this.currPlayer = matchController.getCurrPlayer();
+
     }
 
     @Override
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
             if(msg.getMessageType() == MessageType.PLAY_CHARACTER_CARD && model instanceof ExpertMatchDecorator){
-                // message = () msg;
-                //inputController.checkIsCharacterAvailable(message.get)
+                ReplyPlayCharacterCardMessage message = (ReplyPlayCharacterCardMessage) msg;
+                AbstractCharacterCard card = message.getCardToUse();
+                if (card == null) //the client doesn't want to play a card. Let's go back to action phase
+
+                inputController.checkIsCharacterAvailable(card);
                 askParameters();
             }
         }
