@@ -21,7 +21,7 @@ public class RoundsManager {
     private int roundNum;
     private final int MAX_ROUND_NUM = 10;
 
-    public RoundsManager(MatchController mc) {
+    public RoundsManager() {
     }
 
     public void changePhase(Phase nextPhase) {
