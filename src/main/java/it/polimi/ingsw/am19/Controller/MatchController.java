@@ -54,6 +54,7 @@ public class MatchController implements Observer{
         this.clientManagerMap = new ConcurrentHashMap<>();
         this.currState = StateType.LOGIN;
         this.reducer = new Reducer();
+        this.roundsManager = new RoundsManager();
     }
 
     /**
@@ -148,7 +149,6 @@ public class MatchController implements Observer{
         sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
         sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started\n"));
-        this.roundsManager = new RoundsManager(this);
     }
 
     /**

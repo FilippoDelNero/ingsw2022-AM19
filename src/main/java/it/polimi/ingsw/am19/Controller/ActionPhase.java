@@ -165,5 +165,13 @@ public class ActionPhase extends AbstractPhase implements Phase{
     }
     private void changeActionStep() {
         this.prevStep = currStep;
+        switch (currStep){
+            case MOVE_STUD -> {
+            }
+            case MOVE_MN -> {
+            }
+            case TAKE_STUD -> {
+            }
+        }
     }
 }
