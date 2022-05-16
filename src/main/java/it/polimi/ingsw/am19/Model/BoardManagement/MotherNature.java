@@ -133,29 +133,16 @@ public class MotherNature extends Observable implements Serializable {
 
         ListIterator<Island> islandsIterator = islandManager.getIterator();
         Island island = null;
-        try {
-            island = islandsIterator.next();
-         } catch (java.util.NoSuchElementException e){
-            e.printStackTrace();
-        }
 
         while(island != currPosition){
-            try {
-                island = islandsIterator.next();
-            }catch(java.util.NoSuchElementException e){
-                e.printStackTrace();
-            }
+            island = islandsIterator.next();
         }
 
         island.setPresenceOfMotherNature(false);
         Island finalPosition = currPosition;
 
         for(int s = 0; s < numOfSteps; s++) {
-            try {
-                finalPosition = islandsIterator.next();
-            }catch(java.util.NoSuchElementException e){
-                e.printStackTrace();
-            }
+            finalPosition = islandsIterator.next();
         }
 
         finalPosition.setPresenceOfMotherNature(true);

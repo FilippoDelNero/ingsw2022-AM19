@@ -24,8 +24,9 @@ public class ActionPhase extends AbstractPhase implements Phase{
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator = playersOrder.listIterator();
-        this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
+        this.prevStep = ActionPhaseSteps.MOVE_STUD;
         this.currStep = ActionPhaseSteps.MOVE_STUD;
+        this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
             switch (msg.getMessageType()) {
                 case ENTRANCE_TO_DINING_ROOM -> {
                     ReplyEntranceToDiningRoomMessage message = (ReplyEntranceToDiningRoomMessage) msg;
-                    entranceToDiningRooom(message);
+                    entranceToDiningRoom(message);
                 }
 
                 case ENTRANCE_TO_ISLAND -> {
@@ -54,7 +55,6 @@ public class ActionPhase extends AbstractPhase implements Phase{
         }
     }
 
-    @Override
     public List<String> getPlayersOrder() {
         return this.playersOrder;
     }
@@ -74,7 +74,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
         performPhase(currPlayer);
     }
 
-    private void entranceToDiningRooom(ReplyEntranceToDiningRoomMessage message){
+    private void entranceToDiningRoom(ReplyEntranceToDiningRoomMessage message){
         PieceColor color = message.getColorChosen();
         //if (inputController.checkIsInEntrance(color)) {
         try {
@@ -163,14 +163,18 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 matchController.changeState();
         }
     }
+
     private void changeActionStep() {
         this.prevStep = currStep;
         switch (currStep){
             case MOVE_STUD -> {
+                currStep = ActionPhaseSteps.MOVE_MN;
             }
             case MOVE_MN -> {
+                currStep = ActionPhaseSteps.TAKE_STUD;
             }
             case TAKE_STUD -> {
+
             }
         }
     }

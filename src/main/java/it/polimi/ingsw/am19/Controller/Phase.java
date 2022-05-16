@@ -7,8 +7,6 @@ import java.util.List;
 public interface Phase {
     void inspectMessage(Message msg);
 
-    List<String> getPlayersOrder();
-
     void performPhase(String currPlayer);
 
     void initPhase();

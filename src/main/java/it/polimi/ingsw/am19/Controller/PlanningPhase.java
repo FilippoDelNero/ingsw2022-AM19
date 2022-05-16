@@ -48,7 +48,6 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         }
     }
 
-    @Override
     public List<String> getPlayersOrder() {
         return playersOrder;
     }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
+import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
 import it.polimi.ingsw.am19.Network.Message.Message;
@@ -56,5 +58,15 @@ public class InputController {
             return false;
         }
         return true;
+    }
+
+    boolean checkIsCharacterAvailable(AbstractCharacterCard character){
+        if (!((ExpertMatchDecorator)model).getCharacterCards().contains(character)){
+            matchController.sendMessage(matchController.getCurrPlayer(),
+                    new ErrorMessage("server",character.getId() + " is not available. Please retry"));
+            return false;
+        }
+        else
+            return true;
     }
 }
