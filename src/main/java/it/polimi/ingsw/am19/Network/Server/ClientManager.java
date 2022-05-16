@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.Network.Server;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Network.Message.Message;
+import it.polimi.ingsw.am19.Network.Message.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -116,6 +117,7 @@ public class ClientManager implements Runnable {
         synchronized (lockToSend) {
             try {
                 output.writeObject(msg);
+                System.out.println(msg.getMessageType());
                 output.reset();
             } catch (IOException e) {
                 close();
@@ -131,6 +133,8 @@ public class ClientManager implements Runnable {
             synchronized (lockToReceive) {
                 try {
                     Message msg = (Message) input.readObject();
+                    if(msg.getMessageType()!= MessageType.PING_MESSAGE)
+                        System.out.println(msg.getMessageType());
                     switch (msg.getMessageType()){
                         case PING_MESSAGE -> myTimer.reset();
                         case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);

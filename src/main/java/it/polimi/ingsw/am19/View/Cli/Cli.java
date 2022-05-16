@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * class implementing a cli-style view
@@ -200,7 +201,7 @@ public class Cli implements View {
                 case "6" -> step=6;
                 case "7" -> step=7;
             }
-        } while(step==0);
+        } while(step<=0 || step>7);
         return step;
     }
 
@@ -214,15 +215,18 @@ public class Cli implements View {
         int cloudChosen;
         String input;
         do {
-            printer.println("Chose a cloud from " + cloudAvailable);
+            //server sends the list of available clouds starting from index 0, but we need to display it starting from 1
+            printer.println("Chose a cloud from " + cloudAvailable.stream()
+                    .map(index -> index +1)
+                    .collect(Collectors.toList()));
             input = reader.nextLine();
             try {
-                cloudChosen=Integer.parseInt(input);
+                cloudChosen=Integer.parseInt(input) - 1; // we send back the chosen index according to server index management
             } catch (NumberFormatException e) {
                 cloudChosen = 12; //it will never be contained, so it will be asked again
             }
         } while(!cloudAvailable.contains(cloudChosen));
-        return cloudChosen - 1; //Arrays on the server side are from 0, to the user we present data starting from 1
+        return cloudChosen; //Arrays on the server side are from 0, to the user we present data starting from 1
     }
 
     /**

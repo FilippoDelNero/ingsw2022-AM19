@@ -156,7 +156,8 @@ public class IslandManager extends Observable implements Observer, Serializable 
             if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
                 unify(island1, island2);
                 if (getIslands().size() == 3)
-                    notifyObservers(Notification.FINAL_ROUND);
+                    notifyObservers(Notification.END_MATCH);
+                i = 0;
             }
         }
     }
