@@ -26,7 +26,7 @@ public class MotherNaturePlusTwoCard extends AbstractCharacterCard{
      * @param match references to the match. Is used to save the specific parameter the card needs
      */
     public MotherNaturePlusTwoCard(AbstractMatch match) {
-        super(Character.POSTINO_MAGICO);
+        super(Character.MAGIC_MAILMAN);
         this.motherNature = match.getMotherNature();
     }
 

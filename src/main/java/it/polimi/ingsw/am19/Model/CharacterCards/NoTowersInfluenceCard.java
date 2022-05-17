@@ -31,7 +31,7 @@ public class NoTowersInfluenceCard extends AbstractCharacterCard {
      * @param match a reference to the match
      */
     public NoTowersInfluenceCard(AbstractMatch match) {
-        super(Character.CENTAURO);
+        super(Character.CENTAUR);
         this.islandManager = match.getIslandManager();
     }
 

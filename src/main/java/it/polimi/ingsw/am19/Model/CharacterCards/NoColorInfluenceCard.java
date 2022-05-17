@@ -26,7 +26,7 @@ public class NoColorInfluenceCard extends AbstractCharacterCard{
      * @param match references to the match. Is used to save the specific parameter the card needs
      */
     public NoColorInfluenceCard(AbstractMatch match) {
-        super(Character.FUNGARO);
+        super(Character.MUSHROOM_HUNTER);
         this.islandManager = match.getIslandManager();
     }
 

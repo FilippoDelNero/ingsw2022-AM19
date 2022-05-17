@@ -35,7 +35,7 @@ public class PlusTwoInfluenceCard extends AbstractCharacterCard{
      * @param match a reference to the match
      */
     public PlusTwoInfluenceCard(AbstractMatch match) {
-        super(Character.CAVALIERE);
+        super(Character.KNIGHT);
         this.islandManager = match.getIslandManager();
         this.match = match;
     }

@@ -36,7 +36,7 @@ public class NoEntryTileCard extends AbstractCharacterCard{
      * @param match a reference to the match
      */
     public NoEntryTileCard(AbstractMatch match) {
-        super(Character.NONNA_ERBE);
+        super(Character.GRANNY);
         this.islandManager = match.getIslandManager();
     }
 

@@ -25,7 +25,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             switch (msg.getMessageType()){
                 case PLAY_CHARACTER_CARD -> {
                     ReplyPlayCharacterCardMessage message = (ReplyPlayCharacterCardMessage) msg;
-                    this.card = message.getCardToUse();
+                    //this.card = message.getCardToUse();
                     if (card == null){ //the client doesn't want to play a card. Let's go back to action phase
                         Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
                         matchController.getRoundsManager().changePhase(prevPhase);

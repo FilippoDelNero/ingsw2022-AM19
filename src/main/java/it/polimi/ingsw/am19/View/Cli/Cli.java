@@ -3,7 +3,6 @@ package it.polimi.ingsw.am19.View.Cli;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
-import it.polimi.ingsw.am19.Model.CharacterCards.PlusTwoInfluenceCard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -232,6 +231,37 @@ public class Cli implements View {
     }
 
     /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param characterOptions the character cards present in this expert match
+     * @return the character card choosen by the user or null if they chose not to play a card
+     */
+    @Override
+    public Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
+        Character chosenCardEnum = null;
+        printer.println("Options:");
+        for (AbstractCharacterCard card : characterOptions)
+            printer.println(card.getId() + ": price:" + card.getPrice() + ", description: " + card.getDescription());
+        printer.println("Do you want to play any character card?[e.g. NO or MONK]");
+        String input = reader.nextLine().toLowerCase();
+        switch(input) {
+            case "monk" -> chosenCardEnum = Character.MONK;
+            case "farmer" -> chosenCardEnum = Character.FARMER;
+            case "herald" -> chosenCardEnum = Character.HERALD;
+            case "mailman", "magic" -> chosenCardEnum = Character.MAGIC_MAILMAN;
+            case "granny" -> chosenCardEnum = Character.GRANNY;
+            case "centaur" -> chosenCardEnum = Character.CENTAUR;
+            case "jester" -> chosenCardEnum = Character.JESTER;
+            case "knight" -> chosenCardEnum = Character.KNIGHT;
+            case "mushroom", "hunter" -> chosenCardEnum = Character.MUSHROOM_HUNTER;
+            case "minstrel" -> chosenCardEnum = Character.MINSTREL;
+            case "princess" -> chosenCardEnum = Character.PRINCESS;
+            case "thief" -> chosenCardEnum = Character.THIEF;
+            default -> chosenCardEnum = null;
+        }
+        return chosenCardEnum;
+    }
+
+    /**
      * method used to display a generic message (error messages as well) to the user
      * @param toPrint the content that needs to be print
      */
@@ -282,15 +312,5 @@ public class Cli implements View {
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }
-    }
-
-
-    public void askPlayCharacter(List<AbstractCharacterCard> charcterOptions){
-        printer.println("Do you want to play any character card?[e.g. NO or MONACO]");
-        printer.println("Options:");
-        for (AbstractCharacterCard card : charcterOptions){
-            printer.println(card.getId() + ": price:" + card.getPrice() + ", description: " + card.getDescription());
-        }
-
     }
 }

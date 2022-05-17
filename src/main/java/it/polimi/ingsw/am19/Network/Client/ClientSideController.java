@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Client;
 
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -168,11 +169,6 @@ public class ClientSideController {
         myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
     }
 
-    private void endMatch(EndMatchMessage msg) {
-        view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
-        myClient.disconnect();
-    }
-
     /**
      * The method is called when a AskCloudMessage comes in
      * it ask and send the num of cloud chosen
@@ -185,8 +181,22 @@ public class ClientSideController {
         myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
     }
 
+    /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
+     */
     private void askPlayCharacter(AskPlayCharacterCardMessage msg){
-        view.askPlayCharacter(msg.getAvailableCharacterCards());
+        Character chosenCardEnum = view.askPlayCharacter(msg.getAvailableCharacterCards());
+        myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
+    }
+
+    /**
+     * Method used to display the winner and close the client connection
+     * @param msg the EndMatchMessage sent by the server
+     */
+    private void endMatch(EndMatchMessage msg) {
+        view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        myClient.disconnect();
     }
 
     /**

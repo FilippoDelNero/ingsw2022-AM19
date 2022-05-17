@@ -35,7 +35,7 @@ public class TakeProfessorCard extends AbstractCharacterCard{
      * @param match a reference to the match
      */
     public TakeProfessorCard(AbstractMatch match) {
-        super(Character.CONTADINO);
+        super(Character.FARMER);
         this.m = match;
         this.professorManager = match.getProfessorManager();
         this.strategy = new ChangeIfEqualCheckProfessor();

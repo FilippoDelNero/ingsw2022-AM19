@@ -35,7 +35,7 @@ public class StudentToIslandCard extends AbstractCharacterCard implements MoveSt
     private int currNumOfStudents;
 
     public StudentToIslandCard(AbstractMatch match) {
-        super(Character.MONACO);
+        super(Character.MONK);
         this.bag = match.getBag();
         this.students= new HashMap<>();
         for(PieceColor color: PieceColor.values())
