@@ -305,7 +305,7 @@ public class Cli implements View {
         do {
             printer.println("write the index of the island: ");
             try {
-                islandIndex = Integer.parseInt(reader.nextLine());
+                islandIndex = Integer.parseInt(reader.nextLine()) - 1;
             } catch (NumberFormatException e) {
                 islandIndex = 13; //there is no island with that index, the card will always be asked again if no number is provided
             }

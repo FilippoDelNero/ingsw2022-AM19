@@ -106,9 +106,11 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
         Island island = model.getIslandManager().getIslands().get(islandIndex);
         List<PieceColor> colorList = message.getColorList();
 
-        if (inputController.checkIsInArchipelago(islandIndex) &&
+        /*if (inputController.checkIsInArchipelago(islandIndex) &&
                 inputController.checkValidColor(color) &&
-                inputController.checkValidColor(colorList)) {
+                inputController.checkValidColor(colorList)
+                ) {
+         */
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
                 Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
@@ -119,6 +121,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             } catch (NoSuchColorException | TooManyStudentsException e) {
                 matchController.sendMessage(currPlayer,new ErrorMessage("server","Invalid parameters"));
             }
-        }
+        //}
     }
 }

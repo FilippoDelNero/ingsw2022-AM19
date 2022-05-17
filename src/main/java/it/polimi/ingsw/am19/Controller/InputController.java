@@ -75,6 +75,7 @@ public class InputController {
             return true;
     }
 
+    /*
     boolean checkValidColor(PieceColor color){
         switch (color){
             case GREEN,RED,YELLOW,PINK,BLUE -> {return true;}
@@ -86,7 +87,7 @@ public class InputController {
         boolean isValid = false;
         for (PieceColor color : colors){
             switch (color){
-                case GREEN,RED,YELLOW,PINK,BLUE -> {isValid = true;}
+                case GREEN,RED,YELLOW,PINK,BLUE -> isValid = true;
                 default -> {
                     isValid = false;
                     return false;
@@ -95,6 +96,8 @@ public class InputController {
         }
         return isValid;
     }
+
+     */
 
     boolean checkAffordability(AbstractCharacterCard card){
         if (card.getPrice() <= ((ExpertMatchDecorator)model).getCurrPlayer().getCoins()){
