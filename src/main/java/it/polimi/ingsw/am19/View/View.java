@@ -41,6 +41,8 @@ public interface View {
      */
     String askNickname();
 
+    String askNicknameFromList(List<String> nicknameAvailable);
+
     /**
      * method used to ask a wizard family to the user
      * @param availableWizardFamilies a list containing the yet to be selected wizard families
@@ -100,4 +102,10 @@ public interface View {
      * @param nickname the nickname of the player who owns the view
      */
     void printView(String nickname);
+
+    /**
+     * method used to ask if the first player want to resume an old match
+     * @return the choice of the player
+     */
+    boolean askResumeMatch();
 }

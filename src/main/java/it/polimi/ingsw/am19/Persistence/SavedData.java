@@ -8,21 +8,20 @@ import java.io.Serializable;
  * This class contains all the object must be stored for saving a match
  */
 public class SavedData implements Serializable {
-    private final boolean isExpert;
     private final MatchDecorator model;
+    private final int roundNumber;
 
 
-    public SavedData(boolean isExpert, MatchDecorator model) {
-        this.isExpert = isExpert;
+    public SavedData(MatchDecorator model, int roundNumber) {
         this.model = model;
-    }
-
-    public boolean isExpert() {
-        return isExpert;
+        this.roundNumber = roundNumber;
     }
 
     public MatchDecorator getModel() {
         return model;
     }
 
+    public int getRoundNumber() {
+        return roundNumber;
+    }
 }

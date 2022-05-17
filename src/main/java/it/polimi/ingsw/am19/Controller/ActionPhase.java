@@ -204,9 +204,11 @@ public class ActionPhase extends AbstractPhase implements Phase{
             matchController.setCurrPlayer(nextPlayer);
             performPhase(nextPlayer);
         } else {
-            //TODO salvataggio partita
+
             model.resetAlreadyPlayedCards();
             model.updatePlanningPhaseOrder();
+            matchController.saveMatch();
+
             if (matchController.getRoundsManager().hasNextRound() && !model.isFinalRound()) {
                 List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
                         .map(Player::getNickname)

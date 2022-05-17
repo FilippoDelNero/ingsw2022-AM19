@@ -21,11 +21,11 @@
 |:-----------------------|:-------------------------------------------:|
 | Basic rules            | 🟢 |
 | Complete rules         | 🟢 |
-| Communication Protocol | 🟡 |
-| GUI                    | 🔴 |
-| CLI                    | 🟡 |
+| Communication Protocol | 🟢 |
+| GUI                    | 🟡 |
+| CLI                    | 🟢 |
 | AF 1: Character cards  | 🟢 |
-| AF 2: Persistence      | 🟡 |
+| AF 2: Persistence      | 🟢 |
 | AF 3: -                | 🔴 |
 
 

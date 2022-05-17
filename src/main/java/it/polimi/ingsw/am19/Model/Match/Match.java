@@ -193,4 +193,6 @@ public interface Match {
     Player getPlayerByNickname(String nickname);
 
     List<Integer> getNonEmptyClouds();
+
+    void setAllObservers();
 }

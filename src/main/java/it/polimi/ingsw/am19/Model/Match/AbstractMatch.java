@@ -421,6 +421,27 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         return finalRound;
     }
 
+    @Override
+    public void setAllObservers(){
+        islandManager.registerObserverToIslands();
+        islandManager.addObserver(this);
+
+        bag.addObserver(this);
+
+
+
+        for (Cloud c : clouds)
+            c.addObserver(this);
+
+
+        for (Player player: getGameBoards().keySet()) {
+            player.addObserver(this);
+            getGameBoards().get(player).addObserver(this);
+        }
+
+        motherNature.addObserver(this);
+    }
+
     /**
      * Reacts to the receiving of a Notification from the observed classes
      * @param notification is the notification type provided by the observed class

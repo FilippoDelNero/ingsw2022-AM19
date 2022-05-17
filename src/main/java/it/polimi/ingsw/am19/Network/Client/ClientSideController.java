@@ -8,6 +8,7 @@ import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.View.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class ClientSideController {
             previousMsg = msg;
         switch (type) {
             case ASK_LOGIN_FIRST_PLAYER -> askLoginFirstPlayer((AskFirstPlayerMessage) msg);
+            case LOGIN_PLAYERS_OPTION -> askNicknameFromResumedMatch((AskNicknameOptionsMessage)msg);
             case ASK_LOGIN_INFO -> askLoginInfo((AskLoginInfoMessage) msg);
             case ERROR_MESSAGE -> error((ErrorMessage) msg);
             case GENERIC_MESSAGE -> generic((GenericMessage) msg);
@@ -80,12 +82,27 @@ public class ClientSideController {
     private void askLoginFirstPlayer(AskFirstPlayerMessage msg) {
         int numOfPlayers;
         boolean isExpert;
-        if(msg.getMatchToResume() == null) {
+        if(!msg.isMatchToResume()) {
             numOfPlayers = view.newMatchNumOfPlayers();
             isExpert = view.newMatchIsExpert();
             myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
         }
-        //TODO manca cosa fare in caso di else
+
+        else{
+            boolean resumingMatch = view.askResumeMatch();
+            if(!resumingMatch) {
+                numOfPlayers = view.newMatchNumOfPlayers();
+                isExpert = view.newMatchIsExpert();
+                myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
+            } else{
+                myClient.sendMessage(new ReplyResumeMatchMessage());
+            }
+        }
+    }
+
+    public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg){
+        this.nickname=view.askNicknameFromList(new ArrayList<>(msg.getNicknameAvailable()));
+        myClient.sendMessage(new ReplyLoginInfoMessage(nickname,null,null));
     }
 
     /**
