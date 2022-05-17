@@ -99,7 +99,6 @@ public class LoginManager {
                 case RESUME_MATCH -> {
                     isResumingMatch = true;
 
-                    
                     matchController.resumeMatch();
                     lastMatchPlayers = new ArrayList<>(matchController.getNicknamesFromResumedMatch());
 

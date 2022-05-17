@@ -58,9 +58,6 @@ public class RoundsManager {
         return roundNum;
     }
 
-    public void setRoundNum(int roundNum) {
-        this.roundNum = roundNum;
-    }
 
     public int getMAX_ROUND_NUM() {
         return MAX_ROUND_NUM;
