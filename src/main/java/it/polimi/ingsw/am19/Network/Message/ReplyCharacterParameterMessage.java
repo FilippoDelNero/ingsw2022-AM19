@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class ReplyCharacterParameterMessage extends Message {
     private final PieceColor color;
-    private final int island;
+    private final Integer island;
     private final List<PieceColor> colorList;
     private ClientManager clientManager = null;
 
-    public ReplyCharacterParameterMessage(String nickname, PieceColor color, int island, List<PieceColor> colorList) {
+    public ReplyCharacterParameterMessage(String nickname, PieceColor color, Integer island, List<PieceColor> colorList) {
         super(nickname, MessageType.REPLY_CHARACTER_PARAMETER);
         this.color = color;
         this.island = island;
@@ -25,7 +25,7 @@ public class ReplyCharacterParameterMessage extends Message {
         return color;
     }
 
-    public int getIsland() {
+    public Integer getIsland() {
         return island;
     }
 

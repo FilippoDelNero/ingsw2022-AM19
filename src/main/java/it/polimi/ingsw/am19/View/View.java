@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
+import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
@@ -87,9 +87,27 @@ public interface View {
     /**
      * Method used to ask the user if and which characterCards they want to play
      * @param characterOptions the character cards present in this expert match
-     * @return the character card choosen by the user or null if they chose not to play a card
+     * @return the character card chosen by the user or null if they chose not to play a card
      */
     Character askPlayCharacter(List<Character> characterOptions);
+
+    /**
+     * Method used to ask the user a color for a Character Card
+     * @return the chosen PieceColor
+     */
+    PieceColor askCharacterCardParamPieceColor();
+
+    /**
+     * Method used to ask the user an index of an island for a Character Card
+     * @return the chosen index
+     */
+    int askCharacterCardParamIsland();
+
+    /**
+     * Method used to ask the user a list of PieceColor for a Character Card
+     * @return the list of PieceColor
+     */
+    List<PieceColor> askCharacterCardParamList();
 
     /**
      * method used to display a generic message (error messages as well) to the user

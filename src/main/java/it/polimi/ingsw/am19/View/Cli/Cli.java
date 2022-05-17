@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.View.Cli;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -11,10 +10,7 @@ import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * class implementing a cli-style view
@@ -60,6 +56,20 @@ public class Cli implements View {
         printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
         printer.println("\n");
         printer.println("Welcome!\n");
+    }
+
+    /**
+     * method used to ask the player if they want to resume a saved match
+     * @return true if the player wants to resume a saved match, false otherwise
+     */
+    @Override
+    public boolean askResumeMatch() {
+        String input;
+        do  {
+            printer.println("Do you want to resume the previous match? [yes, no]");
+            input = reader.nextLine();
+        } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
+        return input.equalsIgnoreCase("yes");
     }
 
     /**
@@ -212,7 +222,7 @@ public class Cli implements View {
                 case "6" -> step=6;
                 case "7" -> step=7;
             }
-        } while(step<=0 || step>7);
+        } while(step<=0);
         return step;
     }
 
@@ -228,8 +238,7 @@ public class Cli implements View {
         do {
             //server sends the list of available clouds starting from index 0, but we need to display it starting from 1
             printer.println("Chose a cloud from " + cloudAvailable.stream()
-                    .map(index -> index +1)
-                    .collect(Collectors.toList()));
+                    .map(index -> index + 1).toList());
             input = reader.nextLine();
             try {
                 cloudChosen=Integer.parseInt(input) - 1; // we send back the chosen index according to server index management
@@ -243,7 +252,7 @@ public class Cli implements View {
     /**
      * Method used to ask the user if and which characterCards they want to play
      * @param characterOptions the character cards present in this expert match
-     * @return the character card choosen by the user or null if they chose not to play a card
+     * @return the character card chosen by the user or null if they chose not to play a card
      */
     @Override
     public Character askPlayCharacter(List<Character> characterOptions) {
@@ -266,9 +275,72 @@ public class Cli implements View {
             case "minstrel" -> chosenCardEnum = Character.MINSTREL;
             case "princess" -> chosenCardEnum = Character.PRINCESS;
             case "thief" -> chosenCardEnum = Character.THIEF;
-            default -> chosenCardEnum = null;
         }
         return chosenCardEnum;
+    }
+
+    /**
+     * Method used to ask the user a color for a Character Card
+     * @return the chosen PieceColor
+     */
+    @Override
+    public PieceColor askCharacterCardParamPieceColor() {
+        PieceColor color;
+        String input;
+        do {
+            printer.println("write the color of the student");
+            input = reader.nextLine().toLowerCase();
+            color = convertToColor(input);
+        } while(color == null);
+        return color;
+    }
+
+    /**
+     * Method used to ask the user an index of an island for a Character Card
+     * @return the chosen index
+     */
+    @Override
+    public int askCharacterCardParamIsland(){
+        int islandIndex;
+        do {
+            printer.println("write the index of the island: ");
+            try {
+                islandIndex = Integer.parseInt(reader.nextLine());
+            } catch (NumberFormatException e) {
+                islandIndex = 13; //there is no island with that index, the card will always be asked again if no number is provided
+            }
+        } while(islandIndex < 0 || islandIndex >= cache.getIslands().size());
+        return islandIndex;
+    }
+
+    /**
+     * Method used to ask the user a list of PieceColor for a Character Card
+     * @return the list of PieceColor
+     */
+    @Override
+    public List<PieceColor> askCharacterCardParamList() {
+        List<PieceColor> pieceColorList = new ArrayList<>();
+        PieceColor color1;
+        PieceColor color2;
+        String input;
+        do {
+            printer.println("write the first color's student you want to move:");
+            input = reader.nextLine().toLowerCase();
+            color1 = convertToColor(input);
+            if(color1 != null) {
+                pieceColorList.add(color1);
+                printer.println("write the second color's student you want to move:");
+                input = reader.nextLine().toLowerCase();
+                color2 = convertToColor(input);
+                if(color2 != null)
+                    pieceColorList.add(color2);
+                else {
+                    pieceColorList.remove(color1);
+                    printer.println("retry writing both color");
+                }
+            }
+        } while (!input.equals("stop"));
+        return pieceColorList;
     }
 
     /**
@@ -324,13 +396,21 @@ public class Cli implements View {
         }
     }
 
-    @Override
-    public boolean askResumeMatch() {
-        String input;
-        do  {
-            printer.println("Do you want to resume the previous match? [yes, no]");
-            input = reader.nextLine();
-        } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
-        return input.equalsIgnoreCase("yes");
+    /**
+     * utility method used to convert a string in a PieceColor
+     * @param input the string written by the user
+     * @return the PieceColor corresponding to the user's input
+     */
+    private PieceColor convertToColor(String input) {
+        PieceColor color;
+        switch (input) {
+            case "red" -> color = PieceColor.RED;
+            case "green" -> color = PieceColor.GREEN;
+            case "blue" -> color = PieceColor.BLUE;
+            case "yellow" -> color = PieceColor.YELLOW;
+            case "pink" -> color = PieceColor.PINK;
+            default -> color = null;
+        }
+        return color;
     }
 }

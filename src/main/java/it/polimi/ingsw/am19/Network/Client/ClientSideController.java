@@ -69,7 +69,8 @@ public class ClientSideController {
             case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
             case END_MATCH_MESSAGE -> endMatch((EndMatchMessage) msg);
-            case ASK_CHARACTER_CARD -> askPlayCharacter((AskPlayCharacterCardMessage)msg);
+            case ASK_CHARACTER_CARD -> askPlayCharacter((AskPlayCharacterCardMessage) msg);
+            case ASK_CHARACTER_PARAMETER -> askCharacterCardParameters((AskCharacterParameterMessage) msg);
         }
     }
 
@@ -205,6 +206,19 @@ public class ClientSideController {
     private void askPlayCharacter(AskPlayCharacterCardMessage msg){
         Character chosenCardEnum = view.askPlayCharacter(msg.getAvailableCharacterCards());
         myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
+    }
+
+    private void askCharacterCardParameters(AskCharacterParameterMessage msg) {
+        PieceColor color = null;
+        Integer islandIndex = null;
+        List<PieceColor> pieceColorList = null;
+        if(msg.isRequireColor())
+            color = view.askCharacterCardParamPieceColor();
+        if(msg.isRequireIsland())
+            islandIndex = view.askCharacterCardParamIsland();
+        if(msg.isRequireColorList())
+            pieceColorList = view.askCharacterCardParamList();
+        myClient.sendMessage(new ReplyCharacterParameterMessage(nickname, color, islandIndex, pieceColorList));
     }
 
     /**
