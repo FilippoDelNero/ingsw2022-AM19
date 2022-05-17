@@ -3,12 +3,14 @@ package it.polimi.ingsw.am19.Controller;
 import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -81,8 +83,11 @@ public class ActionPhase extends AbstractPhase implements Phase{
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
         if (model instanceof ExpertMatchDecorator && !cardPlayed){
             matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+            List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                            .map(AbstractCharacterCard::getId)
+                                    .toList();
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+                    new AskPlayCharacterCardMessage(charactersAvailable));
         }else{
             matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
         }
@@ -110,7 +115,16 @@ public class ActionPhase extends AbstractPhase implements Phase{
             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
         else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
             changeActionStep();
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+            if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                        .map(AbstractCharacterCard::getId)
+                        .toList();
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new AskPlayCharacterCardMessage(charactersAvailable));
+            }else{
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+            }
         }
     }
         //}
@@ -136,8 +150,11 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 changeActionStep();
                 if (model instanceof ExpertMatchDecorator && !cardPlayed){
                     matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                    List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                            .map(AbstractCharacterCard::getId)
+                            .toList();
                     matchController.sendMessage(matchController.getCurrPlayer(),
-                            new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+                            new AskPlayCharacterCardMessage(charactersAvailable));
                 }else{
                     matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
                 }
@@ -152,8 +169,11 @@ public class ActionPhase extends AbstractPhase implements Phase{
             changeActionStep();
             if (model instanceof ExpertMatchDecorator && !cardPlayed){
                 matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                        .map(AbstractCharacterCard::getId)
+                        .toList();
                 matchController.sendMessage(matchController.getCurrPlayer(),
-                        new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+                        new AskPlayCharacterCardMessage(charactersAvailable));
             }else{
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
             }

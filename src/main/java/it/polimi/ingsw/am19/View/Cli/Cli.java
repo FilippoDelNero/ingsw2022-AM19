@@ -236,11 +236,11 @@ public class Cli implements View {
      * @return the character card choosen by the user or null if they chose not to play a card
      */
     @Override
-    public Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
+    public Character askPlayCharacter(List<Character> characterOptions) {
         Character chosenCardEnum = null;
         printer.println("Options:");
-        for (AbstractCharacterCard card : characterOptions)
-            printer.println(card.getId() + ": price:" + card.getPrice() + ", description: " + card.getDescription());
+        for (Character card : characterOptions)
+            printer.println(card + ": price:" + card.getPrice() + ", description: " + card.getDescription());
         printer.println("Do you want to play any character card?[e.g. NO or MONK]");
         String input = reader.nextLine().toLowerCase();
         switch(input) {

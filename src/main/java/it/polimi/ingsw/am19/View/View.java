@@ -87,7 +87,7 @@ public interface View {
      * @param characterOptions the character cards present in this expert match
      * @return the character card choosen by the user or null if they chose not to play a card
      */
-    Character askPlayCharacter(List<AbstractCharacterCard> characterOptions);
+    Character askPlayCharacter(List<Character> characterOptions);
 
     /**
      * method used to display a generic message (error messages as well) to the user
