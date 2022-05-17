@@ -1,14 +1,14 @@
 package it.polimi.ingsw.am19.Network.Message;
 
 public class AskFirstPlayerMessage extends Message {
-    private final String matchToResume;
+    private boolean matchToResume;
 
-    public AskFirstPlayerMessage(String matchToResume) {
+    public AskFirstPlayerMessage(boolean matchToResume) {
         super("server", MessageType.ASK_LOGIN_FIRST_PLAYER);
         this.matchToResume = matchToResume;
     }
 
-    public String getMatchToResume() {
+    public boolean isMatchToResume() {
         return matchToResume;
     }
 

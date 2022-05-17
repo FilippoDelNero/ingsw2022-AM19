@@ -302,4 +302,9 @@ public class MatchDecorator implements Match, Serializable {
     public List<Integer> getNonEmptyClouds(){
         return wrappedMatch.getNonEmptyClouds();
     }
+
+    @Override
+    public void setAllObservers() {
+        wrappedMatch.setAllObservers();
+    }
 }

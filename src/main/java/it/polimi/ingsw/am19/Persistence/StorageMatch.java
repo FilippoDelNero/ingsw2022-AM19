@@ -9,8 +9,8 @@ import java.io.*;
  */
 public class StorageMatch implements Serializable {
 
-    public void store(MatchDecorator model, boolean isExpert){
-        SavedData savedData = new SavedData(isExpert,model);
+    public void store(MatchDecorator model, int roundNUmber){
+        SavedData savedData = new SavedData(model,roundNUmber);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("savedMatch.txt");

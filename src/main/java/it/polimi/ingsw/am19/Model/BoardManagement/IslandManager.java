@@ -197,6 +197,11 @@ public class IslandManager extends Observable implements Observer, Serializable 
         iterator.set(newIsland);
     }
 
+    public void registerObserverToIslands(){
+        for(Island i: getIslands())
+            i.addObserver(this);
+    }
+
     /**
      * reacts to notifications from the islands
      */

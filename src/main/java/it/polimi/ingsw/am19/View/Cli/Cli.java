@@ -102,6 +102,16 @@ public class Cli implements View {
         return input;
     }
 
+    @Override
+    public String askNicknameFromList(List<String> nicknameAvailable) {
+        String input;
+        do{
+            printer.println("Who are you?" + nicknameAvailable + '\n');
+            input= reader.nextLine();
+        } while (!nicknameAvailable.contains(input));
+        return input;
+    }
+
     /**
      * method used to ask a wizard family to the user
      * @param availableWizardFamilies a list containing the yet to be selected wizard families
@@ -280,5 +290,15 @@ public class Cli implements View {
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }
+    }
+
+    @Override
+    public boolean askResumeMatch() {
+        String input;
+        do  {
+            printer.println("Do you want to resume the previous match? [yes, no]");
+            input = reader.nextLine();
+        } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
+        return input.equalsIgnoreCase("yes");
     }
 }

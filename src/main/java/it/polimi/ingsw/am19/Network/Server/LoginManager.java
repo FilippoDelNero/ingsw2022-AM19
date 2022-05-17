@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -35,7 +36,7 @@ public class LoginManager {
     private final ArrayList<String> nicknames;
 
     /** the list of nicknames used in a resuming match */
-    private final ArrayList<String> lastMatchPlayers;
+    private ArrayList<String> lastMatchPlayers;
 
     /** field containing the reply from the client */
     private Message answerFromClient;
@@ -77,8 +78,9 @@ public class LoginManager {
 
         //if the player connecting is the first one
         else if (activePlayers == 0){
-            //TODO controllare se ci sono match già salvati e passarlo nel messaggio, altrimenti null
-            clientToAdd.sendMessage(new AskFirstPlayerMessage(null));
+
+
+            clientToAdd.sendMessage(new AskFirstPlayerMessage(matchController.checkOldMatches()));
             waitForReply();
 
             switch (answerFromClient.getMessageType()) {
@@ -96,8 +98,11 @@ public class LoginManager {
                 //The player wants to resume an old match
                 case RESUME_MATCH -> {
                     isResumingMatch = true;
-                    //TODO recupero nomi giocatori da file + model + controller. Le tre add sono solo per prova
-                    lastMatchPlayers.add("Dennis"); lastMatchPlayers.add("Phil"); lastMatchPlayers.add("Laura");
+
+                    
+                    matchController.resumeMatch();
+                    lastMatchPlayers = new ArrayList<>(matchController.getNicknamesFromResumedMatch());
+
                     addPlayerToResumingMatch(clientToAdd);
                     sendMessageOfWait(clientToAdd);
                     activePlayers++;
@@ -194,6 +199,8 @@ public class LoginManager {
         String nickname = msg.getNickname();
         matchController.setClientManager(nickname,clientToAdd); //TODO after implementing persistence make sure the map saved in the previous match was ignored while saving
         lastMatchPlayers.remove(nickname);
+        if(lastMatchPlayers.size()==0)
+            matchController.inProgress();
     }
 
     /**

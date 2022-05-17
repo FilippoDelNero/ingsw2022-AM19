@@ -11,8 +11,11 @@ import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.Network.ReducedObjects.Reducer;
 import it.polimi.ingsw.am19.Network.Server.ClientManager;
 import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Persistence.SavedData;
+import it.polimi.ingsw.am19.Persistence.StorageMatch;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -76,18 +79,28 @@ public class MatchController implements Observer{
         this.inputController = new InputController(this);
     }
 
-    private boolean checkOldMatches(){
-        //TODO  look for saved matches
-        return this.model != null;
+    public boolean checkOldMatches(){
+        File file = new File("savedMatch.txt");
+        return file.exists();
     }
 
-    public MatchDecorator resumeMatch(){
-        if (checkOldMatches()){
-            //TODO properly restore an old match
-            return this.model;
-            }
-        else
-            return null;
+    public void saveMatch(){
+        StorageMatch storageMatch = new StorageMatch();
+        storageMatch.store(this.getModel(), roundsManager.getRoundNum());
+    }
+
+    public void resumeMatch(){
+        StorageMatch storageMatch = new StorageMatch();
+        SavedData savedData = storageMatch.restore();
+        this.model = savedData.getModel();
+        roundsManager.setRoundNum(savedData.getRoundNumber());
+
+        inputController = new InputController(this);
+        model.getWrappedMatch().addObserver(this);
+        model.setAllObservers();
+
+        currState = StateType.IN_PROGRESS;
+        // faccio nuova planning phase e faccio l'init
     }
 
     /**
@@ -146,8 +159,6 @@ public class MatchController implements Observer{
      */
     private void init(){
         model.initializeMatch();
-        sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
-        sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         sendBroadcastMessage(new GenericMessage("The match has started\n"));
     }
 
@@ -205,7 +216,9 @@ public class MatchController implements Observer{
     /**
      * At the beginning of a new round, it begins from the PlanningPhase
      */
-    private void inProgress(){
+    public void inProgress(){
+        sendBroadcastMessage(new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
+        sendBroadcastMessage(new UpdateIslandsMessage(reducer.reduceIsland(model.getIslandManager().getIslands())));
         List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
                 .map(Player::getNickname)
                 .toList();
