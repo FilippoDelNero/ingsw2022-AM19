@@ -113,8 +113,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
          */
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
-                Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
-                matchController.getRoundsManager().changePhase(prevPhase);
+                goBackToPrevPhase();
             } catch (InsufficientCoinException e) {
                 Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
                 matchController.getRoundsManager().changePhase(prevPhase);
