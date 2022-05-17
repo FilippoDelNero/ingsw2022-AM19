@@ -178,7 +178,6 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
             }
         } catch (IllegalNumOfStepsException e) {
-            e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),
                     new ErrorMessage("server","You can't move mother nature of " + message.getStep() + " steps. Please retry\n"));
         }
