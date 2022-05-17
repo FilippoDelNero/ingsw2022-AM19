@@ -102,8 +102,10 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
 
     private void activateCardEffect(ReplyCharacterParameterMessage message){
         PieceColor color = message.getColor();
-        int islandIndex = message.getIsland();
-        Island island = model.getIslandManager().getIslands().get(islandIndex);
+        Integer islandIndex = message.getIsland();
+        Island island = null;
+        if (islandIndex!=null)
+            island = model.getIslandManager().getIslands().get(islandIndex);
         List<PieceColor> colorList = message.getColorList();
 
         /*if (inputController.checkIsInArchipelago(islandIndex) &&
@@ -113,6 +115,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
          */
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
+                ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setCardPlayed(true);
                 goBackToPrevPhase();
             } catch (InsufficientCoinException e) {
                 Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
