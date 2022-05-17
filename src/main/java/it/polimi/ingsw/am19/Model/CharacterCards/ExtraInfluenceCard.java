@@ -24,7 +24,7 @@ public class ExtraInfluenceCard extends AbstractCharacterCard {
      * @param match a reference to the match
      */
     public ExtraInfluenceCard(AbstractMatch match) {
-        super(Character.ARALDO);
+        super(Character.HERALD);
         this.islandManager = match.getIslandManager();
     }
 

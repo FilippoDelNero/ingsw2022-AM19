@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
@@ -82,6 +83,13 @@ public interface View {
     int askCloud(List<Integer> cloudAvailable);
 
     /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param characterOptions the character cards present in this expert match
+     * @return the character card choosen by the user or null if they chose not to play a card
+     */
+    Character askPlayCharacter(List<AbstractCharacterCard> characterOptions);
+
+    /**
      * method used to display a generic message (error messages as well) to the user
      * @param toPrint the content that needs to be print
      */
@@ -92,6 +100,4 @@ public interface View {
      * @param nickname the nickname of the player who owns the view
      */
     void printView(String nickname);
-
-     void askPlayCharacter(List<AbstractCharacterCard> characterOptions);
 }

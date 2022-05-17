@@ -4,18 +4,18 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
  * Enum for the 12 characters card, with price and a description of the effect that they cause
  */
 public enum Character {
-    MONACO(1,"Prendi 1 studente dalla carta e piazzalo su un'isola a tua scelta. Poi, pesca 1 studente dal sacchetto e rimettilo su questa carta",true,true,false),
-    CONTADINO(2, "Durante questo turno, prendi il controllo dei Professori anche se nella tua sala hai lo stesso numero di Studenti del giocatore che li controlla in quel momento",false,false,false),
-    ARALDO(3,"Scegli un'isola e calcola la maggioranza come se Madre Natura avesse terminato il suo movimento lì. In questo turno Madre Natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata",false, true,false),
-    POSTINO_MAGICO(1,"Puoi muovere Madre Natura fino a 2 Isole addizionali rispetto a quanto indicato sulla carta Assistente che hai giocato.", false, false, false),
-    NONNA_ERBE(2,"Piazza una tessera Divieto su un'Isola a tua scelta. La prima volta che Madre Natura termina il suo movimento lì, rimettete la tessera Divieto sulla carta SENZA calcolare l'influenza su quell'Isola né piazzare Torri.",false,true,false),
-    CENTAURO(3,"Durante il conteggio dell'influenza su un'isola (o su un gruppo di Isole), le Torri presenti non vengono calcolate.",false,false,false),
-    GIULLARE(1,"Puoi prendere fino a 3 Studenti da questa carta e scambiarli con altrettanti Studenti presenti nel tuo Ingresso.",false,false,true),
-    CAVALIERE(2,"In questo turno, durante il calcolo dell'influenza hai 2 punti di influenza addizionali.",false,false,false),
-    FUNGARO(3,"Scegli un colore di Studente; in questo turno, durante il calcolo dell'influenza quel colore non fornisce influenza.",true,false,true),
-    MENESTRELLO(1,"Puoi scambiare fra loro fino a 2 Studenti presenti nella tua Sala e nel tuo Ingresso.",false,false,true),
-    PRINCIPESSA_VIZIATA(2,"Prendi 1 Studente da questa carta e piazzalo nella tua Sala. Poi pesca un nuovo Studente dal sacchetto e posizionalo su questa carta.",true,false,false),
-    LADRO(3,"Scegli un colore di Studente; ogni giocatore (incluso te) deve rimettere nel sacchetto 3 Studenti di quel colore presenti nella sua Sala. Chi avesse meno di 3 Studenti di quel colore, rimetterà tutti quelli che ha.",true,false,false);
+    MONK(1,"Take 1 student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card.",true,true,false),
+    FARMER(2, "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.",false,false,false),
+    HERALD(3,"Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends hre movement will also be resolved.",false, true,false),
+    MAGIC_MAILMAN(1,"You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.", false, false, false),
+    GRANNY(2,"Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that island, or place any Towers.",false,true,false),
+    CENTAUR(3,"When resolving a Conquering on an Island, Towers do not count towards influence.",false,false,false),
+    JESTER(1,"You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.",false,false,true),
+    KNIGHT(2,"During the influence calculation this turn, you count as having 2 more influence.",false,false,false),
+    MUSHROOM_HUNTER(3,"Choose a color of Student; during the influence calculation this turn, that color adds no influence.",true,false,true),
+    MINSTREL(1,"You may exchange up to 2 Students between your Entrance and your Dining Room.",false,false,true),
+    PRINCESS(2,"Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.",true,false,false),
+    THIEF(3,"Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.",true,false,false);
 
     public int getPrice() {
         return price;
