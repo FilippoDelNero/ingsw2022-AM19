@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class ExtraInfluenceCard extends AbstractCharacterCard {
     public void activateEffect(Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         super.activateEffect(island, color,pieceColorList);
         this.islandManager.calculateInfluence(island);
+        this.islandManager.notifyObservers(Notification.UPDATE_ISLANDS);
         this.active = false;
     }
 
