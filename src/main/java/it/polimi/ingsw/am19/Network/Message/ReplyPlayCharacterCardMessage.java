@@ -8,14 +8,14 @@ import it.polimi.ingsw.am19.Model.CharacterCards.Character;
  * Contains the Card to use
  */
 public class ReplyPlayCharacterCardMessage extends Message {
-    private final AbstractCharacterCard cardToUse;
+    private final Character cardToUse;
 
-    public ReplyPlayCharacterCardMessage(String nickname, AbstractCharacterCard cardToUse) {
+    public ReplyPlayCharacterCardMessage(String nickname, Character cardToUse) {
         super(nickname, MessageType.PLAY_CHARACTER_CARD);
         this.cardToUse = cardToUse;
     }
 
-    public AbstractCharacterCard getCardToUse() {
+    public Character getCardToUse() {
         return cardToUse;
     }
 

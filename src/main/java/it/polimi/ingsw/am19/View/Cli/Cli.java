@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View.Cli;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -237,6 +238,37 @@ public class Cli implements View {
             }
         } while(!cloudAvailable.contains(cloudChosen));
         return cloudChosen; //Arrays on the server side are from 0, to the user we present data starting from 1
+    }
+
+    /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param characterOptions the character cards present in this expert match
+     * @return the character card choosen by the user or null if they chose not to play a card
+     */
+    @Override
+    public Character askPlayCharacter(List<Character> characterOptions) {
+        Character chosenCardEnum = null;
+        printer.println("Options:");
+        for (Character card : characterOptions)
+            printer.println(card + ": price:" + card.getPrice() + ", description: " + card.getDescription());
+        printer.println("Do you want to play any character card?[e.g. NO or MONK]");
+        String input = reader.nextLine().toLowerCase();
+        switch(input) {
+            case "monk" -> chosenCardEnum = Character.MONK;
+            case "farmer" -> chosenCardEnum = Character.FARMER;
+            case "herald" -> chosenCardEnum = Character.HERALD;
+            case "mailman", "magic" -> chosenCardEnum = Character.MAGIC_MAILMAN;
+            case "granny" -> chosenCardEnum = Character.GRANNY;
+            case "centaur" -> chosenCardEnum = Character.CENTAUR;
+            case "jester" -> chosenCardEnum = Character.JESTER;
+            case "knight" -> chosenCardEnum = Character.KNIGHT;
+            case "mushroom", "hunter" -> chosenCardEnum = Character.MUSHROOM_HUNTER;
+            case "minstrel" -> chosenCardEnum = Character.MINSTREL;
+            case "princess" -> chosenCardEnum = Character.PRINCESS;
+            case "thief" -> chosenCardEnum = Character.THIEF;
+            default -> chosenCardEnum = null;
+        }
+        return chosenCardEnum;
     }
 
     /**

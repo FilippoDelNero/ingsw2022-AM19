@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Network.Client;
 
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -67,6 +68,8 @@ public class ClientSideController {
             case ENTRANCE_MOVE -> askEntranceMove();
             case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
+            case END_MATCH_MESSAGE -> endMatch((EndMatchMessage) msg);
+            case ASK_CHARACTER_CARD -> askPlayCharacter((AskPlayCharacterCardMessage)msg);
         }
     }
 
@@ -196,6 +199,24 @@ public class ClientSideController {
     }
 
     /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
+     */
+    private void askPlayCharacter(AskPlayCharacterCardMessage msg){
+        Character chosenCardEnum = view.askPlayCharacter(msg.getAvailableCharacterCards());
+        myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
+    }
+
+    /**
+     * Method used to display the winner and close the client connection
+     * @param msg the EndMatchMessage sent by the server
+     */
+    private void endMatch(EndMatchMessage msg) {
+        view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        myClient.disconnect();
+    }
+
+    /**
      * method to update the clouds on the cache
      * @param msg the UpdateCloudMessage sent by the server
      */
@@ -241,7 +262,7 @@ public class ClientSideController {
      * @param msg the ErrorMessage sent by the server
      */
     private void error(ErrorMessage msg) {
-        view.genericPrint(msg.toString());
+        view.genericPrint("\033[31;1;4m" + msg.toString() + "\033[0m");
         communicate(previousMsg);
     }
 }

@@ -41,7 +41,7 @@ public class ThreeStudentToEntryCard extends AbstractCharacterCard implements Mo
     private int currNumOfStudents;
 
     public ThreeStudentToEntryCard(AbstractMatch match) {
-        super(Character.GIULLARE);
+        super(Character.JESTER);
         this.match = match;
         this.bag = match.getBag();
         this.students= new HashMap<>();

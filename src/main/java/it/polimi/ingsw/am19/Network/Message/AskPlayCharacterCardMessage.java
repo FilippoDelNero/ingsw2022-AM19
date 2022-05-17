@@ -1,18 +1,18 @@
 package it.polimi.ingsw.am19.Network.Message;
 
-import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
 
 public class AskPlayCharacterCardMessage extends Message {
-    private final List<AbstractCharacterCard> availableCharacterCards;
+    private final List<Character> availableCharacterCards;
 
-    public AskPlayCharacterCardMessage(List<AbstractCharacterCard> availableCharacterCards) {
+    public AskPlayCharacterCardMessage(List<Character> availableCharacterCards) {
         super("server", MessageType.ASK_CHARACTER_CARD);
         this.availableCharacterCards = availableCharacterCards;
     }
 
-    public List<AbstractCharacterCard> getAvailableCharacterCards() {
+    public List<Character> getAvailableCharacterCards() {
         return availableCharacterCards;
     }
 

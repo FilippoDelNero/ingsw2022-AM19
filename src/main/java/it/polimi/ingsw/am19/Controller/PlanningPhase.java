@@ -30,6 +30,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                     model.useHelperCard(helperCard);
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
                     matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice. Please retry\n"));
+                    return;
                 }
                 matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
                         helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n"));
@@ -48,13 +49,13 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         }
     }
 
-    @Override
     public List<String> getPlayersOrder() {
         return playersOrder;
     }
 
     @Override
     public void initPhase(){
+        matchController.getRoundsManager().incrementPhaseNum();
         matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n"));
         matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder));
         try {

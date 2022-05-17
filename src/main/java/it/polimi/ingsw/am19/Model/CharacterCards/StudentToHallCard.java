@@ -51,7 +51,7 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
     private int currNumOfStudents;
 
     public StudentToHallCard(AbstractMatch match) {
-        super(Character.PRINCIPESSA_VIZIATA);
+        super(Character.PRINCESS);
         this.match = match;
         this.currentPlayer = null;
         this.gameboard = null;

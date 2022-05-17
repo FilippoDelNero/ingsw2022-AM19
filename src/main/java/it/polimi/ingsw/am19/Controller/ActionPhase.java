@@ -3,11 +3,14 @@ package it.polimi.ingsw.am19.Controller;
 import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
+import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -19,13 +22,15 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private final int MAX_NUM_STUDENTS;
     private ActionPhaseSteps currStep;
     private ActionPhaseSteps prevStep;
+    private boolean cardPlayed;
 
     public ActionPhase(List<String> playersOrder,MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator = playersOrder.listIterator();
-        this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
+        this.prevStep = ActionPhaseSteps.MOVE_STUD;
         this.currStep = ActionPhaseSteps.MOVE_STUD;
+        this.MAX_NUM_STUDENTS = matchController.getModel().getClouds().get(0).getNumOfHostableStudents();
     }
 
     @Override
@@ -34,7 +39,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
             switch (msg.getMessageType()) {
                 case ENTRANCE_TO_DINING_ROOM -> {
                     ReplyEntranceToDiningRoomMessage message = (ReplyEntranceToDiningRoomMessage) msg;
-                    entranceToDiningRooom(message);
+                    entranceToDiningRoom(message);
                 }
 
                 case ENTRANCE_TO_ISLAND -> {
@@ -54,17 +59,38 @@ public class ActionPhase extends AbstractPhase implements Phase{
         }
     }
 
-    @Override
     public List<String> getPlayersOrder() {
         return this.playersOrder;
     }
 
+    public void setCardPlayed(boolean cardPlayed) {
+        this.cardPlayed = cardPlayed;
+    }
+
+    public ActionPhaseSteps getPrevStep() {
+        return prevStep;
+    }
+
+    public ActionPhaseSteps getCurrStep() {
+        return currStep;
+    }
+
     @Override
     public void performPhase(String currPlayer) {
+        this.cardPlayed = false;
         matchController.setCurrPlayer(currPlayer);
         matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
-        matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
+        if (model instanceof ExpertMatchDecorator && !cardPlayed){
+            matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+            List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                            .map(AbstractCharacterCard::getId)
+                                    .toList();
+            matchController.sendMessage(matchController.getCurrPlayer(),
+                    new AskPlayCharacterCardMessage(charactersAvailable));
+        }else{
+            matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
+        }
     }
 
     @Override
@@ -74,7 +100,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
         performPhase(currPlayer);
     }
 
-    private void entranceToDiningRooom(ReplyEntranceToDiningRoomMessage message){
+    private void entranceToDiningRoom(ReplyEntranceToDiningRoomMessage message){
         PieceColor color = message.getColorChosen();
         //if (inputController.checkIsInEntrance(color)) {
         try {
@@ -88,10 +114,20 @@ public class ActionPhase extends AbstractPhase implements Phase{
         if (numOfMovedStudents < MAX_NUM_STUDENTS)
             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
         else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+            changeActionStep();
+            if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                        .map(AbstractCharacterCard::getId)
+                        .toList();
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new AskPlayCharacterCardMessage(charactersAvailable));
+            }else{
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+            }
         }
-        //}
     }
+        //}
 
     private void entranceToIsland(ReplyEntranceToIslandMessage message){
         PieceColor color = message.getColorChosen();
@@ -111,7 +147,17 @@ public class ActionPhase extends AbstractPhase implements Phase{
             if (numOfMovedStudents < MAX_NUM_STUDENTS)
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
             else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
-                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+                changeActionStep();
+                if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                    matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                    List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                            .map(AbstractCharacterCard::getId)
+                            .toList();
+                    matchController.sendMessage(matchController.getCurrPlayer(),
+                            new AskPlayCharacterCardMessage(charactersAvailable));
+                }else{
+                    matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+                }
             }
         }
     }
@@ -120,11 +166,21 @@ public class ActionPhase extends AbstractPhase implements Phase{
         numOfMovedStudents = 0;
         try {
             model.moveMotherNature(message.getStep());
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
+            changeActionStep();
+            if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
+                        .map(AbstractCharacterCard::getId)
+                        .toList();
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new AskPlayCharacterCardMessage(charactersAvailable));
+            }else{
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
+            }
         } catch (IllegalNumOfStepsException e) {
             e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","Yuo can't move mother nature of " + message.getStep() + " steps. Please retry \n"));
+                    new ErrorMessage("server","You can't move mother nature of " + message.getStep() + " steps. Please retry\n"));
         }
     }
 
@@ -169,12 +225,9 @@ public class ActionPhase extends AbstractPhase implements Phase{
     private void changeActionStep() {
         this.prevStep = currStep;
         switch (currStep){
-            case MOVE_STUD -> {
-            }
-            case MOVE_MN -> {
-            }
-            case TAKE_STUD -> {
-            }
+            case MOVE_STUD -> currStep = ActionPhaseSteps.MOVE_MN;
+            case MOVE_MN -> currStep = ActionPhaseSteps.TAKE_STUD;
+            case TAKE_STUD -> {}
         }
     }
 }

@@ -22,4 +22,6 @@ module it.polimi.ingsw.am19 {
     exports it.polimi.ingsw.am19.Model.BoardManagement;
     exports it.polimi.ingsw.am19.Model.Utilities;
     exports it.polimi.ingsw.am19.Model.CharacterCards;
+    exports it.polimi.ingsw.am19.Model.InfluenceStrategies;
+    exports it.polimi.ingsw.am19.Model.Exceptions;
 }

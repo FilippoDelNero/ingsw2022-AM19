@@ -38,7 +38,7 @@ public class EntranceToDiningRoomCard extends AbstractCharacterCard{
      * @param match a reference to the match
      */
     public EntranceToDiningRoomCard(AbstractMatch match) {
-        super(Character.MENESTRELLO);
+        super(Character.MINSTREL);
         this.m = match;
         this.standardStrategy = new StandardMove();
         this.reverseStrategy = new ReverseMove();

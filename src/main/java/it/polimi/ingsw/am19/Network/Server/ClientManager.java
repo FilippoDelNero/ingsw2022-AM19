@@ -170,4 +170,8 @@ public class ClientManager implements Runnable {
         }
     }
 
+    public boolean isClosed() {
+        return Thread.currentThread().isInterrupted();
+    }
+
 }

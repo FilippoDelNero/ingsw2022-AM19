@@ -33,7 +33,7 @@ public class ThreeToBagCard extends AbstractCharacterCard {
      * @param match references to the match. Is used to save the specific parameter the card needs
      */
     public ThreeToBagCard(AbstractMatch match) {
-        super(Character.LADRO);
+        super(Character.THIEF);
         this.gameBoards = match.getGameBoards();
         this.bag=match.getBag();
     }

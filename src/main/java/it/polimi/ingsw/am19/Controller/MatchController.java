@@ -150,7 +150,7 @@ public class MatchController implements Observer{
                 inProgress();
             }
             case IN_PROGRESS -> currState = StateType.END_MATCH;
-            case END_MATCH -> endMatch();
+            case END_MATCH -> System.out.println("error"); //TODO DA TOGLIERE
         }
     }
 
@@ -169,7 +169,9 @@ public class MatchController implements Observer{
         sendBroadcastMessage(new GenericMessage("You will be disconnected due to internal errors"));
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
-                cm.close();
+                while(cm.isClosed()) {
+                    cm.close();
+                }
         }
     }
 
@@ -251,6 +253,7 @@ public class MatchController implements Observer{
                 .map(Player::getNickname)
                 .toList();
         sendBroadcastMessage(new EndMatchMessage(winners));
+        disconnectAll();//TODO verificare se ha effetto
     }
 
     /**
@@ -280,7 +283,10 @@ public class MatchController implements Observer{
 
             case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
                     new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
-            case END_MATCH -> changeState();
+            case END_MATCH -> {
+                endMatch();
+                changeState();
+            }
         }
     }
 

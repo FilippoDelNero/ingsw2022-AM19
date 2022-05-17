@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 public class RoundsManager {
     private Phase currPhase;
+    private Phase prevPhase;
     private int roundNum;
     private final int MAX_ROUND_NUM = 10;
 
@@ -25,10 +26,28 @@ public class RoundsManager {
     }
 
     public void changePhase(Phase nextPhase) {
+        this.prevPhase = currPhase;
         this.currPhase = nextPhase;
-        if (this.currPhase instanceof PlanningPhase){
-          roundNum++;
-        }
+    }
+
+    public Phase getPrevPhase() {
+        return prevPhase;
+    }
+
+    public void setCurrPhase(Phase currPhase) {
+        this.currPhase = currPhase;
+    }
+
+    public void setPrevPhase(Phase prevPhase) {
+        this.prevPhase = prevPhase;
+    }
+
+    public void setRoundNum(int roundNum) {
+        this.roundNum = roundNum;
+    }
+
+    public void incrementPhaseNum(){
+        roundNum++;
     }
 
     public Phase getCurrPhase() {
