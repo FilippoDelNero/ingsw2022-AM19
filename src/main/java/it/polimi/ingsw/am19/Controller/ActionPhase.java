@@ -178,7 +178,6 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
             }
         } catch (IllegalNumOfStepsException e) {
-            e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),
                     new ErrorMessage("server","You can't move mother nature of " + message.getStep() + " steps. Please retry\n"));
         }
@@ -203,6 +202,8 @@ public class ActionPhase extends AbstractPhase implements Phase{
         if (iterator.hasNext()) {
             String nextPlayer = iterator.next();
             matchController.setCurrPlayer(nextPlayer);
+            cardPlayed = false;
+            currStep = ActionPhaseSteps.MOVE_STUD;
             performPhase(nextPlayer);
         } else {
 
