@@ -204,6 +204,7 @@ public class ClientSideController {
      * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
      */
     private void askPlayCharacter(AskPlayCharacterCardMessage msg){
+        view.printView(nickname);
         Character chosenCardEnum = view.askPlayCharacter(msg.getAvailableCharacterCards());
         myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
     }

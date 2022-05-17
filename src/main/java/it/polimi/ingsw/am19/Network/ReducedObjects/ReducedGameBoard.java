@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Network.ReducedObjects;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,15 +20,20 @@ public record ReducedGameBoard(String playerNickname,
                                HashMap<PieceColor, Integer> entrance,
                                HashMap<PieceColor, Integer> diningRoom,
                                ArrayList<PieceColor> professors,
-                               int numOfTowers) implements Serializable {
+                               int numOfTowers,
+                               TowerColor TowerColor,
+                               Integer coins) implements Serializable {
 
     @Override
     public String toString() {
+        String returnString;
+
         String entranceString = "Entrance: ";
         for(PieceColor p : PieceColor.values()) {
             if(entrance.get(p) != 0)
                 entranceString = entranceString.concat(p + "x" + entrance.get(p) + " ");
         }
+
         String diningString = "Dining Room: ";
         for(PieceColor p : PieceColor.values()) {
             if(diningRoom.get(p) != 0)
@@ -38,10 +44,18 @@ public record ReducedGameBoard(String playerNickname,
         if(diningString.equals("Dining Room: "))
             diningString = diningString.concat("empty");
 
-        return "Gameboard of \033[48;1;7m" + playerNickname.toUpperCase() + "\u001B[0m:  " +
+        returnString = "Gameboard of \033[48;1;7m" + playerNickname.toUpperCase() + "\u001B[0m:  " +
                 entranceString + '\n' +
                 diningString + '\n' +
-                "Towers remaining: " + numOfTowers;
+                "Towers remaining: [" + TowerColor + "] " + numOfTowers ;
+
+        if(coins != null) {
+            return returnString + '\n' +
+                    "coins: " + coins;
+        }
+        else {
+            return returnString;
+        }
     }
 
     @Override

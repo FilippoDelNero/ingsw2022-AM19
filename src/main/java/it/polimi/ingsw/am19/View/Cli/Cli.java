@@ -237,7 +237,7 @@ public class Cli implements View {
         String input;
         do {
             //server sends the list of available clouds starting from index 0, but we need to display it starting from 1
-            printer.println("Chose a cloud from " + cloudAvailable.stream()
+            printer.println("Choose a cloud from " + cloudAvailable.stream()
                     .map(index -> index + 1).toList());
             input = reader.nextLine();
             try {
@@ -256,26 +256,32 @@ public class Cli implements View {
      */
     @Override
     public Character askPlayCharacter(List<Character> characterOptions) {
+        boolean validInput;
         Character chosenCardEnum = null;
         printer.println("Options:");
         for (Character card : characterOptions)
             printer.println(card + ": price:" + card.getPrice() + ", description: " + card.getDescription());
-        printer.println("Do you want to play any character card?[e.g. NO or MONK]");
-        String input = reader.nextLine().toLowerCase();
-        switch(input) {
-            case "monk" -> chosenCardEnum = Character.MONK;
-            case "farmer" -> chosenCardEnum = Character.FARMER;
-            case "herald" -> chosenCardEnum = Character.HERALD;
-            case "mailman", "magic" -> chosenCardEnum = Character.MAGIC_MAILMAN;
-            case "granny" -> chosenCardEnum = Character.GRANNY;
-            case "centaur" -> chosenCardEnum = Character.CENTAUR;
-            case "jester" -> chosenCardEnum = Character.JESTER;
-            case "knight" -> chosenCardEnum = Character.KNIGHT;
-            case "mushroom", "hunter" -> chosenCardEnum = Character.MUSHROOM_HUNTER;
-            case "minstrel" -> chosenCardEnum = Character.MINSTREL;
-            case "princess" -> chosenCardEnum = Character.PRINCESS;
-            case "thief" -> chosenCardEnum = Character.THIEF;
-        }
+        do {
+            validInput = true;
+            printer.println("Do you want to play any character card?[e.g. NO or MONK]");
+            String input = reader.nextLine().toLowerCase();
+            switch(input) {
+                case "monk" -> chosenCardEnum = Character.MONK;
+                case "farmer" -> chosenCardEnum = Character.FARMER;
+                case "herald" -> chosenCardEnum = Character.HERALD;
+                case "mailman", "magic", "magic mailman"-> chosenCardEnum = Character.MAGIC_MAILMAN;
+                case "granny" -> chosenCardEnum = Character.GRANNY;
+                case "centaur" -> chosenCardEnum = Character.CENTAUR;
+                case "jester" -> chosenCardEnum = Character.JESTER;
+                case "knight" -> chosenCardEnum = Character.KNIGHT;
+                case "mushroom", "hunter", "mushroom hunter"-> chosenCardEnum = Character.MUSHROOM_HUNTER;
+                case "minstrel" -> chosenCardEnum = Character.MINSTREL;
+                case "princess" -> chosenCardEnum = Character.PRINCESS;
+                case "thief" -> chosenCardEnum = Character.THIEF;
+                case "no" -> {}
+                default -> validInput = false;
+            }
+        } while(!validInput);
         return chosenCardEnum;
     }
 
@@ -390,7 +396,7 @@ public class Cli implements View {
         }
 
         if(cache.getIslands() != null) {
-            printer.println("The Eriantys' Archipelago: ");
+            printer.println("The Archipelago: ");
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }

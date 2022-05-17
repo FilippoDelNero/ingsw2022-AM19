@@ -41,7 +41,9 @@ public class Reducer {
         HashMap<PieceColor,Integer> dining = gb.getDiningRoom();
         ArrayList<PieceColor> profs = gb.getProfessor().getProfessorsByPlayer(gb.getPlayer());
         int towers = gb.getNumOfTowers();
-        return new ReducedGameBoard(nick, entrance, dining, profs, towers);
+        TowerColor towerColor = gb.getPlayer().getTowerColor();
+        Integer coins = gb.getPlayer().getCoins();
+        return new ReducedGameBoard(nick, entrance, dining, profs, towers, towerColor, coins);
     }
 
     /**

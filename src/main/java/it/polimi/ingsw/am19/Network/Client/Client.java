@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Network.Message.Message;
-import it.polimi.ingsw.am19.Network.Message.MessageType;
 import it.polimi.ingsw.am19.Network.Message.PingMessage;
 import it.polimi.ingsw.am19.View.View;
 
@@ -43,11 +42,17 @@ public class Client {
     private final ScheduledExecutorService scheduledThread;
 
     /**
+     * boolean used to let the client do two attempts at reading or writing an object
+     */
+    private boolean tryAgain;
+
+    /**
      * class constructor
      * @param hostName the ip address of the server
      * @param portNumber the port number at which the client should connect to
      */
     public Client(String hostName, int portNumber, View view) {
+        tryAgain = true;
         myController = new ClientSideController(this, view);
         thread = Executors.newSingleThreadExecutor();
         scheduledThread = Executors.newSingleThreadScheduledExecutor();
@@ -71,8 +76,14 @@ public class Client {
             output.writeObject(msg);
             output.reset();
         } catch (IOException e) {
-            disconnect();
+            if(tryAgain) {
+                tryAgain = false;
+                sendMessage(msg);
+            }
+            else
+                disconnect();
         }
+        tryAgain = true;
     }
 
     /**
@@ -86,7 +97,12 @@ public class Client {
                         try {
                             msg = (Message) input.readObject();
                             myController.communicate(msg);
-                        } catch (IOException | ClassNotFoundException e) {
+                        } catch (IOException e) {
+                            if(tryAgain)
+                                tryAgain = false;
+                            else
+                                disconnect();
+                        } catch (ClassNotFoundException e) {
                             disconnect();
                         }
                     }
