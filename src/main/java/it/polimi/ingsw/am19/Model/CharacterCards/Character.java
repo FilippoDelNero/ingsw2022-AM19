@@ -12,7 +12,7 @@ public enum Character {
     CENTAUR(3,"When resolving a Conquering on an Island, Towers do not count towards influence.",false,false,false),
     JESTER(1,"You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.",false,false,true),
     KNIGHT(2,"During the influence calculation this turn, you count as having 2 more influence.",false,false,false),
-    MUSHROOM_HUNTER(3,"Choose a color of Student; during the influence calculation this turn, that color adds no influence.",true,false,true),
+    MUSHROOM_HUNTER(3,"Choose a color of Student; during the influence calculation this turn, that color adds no influence.",true,false,false),
     MINSTREL(1,"You may exchange up to 2 Students between your Entrance and your Dining Room.",false,false,true),
     PRINCESS(2,"Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.",true,false,false),
     THIEF(3,"Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.",true,false,false);
