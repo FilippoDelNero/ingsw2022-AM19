@@ -65,6 +65,14 @@ public class ActionPhase extends AbstractPhase implements Phase{
         this.cardPlayed = cardPlayed;
     }
 
+    public ActionPhaseSteps getPrevStep() {
+        return prevStep;
+    }
+
+    public ActionPhaseSteps getCurrStep() {
+        return currStep;
+    }
+
     @Override
     public void performPhase(String currPlayer) {
         this.cardPlayed = false;
@@ -101,9 +109,10 @@ public class ActionPhase extends AbstractPhase implements Phase{
         if (numOfMovedStudents < MAX_NUM_STUDENTS)
             matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
         else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
+            changeActionStep();
             matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
         }
-        }
+    }
         //}
 
     private void entranceToIsland(ReplyEntranceToIslandMessage message){
@@ -124,7 +133,14 @@ public class ActionPhase extends AbstractPhase implements Phase{
             if (numOfMovedStudents < MAX_NUM_STUDENTS)
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
             else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
-                matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+                changeActionStep();
+                if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                    matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                    matchController.sendMessage(matchController.getCurrPlayer(),
+                            new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+                }else{
+                    matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
+                }
             }
         }
     }
@@ -133,7 +149,14 @@ public class ActionPhase extends AbstractPhase implements Phase{
         numOfMovedStudents = 0;
         try {
             model.moveMotherNature(message.getStep());
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
+            changeActionStep();
+            if (model instanceof ExpertMatchDecorator && !cardPlayed){
+                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new AskPlayCharacterCardMessage(((ExpertMatchDecorator) model).getCharacterCards()));
+            }else{
+                matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
+            }
         } catch (IllegalNumOfStepsException e) {
             e.printStackTrace();
             matchController.sendMessage(matchController.getCurrPlayer(),

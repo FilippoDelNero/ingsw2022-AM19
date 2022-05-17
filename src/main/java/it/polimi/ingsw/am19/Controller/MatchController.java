@@ -240,6 +240,7 @@ public class MatchController implements Observer{
                 .map(Player::getNickname)
                 .toList();
         sendBroadcastMessage(new EndMatchMessage(winners));
+        disconnectAll();//TODO verificare se ha effetto
     }
 
     /**

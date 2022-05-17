@@ -25,38 +25,12 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             switch (msg.getMessageType()){
                 case PLAY_CHARACTER_CARD -> {
                     ReplyPlayCharacterCardMessage message = (ReplyPlayCharacterCardMessage) msg;
-                    this.card = message.getCardToUse();
-                    if (card == null){ //the client doesn't want to play a card. Let's go back to action phase
-                        Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
-                        matchController.getRoundsManager().changePhase(prevPhase);
-                    }
-                    else{
-                        if(inputController.checkIsCharacterAvailable(card) &&
-                                inputController.checkAffordability(card))
-                            askParameters(card);
-                    }
+                    playCharacterCard(message);
                 }
 
                 case REPLY_CHARACTER_PARAMETER -> {
                     ReplyCharacterParameterMessage message = (ReplyCharacterParameterMessage) msg;
-                    PieceColor color = message.getColor();
-                    int islandIndex = message.getIsland();
-                    Island island = model.getIslandManager().getIslands().get(islandIndex);
-                    List<PieceColor> colorList = message.getColorList();
-                    if (inputController.checkIsInArchipelago(islandIndex) &&
-                            inputController.checkValidColor(color) &&
-                            inputController.checkValidColor(colorList)) {
-                        try {
-                            ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
-                            Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
-                            matchController.getRoundsManager().changePhase(prevPhase);
-                        } catch (InsufficientCoinException e) {
-                            Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
-                            matchController.getRoundsManager().changePhase(prevPhase);
-                        } catch (NoSuchColorException | TooManyStudentsException e) {
-                            matchController.sendMessage(currPlayer,new ErrorMessage("server","Invalid parameters"));
-                        }
-                    }
+                    activateCardEffect(message);
                 }
             }
         }
@@ -82,5 +56,54 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             requireListColor = true;
         matchController.sendMessage(currPlayer,
                 new AskCharacterParameterMessage(requireColor,requireIsland, requireListColor));
+    }
+
+
+    private void playCharacterCard(ReplyPlayCharacterCardMessage message){
+        this.card = message.getCardToUse();
+        if (card == null)//the client doesn't want to play a card. Let's go back to action phase
+            goBackToPrevPhase();
+        else
+            askForParameters();
+    }
+
+    private void goBackToPrevPhase(){
+        Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
+        matchController.getRoundsManager().changePhase(prevPhase);
+        switch (((ActionPhase)prevPhase).getCurrStep()){
+            case MOVE_STUD ->
+                matchController.sendMessage(currPlayer,new AskEntranceMoveMessage());
+            case MOVE_MN ->
+                matchController.sendMessage(currPlayer,new AskMotherNatureStepMessage());
+            case TAKE_STUD ->
+                matchController.sendMessage(currPlayer, new AskCloudMessage(model.getNonEmptyClouds()));
+        }
+    }
+
+    private void askForParameters(){
+        if (inputController.checkIsCharacterAvailable(card) &&
+                inputController.checkAffordability(card))
+            askParameters(card);
+    }
+
+    private void activateCardEffect(ReplyCharacterParameterMessage message){
+        PieceColor color = message.getColor();
+        int islandIndex = message.getIsland();
+        Island island = model.getIslandManager().getIslands().get(islandIndex);
+        List<PieceColor> colorList = message.getColorList();
+        if (inputController.checkIsInArchipelago(islandIndex) &&
+                inputController.checkValidColor(color) &&
+                inputController.checkValidColor(colorList)) {
+            try {
+                ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
+                Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
+                matchController.getRoundsManager().changePhase(prevPhase);
+            } catch (InsufficientCoinException e) {
+                Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
+                matchController.getRoundsManager().changePhase(prevPhase);
+            } catch (NoSuchColorException | TooManyStudentsException e) {
+                matchController.sendMessage(currPlayer,new ErrorMessage("server","Invalid parameters"));
+            }
+        }
     }
 }
