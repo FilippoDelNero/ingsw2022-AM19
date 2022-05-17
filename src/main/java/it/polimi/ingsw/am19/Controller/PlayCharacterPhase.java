@@ -10,9 +10,7 @@ import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
-import java.util.Optional;
 
 public class PlayCharacterPhase extends AbstractPhase implements Phase{
     private final String currPlayer;
@@ -49,7 +47,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
 
     }
 
-    private void askParameters(AbstractCharacterCard card){
+    private void askParameters(){
         boolean requireColor = false, requireIsland = false, requireListColor = false;
         if (card.isRequiringIsland())
             requireIsland = true;
@@ -59,12 +57,13 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             requireListColor = true;
         matchController.sendMessage(currPlayer,
                 new AskCharacterParameterMessage(requireColor,requireIsland, requireListColor));
+        System.out.println("parameters sent");
     }
 
 
     private void playCharacterCard(ReplyPlayCharacterCardMessage message){
         //this.card = message.getCardToUse();
-        if (card == null)//the client doesn't want to play a card. Let's go back to action phase
+        if (message.getCardToUse() == null)//the client doesn't want to play a card. Let's go back to action phase
             goBackToPrevPhase();
         else{
             card = getCharacterById(message.getCardToUse());
@@ -88,28 +87,12 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
     private void askForParameters(){
         if (inputController.checkIsCharacterAvailable(card) &&
                 inputController.checkAffordability(card))
-            askParameters(card);
+            askParameters();
         else
             card = null;
     }
 
     private AbstractCharacterCard getCharacterById(Character id){
-        /*
-        switch (id){
-            case MONK -> card = new StudentToIslandCard(model.getWrappedMatch());
-            case FARMER -> new TakeProfessorCard(model.getWrappedMatch());
-            case HERALD -> new ExtraInfluenceCard(model.getWrappedMatch());
-            case MAGIC_MAILMAN -> new MotherNaturePlusTwoCard(model.getWrappedMatch());
-            case GRANNY -> new NoEntryTileCard(model.getWrappedMatch());
-            case CENTAUR -> new NoTowersInfluenceCard(model.getWrappedMatch());
-            case JESTER -> new ThreeStudentToEntryCard(model.getWrappedMatch());
-            case KNIGHT -> new PlusTwoInfluenceCard(model.getWrappedMatch());
-            case MUSHROOM_HUNTER ->  new NoColorInfluenceCard(model.getWrappedMatch());
-            case MINSTREL -> new EntranceToDiningRoomCard(model.getWrappedMatch());
-            case PRINCESS -> new StudentToHallCard(model.getWrappedMatch());
-            case THIEF -> new ThreeToBagCard(model.getWrappedMatch());
-        }
-         */
        for (AbstractCharacterCard characterCard : ((ExpertMatchDecorator)model).getCharacterCards()){
            if (characterCard.getId() == id)
                return characterCard;

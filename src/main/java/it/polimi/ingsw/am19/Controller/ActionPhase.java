@@ -202,6 +202,8 @@ public class ActionPhase extends AbstractPhase implements Phase{
         if (iterator.hasNext()) {
             String nextPlayer = iterator.next();
             matchController.setCurrPlayer(nextPlayer);
+            cardPlayed = false;
+            currStep = ActionPhaseSteps.MOVE_STUD;
             performPhase(nextPlayer);
         } else {
 
