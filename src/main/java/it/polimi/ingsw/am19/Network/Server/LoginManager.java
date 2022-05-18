@@ -1,12 +1,10 @@
 package it.polimi.ingsw.am19.Network.Server;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
-import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -68,12 +66,14 @@ public class LoginManager {
     /**
      * method used to log in a new player
      * @param clientToAdd the clientManager of the newly accepted player
+     * @return true if the client is added to the match, false otherwise
      */
-    public void login (ClientManager clientToAdd) {
+    public boolean login (ClientManager clientToAdd) {
         //if there is already a match in progress refuse all connection
         if(activePlayers == numOfPlayers){
             clientToAdd.sendMessage(new GenericMessage("Match already started. Please try later"));
-            clientToAdd.close();
+            clientToAdd.close(false);
+            return false;
         }
 
         //if the player connecting is the first one
@@ -107,6 +107,7 @@ public class LoginManager {
                     activePlayers++;
                 }
             }
+            return true;
         }
 
         //if the player is not the first one, but there is not a match en course
@@ -127,6 +128,7 @@ public class LoginManager {
                         " players. The match difficulty will be easy..."));
                 addPlayerToNewMatch(clientToAdd);
             }
+            return true;
         }
     }
 
@@ -215,7 +217,11 @@ public class LoginManager {
                 !availableWizardFamilies.contains(wizardFamily));
     }
 
+    /**
+     * method to send a message to the already connected client telling them to wait for other players
+     * @param clientToAdd the client currently served by the loginManager
+     */
     private void sendMessageOfWait(ClientManager clientToAdd) {
-        clientToAdd.sendMessage(new GenericMessage("waiting for others player to join...")); //Va bene?
+        clientToAdd.sendMessage(new GenericMessage("waiting for others player to join..."));
     }
 }

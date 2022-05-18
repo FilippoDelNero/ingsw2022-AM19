@@ -209,6 +209,10 @@ public class ClientSideController {
         myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
     }
 
+    /**
+     * method used to ask the user the parameters of the character card that they played
+     * @param msg the AskCharacterParameterMessage sent by server containing which parameter the played card will need
+     */
     private void askCharacterCardParameters(AskCharacterParameterMessage msg) {
         PieceColor color = null;
         Integer islandIndex = null;
@@ -227,7 +231,10 @@ public class ClientSideController {
      * @param msg the EndMatchMessage sent by the server
      */
     private void endMatch(EndMatchMessage msg) {
-        view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        if(msg.getWinners() != null)
+            view.genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        else
+            view.genericPrint("We are sorry, the match will interrupted due to a fatal error occurring");
         myClient.disconnect();
     }
 

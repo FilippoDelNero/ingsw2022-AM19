@@ -8,6 +8,8 @@ import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Utilities.Notification;
+
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +71,7 @@ public class NoEntryTileCard extends AbstractCharacterCard{
         if(numberOfNoEntryTiles > 0) {
             this.islandManager.setIslandInfluenceStrategy(island, strategy);
             numberOfNoEntryTiles--;
+            this.islandManager.notifyObservers(Notification.UPDATE_ISLANDS);
         }
         else {
             numberOfNoEntryTiles = 4;
@@ -79,6 +82,7 @@ public class NoEntryTileCard extends AbstractCharacterCard{
             if(numberOfNoEntryTiles > 0) {
                 this.islandManager.setIslandInfluenceStrategy(island, strategy);
                 numberOfNoEntryTiles--;
+                this.islandManager.notifyObservers(Notification.UPDATE_ISLANDS);
             }
         }
 

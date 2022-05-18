@@ -16,14 +16,21 @@ import java.util.Objects;
  */
 public record ReducedIsland(
         Map<PieceColor, Integer> numOfStudents,
-        TowerColor towerColor, boolean presenceOfMotherNature, int numOfIslands) implements Serializable {
+        TowerColor towerColor,
+        boolean presenceOfMotherNature,
+        int numOfIslands,
+        boolean noEntryTile) implements Serializable {
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReducedIsland that = (ReducedIsland) o;
-        return presenceOfMotherNature == that.presenceOfMotherNature && numOfIslands == that.numOfIslands && Objects.equals(numOfStudents, that.numOfStudents) && towerColor == that.towerColor;
+        return presenceOfMotherNature == that.presenceOfMotherNature &&
+                numOfIslands == that.numOfIslands &&
+                Objects.equals(numOfStudents, that.numOfStudents) &&
+                towerColor == that.towerColor &&
+                noEntryTile == that.noEntryTile;
     }
 
     @Override
@@ -33,7 +40,11 @@ public record ReducedIsland(
 
     @Override
     public String toString() { //TODO FAR CAPIRE DA QUANTE ISOLE è COMPOSTO IL GRUPPO (ICONCINA?)
-        String string = "";
+        String string = "[";
+        for(int i = 0; i < numOfIslands; i++) {
+            string = string.concat("*");
+        }
+        string = string.concat("] ");
         for(PieceColor p : PieceColor.values()) {
             if(numOfStudents.get(p) != 0)
                 string = string.concat(p + "x" + numOfStudents.get(p) + " ");
@@ -42,7 +53,8 @@ public record ReducedIsland(
             string = string.concat("-- " + towerColor);
         if(presenceOfMotherNature)
             string = string.concat(" -- MotherNature");
-
+        if(noEntryTile)
+            string = string.concat(" -- No Entry");
         return string;
     }
 }

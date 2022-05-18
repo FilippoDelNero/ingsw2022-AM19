@@ -51,6 +51,9 @@ public class MatchController implements Observer{
      */
     private InputController inputController;
 
+    /**
+     * the reducer is used to create specific objects that will be sent to the client
+     */
     private final Reducer reducer;
 
     public MatchController(){
@@ -170,7 +173,7 @@ public class MatchController implements Observer{
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
                 while(cm.isClosed()) {
-                    cm.close();
+                    cm.close(false);
                 }
         }
     }

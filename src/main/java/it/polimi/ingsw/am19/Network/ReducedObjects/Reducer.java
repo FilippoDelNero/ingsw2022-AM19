@@ -3,6 +3,7 @@ package it.polimi.ingsw.am19.Network.ReducedObjects;
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
+import it.polimi.ingsw.am19.Model.InfluenceStrategies.NoEntryTileInfluence;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 
@@ -69,7 +70,8 @@ public class Reducer {
         TowerColor towerColor = isle.getTowerColor();
         boolean presence = isle.isMotherNaturePresent();
         int num = isle.getNumOfIslands();
-        return new ReducedIsland(students, towerColor, presence, num);
+        boolean noEntryTile = isle.getInfluenceStrategy() instanceof NoEntryTileInfluence;
+        return new ReducedIsland(students, towerColor, presence, num, noEntryTile);
     }
 
     /**

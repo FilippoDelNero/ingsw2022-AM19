@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.Network.Server;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
+import it.polimi.ingsw.am19.Network.Message.EndMatchMessage;
 import it.polimi.ingsw.am19.Network.Message.Message;
 
 import java.io.IOException;
@@ -21,13 +22,16 @@ public class Server {
     private final ExecutorService pool;
 
     /** an object used to handle the "login" phase of each player*/
-    private final LoginManager loginManager;
+    private LoginManager loginManager;
 
     /** keeps a reference to the MatchController class */
-    private final MatchController matchController;
+    private MatchController matchController;
 
     /** a list of all clientManagers created by the server*/
-    private final List<ClientManager> managers;
+    private List<ClientManager> managers;
+
+    /** object used to lock on the managers list to avoid conflicts */
+    private final Object managersLock;
 
     /**
      * class constructor, opens up a socket and create a LoginManager
@@ -41,6 +45,7 @@ public class Server {
         }
         this.matchController = new MatchController();
         this.loginManager = new LoginManager(matchController);
+        managersLock = new Object();
         managers = new ArrayList<>();
         pool = Executors.newCachedThreadPool();
     }
@@ -51,8 +56,8 @@ public class Server {
     public void connect() {
         ClientManager clientManager;
         pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket, this.matchController));
-        managers.add(clientManager);
-        loginManager.login(clientManager);
+        if(loginManager.login(clientManager))
+            managers.add(clientManager);
     }
 
     /**
@@ -68,9 +73,38 @@ public class Server {
      * method to remove a clientManager from the server's list
      * @param clientManager the clientManager that is no longer in use
      */
-    public void removeClient(ClientManager clientManager) {
-        synchronized (managers) {
-            managers.remove(clientManager);
+    public void removeClient(ClientManager clientManager, boolean fatal) {
+        synchronized (managersLock) {
+            if(fatal)
+                removeAllClients();
+            else {
+                managers.remove(clientManager);
+                if(managers.isEmpty())
+                    prepareForANewMatch();
+            }
         }
+    }
+
+    /**
+     * method to disconnect all clients and prepare the server to create a new match
+     */
+    public void removeAllClients() {
+        if(!managers.isEmpty()) {
+            managers.get(0).sendMessage(new EndMatchMessage(null));
+            managers.get(0).close(false);
+            managers.remove(0);
+            removeAllClients();
+        }
+        else
+           prepareForANewMatch();
+    }
+
+    /**
+     * method to prepare the server to instantiate a new match
+     */
+    public void prepareForANewMatch() {
+        managers = new ArrayList<>();
+        matchController = new MatchController();
+        loginManager = new LoginManager(matchController);
     }
 }

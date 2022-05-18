@@ -136,6 +136,7 @@ public class IslandManager extends Observable implements Observer, Serializable 
         else {
             island.setInfluenceStrategy(currInfluenceStrategy);
             changes = island.calculateInfluence(professorManager);
+            island.setInfluenceStrategy(stdInfluenceStrategy);
             if(changes)
                 lookForIslandsToMerge();
         }
@@ -198,6 +199,9 @@ public class IslandManager extends Observable implements Observer, Serializable 
         iterator.set(newIsland);
     }
 
+    /**
+     * method to register this manager as an observer of each island
+     */
     public void registerObserverToIslands(){
         for(Island i: getIslands())
             i.addObserver(this);

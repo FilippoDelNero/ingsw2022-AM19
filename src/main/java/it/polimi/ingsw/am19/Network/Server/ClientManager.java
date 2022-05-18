@@ -74,23 +74,11 @@ public class ClientManager implements Runnable {
             output.flush();
             input = new ObjectInputStream(myClient.getInputStream());
         } catch (IOException e) {
-            server.removeClient(this);
+            server.removeClient(this, false);
         }
 
         myTimer.start();
         System.out.println("nuovo client connesso");
-    }
-
-    /**
-     * Constructor used ONLY for testing purposes
-     */
-    public ClientManager() { //TODO I SHOULD USE JMOCK OR EASYMOCK TO MOCK IT INSTEAD
-        matchController = null;
-        myTimer = null;
-        myServer = null;
-        lockToSend = null;
-        lockToReceive = null;
-        id = 0;
     }
 
     /**
@@ -120,7 +108,7 @@ public class ClientManager implements Runnable {
                 System.out.println(msg.getMessageType());
                 output.reset();
             } catch (IOException e) {
-                close();
+                close(true);
             }
         }
     }
@@ -141,7 +129,7 @@ public class ClientManager implements Runnable {
                         default -> matchController.inspectMessage(msg);
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    close();
+                    close(true);
                 }
             }
         }
@@ -150,20 +138,20 @@ public class ClientManager implements Runnable {
     /**
      * method to stop the timer, close the connection and remove this Manager from the server's list
      */
-    public void close() {
-        if(!Thread.currentThread().isInterrupted()) {
+    public void close(boolean fatal) {
+        while(!Thread.currentThread().isInterrupted()) {
             Thread.currentThread().interrupt();
 
-            if(!myTimer.isInterrupted())
+            while(!myTimer.isInterrupted())
                 myTimer.interrupt();
 
-            if(!myClient.isClosed()) {
+            while(!myClient.isClosed()) {
                 try {
                     myClient.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                myServer.removeClient(this);
+                myServer.removeClient(this, fatal);
             }
 
             System.out.println("client disconnesso");
