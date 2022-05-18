@@ -169,7 +169,7 @@ public class MatchController implements Observer{
         sendBroadcastMessage(new GenericMessage("You will be disconnected due to internal errors"));
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
-                while(cm.isClosed()) {
+                while(!cm.isClosed()) {
                     cm.close();
                 }
         }
@@ -249,10 +249,13 @@ public class MatchController implements Observer{
      * After an end match condition occurred, it simulates the end of the match
      */
     private void endMatch(){
+        System.out.println("Computing winners");
         List<String> winners = model.getWinner().stream()
                 .map(Player::getNickname)
                 .toList();
+        System.out.println("Sending winners");
         sendBroadcastMessage(new EndMatchMessage(winners));
+        System.out.println("Disconnecting all");
         disconnectAll();//TODO verificare se ha effetto
     }
 
@@ -274,7 +277,9 @@ public class MatchController implements Observer{
 
     @Override
     public void notify(Notification notification) {
+        System.out.println("Notification received: " + notification);
         switch (notification){
+
             case UPDATE_CLOUDS -> sendBroadcastMessage(
                     new UpdateCloudsMessage(reducer.reduceClouds(model.getClouds())));
 
@@ -283,9 +288,9 @@ public class MatchController implements Observer{
 
             case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
                     new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
-            case END_MATCH -> {
-                endMatch();
-                changeState();
+             case END_MATCH -> {
+                 endMatch();
+                 changeState();
             }
         }
     }
