@@ -450,7 +450,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     public void notify(Notification notification){
         switch (notification){
             case END_MATCH -> {
-                notifyObservers(Notification.FINAL_ROUND);
+                notifyObservers(END_MATCH);
                 computeWinners();
             }
             case FINAL_ROUND -> finalRound = true;
