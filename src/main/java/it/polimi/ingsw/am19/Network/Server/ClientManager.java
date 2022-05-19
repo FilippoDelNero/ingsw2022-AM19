@@ -52,6 +52,11 @@ public class ClientManager implements Runnable {
     private final int id;
 
     /**
+     * boolean used to let the clientManager do two attempts at reading or writing an object
+     */
+    private boolean tryAgain;
+
+    /**
      * class constructor, accept the connection and opens up input and output, starts the timer
      * @param id a number given in chronological order to each clientManager
      * @param server the server that created this clientManager
@@ -59,6 +64,7 @@ public class ClientManager implements Runnable {
      * @param matchController the MatchController whose reference needs to be stored
      */
     public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) {
+        this.tryAgain = true;
         this.id = id;
         this.matchController = matchController;
 
@@ -108,8 +114,15 @@ public class ClientManager implements Runnable {
                 System.out.println(msg.getMessageType());
                 output.reset();
             } catch (IOException e) {
-                close(true);
+                System.out.println("errore in invio");
+                if(tryAgain) {
+                    tryAgain = false;
+                    sendMessage(msg);
+                }
+                else
+                    close(true);
             }
+            tryAgain = true;
         }
     }
 
@@ -121,6 +134,7 @@ public class ClientManager implements Runnable {
             synchronized (lockToReceive) {
                 try {
                     Message msg = (Message) input.readObject();
+                    tryAgain = false;
                     if(msg.getMessageType()!= MessageType.PING_MESSAGE)
                         System.out.println(msg.getMessageType());
                     switch (msg.getMessageType()){
@@ -128,7 +142,13 @@ public class ClientManager implements Runnable {
                         case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);
                         default -> matchController.inspectMessage(msg);
                     }
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (IOException e) {
+                    System.out.println("errore in ricezione");
+                   if(tryAgain)
+                       tryAgain = false;
+                   else
+                    close(true);
+                } catch (ClassNotFoundException e) {
                     close(true);
                 }
             }

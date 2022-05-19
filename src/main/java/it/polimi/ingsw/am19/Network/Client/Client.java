@@ -75,6 +75,7 @@ public class Client {
         try {
             output.writeObject(msg);
             output.reset();
+            tryAgain = true;
         } catch (IOException e) {
             if(tryAgain) {
                 tryAgain = false;
@@ -83,7 +84,6 @@ public class Client {
             else
                 disconnect();
         }
-        tryAgain = true;
     }
 
     /**
@@ -97,6 +97,7 @@ public class Client {
                         try {
                             msg = (Message) input.readObject();
                             myController.communicate(msg);
+                            tryAgain = true;
                         } catch (IOException e) {
                             if(tryAgain)
                                 tryAgain = false;
