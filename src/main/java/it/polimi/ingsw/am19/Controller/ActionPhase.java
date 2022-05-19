@@ -2,6 +2,7 @@ package it.polimi.ingsw.am19.Controller;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
+import it.polimi.ingsw.am19.Model.BoardManagement.MoveStudent;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
@@ -10,7 +11,6 @@ import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.*;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -137,16 +137,12 @@ public class ActionPhase extends AbstractPhase implements Phase{
         matchController.setCurrPlayer(currPlayer);
         matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
-        if (model instanceof ExpertMatchDecorator && !cardPlayed){
-            matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
-            List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
-                            .map(AbstractCharacterCard::getId)
-                                    .toList();
-            matchController.sendMessage(matchController.getCurrPlayer(),
-                    new AskPlayCharacterCardMessage(charactersAvailable));
-        }else{
-            matchController.sendMessage(currPlayer, new AskEntranceMoveMessage());
-        }
+
+        if (model instanceof ExpertMatchDecorator && !cardPlayed)
+            sendCharacterRequest();
+        else
+            matchController.sendMessage(currPlayer,
+                    new AskEntranceMoveMessage(MAX_NUM_STUDENTS - numOfMovedStudents));
     }
 
     /**
@@ -168,53 +164,43 @@ public class ActionPhase extends AbstractPhase implements Phase{
                     new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
             return;
         }
-        numOfMovedStudents++;
-        if (numOfMovedStudents < MAX_NUM_STUDENTS)
-            matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-        else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
+        incrementStudNum();
+        if (!allStudMoved())
+            matchController.sendMessage(matchController.getCurrPlayer(),
+                    new AskEntranceMoveMessage(MAX_NUM_STUDENTS - numOfMovedStudents));
+        else {
             changeActionStep();
             if (model instanceof ExpertMatchDecorator && !cardPlayed){
-                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
-                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
-                        .map(AbstractCharacterCard::getId)
-                        .toList();
-                matchController.sendMessage(matchController.getCurrPlayer(),
-                        new AskPlayCharacterCardMessage(charactersAvailable));
-            }else{
+                sendCharacterRequest();
+            } else
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
-            }
         }
     }
 
     private void entranceToIsland(ReplyEntranceToIslandMessage message){
         PieceColor color = message.getColorChosen();
         int islandIndex = message.getIsland();
-        if (//inputController.checkIsInEntrance(color) &&
-                inputController.checkIsInArchipelago(islandIndex)){
+        MoveStudent entrance = model.getGameBoards().get(
+                model.getPlayerByNickname(matchController.getCurrPlayer()));
+        MoveStudent island = model.getIslandManager().getIslands().get(islandIndex);
+        if (inputController.checkIsInArchipelago(islandIndex)){
             try {
-                model.moveStudent(color,model.getGameBoards().get(
-                        model.getPlayerByNickname(matchController.getCurrPlayer())
-                ), model.getIslandManager().getIslands().get(islandIndex));
+                model.moveStudent(color, entrance, island);
             } catch (NoSuchColorException | TooManyStudentsException e) {
                 matchController.sendMessage(matchController.getCurrPlayer(),
                         new ErrorMessage("server","You can't move a " + color + " student to island "+ (islandIndex+1)+ ". Please retry\n"));
                 return;
             }
-            numOfMovedStudents++;
-            if (numOfMovedStudents < MAX_NUM_STUDENTS)
-                matchController.sendMessage(matchController.getCurrPlayer(), new AskEntranceMoveMessage());
-            else if (numOfMovedStudents == MAX_NUM_STUDENTS) {
+            incrementStudNum();
+            if (!allStudMoved())
+                matchController.sendMessage(matchController.getCurrPlayer(),
+                        new AskEntranceMoveMessage(MAX_NUM_STUDENTS - numOfMovedStudents));
+            else {
                 changeActionStep();
                 if (model instanceof ExpertMatchDecorator && !cardPlayed){
-                    matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
-                    List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
-                            .map(AbstractCharacterCard::getId)
-                            .toList();
-                    matchController.sendMessage(matchController.getCurrPlayer(),
-                            new AskPlayCharacterCardMessage(charactersAvailable));
-                }else{
+                    sendCharacterRequest();
+                } else
                     matchController.sendMessage(matchController.getCurrPlayer(), new AskMotherNatureStepMessage());
-                }
             }
         }
     }
@@ -224,16 +210,10 @@ public class ActionPhase extends AbstractPhase implements Phase{
         try {
             model.moveMotherNature(message.getStep());
             changeActionStep();
-            if (model instanceof ExpertMatchDecorator && !cardPlayed){
-                matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
-                List<Character> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards().stream()
-                        .map(AbstractCharacterCard::getId)
-                        .toList();
-                matchController.sendMessage(matchController.getCurrPlayer(),
-                        new AskPlayCharacterCardMessage(charactersAvailable));
-            }else{
+            if (model instanceof ExpertMatchDecorator && !cardPlayed)
+                sendCharacterRequest();
+            else
                 matchController.sendMessage(matchController.getCurrPlayer(), new AskCloudMessage(model.getNonEmptyClouds()));
-            }
         } catch (IllegalNumOfStepsException e) {
             matchController.sendMessage(matchController.getCurrPlayer(),
                     new ErrorMessage("server","You can't move mother nature of " + message.getStep() + " steps. Please retry\n"));
@@ -256,27 +236,18 @@ public class ActionPhase extends AbstractPhase implements Phase{
                 }
             }
         }
-        if (iterator.hasNext()) {
-            String nextPlayer = iterator.next();
-            matchController.setCurrPlayer(nextPlayer);
-            cardPlayed = false;
-            currStep = ActionPhaseSteps.MOVE_STUD;
-            performPhase(nextPlayer);
-        } else {
-
+        if (iterator.hasNext()) //another player needs to perform the same phase
+            pickNextPlayer();
+        else { //no players left for this phase
             model.resetAlreadyPlayedCards();
             model.updatePlanningPhaseOrder();
             matchController.saveMatch();
 
-            if (matchController.getRoundsManager().hasNextRound() && !model.isFinalRound()) {
-                List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
-                        .map(Player::getNickname)
-                        .toList();
-                matchController.getRoundsManager().changePhase(new PlanningPhase(planningPhaseOrder, matchController));
-                matchController.getRoundsManager().getCurrPhase().initPhase();
-            }
+            //if there's another round to play and the current round was not the last one, restart from planning phase
+            if (matchController.getRoundsManager().hasNextRound() && !model.isFinalRound())
+                playAnotherRound();
             else
-                matchController.changeState();
+                matchController.changeState(); // transition to end match state
         }
     }
 
@@ -286,5 +257,36 @@ public class ActionPhase extends AbstractPhase implements Phase{
             case MOVE_STUD -> currStep = ActionPhaseSteps.MOVE_MN;
             case MOVE_MN -> currStep = ActionPhaseSteps.TAKE_STUD;
         }
+    }
+
+    private void incrementStudNum(){
+        numOfMovedStudents++;
+    }
+
+    private boolean allStudMoved(){
+        return numOfMovedStudents >= MAX_NUM_STUDENTS;
+    }
+
+    private void sendCharacterRequest(){
+        matchController.getRoundsManager().changePhase(new PlayCharacterPhase(matchController));
+        List<AbstractCharacterCard> charactersAvailable = ((ExpertMatchDecorator) model).getCharacterCards();
+        matchController.sendMessage(matchController.getCurrPlayer(),
+                new AskPlayCharacterCardMessage(charactersAvailable));
+    }
+
+    private void pickNextPlayer(){
+        String nextPlayer = iterator.next();
+        matchController.setCurrPlayer(nextPlayer);
+        cardPlayed = false;
+        currStep = ActionPhaseSteps.MOVE_STUD;
+        performPhase(nextPlayer);
+    }
+
+    private void playAnotherRound(){
+            List<String> planningPhaseOrder = model.getPlanningPhaseOrder().stream()
+                    .map(Player::getNickname)
+                    .toList();
+            matchController.getRoundsManager().changePhase(new PlanningPhase(planningPhaseOrder, matchController));
+            matchController.getRoundsManager().getCurrPhase().initPhase();
     }
 }

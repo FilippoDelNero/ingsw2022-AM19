@@ -195,9 +195,9 @@ public class Cli implements View {
      * @return the input of the player
      */
     @Override
-    public String askEntranceMove() {
+    public String askEntranceMove(int movesLeft) {
         String input;
-        printer.println("Which color do you want to move and where? [e.g. RED island 1]");
+        printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
         input = reader.nextLine();
         return input.toLowerCase();
     }

@@ -70,7 +70,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
 
 
     private void playCharacterCard(ReplyPlayCharacterCardMessage message){
-        //this.card = message.getCardToUse();
         if (message.getCardToUse() == null)//the client doesn't want to play a card. Let's go back to action phase
             goBackToPrevPhase();
         else{

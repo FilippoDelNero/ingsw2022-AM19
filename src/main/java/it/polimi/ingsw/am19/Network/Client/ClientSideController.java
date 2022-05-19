@@ -65,7 +65,7 @@ public class ClientSideController {
             case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
             case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
             case PLAYABLE_HELPER_CARD -> showHelperOptions((AskHelperCardMessage) msg);
-            case ENTRANCE_MOVE -> askEntranceMove();
+            case ENTRANCE_MOVE -> askEntranceMove((AskEntranceMoveMessage) msg);
             case HOW_MANY_STEP_MN -> askMotherNatureStep();
             case CHOOSE_CLOUD -> askCloud((AskCloudMessage) msg);
             case END_MATCH_MESSAGE -> endMatch((EndMatchMessage) msg);
@@ -136,7 +136,7 @@ public class ClientSideController {
      * Method used to ask the player where she/he wants to move which student's color
      * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
      */
-    private void askEntranceMove() { //TODO VOGLIO SOLO INTERAZIONI GENERICHE NON SPECIFICHE COME SE AVESSI UNA CLI, FORSE CI SARà DA RIPENSARE QUESTO METODO
+    private void askEntranceMove(AskEntranceMoveMessage msg) { //TODO VOGLIO SOLO INTERAZIONI GENERICHE NON SPECIFICHE COME SE AVESSI UNA CLI, FORSE CI SARà DA RIPENSARE QUESTO METODO
         String input;
         int islandNum;
         PieceColor color = null;
@@ -149,7 +149,7 @@ public class ClientSideController {
         }
 
         view.printView(nickname);
-        input = view.askEntranceMove();
+        input = view.askEntranceMove(msg.getMovesLeft());
         for(String s : colors.keySet()) {
             if(input.contains(s))
                 color = colors.get(s);

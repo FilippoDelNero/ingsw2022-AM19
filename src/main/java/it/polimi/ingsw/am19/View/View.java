@@ -67,9 +67,10 @@ public interface View {
 
     /**
      * method used to ask the user which student's color wants to move and where
+     * @param movesLeft is the number of students that already needs to be moved
      * @return the input of the player
      */
-    String askEntranceMove();
+    String askEntranceMove(int movesLeft);
 
     /**
      * method used to ask the step that MotherNature have to do in clockwise
