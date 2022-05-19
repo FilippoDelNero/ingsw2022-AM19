@@ -83,7 +83,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
         matchController.getRoundsManager().changePhase(prevPhase);
         switch (((ActionPhase)prevPhase).getCurrStep()){
             case MOVE_STUD ->
-                matchController.sendMessage(currPlayer,new AskEntranceMoveMessage(3));
+                matchController.sendMessage(currPlayer,new AskEntranceMoveMessage(((ActionPhase)prevPhase).getMAX_NUM_STUDENTS()));
             case MOVE_MN ->
                 matchController.sendMessage(currPlayer,new AskMotherNatureStepMessage());
             case TAKE_STUD ->

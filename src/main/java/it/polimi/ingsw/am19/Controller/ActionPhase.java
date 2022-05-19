@@ -128,6 +128,14 @@ public class ActionPhase extends AbstractPhase implements Phase{
     }
 
     /**
+     * Return the MAX_NUM_STUDENTS attribute
+     * @return the maximum number of students a player can move
+     */
+    public int getMAX_NUM_STUDENTS() {
+        return MAX_NUM_STUDENTS;
+    }
+
+    /**
      * Performs action phase for the player passed as parameter
      * @param currPlayer is the nickname of the player that needs to perform the action phase
      */
