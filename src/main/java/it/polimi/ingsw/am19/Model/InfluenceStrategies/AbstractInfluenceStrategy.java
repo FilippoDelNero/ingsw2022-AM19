@@ -18,17 +18,17 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy, Se
     /**
      * a map containing the amount of influence of each player on the island
      */
-    Map<Player, Integer> influenceMap = new HashMap<>();
+    Map<Player, Integer> influenceMap;
 
     /**
      * the old owner of the island
      */
-    Player oldOwner = null;
+    Player oldOwner;
 
     /**
      * the new owner of the island
      */
-    Player newOwner = null;
+    Player newOwner;
 
     /**
      * influence value before updating it
@@ -47,10 +47,14 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy, Se
      * @param manager the professor manager of the match
      */
     void initialize(TowerColor towerColor, ProfessorManager manager) {
+        influenceMap = new HashMap<>();
+        oldOwner = null;
+        newOwner = null;
         for(Player player : manager.getGameboards().keySet()) {
             influenceMap.put(player, 0);
-            if(player.getTowerColor() == towerColor)
+            if(towerColor != null && player.getTowerColor() == towerColor) {
                 oldOwner = player;
+            }
         }
     }
 
@@ -131,13 +135,13 @@ public abstract class AbstractInfluenceStrategy implements InfluenceStrategy, Se
             }
 
             //if there is a player with a clear majority the island changes ownership, return the new owner
-            if(oldOwner != null){
-
+            if(oldOwner != null) {
                 // but first give the towers back to the old owner
                 GameBoard gameBoard = manager.getGameboards().get(oldOwner);
                 for (int i = 0; i < numOfIslands; i++)
                     gameBoard.addTower();
             }
+
             return newOwner;
         }
     }

@@ -85,6 +85,9 @@ class IslandManagerTest {
         assertDoesNotThrow(() -> gameBoard2.addStudent(PieceColor.PINK));
         assertDoesNotThrow(() -> gameBoard2.moveStudentToDiningRoom(PieceColor.PINK));
         manager.checkProfessor(PieceColor.PINK, player2);
+        assertDoesNotThrow(() -> gameBoard2.addStudent(PieceColor.GREEN));
+        assertDoesNotThrow(() -> gameBoard2.moveStudentToDiningRoom(PieceColor.GREEN));
+        manager.checkProfessor(PieceColor.GREEN, player1);
 
         //--CHECK IF EVERYTHING IS OK PART
         islandManager.calculateInfluence(islandManager.getIslands().get(0));

@@ -138,34 +138,62 @@ public class IslandManager extends Observable implements Observer, Serializable 
             changes = island.calculateInfluence(professorManager);
             island.setInfluenceStrategy(stdInfluenceStrategy);
             if(changes)
-                lookForIslandsToMerge();
+                searchForIslandToMerge(island);
         }
         currInfluenceStrategy = stdInfluenceStrategy;
     }
 
     /**
      * check if there are adjacent islands with same tower's color and merges them
-     * after merging together two islands, a check is made to the number of Islands in the archipelago
-     * if the number is 3, a notification si sent to the observers to say that an end match conditions is now verified
+     * @param island the island around which i should check
      */
-    private void lookForIslandsToMerge() {
-        Island island1;
-        Island island2;
-        island1 = iterator.next();
-        for(int i = 0; i <= islands.size(); i++) {
-            island2 = iterator.next();
-            if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
-                unify(island1, island2);
-                if (getIslands().size() == 3)
-                    notifyObservers(Notification.END_MATCH);
-                lookForIslandsToMerge();
+    private void searchForIslandToMerge(Island island) {
+        if(island.getTowerColor() != null && moveIteratorToIsland(island)) {
+            Island islandBefore = iterator.previous();
+            iterator.next();
+            Island islandAfter = iterator.next();
+            if(island.getTowerColor() == islandBefore.getTowerColor()) {
+                iterator.previous();
+                unify(islandBefore, island);
             }
-            island1 = island2;
+            else if(island.getTowerColor() == islandAfter.getTowerColor()) {
+                unify(island, islandAfter);
+            }
         }
     }
 
     /**
+     * utility method used to move the iterator to a specific island
+     * @param island the island to which the iterator should be moved to
+     * @return true if the island was successfully found, false otherwise
+     */
+    private boolean moveIteratorToIsland(Island island) {
+        boolean found = false;
+        for(int i = 0; i <= islands.size(); i++) {
+            if(iterator.next().equals(island)) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    /**
+     * utility method used to check if there are less than three island in the archipelago
+     * @return true if is end-match, false otherwise
+     */
+    private boolean isEnd() {
+        if (getIslands().size() <= 3) {
+            notifyObservers(Notification.END_MATCH);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * it merges two islands into a new one, the old islands will get deleted
+     * after merging together two islands, a check is made to the number of Islands in the archipelago
+     * if the number is 3, a notification is sent to the observers to say that an end match conditions is now verified
      * @param island1 the first island to be merged
      * @param island2 the second island to be merged
      */
@@ -174,7 +202,7 @@ public class IslandManager extends Observable implements Observer, Serializable 
         Map<PieceColor, Integer> map = new HashMap<>(island1.getNumOfStudents());
         island2.getNumOfStudents().forEach((k, v) -> map.merge(k, v, Integer::sum));
 
-        //grab the tower's color from island1 (its the same as island2)
+        //grab the tower's color from island1 (it's the same as island2)
         TowerColor towerColor = island1.getTowerColor();
 
         //sums the number of island present in this group
@@ -197,6 +225,9 @@ public class IslandManager extends Observable implements Observer, Serializable 
         //adds the new island and deletes the old ones
         iterator.remove();
         iterator.set(newIsland);
+        if(!isEnd()) {
+            searchForIslandToMerge(newIsland);
+        }
     }
 
     /**
@@ -215,6 +246,32 @@ public class IslandManager extends Observable implements Observer, Serializable 
         switch (notification) {
             case UPDATE_ISLANDS -> notifyObservers(Notification.UPDATE_ISLANDS);
             case UPDATE_GAMEBOARDS -> notifyObservers(Notification.UPDATE_GAMEBOARDS);
+        }
+    }
+
+    /**
+     * check if there are adjacent islands with same tower's color and merges them
+     * after merging together two islands, a check is made to the number of Islands in the archipelago
+     * if the number is 3, a notification is sent to the observers to say that an end match conditions is now verified
+     */
+    @Deprecated
+    private void lookForIslandsToMerge() {
+        int sizeBefore = getIslands().size();
+        Island island1;
+        Island island2;
+        island1 = iterator.next();
+        island2 = iterator.next();
+        for(int i = 0; i <= islands.size(); i++) {
+            if(island1.getTowerColor() != null && island1.getTowerColor() == island2.getTowerColor()) {
+                unify(island1, island2);
+                assert getIslands().size() == (sizeBefore - 1);
+                if (getIslands().size() == 3)
+                    notifyObservers(Notification.END_MATCH);
+                else
+                    lookForIslandsToMerge();
+            }
+            island1 = island2;
+            island2 = iterator.next();
         }
     }
 }
