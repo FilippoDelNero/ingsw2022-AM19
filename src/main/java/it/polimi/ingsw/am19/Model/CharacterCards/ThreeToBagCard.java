@@ -9,6 +9,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,12 @@ public class ThreeToBagCard extends AbstractCharacterCard {
     /**
      * References to the gameBoard of the match
      */
-    private Map<Player, GameBoard> gameBoards;
+    private final Map<Player, GameBoard> gameBoards;
 
     /**
      * References to the bag of the match
      */
-    private Bag bag;
+    private final Bag bag;
 
     /**
      * Constructor for the Card
@@ -84,5 +85,6 @@ public class ThreeToBagCard extends AbstractCharacterCard {
             }
         }
         active = false;
+        bag.notifyObservers(Notification.UPDATE_GAMEBOARDS); //improperly notified by the bag
     }
 }

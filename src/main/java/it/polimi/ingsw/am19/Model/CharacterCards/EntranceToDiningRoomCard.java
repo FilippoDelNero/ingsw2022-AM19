@@ -9,6 +9,7 @@ import it.polimi.ingsw.am19.Model.InternalMoveStrategy.ReverseMove;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +115,7 @@ public class EntranceToDiningRoomCard extends AbstractCharacterCard{
             }
 
             currGameBoard.setMoveStrategy(standardStrategy);
+            m.notifyObservers(Notification.UPDATE_GAMEBOARDS);
         }
 
 

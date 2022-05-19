@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -90,7 +91,7 @@ public interface View {
      * @param characterOptions the character cards present in this expert match
      * @return the character card chosen by the user or null if they chose not to play a card
      */
-    Character askPlayCharacter(List<Character> characterOptions);
+    Character askPlayCharacter(List<AbstractCharacterCard> characterOptions);
 
     /**
      * Method used to ask the user a color for a Character Card

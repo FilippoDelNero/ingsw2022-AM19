@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View.Cli;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
@@ -255,12 +256,17 @@ public class Cli implements View {
      * @return the character card chosen by the user or null if they chose not to play a card
      */
     @Override
-    public Character askPlayCharacter(List<Character> characterOptions) {
+    public Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
         boolean validInput;
         Character chosenCardEnum = null;
+
         printer.println("Options:");
-        for (Character card : characterOptions)
-            printer.println(card + ": price:" + card.getPrice() + ", description: " + card.getDescription());
+        for (AbstractCharacterCard card : characterOptions) {
+            printer.println(card.getId() + ": price: " + card.getPrice() + ", description: " + card.getDescription());
+            if(card.getStudents() != null)
+                printer.println(card.getStudents());
+        }
+
         do {
             validInput = true;
             printer.println("Do you want to play any character card?[e.g. NO or MONK]");
@@ -400,6 +406,7 @@ public class Cli implements View {
             for(int i = 0; i < cache.getIslands().size(); i++)
                 printer.println("island #" + (i+1) + ": " + cache.getIslands().get(i).toString());
         }
+        printer.println('\n');
     }
 
     /**

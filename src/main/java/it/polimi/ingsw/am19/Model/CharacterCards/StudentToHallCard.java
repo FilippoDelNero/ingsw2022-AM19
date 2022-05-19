@@ -43,7 +43,7 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
     /**
      * Max num of student hospitable
      */
-    private final int maxNumOFStudents = 4;
+    private final int maxNumOfStudents = 4;
 
     /**
      * Current num of student on the card
@@ -79,7 +79,7 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
     public void addStudent(PieceColor color) throws TooManyStudentsException, IllegalArgumentException {
         switch (color) {
             case GREEN, RED, YELLOW, PINK, BLUE -> {
-                if (currNumOfStudents == maxNumOFStudents)
+                if (currNumOfStudents == maxNumOfStudents)
                     throw new TooManyStudentsException("This card cannot host more than 4 student");
                 else {
                     this.currNumOfStudents++;
