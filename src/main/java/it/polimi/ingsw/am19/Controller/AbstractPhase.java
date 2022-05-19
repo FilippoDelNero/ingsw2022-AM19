@@ -5,9 +5,11 @@ import it.polimi.ingsw.am19.Network.Server.ClientManager;
 
 import java.util.Map;
 
+/**
+ * Class for putting together common Phases characteristics
+ */
 public class AbstractPhase {
     protected final Map<String, ClientManager> clientManagerMap;
-    //private final Reducer reducer;
     protected final MatchDecorator model;
     protected final MatchController matchController;
     protected final InputController inputController;

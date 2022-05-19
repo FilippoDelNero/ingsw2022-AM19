@@ -1,16 +1,14 @@
 package it.polimi.ingsw.am19.Controller;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
-import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.ErrorMessage;
 import it.polimi.ingsw.am19.Network.Message.Message;
 
-import java.util.List;
-
+/**
+ * Helper Class for making some checks server side
+ */
 public class InputController {
     private final MatchDecorator model;
     MatchController matchController;
@@ -30,21 +28,6 @@ public class InputController {
     }
 
     /**
-     * Checks if the given PieceColor is in the current player's entrance.
-     * In case of absence, it sends an error message
-     * @param color the color to look for in the entrance
-     */
-    /*
-    boolean checkIsInEntrance(PieceColor color){
-        GameBoard gameBoard = model.getGameBoards().get(model.getPlayerByNickname(matchController.getCurrPlayer()));
-        if (!gameBoard.getEntrance().containsKey(color)){
-            matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","You don't have" + color.name() + " in your entrance"));
-            return false;
-        }
-        return true;
-    }*/
-
-    /**
      * Given an island index, it checks whether the corresponding Island is part of the archipelago
      * @param islandIndex it is the island index that needs to be checked
      * @return true if the island index is that of an Island that takes part into the archipelago, false otherwise
@@ -57,6 +40,11 @@ public class InputController {
         return true;
     }
 
+    /**
+     * Given a Cloud index, returns true if its index corresponds to an Island currently in the archipelago
+     * @param cloudIndex the CLoud index to check
+     * @return true if its index corresponds to an Island currently in the archipelago
+     */
     boolean checkCloudIndex(int cloudIndex){
         if (!model.getNonEmptyClouds().contains(cloudIndex)){
             matchController.sendMessage(matchController.getCurrPlayer(), new ErrorMessage("server","Invalid cloud number. Please retry\n"));
@@ -65,6 +53,11 @@ public class InputController {
         return true;
     }
 
+    /**
+     * Given a character card, it returns true if is one of those available, false otherwise
+     * @param character is the character card the needs to be checked
+     * @return true if is one of those available, false otherwise
+     */
     boolean checkIsCharacterAvailable(AbstractCharacterCard character){
         if (!((ExpertMatchDecorator)model).getCharacterCards().contains(character)){
             matchController.sendMessage(matchController.getCurrPlayer(),
@@ -75,32 +68,13 @@ public class InputController {
             return true;
     }
 
-    /*
-    boolean checkValidColor(PieceColor color){
-        switch (color){
-            case GREEN,RED,YELLOW,PINK,BLUE -> {return true;}
-            default -> {return false;}
-        }
-    }
-
-    boolean checkValidColor(List<PieceColor> colors){
-        boolean isValid = false;
-        for (PieceColor color : colors){
-            switch (color){
-                case GREEN,RED,YELLOW,PINK,BLUE -> isValid = true;
-                default -> {
-                    isValid = false;
-                    return false;
-                }
-            }
-        }
-        return isValid;
-    }
-
+    /**
+     * Given a card, it returns true if the current player can afford it, false otherwise
+     * @param card is the character card the needs to be checked
+     * @return true if the current player can afford it, false otherwise
      */
-
     boolean checkAffordability(AbstractCharacterCard card){
-        if (card.getPrice() <= ((ExpertMatchDecorator)model).getCurrPlayer().getCoins()){
+        if (card.getPrice() <= model.getCurrPlayer().getCoins()){
             return true;
         }
         else{
