@@ -52,7 +52,7 @@ public class MatchController implements Observer{
     private InputController inputController;
 
     /**
-     * the reducer is used to create specific objects that will be sent to the client
+     * Utility class for updates towards views
      */
     private final Reducer reducer;
 
@@ -82,16 +82,26 @@ public class MatchController implements Observer{
         this.inputController = new InputController(this);
     }
 
+    /**
+     * Returns true if a previous match's storage data exists, false otherwise
+     * @return true if a previous match's storage data exists, false otherwise
+     */
     public boolean checkOldMatches(){
         File file = new File("savedMatch.txt");
         return file.exists();
     }
 
+    /**
+     * Saves the current match for future uses
+     */
     public void saveMatch(){
         StorageMatch storageMatch = new StorageMatch();
         storageMatch.store(this.getModel(), roundsManager.getRoundNum());
     }
 
+    /**
+     * Resumes old match's data
+     */
     public void resumeMatch(){
         StorageMatch storageMatch = new StorageMatch();
         SavedData savedData = storageMatch.restore();
@@ -152,8 +162,10 @@ public class MatchController implements Observer{
                 init();
                 inProgress();
             }
-            case IN_PROGRESS -> currState = StateType.END_MATCH;
-            case END_MATCH -> System.out.println("error"); //TODO DA TOGLIERE
+            case IN_PROGRESS -> {
+                currState = StateType.END_MATCH;
+                endMatch();
+            }
         }
     }
 
@@ -252,14 +264,10 @@ public class MatchController implements Observer{
      * After an end match condition occurred, it simulates the end of the match
      */
     private void endMatch(){
-        System.out.println("Computing winners");
         List<String> winners = model.getWinner().stream()
                 .map(Player::getNickname)
                 .toList();
-        System.out.println("Sending winners");
         sendBroadcastMessage(new EndMatchMessage(winners));
-        System.out.println("Disconnecting all");
-        disconnectAll();//TODO verificare se ha effetto
     }
 
     /**
@@ -278,9 +286,12 @@ public class MatchController implements Observer{
         return roundsManager;
     }
 
+    /**
+     * Reacts to some Notification sent by the model (Observed class) to MatchController (Observer class)
+     * @param notification is the Notification sent by the Model
+     */
     @Override
     public void notify(Notification notification) {
-        System.out.println("Notification received: " + notification);
         switch (notification){
 
             case UPDATE_CLOUDS -> sendBroadcastMessage(
@@ -291,10 +302,8 @@ public class MatchController implements Observer{
 
             case UPDATE_GAMEBOARDS -> sendBroadcastMessage(
                     new UpdateGameBoardsMessage(reducer.reducedGameBoard(model.getGameBoards())));
-             case END_MATCH -> {
-                 endMatch();
-                 changeState();
-            }
+
+             case END_MATCH -> changeState();
         }
     }
 

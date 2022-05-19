@@ -10,8 +10,18 @@ import it.polimi.ingsw.am19.Network.Message.*;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * A Class for managing planning phase lifecycle
+ */
 public class PlanningPhase extends AbstractPhase implements Phase{
+    /**
+     * It contains all players' nicknames, in the order in which they will perform this phase
+     */
     private final List<String> playersOrder;
+
+    /**
+     * An iterator for iterating players' nicknames
+     */
     private final ListIterator<String> iterator;
 
     public PlanningPhase(List<String> playersOrder,MatchController matchController) {
@@ -20,6 +30,11 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         this.iterator =  playersOrder.listIterator();
     }
 
+    /**
+     * Inspects messages sent from the client and reacts to them only if they come from the current player
+     * and only if the message type is within those expected for this phase
+     * @param msg  message passed from MatchController class
+     */
     @Override
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
@@ -49,10 +64,20 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         }
     }
 
+    /**
+     * Returns the players' order for this phase
+     * @return the players' order for this phase
+     */
     public List<String> getPlayersOrder() {
         return playersOrder;
     }
 
+    /**
+     * Initializes planning phase:
+     * notifies clients about the current round number,
+     * refills clouds,
+     * picks up the first player and make it perform his phase
+     */
     @Override
     public void initPhase(){
         matchController.getRoundsManager().incrementPhaseNum();
@@ -68,6 +93,10 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         performPhase(iterator.next());
     }
 
+    /**
+     * Performs the planning phase of a specific player
+     * @param currPlayer is the nickname of the player that needs to perform this phase
+     */
     @Override
     public void performPhase(String currPlayer) {
         matchController.setCurrPlayer(currPlayer);

@@ -12,6 +12,9 @@ import it.polimi.ingsw.am19.Network.Message.*;
 
 import java.util.List;
 
+/**
+ * A Class that manages playing a character card into an expert match
+ */
 public class PlayCharacterPhase extends AbstractPhase implements Phase{
     private final String currPlayer;
     private AbstractCharacterCard  card;
@@ -20,6 +23,11 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
         this.currPlayer = matchController.getCurrPlayer();
     }
 
+    /**
+     * Inspects messages passed as argument, but only if they come from the current player and
+     * only if their type is between those expected
+     * @param msg  message passed from MatchController class
+     */
     @Override
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
@@ -62,7 +70,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
 
 
     private void playCharacterCard(ReplyPlayCharacterCardMessage message){
-        //this.card = message.getCardToUse();
         if (message.getCardToUse() == null)//the client doesn't want to play a card. Let's go back to action phase
             goBackToPrevPhase();
         else{
@@ -108,11 +115,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             island = model.getIslandManager().getIslands().get(islandIndex);
         List<PieceColor> colorList = message.getColorList();
 
-        /*if (inputController.checkIsInArchipelago(islandIndex) &&
-                inputController.checkValidColor(color) &&
-                inputController.checkValidColor(colorList)
-                ) {
-         */
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
                 ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setCardPlayed(true);
@@ -123,6 +125,5 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             } catch (NoSuchColorException | TooManyStudentsException e) {
                 matchController.sendMessage(currPlayer,new ErrorMessage("server","Invalid parameters"));
             }
-        //}
     }
 }
