@@ -1,131 +1,128 @@
 package it.polimi.ingsw.am19.View;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
-import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
-import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Network.Client.Cache;
-
-import java.util.List;
+import it.polimi.ingsw.am19.Network.Client.Client;
+import it.polimi.ingsw.am19.Network.Client.Dispatcher;
+import it.polimi.ingsw.am19.Network.Message.*;
 
 /**
  * Interface to allow the ClientSideController to use indifferently a gui or a cli
  */
 public interface View {
-    /**
-     * setter for the cache containing the view objects
-     */
-    void setViewCache(Cache viewCache);
 
     /**
-     * method to display an introductory splash screen
+     * setter for the client parameter
+     * @param client the client this view needs to refer to to send messages
      */
-    void init();
+    void setMyClient(Client client);
 
     /**
-     * method used to ask the number of players of a match
-     * @return the number of player chosen by the user
+     * setter for the dispatcher parameter
+     * @param dispatcher the dispatcher this view needs to refer to
      */
-    int newMatchNumOfPlayers();
+    void setDispatcher(Dispatcher dispatcher);
 
     /**
-     * method used to ask the difficulty of a match
-     * @return true if the match will be an expert one, false otherwise
+     * setter for the previous message attribute
+     * @param msg the message that just arrived
      */
-    boolean newMatchIsExpert();
+    void setPreviousMsg(Message msg);
 
     /**
-     * method used to ask a nickname to the user
-     * @return a String containing the nickname
+     * This method is called to ask match info to the first connecting player
+     * @param msg the AskFirstPlayerMessage sent by the server
      */
-    String askNickname();
-
-    String askNicknameFromList(List<String> nicknameAvailable);
+    void askLoginFirstPlayer(AskFirstPlayerMessage msg);
 
     /**
-     * method used to ask a wizard family to the user
-     * @param availableWizardFamilies a list containing the yet to be selected wizard families
-     * @return the wizard family chosen by the player
+     * This method is called to ask a nickname to the user when resuming a saved match
+     * @param msg the AskNicknameOptionsMessage sent by the server
      */
-    WizardFamily askWizardFamily (List<WizardFamily> availableWizardFamilies);
+    void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg);
 
     /**
-     * method used to ask a tower color to the user
-     * @param availableTowerColor a list containing the unused tower's color
-     * @return the tower's color chosen by the user
+     * This method is called when a AskLoginInfoMessage comes in
+     * it asks and sends nickname, wizardFamily and towerColor
+     * @param msg the AskLoginInfoMessage sent by the server
      */
-    TowerColor askTowerColor (List<TowerColor> availableTowerColor);
+    void askLoginInfo(AskLoginInfoMessage msg);
 
     /**
-     * method used to ask the user what card she/he wants to play
-     * @param helperDeck the available helperCards in the player's deck
-     * @return the helperCard chosen by the user
+     * shows the available HelperCards to the user and the sends he/she's answer to the server
+     * @param msg the message sent by the server containing the availableHelperCards
      */
-    HelperCard askHelperCard(List<HelperCard> helperDeck);
-
+    void showHelperOptions(AskHelperCardMessage msg);
 
     /**
-     * method used to ask the user which student's color wants to move and where
-     * @param movesLeft is the number of students that already needs to be moved
-     * @return the input of the player
+     * Method used to ask the player where she/he wants to move which student's color
+     * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
      */
-    String askEntranceMove(int movesLeft);
+    void askEntranceMove(AskEntranceMoveMessage msg);
 
     /**
-     * method used to ask the step that MotherNature have to do in clockwise
-     * @return the num of step
+     * The method is called when a AskMotherNatureStepMessage comes in
+     * it ask and send the num of step
      */
-    int askMotherNatureStep();
+    void askMotherNatureStep();
 
     /**
-     * method used to ask the user which clouds he/she wants to take
-     * @param cloudAvailable the List of a indexes of the available clouds
-     * @return the index of the cloud chosen by the player
+     * The method is called when a AskCloudMessage comes in
+     * it ask and send the num of cloud chosen
+     * @param msg the AskCloudMessage sent by server
      */
-    int askCloud(List<Integer> cloudAvailable);
+    void askCloud(AskCloudMessage msg);
 
     /**
      * Method used to ask the user if and which characterCards they want to play
-     * @param characterOptions the character cards present in this expert match
-     * @return the character card chosen by the user or null if they chose not to play a card
+     * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
      */
-    Character askPlayCharacter(List<AbstractCharacterCard> characterOptions);
+    void askPlayCharacter(AskPlayCharacterCardMessage msg);
 
     /**
-     * Method used to ask the user a color for a Character Card
-     * @return the chosen PieceColor
+     * method used to ask the user the parameters of the character card that they played
+     * @param msg the AskCharacterParameterMessage sent by server containing which parameter the played card will need
      */
-    PieceColor askCharacterCardParamPieceColor();
+    void askCharacterCardParameters(AskCharacterParameterMessage msg);
 
     /**
-     * Method used to ask the user an index of an island for a Character Card
-     * @return the chosen index
+     * Method used to display the winner and close the client connection
+     * @param msg the EndMatchMessage sent by the server
      */
-    int askCharacterCardParamIsland();
+    void endMatch(EndMatchMessage msg);
 
     /**
-     * Method used to ask the user a list of PieceColor for a Character Card
-     * @return the list of PieceColor
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
      */
-    List<PieceColor> askCharacterCardParamList();
+    void updateCloud(UpdateCloudsMessage msg);
 
     /**
-     * method used to display a generic message (error messages as well) to the user
-     * @param toPrint the content that needs to be print
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
      */
-    void genericPrint(String toPrint);
+    void updateGameBoards(UpdateGameBoardsMessage msg);
 
     /**
-     * method used to print the entire game view
-     * @param nickname the nickname of the player who owns the view
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
      */
-    void printView(String nickname);
+    void updateIslands(UpdateIslandsMessage msg);
 
     /**
-     * method used to ask if the first player want to resume an old match
-     * @return the choice of the player
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
      */
-    boolean askResumeMatch();
+    void updateCards(UpdateCardsMessage msg);
+
+    /**
+     * Method used to display a genericMessage coming from the server
+     * @param msg the GenericMessage sent by the server
+     */
+    void generic(GenericMessage msg);
+
+    /**
+     * Method used to display an errorMessage and to recover to the last message by simulating the arrival
+     * of the message of which the answer caused the error
+     * @param msg the ErrorMessage sent by the server
+     */
+    void error(ErrorMessage msg);
 }
