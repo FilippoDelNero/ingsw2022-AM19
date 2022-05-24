@@ -24,4 +24,6 @@ module it.polimi.ingsw.am19 {
     exports it.polimi.ingsw.am19.Model.CharacterCards;
     exports it.polimi.ingsw.am19.Model.InfluenceStrategies;
     exports it.polimi.ingsw.am19.Model.Exceptions;
+    exports it.polimi.ingsw.am19.View.GUI;
+    opens it.polimi.ingsw.am19.View.GUI to javafx.fxml;
 }

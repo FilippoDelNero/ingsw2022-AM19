@@ -22,7 +22,7 @@ public interface View {
     /**
      * method to display an introductory splash screen
      */
-    void init();
+    void initView();
 
     /**
      * method used to ask the number of players of a match

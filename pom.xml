@@ -146,7 +146,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.polimi.ingsw.am19/it.polimi.ingsw.am19.HelloApplication</mainClass>
+                            <mainClass>it.polimi.ingsw.am19/it.polimi.ingsw.am19.View.GUI.Gui</mainClass>
                         </configuration>
                     </execution>
                 </executions>

@@ -47,7 +47,7 @@ public class Cli implements View {
      * method to display an introductory splash screen
      */
     @Override
-    public void init() {
+    public void initView() {
         printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
         printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
         printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");

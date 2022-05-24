@@ -33,7 +33,7 @@ public class ClientSideController {
     private Message previousMsg;
 
     /**
-     * class constructor, it also perform the view.init() method
+     * class constructor, it also perform the view.initView() method
      * @param client the client that this controller is associated with
      * @param view the view this controller has to work with
      */
@@ -42,7 +42,7 @@ public class ClientSideController {
         this.view = view;
         cache = new Cache();
         view.setViewCache(cache);
-        view.init();
+        view.initView();
     }
 
     /**
@@ -91,6 +91,7 @@ public class ClientSideController {
 
         else{
             boolean resumingMatch = view.askResumeMatch();
+
             if(!resumingMatch) {
                 numOfPlayers = view.newMatchNumOfPlayers();
                 isExpert = view.newMatchIsExpert();
