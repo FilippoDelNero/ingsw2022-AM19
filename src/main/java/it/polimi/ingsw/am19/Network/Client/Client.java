@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Client {
     /** the controller used to manage incoming messages and send correct replies */
-    private final ClientSideController myController;
+    private final Dispatcher dispatcher;
 
     /** socket used to connect to the server */
     private final Socket socket;
@@ -53,7 +53,8 @@ public class Client {
      */
     public Client(String hostName, int portNumber, View view) {
         tryAgain = true;
-        myController = new ClientSideController(this, view);
+        view.setMyClient(this);
+        dispatcher = new Dispatcher(view);
         thread = Executors.newSingleThreadExecutor();
         scheduledThread = Executors.newSingleThreadScheduledExecutor();
 
@@ -96,7 +97,7 @@ public class Client {
                         Message msg;
                         try {
                             msg = (Message) input.readObject();
-                            myController.communicate(msg);
+                            dispatcher.dispatch(msg);
                             tryAgain = true;
                         } catch (IOException e) {
                             if(tryAgain)

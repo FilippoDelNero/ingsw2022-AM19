@@ -7,6 +7,9 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
+import it.polimi.ingsw.am19.Network.Client.Client;
+import it.polimi.ingsw.am19.Network.Client.Dispatcher;
+import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.View.View;
 
@@ -24,7 +27,15 @@ public class Cli implements View {
     private final Scanner reader;
 
     /** cache used to store objects to be displayed on the view */
-    private Cache cache;
+    private final Cache cache;
+
+    private String nickname;
+
+    private Client myClient;
+
+    private Dispatcher myDispatcher;
+
+    private Message previousMsg;
 
     /**
      * class constructor
@@ -32,22 +43,14 @@ public class Cli implements View {
     public Cli() {
         printer = System.out;
         reader = new Scanner(System.in);
-    }
-
-    /**
-     * setter for the viewCache
-     * @param viewCache the cache this view will pull data from
-     */
-    @Override
-    public void setViewCache(Cache viewCache) {
-        this.cache = viewCache;
+        cache = new Cache();
+        init();
     }
 
     /**
      * method to display an introductory splash screen
      */
-    @Override
-    public void initView() {
+    public void init() {
         printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
         printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
         printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
@@ -59,12 +62,235 @@ public class Cli implements View {
         printer.println("Welcome!\n");
     }
 
+    @Override
+    public void setMyClient(Client client) {
+        this.myClient = client;
+    }
+
+    @Override
+    public void setDispatcher(Dispatcher dispatcher) {
+        this.myDispatcher = dispatcher;
+    }
+
+    @Override
+    public void setPreviousMsg(Message msg) {
+        this.previousMsg = msg;
+    }
+
+    public void askLoginFirstPlayer(AskFirstPlayerMessage msg) {
+        previousMsg = msg;
+        int numOfPlayers;
+        boolean isExpert;
+        if(!msg.isMatchToResume()) {
+            numOfPlayers = newMatchNumOfPlayers();
+            isExpert = newMatchIsExpert();
+            myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
+        }
+
+        else{
+            boolean resumingMatch = askResumeMatch();
+            if(!resumingMatch) {
+                numOfPlayers = newMatchNumOfPlayers();
+                isExpert = newMatchIsExpert();
+                myClient.sendMessage(new ReplyCreateMatchMessage(numOfPlayers, isExpert));
+            } else{
+                myClient.sendMessage(new ReplyResumeMatchMessage());
+            }
+        }
+    }
+
+    public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg){
+        this.nickname = askNicknameFromList(new ArrayList<>(msg.getNicknameAvailable()));
+        myClient.sendMessage(new ReplyLoginInfoMessage(nickname,null,null));
+    }
+
+    /**
+     * The method is called when a AskLoginInfoMessage comes in
+     * it asks and sends nickname, wizardFamily and towerColor
+     * @param msg the AskLoginInfoMessage sent by the server
+     */
+    public void askLoginInfo(AskLoginInfoMessage msg){
+        TowerColor towercolor;
+        WizardFamily wizardFamily;
+        this.nickname = askNickname();
+        towercolor = askTowerColor(msg.getTowerColorsAvailable());
+        wizardFamily = askWizardFamily(msg.getWizardFamiliesAvailable());
+        myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
+    }
+
+    /**
+     * shows the available HelperCards to the user and the sends he/she's answer to the server
+     * @param msg the message sent by the server containing the availableHelperCards
+     */
+    public void showHelperOptions(AskHelperCardMessage msg){
+        List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
+        HelperCard helperCard;
+        printView();
+        helperCard = askHelperCard(cardOptions);
+        myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
+    }
+
+    /**
+     * Method used to ask the player where she/he wants to move which student's color
+     * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
+     */
+    public void askEntranceMove(AskEntranceMoveMessage msg) {
+        String input;
+        int islandNum;
+        PieceColor color = null;
+
+        String[] colorsString = {"red", "green", "blue", "yellow", "pink"};
+        PieceColor[] colorsPC = {PieceColor.RED, PieceColor.GREEN, PieceColor.BLUE, PieceColor.YELLOW, PieceColor.PINK};
+        Map<String, PieceColor> colors = new HashMap<>();
+        for(int i = 0; i < 5; i++) {
+            colors.put(colorsString[i], colorsPC[i]);
+        }
+
+        printView();
+        input = askEntranceMove(msg.getMovesLeft());
+        for(String s : colors.keySet()) {
+            if(input.contains(s))
+                color = colors.get(s);
+        }
+        if (color == null)
+            myDispatcher.dispatch(previousMsg);
+        else if(input.contains("island") || input.contains(" i") || input.contains("isle")) {
+            input = input.replaceAll("[^0-9]+", " ");
+            try {
+                islandNum = (Integer.parseInt(input.trim())) - 1;
+            } catch (NumberFormatException e) {
+                myDispatcher.dispatch(previousMsg);
+                return;
+            }
+            if(islandNum < 0 || islandNum >= cache.getIslands().size()) {
+                myDispatcher.dispatch(previousMsg);
+                return;
+            }
+            myClient.sendMessage(new ReplyEntranceToIslandMessage(nickname, islandNum, color));
+        }
+        else if(input.contains("dining") || input.contains("room") || input.contains(" d"))
+            myClient.sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, color));
+        else
+            myDispatcher.dispatch(previousMsg);
+    }
+
+    /**
+     * The method is called when a AskMotherNatureStepMessage comes in
+     * it ask and send the num of step
+     */
+    public void askMotherNatureStep() {
+        int step;
+        printView();
+        step = askMotherNatureSteps();
+        myClient.sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
+    }
+
+    /**
+     * The method is called when a AskCloudMessage comes in
+     * it ask and send the num of cloud chosen
+     * @param msg the AskCloudMessage sent by server
+     */
+    public void askCloud(AskCloudMessage msg){
+        int cloudChosen;
+        printView();
+        cloudChosen= askCloud(msg.getCloudAvailable());
+        myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
+    }
+
+    /**
+     * Method used to ask the user if and which characterCards they want to play
+     * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
+     */
+    public void askPlayCharacter(AskPlayCharacterCardMessage msg){
+        printView();
+        Character chosenCardEnum = askPlayCharacter(msg.getAvailableCharacterCards());
+        myClient.sendMessage(new ReplyPlayCharacterCardMessage(nickname, chosenCardEnum));
+    }
+
+    /**
+     * method used to ask the user the parameters of the character card that they played
+     * @param msg the AskCharacterParameterMessage sent by server containing which parameter the played card will need
+     */
+    public void askCharacterCardParameters(AskCharacterParameterMessage msg) {
+        PieceColor color = null;
+        Integer islandIndex = null;
+        List<PieceColor> pieceColorList = null;
+        if(msg.isRequireColor())
+            color = askCharacterCardParamPieceColor();
+        if(msg.isRequireIsland())
+            islandIndex = askCharacterCardParamIsland();
+        if(msg.isRequireColorList())
+            pieceColorList = askCharacterCardParamList();
+        myClient.sendMessage(new ReplyCharacterParameterMessage(nickname, color, islandIndex, pieceColorList));
+    }
+
+    /**
+     * Method used to display the winner and close the client connection
+     * @param msg the EndMatchMessage sent by the server
+     */
+    public void endMatch(EndMatchMessage msg) {
+        if(msg.getWinners() != null)
+            genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+        else
+            genericPrint("We are sorry, the match will interrupted due to a fatal error occurring");
+        myClient.disconnect();
+    }
+
+    /**
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
+     */
+    public void updateCloud(UpdateCloudsMessage msg) {
+        cache.setClouds(msg.getClouds());
+    }
+
+    /**
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
+     */
+    public void updateGameBoards(UpdateGameBoardsMessage msg) {
+        cache.setGameBoards(msg.getList());
+    }
+
+    /**
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
+     */
+    public void updateIslands(UpdateIslandsMessage msg) {
+        cache.setIslands(msg.getList());
+    }
+
+    /**
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
+     */
+    public void updateCards(UpdateCardsMessage msg) {
+        cache.setCharacterCards(msg.getCharacterCardList());
+    }
+
+    /**
+     * Method used to display a genericMessage coming from the server
+     * @param msg the GenericMessage sent by the server
+     */
+    public void generic(GenericMessage msg) {
+        genericPrint(msg.toString());
+    }
+
+    /**
+     * Method used to display an errorMessage and to recover to the last message by simulating the arrival
+     * of the message of which the answer caused the error
+     * @param msg the ErrorMessage sent by the server
+     */
+    public void error(ErrorMessage msg) {
+        genericPrint("\033[31;1;4m" + msg.toString() + "\033[0m");
+        myDispatcher.dispatch(previousMsg);
+    }
+
     /**
      * method used to ask the player if they want to resume a saved match
      * @return true if the player wants to resume a saved match, false otherwise
      */
-    @Override
-    public boolean askResumeMatch() {
+    private boolean askResumeMatch() {
         String input;
         do  {
             printer.println("Do you want to resume the previous match? [yes, no]");
@@ -77,8 +303,7 @@ public class Cli implements View {
      * method used to ask the number of players of a match
      * @return the number of player chosen by the user
      */
-    @Override
-    public int newMatchNumOfPlayers() {
+    private int newMatchNumOfPlayers() {
         String input;
         printer.println("There are no matches to resume, we will create a new one:");
         do {
@@ -92,8 +317,7 @@ public class Cli implements View {
      * method used to ask the difficulty of a match
      * @return true if the match will be an expert one, false otherwise
      */
-    @Override
-    public boolean newMatchIsExpert() {
+    private boolean newMatchIsExpert() {
         String input;
         do  {
             printer.println("Do you want to play an expert match? [yes, no]");
@@ -106,16 +330,14 @@ public class Cli implements View {
      * method used to ask a nickname to the user
      * @return a String containing the nickname
      */
-    @Override
-    public String askNickname() {
+    private String askNickname() {
         String input;
         printer.println("Insert a nickname: ");
         input = reader.nextLine();
         return input;
     }
 
-    @Override
-    public String askNicknameFromList(List<String> nicknameAvailable) {
+    private String askNicknameFromList(List<String> nicknameAvailable) {
         String input;
         do{
             printer.println("Who are you?" + nicknameAvailable + '\n');
@@ -129,8 +351,7 @@ public class Cli implements View {
      * @param availableWizardFamilies a list containing the yet to be selected wizard families
      * @return the wizard family chosen by the player
      */
-    @Override
-    public WizardFamily askWizardFamily (List<WizardFamily> availableWizardFamilies) {
+    private WizardFamily askWizardFamily (List<WizardFamily> availableWizardFamilies) {
         String input;
         WizardFamily wizardFamily = null;
         do {
@@ -151,8 +372,7 @@ public class Cli implements View {
      * @param availableTowerColor a list containing the unused tower's color
      * @return the tower's color chosen by the user
      */
-    @Override
-    public TowerColor askTowerColor (List<TowerColor> availableTowerColor) {
+    private TowerColor askTowerColor (List<TowerColor> availableTowerColor) {
         String input;
         TowerColor towerColor = null;
         do {
@@ -166,8 +386,7 @@ public class Cli implements View {
         } while(!availableTowerColor.contains(towerColor));
         return towerColor;
     }
-
-    public HelperCard askHelperCard(List<HelperCard> cardOptions) {
+    private HelperCard askHelperCard(List<HelperCard> cardOptions) {
         int chosenCardIndex;
         List<Integer> availableIndexes = cardOptions.stream()
                 .map(HelperCard::getNextRoundOrder)
@@ -195,8 +414,7 @@ public class Cli implements View {
      * method used to ask the user which student's color wants to move and where
      * @return the input of the player
      */
-    @Override
-    public String askEntranceMove(int movesLeft) {
+    private String askEntranceMove(int movesLeft) {
         String input;
         printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
         input = reader.nextLine();
@@ -207,8 +425,7 @@ public class Cli implements View {
      * Method used to ask the step that Mother Nature have to do in clockwise
      * @return the num of step
      */
-    @Override
-    public int askMotherNatureStep() {
+    private int askMotherNatureSteps() {
         String input;
         int step=0;
         do {
@@ -232,8 +449,7 @@ public class Cli implements View {
      * @param cloudAvailable the array with the num of cloud still available to take
      * @return the index of cloud to take
      */
-    @Override
-    public int askCloud(List<Integer> cloudAvailable) {
+    private int askCloud(List<Integer> cloudAvailable) {
         int cloudChosen;
         String input;
         do {
@@ -255,8 +471,7 @@ public class Cli implements View {
      * @param characterOptions the character cards present in this expert match
      * @return the character card chosen by the user or null if they chose not to play a card
      */
-    @Override
-    public Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
+    private Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
         boolean validInput;
         Character chosenCardEnum = null;
 
@@ -295,8 +510,7 @@ public class Cli implements View {
      * Method used to ask the user a color for a Character Card
      * @return the chosen PieceColor
      */
-    @Override
-    public PieceColor askCharacterCardParamPieceColor() {
+    private PieceColor askCharacterCardParamPieceColor() {
         PieceColor color;
         String input;
         do {
@@ -311,8 +525,7 @@ public class Cli implements View {
      * Method used to ask the user an index of an island for a Character Card
      * @return the chosen index
      */
-    @Override
-    public int askCharacterCardParamIsland(){
+    private int askCharacterCardParamIsland(){
         int islandIndex;
         do {
             printer.println("write the index of the island: ");
@@ -329,8 +542,7 @@ public class Cli implements View {
      * Method used to ask the user a list of PieceColor for a Character Card
      * @return the list of PieceColor
      */
-    @Override
-    public List<PieceColor> askCharacterCardParamList() {
+    private List<PieceColor> askCharacterCardParamList() {
         List<PieceColor> pieceColorList = new ArrayList<>();
         PieceColor color1;
         PieceColor color2;
@@ -359,17 +571,14 @@ public class Cli implements View {
      * method used to display a generic message (error messages as well) to the user
      * @param toPrint the content that needs to be print
      */
-    @Override
-    public void genericPrint(String toPrint) {
+    private void genericPrint(String toPrint) {
         printer.println(toPrint);
     }
 
     /**
      * method used to print the entire game view
-     * @param nickname the nickname of the player who owns the view
      */
-    @Override
-    public void printView(String nickname) {
+    private void printView() {
         printer.flush(); //TODO NON FUNZIONA
 
         if(cache.getCharacterCards() != null) {
