@@ -40,4 +40,11 @@ public class StorageMatch implements Serializable {
         return null;
     }
 
+    public void delete(){
+        boolean isEliminated=false;
+        File file =new File("savedMatch.txt");
+        do{
+            isEliminated=file.delete();
+        } while(!isEliminated);
+    }
 }
