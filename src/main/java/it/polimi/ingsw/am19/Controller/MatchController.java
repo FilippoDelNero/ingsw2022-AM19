@@ -267,6 +267,8 @@ public class MatchController implements Observer{
         List<String> winners = model.getWinner().stream()
                 .map(Player::getNickname)
                 .toList();
+        StorageMatch store = new StorageMatch();
+        store.delete();
         sendBroadcastMessage(new EndMatchMessage(winners));
     }
 
