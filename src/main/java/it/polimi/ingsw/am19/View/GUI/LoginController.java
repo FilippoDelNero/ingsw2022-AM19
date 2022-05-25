@@ -11,19 +11,18 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-
 public class LoginController implements SceneController{
         private Gui gui;
 
         public void initialize(){
                 warningLabel.setVisible(false);
-                //warningLabel.setText("Invalid username");
+                warningLabel.setText("Please fill out all fields");
         }
         @FXML
         private Pane pane;
 
         @FXML
-        private Label warningLabel; //TODO valutare se eliminare
+        private Label warningLabel;
 
         @FXML
         private Button submitButton;
@@ -39,14 +38,14 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
-                //TODO
-                // if (usernameField.getText()==null || usernameField.getText().equals("") || towerColorField.getText().equals())
-                gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
-                        usernameField.getText(),
-                        getTowerColor(towerColorField.getText()),
-                        getWizardFamily(wizardFamilyField.getText())));
-
-                //gui.changeScene(gui.getWAITING());
+                if (!checkInputValidity())
+                        warningLabel.setVisible(true);
+                else{
+                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
+                                usernameField.getText(),
+                                getTowerColor(towerColorField.getText()),
+                                getWizardFamily(wizardFamilyField.getText())));
+                }
         }
 
 
@@ -97,9 +96,9 @@ public class LoginController implements SceneController{
                 this.gui = gui;
         }
 
-        /*
-        public Label getWarningLabel() {
-                return warningLabel;
+        private boolean checkInputValidity() {
+                return usernameField.getText() != null && !usernameField.getText().equals("")
+                        && !towerColorField.getText().equals("Tower color") //default option still set
+                        && !wizardFamilyField.getText().equals("Wizard family"); //default option still set
         }
-         */
 }
