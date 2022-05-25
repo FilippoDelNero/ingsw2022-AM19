@@ -37,9 +37,9 @@ public class Gui extends Application implements View {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
         stage.setResizable(false);
-        Scene scene = new Scene(root, 1440, 900);
+        Scene scene = new Scene(root, 1440, 850);
         currScene = scene;
         ConnectionController controller = fxmlLoader.getController();
         controller.setGui(this);
@@ -159,8 +159,6 @@ public class Gui extends Application implements View {
     public void generic(GenericMessage msg) {
         if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
-
-
     }
 
     @Override
@@ -182,7 +180,7 @@ public class Gui extends Application implements View {
                 currController = fxmlLoader.getController();
                 currController.setGui(this);
                 //stage.setFullScreen(true);
-                Scene scene = new Scene(root, 1440, 900);
+                Scene scene = new Scene(root, 1440, 850);
                 currScene=scene;
                 stage.setTitle("Eriantys");
                 stage.setScene(scene);

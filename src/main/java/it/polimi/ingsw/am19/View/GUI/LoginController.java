@@ -16,7 +16,7 @@ public class LoginController implements SceneController{
         private Gui gui;
 
         public void initialize(){
-                //warningLabel.setVisible(false);
+                warningLabel.setVisible(false);
                 //warningLabel.setText("Invalid username");
         }
         @FXML
@@ -39,6 +39,8 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
+                //TODO
+                // if (usernameField.getText()==null || usernameField.getText().equals("") || towerColorField.getText().equals())
                 gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
                         usernameField.getText(),
                         getTowerColor(towerColorField.getText()),
@@ -52,8 +54,8 @@ public class LoginController implements SceneController{
                return switch (towerColor.toLowerCase()){
                         case "white" ->  TowerColor.WHITE;
                         case "black"->  TowerColor.BLACK;
-                       case "grey"->  TowerColor.GREY;
-                       default -> null;
+                        case "grey"->  TowerColor.GREY;
+                        default -> null;
                 };
         }
 
