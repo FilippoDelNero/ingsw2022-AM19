@@ -8,7 +8,6 @@ import it.polimi.ingsw.am19.Network.Message.*;
  * Interface to allow the ClientSideController to use indifferently a gui or a cli
  */
 public interface View {
-
     /**
      * setter for the client parameter
      * @param client the client this view needs to refer to to send messages

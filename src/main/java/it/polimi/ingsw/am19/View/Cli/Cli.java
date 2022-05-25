@@ -44,13 +44,14 @@ public class Cli implements View {
         printer = System.out;
         reader = new Scanner(System.in);
         cache = new Cache();
-        init();
+        initView();
+        startView();
     }
 
     /**
      * method to display an introductory splash screen
      */
-    public void init() {
+    private void initView() {
         printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
         printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
         printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
@@ -60,6 +61,31 @@ public class Cli implements View {
         printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
         printer.println("\n");
         printer.println("Welcome!\n");
+    }
+
+    private void startView() {
+        String ipAddress;
+        String portNumberString;
+        int portNumber = 0;
+        boolean isValid = true;
+
+        printer.println("insert an ip address: ");
+        ipAddress = reader.nextLine();
+
+        do {
+            printer.println("insert a port: ");
+            portNumberString = reader.nextLine();
+            try {
+                portNumber = Integer.parseInt(portNumberString);
+            } catch (NumberFormatException e) {
+                isValid = false;
+            }
+        } while(!isValid);
+
+
+        myClient = new Client(ipAddress, portNumber, this);
+        myClient.startPinging();
+        myClient.receiveMessage();
     }
 
     @Override

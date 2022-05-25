@@ -2,7 +2,9 @@ package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Network.Message.Message;
 import it.polimi.ingsw.am19.Network.Message.PingMessage;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import it.polimi.ingsw.am19.View.View;
+import javafx.application.Application;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -53,7 +55,7 @@ public class Client {
      */
     public Client(String hostName, int portNumber, View view) {
         tryAgain = true;
-        view.setMyClient(this);
+
         dispatcher = new Dispatcher(view);
         thread = Executors.newSingleThreadExecutor();
         scheduledThread = Executors.newSingleThreadScheduledExecutor();

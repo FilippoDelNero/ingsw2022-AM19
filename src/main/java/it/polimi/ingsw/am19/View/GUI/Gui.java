@@ -1,141 +1,199 @@
 package it.polimi.ingsw.am19.View.GUI;
 
-import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
-import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
-import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Client.Cache;
+import it.polimi.ingsw.am19.Network.Client.Client;
+import it.polimi.ingsw.am19.Network.Client.Dispatcher;
+import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.View.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Gui extends Application implements View {
+    private Client myClient;
+
     /** cache used to store objects to be displayed on the view */
     private Cache cache;
-    private Map<String,SceneController> controllers = new HashMap<>();
     private SceneController currController;
+    private Scene currScene;
+    private Stage stage;
+    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
     private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
+    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
+    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
+    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Gui.class.getResource(GAME_OPT));
-        controllers.put(GAME_OPT,fxmlLoader.getController());
+        this.stage = stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
         stage.setFullScreen(true);
+        stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
+        currScene = scene;
+        ConnectionController controller = fxmlLoader.getController();
+        controller.setGui(this);
+        currController = controller;
         stage.setTitle("Eriantys");
         stage.setScene(scene);
         stage.show();
-        setUpController();
     }
 
-    private void setUpController(){
-        currController = controllers.get(GAME_OPT);
-    }
-
-    @Override
-    public void setViewCache(Cache viewCache) {
-
+    public void startView(String ip, int port) {
+        myClient = new Client(ip, port, this);
+        myClient.startPinging();
+        myClient.receiveMessage();
     }
 
     @Override
-    public void initView() {
+    public void setMyClient(Client client) {
+        this.myClient = client;
 
     }
 
     @Override
-    public int newMatchNumOfPlayers() {
-        return 0;
-    }
-
-    @Override
-    public boolean newMatchIsExpert() {
-        return false;
-    }
-
-    @Override
-    public String askNickname() {
-        return null;
-    }
-
-    @Override
-    public String askNicknameFromList(List<String> nicknameAvailable) {
-        return null;
-    }
-
-    @Override
-    public WizardFamily askWizardFamily(List<WizardFamily> availableWizardFamilies) {
-        return null;
-    }
-
-    @Override
-    public TowerColor askTowerColor(List<TowerColor> availableTowerColor) {
-        return null;
-    }
-
-    @Override
-    public HelperCard askHelperCard(List<HelperCard> helperDeck) {
-        return null;
-    }
-
-    @Override
-    public String askEntranceMove(int movesLeft) {
-        return null;
-    }
-
-    @Override
-    public int askMotherNatureStep() {
-        return 0;
-    }
-
-    @Override
-    public int askCloud(List<Integer> cloudAvailable) {
-        return 0;
-    }
-
-    @Override
-    public Character askPlayCharacter(List<AbstractCharacterCard> characterOptions) {
-        return null;
-    }
-
-    @Override
-    public PieceColor askCharacterCardParamPieceColor() {
-        return null;
-    }
-
-    @Override
-    public int askCharacterCardParamIsland() {
-        return 0;
-    }
-
-    @Override
-    public List<PieceColor> askCharacterCardParamList() {
-        return null;
-    }
-
-    @Override
-    public void genericPrint(String toPrint) {
+    public void setDispatcher(Dispatcher dispatcher) {
 
     }
 
     @Override
-    public void printView(String nickname) {
+    public void setPreviousMsg(Message msg) {
 
     }
 
     @Override
-    public boolean askResumeMatch() {
-        return ((GameOptionsController)currController).resumeOldMatch();
+    public void askLoginFirstPlayer(AskFirstPlayerMessage msg) {
+        changeScene(GAME_OPT);
 
+        Platform.runLater(() -> {
+            if(msg.isMatchToResume())
+                ((GameOptionsController)currController).askResume();
+            else
+                ((GameOptionsController)currController).askNew();
+        });
+    }
+
+    @Override
+    public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg) {
+        changeScene(USERNAMES_OPT);
+
+        Platform.runLater(() ->
+            ((UsernameOptionsController)currController).setAvailableUsernames(msg.getNicknameAvailable()));
+
+    }
+
+    @Override
+    public void askLoginInfo(AskLoginInfoMessage msg) {
+        changeScene(LOGIN);
+
+        Platform.runLater(() ->
+                ((LoginController)currController).setOptions(msg.getTowerColorsAvailable(),msg.getWizardFamiliesAvailable()));
+    }
+
+    @Override
+    public void showHelperOptions(AskHelperCardMessage msg) {
+
+    }
+
+    @Override
+    public void askEntranceMove(AskEntranceMoveMessage msg) {
+
+    }
+
+    @Override
+    public void askMotherNatureStep() {
+
+    }
+
+    @Override
+    public void askCloud(AskCloudMessage msg) {
+
+    }
+
+    @Override
+    public void askPlayCharacter(AskPlayCharacterCardMessage msg) {
+
+    }
+
+    @Override
+    public void askCharacterCardParameters(AskCharacterParameterMessage msg) {
+
+    }
+
+    @Override
+    public void endMatch(EndMatchMessage msg) {
+
+    }
+
+    @Override
+    public void updateCloud(UpdateCloudsMessage msg) {
+
+    }
+
+    @Override
+    public void updateGameBoards(UpdateGameBoardsMessage msg) {
+
+    }
+
+    @Override
+    public void updateIslands(UpdateIslandsMessage msg) {
+
+    }
+
+    @Override
+    public void updateCards(UpdateCardsMessage msg) {
+
+    }
+
+    @Override
+    public void generic(GenericMessage msg) {
+        if (msg.getMessage().equals("waiting for others player to join..."))
+            changeScene(WAITING);
+
+
+    }
+
+    @Override
+    public void error(ErrorMessage msg) {
+        Platform.runLater(() -> {
+            //((LoginController)currController).getWarningLabel().setVisible(true);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText(msg.getError());
+            Optional<ButtonType> result = alert.showAndWait();
+        });
+    }
+
+    public void changeScene(String controllerName) {
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerName));
+                Parent root = fxmlLoader.load();
+                currController = fxmlLoader.getController();
+                currController.setGui(this);
+                //stage.setFullScreen(true);
+                Scene scene = new Scene(root, 1440, 900);
+                currScene=scene;
+                stage.setTitle("Eriantys");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public Client getMyClient() {
+        return myClient;
     }
 }

@@ -1,34 +1,29 @@
 package it.polimi.ingsw.am19.View.GUI;
 
+import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
+import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
+
 
 public class LoginController implements SceneController{
-        private boolean isExpert;
+        private Gui gui;
+
         public void initialize(){
-                easyRadioButton.setUserData(false);
-                expertRadioButton.setUserData(true);
+                //warningLabel.setVisible(false);
+                //warningLabel.setText("Invalid username");
         }
+        @FXML
+        private Pane pane;
 
         @FXML
-        private ToggleGroup difficultyRadioButton;
-
-        @FXML
-        private RadioButton easyRadioButton;
-
-        @FXML
-        private RadioButton expertRadioButton;
-
-        @FXML
-        private MenuButton numPlayerField;
-
-        @FXML
-        private MenuButton savedUsernameField;
+        private Label warningLabel; //TODO valutare se eliminare
 
         @FXML
         private Button submitButton;
@@ -44,13 +39,65 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
+                gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
+                        usernameField.getText(),
+                        getTowerColor(towerColorField.getText()),
+                        getWizardFamily(wizardFamilyField.getText())));
+
+                //gui.changeScene(gui.getWAITING());
+        }
+
+
+        private TowerColor getTowerColor(String towerColor){
+               return switch (towerColor.toLowerCase()){
+                        case "white" ->  TowerColor.WHITE;
+                        case "black"->  TowerColor.BLACK;
+                       case "grey"->  TowerColor.GREY;
+                       default -> null;
+                };
+        }
+
+        private WizardFamily getWizardFamily(String wizardFamily){
+                return switch (wizardFamily.toLowerCase()){
+                        case "king" ->  WizardFamily.KING;
+                        case "witch"->  WizardFamily.WITCH;
+                        case "shaman"->  WizardFamily.SHAMAN;
+                        case "warrior"->  WizardFamily.WARRIOR;
+                        default -> null;
+                };
+        }
+
+        public void setOptions(ArrayList<TowerColor> towerColors, ArrayList<WizardFamily> wizardFamilies){
+                for (TowerColor color: towerColors)
+                        towerColorField.getItems().add(new MenuItem(color.toString()));
+
+                for (WizardFamily wizardFamily: wizardFamilies)
+                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString()));
+
+                // create action event
+                EventHandler<ActionEvent> clickOnTowerMenuItem = (e) ->
+                        towerColorField.setText(((MenuItem)e.getSource()).getText());
+
+                EventHandler<ActionEvent> clickOnWizardFamMenuItem = (e) ->
+                        wizardFamilyField.setText(((MenuItem)e.getSource()).getText());
+
+                // add action events to the menuitems
+                for (MenuItem item: towerColorField.getItems())
+                        item.setOnAction(clickOnTowerMenuItem);
+
+                for (MenuItem item: wizardFamilyField.getItems())
+                        item.setOnAction(clickOnWizardFamMenuItem);
 
         }
 
-        @FXML
-        void difficultyRadioButtonSelected(ActionEvent event) {
-                RadioButton selectedRadioButton = (RadioButton) difficultyRadioButton.getSelectedToggle();
-                isExpert = (boolean) selectedRadioButton.getUserData();
+        @Override
+        public void setGui(Gui gui) {
+                this.gui = gui;
         }
 
+        /*
+        public Label getWarningLabel() {
+                return warningLabel;
+        }
+         */
 }
