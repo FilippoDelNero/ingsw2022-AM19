@@ -54,6 +54,15 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
+                if (!checkInputValidity())
+                        warningLabel.setVisible(true);
+                else{
+                        gui.setNickname(usernameField.getText());
+                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
+                                usernameField.getText(),
+                                getTowerColor(towerColorField.getText()),
+                                getWizardFamily(wizardFamilyField.getText())));
+                }
                 sendUserData();
         }
 

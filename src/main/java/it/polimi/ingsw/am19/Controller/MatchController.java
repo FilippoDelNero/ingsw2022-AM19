@@ -87,7 +87,7 @@ public class MatchController implements Observer{
      * @return true if a previous match's storage data exists, false otherwise
      */
     public boolean checkOldMatches(){
-        File file = new File("savedMatch.txt");
+        File file = new File("shade/savedMatch.txt");
         return file.exists();
     }
 
