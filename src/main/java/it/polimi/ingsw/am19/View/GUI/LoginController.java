@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -17,6 +18,21 @@ public class LoginController implements SceneController{
         public void initialize(){
                 warningLabel.setVisible(false);
                 warningLabel.setText("Please fill out all fields");
+
+                usernameField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
+
+                towerColorField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
+
+                wizardFamilyField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
         }
         @FXML
         private Pane pane;
@@ -38,14 +54,7 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
-                if (!checkInputValidity())
-                        warningLabel.setVisible(true);
-                else{
-                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
-                                usernameField.getText(),
-                                getTowerColor(towerColorField.getText()),
-                                getWizardFamily(wizardFamilyField.getText())));
-                }
+                sendUserData();
         }
 
 
@@ -100,5 +109,16 @@ public class LoginController implements SceneController{
                 return usernameField.getText() != null && !usernameField.getText().equals("")
                         && !towerColorField.getText().equals("Tower color") //default option still set
                         && !wizardFamilyField.getText().equals("Wizard family"); //default option still set
+        }
+
+        private void sendUserData(){
+                if (!checkInputValidity())
+                        warningLabel.setVisible(true);
+                else{
+                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
+                                usernameField.getText(),
+                                getTowerColor(towerColorField.getText()),
+                                getWizardFamily(wizardFamilyField.getText())));
+                }
         }
 }
