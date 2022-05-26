@@ -19,6 +19,7 @@ import java.util.*;
 
 public class Gui extends Application implements View {
     private Client myClient;
+    private String nickname;
 
     /** cache used to store objects to be displayed on the view */
     private Cache cache;
@@ -30,7 +31,15 @@ public class Gui extends Application implements View {
     private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
     private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
     private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,8 +47,8 @@ public class Gui extends Application implements View {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
         //stage.setFullScreen(true);
-        stage.setResizable(false);
-        Scene scene = new Scene(root, 1440, 850);
+        //stage.setResizable(false);
+        Scene scene = new Scene(root, 1440, 900);
         currScene = scene;
         ConnectionController controller = fxmlLoader.getController();
         controller.setGui(this);
@@ -102,7 +111,10 @@ public class Gui extends Application implements View {
 
     @Override
     public void showHelperOptions(AskHelperCardMessage msg) {
+        changeScene(HELPERCARD);
 
+        Platform.runLater(()->
+                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard()));
     }
 
     @Override
@@ -179,11 +191,7 @@ public class Gui extends Application implements View {
                 Parent root = fxmlLoader.load();
                 currController = fxmlLoader.getController();
                 currController.setGui(this);
-                //stage.setFullScreen(true);
-                Scene scene = new Scene(root, 1440, 850);
-                currScene=scene;
-                stage.setTitle("Eriantys");
-                stage.setScene(scene);
+                stage.getScene().setRoot(root);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();

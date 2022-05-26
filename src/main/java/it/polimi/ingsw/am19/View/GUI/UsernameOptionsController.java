@@ -21,6 +21,7 @@ public class UsernameOptionsController implements SceneController{
 
     @FXML
     void sendUserData(ActionEvent event) {
+        gui.setNickname(savedUsernamesField.getText());
         gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(savedUsernamesField.getText(), null, null));
     }
 
