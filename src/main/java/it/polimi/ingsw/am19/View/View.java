@@ -9,7 +9,6 @@ import it.polimi.ingsw.am19.Network.Message.*;
  * Interface to allow the ClientSideController to use indifferently a gui or a cli
  */
 public interface View {
-
     /**
      * setter for the cache attribute
      * @param cache the cache this view will pull data from

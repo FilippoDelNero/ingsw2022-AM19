@@ -113,7 +113,7 @@ public class MatchController implements Observer{
         model.setAllObservers();
 
         currState = StateType.IN_PROGRESS;
-        // faccio nuova planning phase e faccio l'init
+        // faccio nuova planning phase e faccio l'initView
     }
 
     /**

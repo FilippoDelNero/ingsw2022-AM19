@@ -111,7 +111,7 @@ public class ClientManager implements Runnable {
         synchronized (lockToSend) {
             try {
                 output.writeObject(msg);
-                System.out.println(msg.getMessageType());
+                System.out.println("----" + msg.getMessageType() + "--->");
                 output.reset();
             } catch (IOException e) {
                 System.out.println("errore in invio");
@@ -136,7 +136,7 @@ public class ClientManager implements Runnable {
                     Message msg = (Message) input.readObject();
                     tryAgain = false;
                     if(msg.getMessageType()!= MessageType.PING_MESSAGE)
-                        System.out.println(msg.getMessageType());
+                        System.out.println("<---" + msg.getMessageType() + "----");
                     switch (msg.getMessageType()){
                         case PING_MESSAGE -> myTimer.reset();
                         case RESUME_MATCH,REPLY_CREATE_MATCH,REPLY_LOGIN_INFO -> myServer.MessageToLoginManager(msg);

@@ -48,6 +48,7 @@ public class Cli implements View {
         printer = System.out;
         reader = new Scanner(System.in);
         initView();
+        startView();
     }
 
     /**
@@ -57,6 +58,31 @@ public class Cli implements View {
     @Override
     public void setCache(Cache cache) {
         this.cache = cache;
+    }
+
+    private void startView() {
+        String ipAddress;
+        String portNumberString;
+        int portNumber = 0;
+        boolean isValid = true;
+
+        printer.println("insert an ip address: ");
+        ipAddress = reader.nextLine();
+
+        do {
+            printer.println("insert a port: ");
+            portNumberString = reader.nextLine();
+            try {
+                portNumber = Integer.parseInt(portNumberString);
+            } catch (NumberFormatException e) {
+                isValid = false;
+            }
+        } while(!isValid);
+
+
+        myClient = new Client(ipAddress, portNumber, this);
+        myClient.startPinging();
+        myClient.receiveMessage();
     }
 
     /**

@@ -12,6 +12,10 @@ public class ErrorMessage extends Message{
         this.error = error;
     }
 
+    public String getError() {
+        return error;
+    }
+
     @Override
     public String toString() {
         return error;
