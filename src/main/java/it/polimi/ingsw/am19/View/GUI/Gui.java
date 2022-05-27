@@ -19,18 +19,27 @@ import java.util.*;
 
 public class Gui extends Application implements View {
     private Client myClient;
+    private String nickname;
 
     /** cache used to store objects to be displayed on the view */
     private Cache cache;
     private SceneController currController;
     private Scene currScene;
     private Stage stage;
-    private final static String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
-    private final static String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
-    private final static String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
-    private final static String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
-    private final static String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
+    private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
+    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
+    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
+    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,8 +47,8 @@ public class Gui extends Application implements View {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
         //stage.setFullScreen(true);
-        stage.setResizable(false);
-        Scene scene = new Scene(root, 1440, 850);
+        //stage.setResizable(false);
+        Scene scene = new Scene(root, 1440, 900);
         currScene = scene;
         ConnectionController controller = fxmlLoader.getController();
         controller.setGui(this);
@@ -58,11 +67,6 @@ public class Gui extends Application implements View {
     @Override
     public void setMyClient(Client client) {
         this.myClient = client;
-
-    }
-
-    @Override
-    public void setCache(Cache cache) {
 
     }
 
@@ -107,7 +111,10 @@ public class Gui extends Application implements View {
 
     @Override
     public void showHelperOptions(AskHelperCardMessage msg) {
+        changeScene(HELPERCARD);
 
+        Platform.runLater(()->
+                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard()));
     }
 
     @Override
@@ -141,6 +148,26 @@ public class Gui extends Application implements View {
     }
 
     @Override
+    public void updateCloud(UpdateCloudsMessage msg) {
+
+    }
+
+    @Override
+    public void updateGameBoards(UpdateGameBoardsMessage msg) {
+
+    }
+
+    @Override
+    public void updateIslands(UpdateIslandsMessage msg) {
+
+    }
+
+    @Override
+    public void updateCards(UpdateCardsMessage msg) {
+
+    }
+
+    @Override
     public void generic(GenericMessage msg) {
         if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
@@ -164,11 +191,7 @@ public class Gui extends Application implements View {
                 Parent root = fxmlLoader.load();
                 currController = fxmlLoader.getController();
                 currController.setGui(this);
-                //stage.setFullScreen(true);
-                Scene scene = new Scene(root, 1440, 850);
-                currScene=scene;
-                stage.setTitle("Eriantys");
-                stage.setScene(scene);
+                stage.getScene().setRoot(root);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
