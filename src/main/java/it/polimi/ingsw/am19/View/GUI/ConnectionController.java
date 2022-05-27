@@ -58,6 +58,7 @@ public class ConnectionController implements SceneController{
 
     @Override
     public void showGenericMsg(GenericMessage msg) {
+        //TODO eliminare
         System.out.println(msg.getMessage());
         genericMsgField.setText(msg.getMessage());
         genericMsgField.setVisible(true);

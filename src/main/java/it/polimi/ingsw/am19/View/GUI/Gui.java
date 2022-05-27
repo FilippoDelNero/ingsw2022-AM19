@@ -172,13 +172,12 @@ public class Gui extends Application implements View {
         if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
 
-        Platform.runLater(() ->currController.showGenericMsg(msg));
+        Platform.runLater(() -> currController.showGenericMsg(msg));
     }
 
     @Override
     public void error(ErrorMessage msg) {
         Platform.runLater(() -> {
-            //((LoginController)currController).getWarningLabel().setVisible(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText(msg.getError());
