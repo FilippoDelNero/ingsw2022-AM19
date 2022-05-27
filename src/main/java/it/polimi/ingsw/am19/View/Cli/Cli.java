@@ -64,12 +64,13 @@ public class Cli implements View {
         String ipAddress;
         String portNumberString;
         int portNumber = 0;
-        boolean isValid = true;
+        boolean isValid;
 
         printer.println("insert an ip address: ");
         ipAddress = reader.nextLine();
 
         do {
+            isValid = true;
             printer.println("insert a port: ");
             portNumberString = reader.nextLine();
             try {

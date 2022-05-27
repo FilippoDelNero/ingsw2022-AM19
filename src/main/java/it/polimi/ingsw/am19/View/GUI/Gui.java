@@ -25,11 +25,11 @@ public class Gui extends Application implements View {
     private SceneController currController;
     private Scene currScene;
     private Stage stage;
-    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
-    private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
-    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
-    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
-    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final static String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
+    private final static String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
+    private final static String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
+    private final static String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
+    private final static String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
 
 
     @Override
@@ -58,6 +58,11 @@ public class Gui extends Application implements View {
     @Override
     public void setMyClient(Client client) {
         this.myClient = client;
+
+    }
+
+    @Override
+    public void setCache(Cache cache) {
 
     }
 
@@ -132,26 +137,6 @@ public class Gui extends Application implements View {
 
     @Override
     public void endMatch(EndMatchMessage msg) {
-
-    }
-
-    @Override
-    public void updateCloud(UpdateCloudsMessage msg) {
-
-    }
-
-    @Override
-    public void updateGameBoards(UpdateGameBoardsMessage msg) {
-
-    }
-
-    @Override
-    public void updateIslands(UpdateIslandsMessage msg) {
-
-    }
-
-    @Override
-    public void updateCards(UpdateCardsMessage msg) {
 
     }
 
