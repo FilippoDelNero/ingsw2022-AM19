@@ -641,9 +641,19 @@ public class Cli implements View {
         }
 
         if(cache.getGameBoards() != null) {
+            List<ReducedGameBoard> list = new ArrayList<>();
+
+            for(ReducedGameBoard rgb : cache.getGameBoards()) {
+                if(rgb.playerNickname().equals(nickname))
+                    list.add(0, rgb);
+                else
+                    list.add(rgb);
+            }
+
             printer.println("Each Player's GameBoard: ");
-            for(ReducedGameBoard rgb : cache.getGameBoards())
-                printer.println(rgb.toString() + '\n'); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+
+            for(ReducedGameBoard rgb : list)
+                printer.println(rgb.toString() + '\n');
         }
 
         if(cache.getIslands() != null) {
