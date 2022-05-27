@@ -1,4 +1,5 @@
 package it.polimi.ingsw.am19.View.GUI;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyCreateMatchMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyResumeMatchMessage;
 import javafx.event.ActionEvent;
@@ -113,5 +114,10 @@ public class GameOptionsController implements SceneController{
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    @Override
+    public void showGenericMsg(GenericMessage msg) {
+
     }
 }

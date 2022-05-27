@@ -1,14 +1,12 @@
 package it.polimi.ingsw.am19.View.GUI;
 
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 public class ConnectionController implements SceneController{
@@ -17,6 +15,7 @@ public class ConnectionController implements SceneController{
     public void initialize(){
         warningLabel.setVisible(false);
         warningLabel.setText("Please fill out all fields");
+        genericMsgField.setVisible(false);
 
         ipAddress.setOnKeyPressed( e -> {
             if( e.getCode() == KeyCode.ENTER )
@@ -45,6 +44,9 @@ public class ConnectionController implements SceneController{
     private Label warningLabel;
 
     @FXML
+    private Label genericMsgField;
+
+    @FXML
     void sendConnectionData(ActionEvent event) {
         sendConnectionData();
     }
@@ -52,6 +54,13 @@ public class ConnectionController implements SceneController{
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    @Override
+    public void showGenericMsg(GenericMessage msg) {
+        System.out.println(msg.getMessage());
+        genericMsgField.setText(msg.getMessage());
+        genericMsgField.setVisible(true);
     }
 
     private boolean checkInputValidity() {

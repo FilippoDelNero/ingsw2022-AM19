@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.View.GUI;
 
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,5 +42,10 @@ public class UsernameOptionsController implements SceneController{
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    @Override
+    public void showGenericMsg(GenericMessage msg) {
+
     }
 }

@@ -2,7 +2,9 @@ package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,6 +36,7 @@ public class LoginController implements SceneController{
                                 sendUserData();
                 });
         }
+
         @FXML
         private Pane pane;
 
@@ -54,15 +57,6 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
-                if (!checkInputValidity())
-                        warningLabel.setVisible(true);
-                else{
-                        gui.setNickname(usernameField.getText());
-                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
-                                usernameField.getText(),
-                                getTowerColor(towerColorField.getText()),
-                                getWizardFamily(wizardFamilyField.getText())));
-                }
                 sendUserData();
         }
 
@@ -114,6 +108,10 @@ public class LoginController implements SceneController{
                 this.gui = gui;
         }
 
+        @Override
+        public void showGenericMsg(GenericMessage msg) {
+        }
+
         private boolean checkInputValidity() {
                 return usernameField.getText() != null && !usernameField.getText().equals("")
                         && !towerColorField.getText().equals("Tower color") //default option still set
@@ -124,6 +122,7 @@ public class LoginController implements SceneController{
                 if (!checkInputValidity())
                         warningLabel.setVisible(true);
                 else{
+                        gui.setNickname(usernameField.getText());
                         gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
                                 usernameField.getText(),
                                 getTowerColor(towerColorField.getText()),
