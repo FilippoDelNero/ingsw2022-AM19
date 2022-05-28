@@ -43,6 +43,10 @@ public class Gui extends Application implements View {
         this.nickname = nickname;
     }
 
+    public Cache getCache() {
+        return cache;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;

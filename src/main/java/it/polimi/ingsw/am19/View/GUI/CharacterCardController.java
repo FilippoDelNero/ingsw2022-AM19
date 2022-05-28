@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyPlayCharacterCardMessage;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +54,9 @@ public class CharacterCardController implements SceneController {
     private TextArea description3;
 
     @FXML
+    private Label coinLabel;
+
+    @FXML
     void negativeReplyMessage(MouseEvent event) {
         gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),null));
     }
@@ -89,6 +93,7 @@ public class CharacterCardController implements SceneController {
         description2.setText(getDescription(characterCards.get(1).getId()));
         character3.setImage(new Image(getImagePath(characterCards.get(2).getId())));
         description3.setText(getDescription(characterCards.get(2).getId()));
+        coinLabel.setText("You have:\n" + gui.getCache().getGameBoards().get(0).coins()+ " coins");
     }
 
     private String getImagePath(Character c){
