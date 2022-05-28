@@ -9,12 +9,30 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
 public class LoginController implements SceneController{
+        private final Image blackTower = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/Towers/blackTower.png");
+        private final Image whiteTower = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/Towers/whiteTower.png");
+        private final Image greyTower = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/Towers/greyTower.png");
+        private final Image king = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/HelperCard/king.png");
+        private final Image witch = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/HelperCard/witch.png");
+        private final Image warrior = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/HelperCard/warrior.png");
+        private final Image shaman = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/HelperCard/shaman.png");
+
+        private final ImageView blackImageView = new ImageView(blackTower);
+        private final ImageView whiteTowerImageView = new ImageView(whiteTower);
+        private final ImageView greyTowerImageView = new ImageView(greyTower);
+        private final ImageView witchImageView = new ImageView(witch);
+        private final ImageView kingImageView = new ImageView(king);
+        private final ImageView warriorImageView = new ImageView(warrior);
+        private final ImageView shamanImageView = new ImageView(shaman);
+
         private Gui gui;
 
         public void initialize(){
@@ -78,11 +96,34 @@ public class LoginController implements SceneController{
         }
 
         public void setOptions(ArrayList<TowerColor> towerColors, ArrayList<WizardFamily> wizardFamilies){
+
                 for (TowerColor color: towerColors)
-                        towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase()));
+                        switch (color) {
+                                case BLACK -> towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase(), blackImageView));
+                                case WHITE -> towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase(), whiteTowerImageView));
+                                case GREY -> towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase(), greyTowerImageView));
+                        }
 
                 for (WizardFamily wizardFamily: wizardFamilies)
-                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase()));
+                        switch (wizardFamily) {
+                                case WARRIOR -> {
+                                        warriorImageView.setFitWidth(98.8);
+                                        warriorImageView.setFitHeight(149.8);
+                                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase(),warriorImageView));}
+                                case WITCH -> {
+                                        witchImageView.setFitWidth(98.8);
+                                        witchImageView.setFitHeight(149.8);
+                                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase(),witchImageView));}
+                                case KING -> {
+                                        kingImageView.setFitWidth(98.8);
+                                        kingImageView.setFitHeight(149.8);
+                                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase(),kingImageView));}
+                                case SHAMAN -> {
+                                        shamanImageView.setFitWidth(98.8);
+                                        shamanImageView.setFitHeight(149.8);
+                                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase(),shamanImageView));}
+                        }
+
 
                 // create action event
                 EventHandler<ActionEvent> clickOnTowerMenuItem = (e) ->

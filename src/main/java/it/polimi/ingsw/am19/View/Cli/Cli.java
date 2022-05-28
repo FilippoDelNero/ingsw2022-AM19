@@ -66,8 +66,10 @@ public class Cli implements View {
         int portNumber = 0;
         boolean isValid;
 
-        printer.println("insert an ip address: ");
-        ipAddress = reader.nextLine();
+        do{
+            printer.println("insert an ip address: ");
+            ipAddress = reader.nextLine();
+        } while (!ipAddress.matches("^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$"));
 
         do {
             isValid = true;
