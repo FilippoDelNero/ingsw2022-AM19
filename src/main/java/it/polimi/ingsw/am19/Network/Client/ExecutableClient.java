@@ -14,7 +14,5 @@ public class ExecutableClient {
             new Cli();
         else if(args.length == 2)
             Application.launch(Gui.class);
-
-
     }
 }

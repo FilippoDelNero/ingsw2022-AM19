@@ -5,10 +5,16 @@ import it.polimi.ingsw.am19.View.View;
 
 public class Dispatcher {
 
+    /** the view of this client */
     private final View view;
 
+    /** the cache of this client*/
     private final Cache cache;
 
+    /**
+     * class constructor
+     * @param view the view chosen by the user
+     */
     public Dispatcher(View view) {
         this.view = view;
         this.cache = new Cache();
