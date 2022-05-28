@@ -3,6 +3,7 @@ package it.polimi.ingsw.am19.View.GUI;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Network.Client.Cache;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import javafx.collections.ObservableList;
@@ -99,6 +100,11 @@ public class MatchController implements SceneController {
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    @Override
+    public void showGenericMsg(GenericMessage msg) {
+
     }
 
     public void drawScene() {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyHelperCardMessage;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -163,5 +164,10 @@ public class HelperCardController implements SceneController{
     @Override
     public void setGui(Gui gui) {
         this.gui=gui;
+    }
+
+    @Override
+    public void showGenericMsg(GenericMessage msg) {
+
     }
 }

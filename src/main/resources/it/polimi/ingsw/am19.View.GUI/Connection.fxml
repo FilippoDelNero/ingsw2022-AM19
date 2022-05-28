@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.ConnectionController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.ConnectionController">
    <children>
       <ImageView fitHeight="1655.0" fitWidth="1887.0" layoutX="-24.0" layoutY="-248.0" pickOnBounds="true" preserveRatio="true" x="-90.0">
          <image>
@@ -31,6 +31,11 @@
          </font>
       </Button>
       <Label fx:id="warningLabel" layoutX="570.0" layoutY="318.0" text="Label" textFill="#fffd00">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="genericMsgField" layoutX="570.0" layoutY="272.0" prefHeight="78.0" prefWidth="300.0" text="Label" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>

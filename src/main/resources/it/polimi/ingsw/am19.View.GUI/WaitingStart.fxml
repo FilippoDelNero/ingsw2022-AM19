@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -15,10 +16,11 @@
          </image>
       </ImageView>
       <Text layoutX="656.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Label fx:id="waitingLabel" layoutX="429.0" layoutY="350.0" style="-fx-background-color: white;" text="Waiting for other players to join...">
+      <Label fx:id="waitingLabel" layoutX="558.0" layoutY="425.0" prefHeight="27.0" prefWidth="325.0" text="Waiting for other players to join..." textFill="WHITE">
          <font>
-            <Font size="43.0" />
+            <Font size="23.0" />
          </font>
       </Label>
+      <ProgressBar fx:id="progressBar" layoutX="557.5" layoutY="459.0" prefHeight="35.0" prefWidth="325.0" progress="0.0" />
    </children>
 </Pane>
