@@ -343,8 +343,8 @@ public class MatchController implements SceneController {
         if(cache.getGameBoards().size() == 3) {
             populateEntrance(gameboard3.get(0), list.get(2));
             populateDiningRoom(gameboard3.get(1), gameboard3.get(2), gameboard3.get(3), gameboard3.get(4), gameboard3.get(5), list.get(2));
-            populateProfessors(gameboard2.get(6), list.get(2));
-            populateTowers(gameboard2.get(7), list.get(2));
+            populateProfessors(gameboard3.get(6), list.get(2));
+            populateTowers(gameboard3.get(7), list.get(2));
         }
         else {
             gameboards.getChildren().get(2).setVisible(false);
