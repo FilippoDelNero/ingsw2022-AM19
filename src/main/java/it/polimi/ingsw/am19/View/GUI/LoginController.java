@@ -2,11 +2,14 @@ package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -17,9 +20,22 @@ public class LoginController implements SceneController{
         public void initialize(){
                 warningLabel.setVisible(false);
                 warningLabel.setText("Please fill out all fields");
+
+                usernameField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
+
+                towerColorField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
+
+                wizardFamilyField.setOnKeyPressed( e -> {
+                        if( e.getCode() == KeyCode.ENTER )
+                                sendUserData();
+                });
         }
-        @FXML
-        private Pane pane;
 
         @FXML
         private Label warningLabel;
@@ -38,15 +54,7 @@ public class LoginController implements SceneController{
 
         @FXML
         void sendUserData(ActionEvent event) {
-                if (!checkInputValidity())
-                        warningLabel.setVisible(true);
-                else{
-                        gui.setNickname(usernameField.getText());
-                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
-                                usernameField.getText(),
-                                getTowerColor(towerColorField.getText()),
-                                getWizardFamily(wizardFamilyField.getText())));
-                }
+                sendUserData();
         }
 
 
@@ -71,10 +79,10 @@ public class LoginController implements SceneController{
 
         public void setOptions(ArrayList<TowerColor> towerColors, ArrayList<WizardFamily> wizardFamilies){
                 for (TowerColor color: towerColors)
-                        towerColorField.getItems().add(new MenuItem(color.toString()));
+                        towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase()));
 
                 for (WizardFamily wizardFamily: wizardFamilies)
-                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString()));
+                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase()));
 
                 // create action event
                 EventHandler<ActionEvent> clickOnTowerMenuItem = (e) ->
@@ -97,9 +105,25 @@ public class LoginController implements SceneController{
                 this.gui = gui;
         }
 
+        @Override
+        public void showGenericMsg(GenericMessage msg) {
+        }
+
         private boolean checkInputValidity() {
                 return usernameField.getText() != null && !usernameField.getText().equals("")
                         && !towerColorField.getText().equals("Tower color") //default option still set
                         && !wizardFamilyField.getText().equals("Wizard family"); //default option still set
+        }
+
+        private void sendUserData(){
+                if (!checkInputValidity())
+                        warningLabel.setVisible(true);
+                else{
+                        gui.setNickname(usernameField.getText());
+                        gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(
+                                usernameField.getText(),
+                                getTowerColor(towerColorField.getText()),
+                                getWizardFamily(wizardFamilyField.getText())));
+                }
         }
 }

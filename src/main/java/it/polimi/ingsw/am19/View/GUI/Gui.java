@@ -33,6 +33,7 @@ public class Gui extends Application implements View {
     private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
     private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
     private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
+    private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -157,7 +158,10 @@ public class Gui extends Application implements View {
 
     @Override
     public void askPlayCharacter(AskPlayCharacterCardMessage msg) {
+        changeScene(ASK_CHARACTER);
 
+        Platform.runLater(()->
+                ((CharacterCardController)currController).setCharacterCards(msg.getAvailableCharacterCards()));
     }
 
     @Override
@@ -174,12 +178,13 @@ public class Gui extends Application implements View {
     public void generic(GenericMessage msg) {
         if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
+
+        Platform.runLater(() -> currController.showGenericMsg(msg));
     }
 
     @Override
     public void error(ErrorMessage msg) {
         Platform.runLater(() -> {
-            //((LoginController)currController).getWarningLabel().setVisible(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText(msg.getError());
