@@ -71,8 +71,27 @@ public class Gui extends Application implements View {
     }
 
     @Override
+    public void setDispatcher(Dispatcher dispatcher) {
+
+    }
+
+    @Override
+    public void setPreviousMsg(Message msg) {
+
+    }
+
+    @Override
     public void setCache(Cache cache) {
         this.cache = cache;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+        cache.setNickname(nickname);
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     @Override
@@ -81,14 +100,8 @@ public class Gui extends Application implements View {
 
     }
 
-    @Override
-    public void setDispatcher(Dispatcher dispatcher) {
-
-    }
-
-    @Override
-    public void setPreviousMsg(Message msg) {
-
+    public Client getMyClient() {
+        return myClient;
     }
 
     @Override
@@ -109,7 +122,6 @@ public class Gui extends Application implements View {
 
         Platform.runLater(() ->
             ((UsernameOptionsController)currController).setAvailableUsernames(msg.getNicknameAvailable()));
-
     }
 
     @Override
@@ -135,13 +147,20 @@ public class Gui extends Application implements View {
         Platform.runLater(() -> {
             ((MatchController)currController).setCache(cache);
             ((MatchController)currController).drawScene();
-                });
+            ((MatchController)currController).moveStudentPhase();
+        });
 
     }
 
     @Override
     public void askMotherNatureStep() {
+        changeScene(MATCH);
 
+        Platform.runLater(() -> {
+            ((MatchController)currController).setCache(cache);
+            ((MatchController)currController).drawScene();
+            ((MatchController)currController).moveMotherNaturePhase();
+        });
     }
 
     @Override
@@ -198,9 +217,5 @@ public class Gui extends Application implements View {
                 e.printStackTrace();
             }
         });
-    }
-
-    public Client getMyClient() {
-        return myClient;
     }
 }
