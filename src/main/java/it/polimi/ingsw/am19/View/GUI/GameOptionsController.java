@@ -99,7 +99,6 @@ public class GameOptionsController implements SceneController{
     @FXML
     void sendMatchData(ActionEvent event) {
         gui.getMyClient().sendMessage(new ReplyCreateMatchMessage(numPlayers, isExpert));
-
     }
 
     public void askResume(){

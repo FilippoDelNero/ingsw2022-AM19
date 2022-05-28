@@ -38,9 +38,6 @@ public class LoginController implements SceneController{
         }
 
         @FXML
-        private Pane pane;
-
-        @FXML
         private Label warningLabel;
 
         @FXML
@@ -82,10 +79,10 @@ public class LoginController implements SceneController{
 
         public void setOptions(ArrayList<TowerColor> towerColors, ArrayList<WizardFamily> wizardFamilies){
                 for (TowerColor color: towerColors)
-                        towerColorField.getItems().add(new MenuItem(color.toString()));
+                        towerColorField.getItems().add(new MenuItem(color.toString().toLowerCase()));
 
                 for (WizardFamily wizardFamily: wizardFamilies)
-                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString()));
+                        wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase()));
 
                 // create action event
                 EventHandler<ActionEvent> clickOnTowerMenuItem = (e) ->

@@ -34,12 +34,10 @@ public class WaitingStartController implements SceneController {
         new Thread(() -> {
             for(int i = 0; i <=500; i++) {
                 final int position = i;
-                Platform.runLater(() -> {
-                    progressBar.setProgress(position / 500.0);
-                });
+                Platform.runLater(() -> progressBar.setProgress(position / 500.0));
                 try{
                     Thread.sleep(100);
-                }catch(Exception e){ System.err.println(e); }
+                }catch(Exception e){ e.printStackTrace(); }
             }
         }).start();
     }
