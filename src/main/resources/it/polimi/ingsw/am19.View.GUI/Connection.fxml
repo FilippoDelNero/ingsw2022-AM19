@@ -20,16 +20,16 @@
             <Font size="19.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" text="Submit">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
       <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number">
          <font>
             <Font size="19.0" />
          </font>
       </TextField>
+      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" text="Submit">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
       <Label fx:id="warningLabel" layoutX="570.0" layoutY="318.0" text="Label" textFill="#fffd00">
          <font>
             <Font size="19.0" />

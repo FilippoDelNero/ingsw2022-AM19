@@ -6,7 +6,7 @@ package it.polimi.ingsw.am19.Model.CharacterCards;
 public enum Character {
     MONK(1,"Take 1 student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card.",true,true,false),
     FARMER(2, "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.",false,false,false),
-    HERALD(3,"Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends hre movement will also be resolved.",false, true,false),
+    HERALD(3,"Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.",false, true,false),
     MAGIC_MAILMAN(1,"You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.", false, false, false),
     GRANNY(2,"Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that island, or place any Towers.",false,true,false),
     CENTAUR(3,"When resolving a Conquering on an Island, Towers do not count towards influence.",false,false,false),
