@@ -39,7 +39,7 @@ public record ReducedIsland(
     }
 
     @Override
-    public String toString() { //TODO FAR CAPIRE DA QUANTE ISOLE è COMPOSTO IL GRUPPO (ICONCINA?)
+    public String toString() {
         String string = "[";
         for(int i = 0; i < numOfIslands; i++) {
             string = string.concat("*");

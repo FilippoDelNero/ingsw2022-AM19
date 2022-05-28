@@ -32,6 +32,7 @@ public class Gui extends Application implements View {
     private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
     private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
     private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
+    private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
     private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
     public String getNickname() {
@@ -63,6 +64,11 @@ public class Gui extends Application implements View {
         myClient = new Client(ip, port, this);
         myClient.startPinging();
         myClient.receiveMessage();
+    }
+
+    @Override
+    public void setCache(Cache cache) {
+        this.cache = cache;
     }
 
     @Override
@@ -120,6 +126,12 @@ public class Gui extends Application implements View {
 
     @Override
     public void askEntranceMove(AskEntranceMoveMessage msg) {
+        changeScene(MATCH);
+
+        Platform.runLater(() -> {
+            ((MatchController)currController).setCache(cache);
+            ((MatchController)currController).drawScene();
+                });
 
     }
 
@@ -148,26 +160,6 @@ public class Gui extends Application implements View {
 
     @Override
     public void endMatch(EndMatchMessage msg) {
-
-    }
-
-    @Override
-    public void updateCloud(UpdateCloudsMessage msg) {
-
-    }
-
-    @Override
-    public void updateGameBoards(UpdateGameBoardsMessage msg) {
-
-    }
-
-    @Override
-    public void updateIslands(UpdateIslandsMessage msg) {
-
-    }
-
-    @Override
-    public void updateCards(UpdateCardsMessage msg) {
 
     }
 

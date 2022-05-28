@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Cache class used to store objects to be displayed on the view
  */
-public class Cache { //Non sono sicuro sia il package giusto
+public class Cache {
     /** a list of "clouds" */
     private List<Map<PieceColor, Integer>> clouds;
 

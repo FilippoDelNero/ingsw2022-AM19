@@ -27,14 +27,18 @@ public class Cli implements View {
     private final Scanner reader;
 
     /** cache used to store objects to be displayed on the view */
-    private final Cache cache;
+    private Cache cache;
 
+    /** the nickname of the player */
     private String nickname;
 
+    /** the client associated with this cli */
     private Client myClient;
 
+    /** the dispatcher associated with this cli */
     private Dispatcher myDispatcher;
 
+    /** a field where the last received message is stored, it is used to recover from errors */
     private Message previousMsg;
 
     /**
@@ -43,36 +47,30 @@ public class Cli implements View {
     public Cli() {
         printer = System.out;
         reader = new Scanner(System.in);
-        cache = new Cache();
         initView();
         startView();
     }
 
     /**
-     * method to display an introductory splash screen
+     * setter for the cache attribute
+     * @param cache the cache this view will pull data from
      */
-    private void initView() {
-        printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
-        printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
-        printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
-        printer.println("######   ########     ##    ##     ## ## ## ##    ##       ##     ######   ");
-        printer.println("##       ##   ##      ##    ######### ##  ####    ##       ##           ## ");
-        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##       ##    ##    ##  ");
-        printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
-        printer.println("\n");
-        printer.println("Welcome!\n");
+    @Override
+    public void setCache(Cache cache) {
+        this.cache = cache;
     }
 
     private void startView() {
         String ipAddress;
         String portNumberString;
         int portNumber = 0;
-        boolean isValid = true;
+        boolean isValid;
 
         printer.println("insert an ip address: ");
         ipAddress = reader.nextLine();
 
         do {
+            isValid = true;
             printer.println("insert a port: ");
             portNumberString = reader.nextLine();
             try {
@@ -88,21 +86,38 @@ public class Cli implements View {
         myClient.receiveMessage();
     }
 
+    /**
+     * setter for the client parameter
+     * @param client the client this view needs to refer to to send messages
+     */
     @Override
     public void setMyClient(Client client) {
         this.myClient = client;
     }
 
+    /**
+     * setter for the dispatcher parameter
+     * @param dispatcher the dispatcher this view needs to refer to
+     */
     @Override
     public void setDispatcher(Dispatcher dispatcher) {
         this.myDispatcher = dispatcher;
     }
 
+    /**
+     * setter for the previous message attribute
+     * @param msg the message that just arrived
+     */
     @Override
     public void setPreviousMsg(Message msg) {
         this.previousMsg = msg;
     }
 
+    /**
+     * method used to ask the user the match info to create a new match
+     * @param msg the AskFirstPlayerMessage sent by the server
+     */
+    @Override
     public void askLoginFirstPlayer(AskFirstPlayerMessage msg) {
         previousMsg = msg;
         int numOfPlayers;
@@ -125,6 +140,11 @@ public class Cli implements View {
         }
     }
 
+    /**
+     * method used to ask the user which nickname they used in the saved match
+     * @param msg the AskNicknameOptionsMessage sent by the server
+     */
+    @Override
     public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg){
         this.nickname = askNicknameFromList(new ArrayList<>(msg.getNicknameAvailable()));
         myClient.sendMessage(new ReplyLoginInfoMessage(nickname,null,null));
@@ -135,6 +155,7 @@ public class Cli implements View {
      * it asks and sends nickname, wizardFamily and towerColor
      * @param msg the AskLoginInfoMessage sent by the server
      */
+    @Override
     public void askLoginInfo(AskLoginInfoMessage msg){
         TowerColor towercolor;
         WizardFamily wizardFamily;
@@ -148,6 +169,7 @@ public class Cli implements View {
      * shows the available HelperCards to the user and the sends he/she's answer to the server
      * @param msg the message sent by the server containing the availableHelperCards
      */
+    @Override
     public void showHelperOptions(AskHelperCardMessage msg){
         List<HelperCard> cardOptions =  msg.getPlayableHelperCard();
         HelperCard helperCard;
@@ -160,6 +182,7 @@ public class Cli implements View {
      * Method used to ask the player where she/he wants to move which student's color
      * it also checks that a valid color and a valid destination are passed, but no checks are made on the island number
      */
+    @Override
     public void askEntranceMove(AskEntranceMoveMessage msg) {
         String input;
         int islandNum;
@@ -204,6 +227,7 @@ public class Cli implements View {
      * The method is called when a AskMotherNatureStepMessage comes in
      * it ask and send the num of step
      */
+    @Override
     public void askMotherNatureStep() {
         int step;
         printView();
@@ -216,6 +240,7 @@ public class Cli implements View {
      * it ask and send the num of cloud chosen
      * @param msg the AskCloudMessage sent by server
      */
+    @Override
     public void askCloud(AskCloudMessage msg){
         int cloudChosen;
         printView();
@@ -227,6 +252,7 @@ public class Cli implements View {
      * Method used to ask the user if and which characterCards they want to play
      * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
      */
+    @Override
     public void askPlayCharacter(AskPlayCharacterCardMessage msg){
         printView();
         Character chosenCardEnum = askPlayCharacter(msg.getAvailableCharacterCards());
@@ -237,6 +263,7 @@ public class Cli implements View {
      * method used to ask the user the parameters of the character card that they played
      * @param msg the AskCharacterParameterMessage sent by server containing which parameter the played card will need
      */
+    @Override
     public void askCharacterCardParameters(AskCharacterParameterMessage msg) {
         PieceColor color = null;
         Integer islandIndex = null;
@@ -254,52 +281,22 @@ public class Cli implements View {
      * Method used to display the winner and close the client connection
      * @param msg the EndMatchMessage sent by the server
      */
+    @Override
     public void endMatch(EndMatchMessage msg) {
         if(msg.getWinners() != null)
-            genericPrint("The match has ended, the winner is: " + msg.getWinners().toString());
+            printer.println("The match has ended, the winner is: " + msg.getWinners().toString());
         else
-            genericPrint("We are sorry, the match will interrupted due to a fatal error occurring");
+            printer.println("We are sorry, the match will interrupted due to a fatal error occurring");
         myClient.disconnect();
-    }
-
-    /**
-     * method to update the clouds on the cache
-     * @param msg the UpdateCloudMessage sent by the server
-     */
-    public void updateCloud(UpdateCloudsMessage msg) {
-        cache.setClouds(msg.getClouds());
-    }
-
-    /**
-     * method to update the gameBoards on the cache
-     * @param msg the UpdateGameBoardsMessage sent by the server
-     */
-    public void updateGameBoards(UpdateGameBoardsMessage msg) {
-        cache.setGameBoards(msg.getList());
-    }
-
-    /**
-     * method to update the Islands on the cache
-     * @param msg the UpdateIslandsMessage sent by the server
-     */
-    public void updateIslands(UpdateIslandsMessage msg) {
-        cache.setIslands(msg.getList());
-    }
-
-    /**
-     * method to update the Cards, both Helper and Character, on the cache
-     * @param msg the UpdateCardsMessage sent by the server
-     */
-    public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getCharacterCardList());
     }
 
     /**
      * Method used to display a genericMessage coming from the server
      * @param msg the GenericMessage sent by the server
      */
+    @Override
     public void generic(GenericMessage msg) {
-        genericPrint(msg.toString());
+        printer.println(msg.toString());
     }
 
     /**
@@ -307,9 +304,25 @@ public class Cli implements View {
      * of the message of which the answer caused the error
      * @param msg the ErrorMessage sent by the server
      */
+    @Override
     public void error(ErrorMessage msg) {
-        genericPrint("\033[31;1;4m" + msg.toString() + "\033[0m");
+        printer.println("\033[31;1;4m" + msg.toString() + "\033[0m");
         myDispatcher.dispatch(previousMsg);
+    }
+
+    /**
+     * method to display an introductory splash screen
+     */
+    private void initView() {
+        printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
+        printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
+        printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
+        printer.println("######   ########     ##    ##     ## ## ## ##    ##       ##     ######   ");
+        printer.println("##       ##   ##      ##    ######### ##  ####    ##       ##           ## ");
+        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##       ##    ##    ##  ");
+        printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
+        printer.println("\n");
+        printer.println("Welcome!\n");
     }
 
     /**
@@ -363,6 +376,11 @@ public class Cli implements View {
         return input;
     }
 
+    /**
+     * method used to ask the user to choose a nickname from the list
+     * @param nicknameAvailable the list of nickname displayed to the player
+     * @return the nickname chosen by the user
+     */
     private String askNicknameFromList(List<String> nicknameAvailable) {
         String input;
         do{
@@ -594,14 +612,6 @@ public class Cli implements View {
     }
 
     /**
-     * method used to display a generic message (error messages as well) to the user
-     * @param toPrint the content that needs to be print
-     */
-    private void genericPrint(String toPrint) {
-        printer.println(toPrint);
-    }
-
-    /**
      * method used to print the entire game view
      */
     private void printView() {
@@ -631,9 +641,19 @@ public class Cli implements View {
         }
 
         if(cache.getGameBoards() != null) {
+            List<ReducedGameBoard> list = new ArrayList<>();
+
+            for(ReducedGameBoard rgb : cache.getGameBoards()) {
+                if(rgb.playerNickname().equals(nickname))
+                    list.add(0, rgb);
+                else
+                    list.add(rgb);
+            }
+
             printer.println("Each Player's GameBoard: ");
-            for(ReducedGameBoard rgb : cache.getGameBoards())
-                printer.println(rgb.toString() + '\n'); //TODO I WOULD LIKE TO PRINT FIRST THE GAMEBOARD OF THE PLAYER OWNING THIS VIEW
+
+            for(ReducedGameBoard rgb : list)
+                printer.println(rgb.toString() + '\n');
         }
 
         if(cache.getIslands() != null) {
