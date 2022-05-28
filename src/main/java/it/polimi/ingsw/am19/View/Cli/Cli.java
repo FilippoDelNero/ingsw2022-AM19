@@ -147,6 +147,7 @@ public class Cli implements View {
     @Override
     public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg){
         this.nickname = askNicknameFromList(new ArrayList<>(msg.getNicknameAvailable()));
+        cache.setNickname(nickname);
         myClient.sendMessage(new ReplyLoginInfoMessage(nickname,null,null));
     }
 
@@ -160,6 +161,7 @@ public class Cli implements View {
         TowerColor towercolor;
         WizardFamily wizardFamily;
         this.nickname = askNickname();
+        cache.setNickname(nickname);
         towercolor = askTowerColor(msg.getTowerColorsAvailable());
         wizardFamily = askWizardFamily(msg.getWizardFamiliesAvailable());
         myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
@@ -641,18 +643,9 @@ public class Cli implements View {
         }
 
         if(cache.getGameBoards() != null) {
-            List<ReducedGameBoard> list = new ArrayList<>();
-
-            for(ReducedGameBoard rgb : cache.getGameBoards()) {
-                if(rgb.playerNickname().equals(nickname))
-                    list.add(0, rgb);
-                else
-                    list.add(rgb);
-            }
-
             printer.println("Each Player's GameBoard: ");
 
-            for(ReducedGameBoard rgb : list)
+            for(ReducedGameBoard rgb : cache.getGameBoards())
                 printer.println(rgb.toString() + '\n');
         }
 

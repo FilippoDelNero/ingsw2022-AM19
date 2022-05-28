@@ -3,6 +3,9 @@ package it.polimi.ingsw.am19.View.GUI;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Network.Client.Cache;
+import it.polimi.ingsw.am19.Network.Message.ReplyEntranceToDiningRoomMessage;
+import it.polimi.ingsw.am19.Network.Message.ReplyEntranceToIslandMessage;
+import it.polimi.ingsw.am19.Network.Message.ReplyMotherNatureStepMessage;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import javafx.collections.ObservableList;
@@ -12,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -35,6 +39,8 @@ public class MatchController implements SceneController {
     private final static Image blueProfessor = new Image("file:src/main/resources/Board/teacher_blue.png");
     private final static Image yellowProfessor = new Image("file:src/main/resources/Board/teacher_yellow.png");
     private final static Image pinkProfessor = new Image("file:src/main/resources/Board/teacher_pink.png");
+
+    private final static Image motherNatureImg = new Image("file:src/main/resources/Board/mother_nature.png");
 
     @FXML private Group gameboards;
 
@@ -109,14 +115,7 @@ public class MatchController implements SceneController {
     }
 
     private void initializeGameBoards() {
-        List<ReducedGameBoard> list = new ArrayList<>();
-
-        for(ReducedGameBoard rgb : cache.getGameBoards()) {
-            if(rgb.playerNickname().equals(nickname))
-                list.add(0, rgb);
-            else
-                list.add(rgb);
-        }
+        List<ReducedGameBoard> list = cache.getGameBoards();
 
         populateEntrance(gameboard1.get(0), list.get(0));
         populateDiningRoom(gameboard1.get(1), gameboard1.get(2), gameboard1.get(3), gameboard1.get(4), gameboard1.get(5), list.get(0));
@@ -159,12 +158,24 @@ public class MatchController implements SceneController {
         }
     }
 
-    public void pickStudentToMove(javafx.scene.input.MouseEvent event) {
-        Node clickedNode = event.getPickResult().getIntersectedNode();
-        if (clickedNode != gameboard1.get(0)) {
+    public void moveStudentPhase() {
+        gameboard1.get(0).setCursor(Cursor.HAND);
+        gameboard1.get(0).setOnMouseClicked(this::pickStudentToMove);
+    }
+
+    public void moveMotherNaturePhase() {
+        for(GridPane gp : islands) {
+            gp.setOnMouseClicked(this::getMotherNatureDestination);
+            gp.setCursor(Cursor.HAND);
+        }
+    }
+
+    public void pickStudentToMove(MouseEvent event) {
+        Node clickedStudent = event.getPickResult().getIntersectedNode();
+        if (clickedStudent != gameboard1.get(0)) {
             // click on descendant node
-            Integer colIndex = GridPane.getColumnIndex(clickedNode);
-            Integer rowIndex = GridPane.getRowIndex(clickedNode);
+            Integer colIndex = GridPane.getColumnIndex(clickedStudent);
+            Integer rowIndex = GridPane.getRowIndex(clickedStudent);
 
             Node result = null;
             ObservableList<Node> children = gameboard1.get(0).getChildren();
@@ -182,6 +193,8 @@ public class MatchController implements SceneController {
             GridPane table = getTable(studentToMove);
 
             if(table != null) {
+                gameboard1.get(0).setCursor(Cursor.DEFAULT);
+                gameboard1.get(0).setOnMouseClicked(null);
                 table.setOnMouseClicked(this::getDestinationTable);
                 table.setCursor(Cursor.HAND);
                 for(GridPane gp : islands) {
@@ -195,16 +208,46 @@ public class MatchController implements SceneController {
         }
     }
 
-    public void getDestinationTable(javafx.scene.input.MouseEvent event) {
-        int oldValue = cache.getGameBoards().get(0).entrance().get(studentToMove);
-        cache.getGameBoards().get(0).entrance().put(studentToMove, oldValue - 1);
-        oldValue = cache.getGameBoards().get(0).diningRoom().get(studentToMove);
-        cache.getGameBoards().get(0).diningRoom().put(studentToMove, oldValue + 1);
+    public void getDestinationTable(MouseEvent event) {
+        GridPane clickedTable = (GridPane) event.getPickResult().getIntersectedNode();
+        gui.getMyClient().sendMessage(new ReplyEntranceToDiningRoomMessage(nickname, studentToMove));
+        clickedTable.setCursor(Cursor.DEFAULT);
+        clickedTable.setOnMouseClicked(null);
         System.out.println("eccomi hai scelto un tavolo");
     }
 
-    public void getDestinationIsland(javafx.scene.input.MouseEvent event) {
+    public void getDestinationIsland(MouseEvent event) {
+        GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
+        int islandIndex;
+        for(islandIndex = 0; islandIndex < islands.size(); islandIndex++) {
+            if(islands.get(islandIndex) == clickedIsland)
+                break;
+        }
+        gui.getMyClient().sendMessage(new ReplyEntranceToIslandMessage(nickname, islandIndex, studentToMove));
+        islands.get(islandIndex).setCursor(Cursor.DEFAULT);
+        islands.get(islandIndex).setOnMouseClicked(null);
         System.out.println("eccomi hai scelto un'isola");
+    }
+
+    public void getMotherNatureDestination(MouseEvent event) {
+        GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
+        int step;
+        int MNDestIndex;
+        int MNDepIndex;
+        int numOfIslands = cache.getIslands().size();
+
+        for(MNDepIndex = 0; MNDepIndex < numOfIslands; MNDepIndex++) {
+            if(cache.getIslands().get(MNDepIndex).presenceOfMotherNature())
+                break;
+        }
+
+        for(step = 0; step < numOfIslands; step++) {
+            MNDestIndex = (MNDepIndex - step)%numOfIslands;
+            if(islands.get(MNDestIndex) == clickedIsland)
+                break;
+        }
+        gui.getMyClient().sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
+        System.out.println("muovo madre natura di " + step + " steps");
     }
 
     private void populateEntrance(GridPane entrance, ReducedGameBoard gameBoard) {
@@ -302,6 +345,8 @@ public class MatchController implements SceneController {
     }
 
     private void populateIsland(GridPane island, ReducedIsland reducedIsland) {
+        Circle motherNature = new Circle(20);
+        motherNature.setFill(new ImagePattern(motherNatureImg));
         for (PieceColor color : PieceColor.values()) {
             int num = reducedIsland.numOfStudents().get(color);
             if(num != 0) {
@@ -329,6 +374,8 @@ public class MatchController implements SceneController {
                 }
             }
         }
+        if(reducedIsland.presenceOfMotherNature())
+            island.add(motherNature, 2,2);
     }
 
     private Circle createStudent(PieceColor pieceColor) {
