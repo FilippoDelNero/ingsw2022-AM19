@@ -60,6 +60,10 @@ public class Gui extends Application implements View {
     /** the fxml file for the scene where the character cards are shown*/
     private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
+    public Cache getCache() {
+        return cache;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
