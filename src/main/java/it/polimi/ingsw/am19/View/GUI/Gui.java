@@ -48,6 +48,7 @@ public class Gui extends Application implements View {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
+        //root.getStylesheets().add("@Login.css");
         //stage.setFullScreen(true);
         //stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
