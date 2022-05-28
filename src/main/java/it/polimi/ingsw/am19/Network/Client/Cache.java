@@ -25,8 +25,13 @@ public class Cache {
     /** a list, if present, of "characterCards" */
     private List<Character> characterCards;
 
+    /** the nickname of the player owning this cache */
     private String nickname;
 
+    /**
+     * setter for the nickname attribute
+     * @param nickname the nickname chosen by the player
+     */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }

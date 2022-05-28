@@ -60,32 +60,6 @@ public class Cli implements View {
         this.cache = cache;
     }
 
-    private void startView() {
-        String ipAddress;
-        String portNumberString;
-        int portNumber = 0;
-        boolean isValid;
-
-        printer.println("insert an ip address: ");
-        ipAddress = reader.nextLine();
-
-        do {
-            isValid = true;
-            printer.println("insert a port: ");
-            portNumberString = reader.nextLine();
-            try {
-                portNumber = Integer.parseInt(portNumberString);
-            } catch (NumberFormatException e) {
-                isValid = false;
-            }
-        } while(!isValid);
-
-
-        myClient = new Client(ipAddress, portNumber, this);
-        myClient.startPinging();
-        myClient.receiveMessage();
-    }
-
     /**
      * setter for the client parameter
      * @param client the client this view needs to refer to to send messages
@@ -328,6 +302,37 @@ public class Cli implements View {
     }
 
     /**
+     * method called as soon as the application is running,
+     * it asks the user for the address and the port they wants to connect to
+     * after that it creates a client and connects it with the specified parameters
+     */
+    private void startView() {
+        String ipAddress;
+        String portNumberString;
+        int portNumber = 0;
+        boolean isValid;
+
+        printer.println("insert an ip address: ");
+        ipAddress = reader.nextLine();
+
+        do {
+            isValid = true;
+            printer.println("insert a port: ");
+            portNumberString = reader.nextLine();
+            try {
+                portNumber = Integer.parseInt(portNumberString);
+            } catch (NumberFormatException e) {
+                isValid = false;
+            }
+        } while(!isValid);
+
+
+        myClient = new Client(ipAddress, portNumber, this);
+        myClient.startPinging();
+        myClient.receiveMessage();
+    }
+
+    /**
      * method used to ask the player if they want to resume a saved match
      * @return true if the player wants to resume a saved match, false otherwise
      */
@@ -432,6 +437,13 @@ public class Cli implements View {
         } while(!availableTowerColor.contains(towerColor));
         return towerColor;
     }
+
+    /**
+     * method used to display all the available helper cards to the user
+     * and the read the user's choice
+     * @param cardOptions the helper cards available to the player
+     * @return the helper card chosen by the user
+     */
     private HelperCard askHelperCard(List<HelperCard> cardOptions) {
         int chosenCardIndex;
         List<Integer> availableIndexes = cardOptions.stream()
