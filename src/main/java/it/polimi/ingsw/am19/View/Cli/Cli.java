@@ -149,6 +149,7 @@ public class Cli implements View {
     @Override
     public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg){
         this.nickname = askNicknameFromList(new ArrayList<>(msg.getNicknameAvailable()));
+        cache.setNickname(nickname);
         myClient.sendMessage(new ReplyLoginInfoMessage(nickname,null,null));
     }
 
@@ -162,6 +163,7 @@ public class Cli implements View {
         TowerColor towercolor;
         WizardFamily wizardFamily;
         this.nickname = askNickname();
+        cache.setNickname(nickname);
         towercolor = askTowerColor(msg.getTowerColorsAvailable());
         wizardFamily = askWizardFamily(msg.getWizardFamiliesAvailable());
         myClient.sendMessage(new ReplyLoginInfoMessage(nickname,towercolor,wizardFamily));
@@ -432,6 +434,13 @@ public class Cli implements View {
         } while(!availableTowerColor.contains(towerColor));
         return towerColor;
     }
+
+    /**
+     * method used to display all the available helper cards to the user
+     * and the read the user's choice
+     * @param cardOptions the helper cards available to the player
+     * @return the helper card chosen by the user
+     */
     private HelperCard askHelperCard(List<HelperCard> cardOptions) {
         int chosenCardIndex;
         List<Integer> availableIndexes = cardOptions.stream()
@@ -654,7 +663,7 @@ public class Cli implements View {
 
             printer.println("Each Player's GameBoard: ");
 
-            for(ReducedGameBoard rgb : list)
+            for(ReducedGameBoard rgb : cache.getGameBoards())
                 printer.println(rgb.toString() + '\n');
         }
 

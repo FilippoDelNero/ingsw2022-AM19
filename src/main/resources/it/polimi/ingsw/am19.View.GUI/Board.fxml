@@ -9,790 +9,659 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="850.0" maxWidth="1440.0" minHeight="850.0" minWidth="1440.0" prefHeight="850.0"
-            prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
+<AnchorPane maxHeight="850.0" maxWidth="1440.0" minHeight="850.0" minWidth="1440.0" prefHeight="850.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
    <Group fx:id="gameboards" layoutX="969.0" layoutY="140.0">
-      <AnchorPane layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                  minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
+      <AnchorPane layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../../Board/plancia.png"/>
+            <Image url="@../../../../Board/plancia.png" />
          </ImageView>
-         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="DEFAULT" />
             </cursor>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0"
-                   AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0"
-                   AnchorPane.topAnchor="40.0">
+         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                  minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
+      <AnchorPane layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../../Board/plancia.png"/>
+            <Image url="@../../../../Board/plancia.png" />
          </ImageView>
-         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <cursor>
-               <Cursor fx:constant="DEFAULT"/>
+               <Cursor fx:constant="DEFAULT" />
             </cursor>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0"
-                   AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0"
-                   AnchorPane.topAnchor="40.0">
+         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  prefHeight="200.0" prefWidth="461.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../../Board/plancia.png"/>
+            <Image url="@../../../../Board/plancia.png" />
          </ImageView>
-         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="7.0" layoutY="28.0" prefHeight="157.0" prefWidth="55.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <cursor>
-               <Cursor fx:constant="DEFAULT"/>
+               <Cursor fx:constant="DEFAULT" />
             </cursor>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="52.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="52.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0"
-                   AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="19.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="19.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="151.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="151.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="85.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="85.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0"
-                   prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0"
-                   AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
+         <GridPane alignment="CENTER" layoutX="85.0" layoutY="118.0" maxHeight="30.0" maxWidth="220.0" prefHeight="30.0" prefWidth="220.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="118.0">
             <columnConstraints>
-               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0"
-                                  prefWidth="22.0"/>
-               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0"/>
+               <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="22.0" minWidth="0.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="NEVER" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="22.0" minWidth="10.0" prefWidth="22.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0"
-                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0"
-                   AnchorPane.topAnchor="20.0">
+         <GridPane alignment="CENTER" layoutX="319.0" layoutY="12.0" prefHeight="178.0" prefWidth="36.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="20.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0"
-                   AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0"
-                   AnchorPane.topAnchor="40.0">
+         <GridPane alignment="CENTER" layoutX="365.0" layoutY="40.0" prefHeight="116.0" prefWidth="86.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
    </Group>
    <Group fx:id="archipelago">
-      <AnchorPane layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0"
-                  prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="369.09600830078125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="19.09600067138672" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island3.png"/>
+      <AnchorPane layoutX="544.0960083007812" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island1.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="194.0959930419922" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0"
-                  minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="719.0960083007812" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="369.09600830078125" layoutY="675.0" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island1.png"/>
+      <AnchorPane layoutX="742.7739868164062" layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island1.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="544.0960083007812" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0"
-                  minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="719.0960083007812" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="719.0960083007812" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="544.0960083007812" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="742.7739868164062" layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island1.png"/>
+      <AnchorPane layoutX="369.09600830078125" layoutY="675.0" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island1.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="719.0960083007812" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="194.0959930419922" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="544.0960083007812" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island1.png"/>
+      <AnchorPane layoutX="19.09600067138672" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island3.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="369.09600830078125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0"
-                  prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="194.0959930419922" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island3.png"/>
+      <AnchorPane layoutX="19.09600067138672" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island2.png" />
          </ImageView>
-         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
-                   AnchorPane.topAnchor="50.0">
+         <GridPane layoutX="-13.0" layoutY="43.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="19.09600067138672" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0"
-                  minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
-         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
-            <Image url="@../../../../Board/island2.png"/>
+      <AnchorPane layoutX="194.0959930419922" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+         <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Image url="@../../../../Board/island3.png" />
          </ImageView>
-         <GridPane layoutX="-13.0" layoutY="43.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0"
-                   AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
+         <GridPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
       </AnchorPane>
    </Group>
-   <AnchorPane fx:id="cloud1AP" layoutX="341.249" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0"
-               minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="45.0">
-      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
-         <Image url="@../../../../Board/cloud_card.png"/>
+   <AnchorPane fx:id="cloud1AP" layoutX="341.249" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="45.0">
+      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
-      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0"
-                prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
-                AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="cloud2AP" layoutX="471.943" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0"
-               minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="315.0">
-      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
-         <Image url="@../../../../Board/cloud_card.png"/>
+   <AnchorPane fx:id="cloud2AP" layoutX="471.943" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="315.0">
+      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
-      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0"
-                prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
-                AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="cloud3AP" layoutX="402.6" layoutY="325.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0"
-               minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="135.0">
-      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
-         <Image url="@../../../../Board/cloud_card.png"/>
+   <AnchorPane fx:id="cloud3AP" layoutX="402.6" layoutY="325.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="135.0">
+      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
-      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0"
-                prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
-                AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </AnchorPane>

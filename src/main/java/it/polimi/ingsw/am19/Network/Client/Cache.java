@@ -5,6 +5,7 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,17 @@ public class Cache {
 
     /** a list, if present, of "characterCards" */
     private List<Character> characterCards;
+
+    /** the nickname of the player owning this cache */
+    private String nickname;
+
+    /**
+     * setter for the nickname attribute
+     * @param nickname the nickname chosen by the player
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     /**
      * getter for the clouds attribute
@@ -53,7 +65,16 @@ public class Cache {
      * @param gameBoards a list of reducedGameBoard
      */
     public void setGameBoards(List<ReducedGameBoard> gameBoards) {
-        this.gameBoards = gameBoards;
+        List<ReducedGameBoard> list = new ArrayList<>();
+
+        for(ReducedGameBoard rgb : gameBoards) {
+            if(rgb.playerNickname().equals(nickname))
+                list.add(0, rgb);
+            else
+                list.add(rgb);
+        }
+
+        this.gameBoards = list;
     }
 
     /**

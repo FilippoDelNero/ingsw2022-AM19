@@ -18,7 +18,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="100.0" prefWidth="1071.0" text="Do you want to use a character card?">
+                  <Label prefHeight="98.0" prefWidth="1033.0" text="Do you want to use a character card?">
                      <font>
                         <Font size="64.0" />
                      </font>
@@ -26,7 +26,7 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#negativeReplyMessage" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" prefHeight="70.0" prefWidth="200.0" text="NO" textAlignment="CENTER">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#negativeReplyMessage" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" prefHeight="70.0" prefWidth="186.0" text="NO" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -34,6 +34,14 @@
                         <Insets top="20.0" />
                      </HBox.margin>
                   </Button>
+                  <Label fx:id="coinLabel" prefHeight="98.0" prefWidth="192.0" text="You have: 0 coins" wrapText="true">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <padding>
+                        <Insets left="22.0" top="10.0" />
+                     </padding>
+                  </Label>
                </children>
             </HBox>
             <HBox prefHeight="442.0" prefWidth="1440.0">
