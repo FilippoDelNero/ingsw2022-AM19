@@ -35,14 +35,6 @@ public class Gui extends Application implements View {
     private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
     private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public Cache getCache() {
         return cache;
     }
