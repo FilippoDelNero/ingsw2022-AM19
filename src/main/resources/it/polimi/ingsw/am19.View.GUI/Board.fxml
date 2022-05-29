@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="850.0" maxWidth="1440.0" minHeight="850.0" minWidth="1440.0" prefHeight="850.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
+<AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
    <Group fx:id="gameboards" layoutX="969.0" layoutY="140.0">
       <AnchorPane layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
@@ -667,30 +667,22 @@
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="genericMsgAP" layoutX="979.0" layoutY="10.0" maxHeight="100.0" maxWidth="461.0" minHeight="100.0"
-               minWidth="461.0" prefHeight="100.0" prefWidth="461.0" AnchorPane.bottomAnchor="740.0"
-               AnchorPane.leftAnchor="979.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
-      <ImageView fitHeight="100.0" fitWidth="461.0" pickOnBounds="true" preserveRatio="true"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
-         <Image url="@../../../../Board/genericMsgBox.png"/>
+   <AnchorPane fx:id="genericMsgAP" layoutX="979.0" layoutY="10.0" maxHeight="100.0" maxWidth="461.0" minHeight="100.0" minWidth="461.0" prefHeight="100.0" prefWidth="461.0" AnchorPane.bottomAnchor="790.0" AnchorPane.leftAnchor="979.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+      <ImageView fitHeight="100.0" fitWidth="461.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Image url="@../../../../Board/genericMsgBox.png" />
       </ImageView>
-      <Label textAlignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0"
-             AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="0.0">
+      <Label textAlignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="0.0">
          <font>
-            <Font size="15.0"/>
+            <Font size="15.0" />
          </font>
       </Label>
    </AnchorPane>
-   <Label fx:id="player2Name" layoutX="1340.0" layoutY="590.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="1340.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0" />
-   <Label fx:id="player3Name" layoutX="1340.0" layoutY="340.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="485.0" AnchorPane.leftAnchor="1340.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="340.0" />
-   <Label layoutX="979.0" layoutY="615.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="979.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="615.0" />
+   <Label fx:id="player2Name" layoutX="1340.0" layoutY="590.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="1330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="590.0" />
+   <Label fx:id="player3Name" layoutX="1340.0" layoutY="340.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="1330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="340.0" />
+   <Label layoutX="979.0" layoutY="615.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="371.0" AnchorPane.topAnchor="615.0" />
    <Group fx:id="coinLabels" layoutX="1159.5" layoutY="115.0">
-      <Label layoutY="500.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
-             prefWidth="100.0" textAlignment="RIGHT"/>
-      <Label layoutY="250.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
-             prefWidth="100.0" textAlignment="RIGHT"/>
-      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0"
-             textAlignment="RIGHT"/>
+      <Label layoutY="500.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+      <Label layoutY="250.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
    </Group>
 </AnchorPane>
