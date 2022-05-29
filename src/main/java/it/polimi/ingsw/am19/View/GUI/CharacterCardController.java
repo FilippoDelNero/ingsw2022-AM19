@@ -25,6 +25,7 @@ import java.util.Map;
 public class CharacterCardController implements SceneController {
     private Gui gui;
     private List<AbstractCharacterCard> characterCards = new ArrayList<>();
+    private AbstractCharacterCard cardChosen = null;
 
     private final static Image redStudent = new Image("file:src/main/resources/Board/student_red.png");
     private final static Image greenStudent = new Image("file:src/main/resources/Board/student_green.png");
@@ -95,28 +96,31 @@ public class CharacterCardController implements SceneController {
 
     @FXML
     void useCharacter1(MouseEvent event) {
+        cardChosen = characterCards.get(0);
         gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(0).getId()));
     }
 
     @FXML
     void useCharacter2(MouseEvent event) {
+        cardChosen = characterCards.get(1);
         gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(1).getId()));
     }
 
     @FXML
     void useCharacter3(MouseEvent event) {
+        cardChosen = characterCards.get(2);
         gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(2).getId()));
     }
 
     private void setLayout(){
         character1.setImage(new Image(getImagePath(characterCards.get(0).getId())));
-        description1.setText(getDescription(characterCards.get(0).getId()));
+        description1.setText(getDescription(characterCards.get(0)));
         setStudentOnCard(characterCards.get(0),onCardGrid1);
         character2.setImage(new Image(getImagePath(characterCards.get(1).getId())));
-        description2.setText(getDescription(characterCards.get(1).getId()));
+        description2.setText(getDescription(characterCards.get(1)));
         setStudentOnCard(characterCards.get(1),onCardGrid2);
         character3.setImage(new Image(getImagePath(characterCards.get(2).getId())));
-        description3.setText(getDescription(characterCards.get(2).getId()));
+        description3.setText(getDescription(characterCards.get(2)));
         setStudentOnCard(characterCards.get(2),onCardGrid3);
         coinLabel.setText("You have:\n" + gui.getCache().getGameBoards().get(0).coins()+ " coins");
     }
@@ -145,8 +149,8 @@ public class CharacterCardController implements SceneController {
         return path;
     }
 
-    private String getDescription(Character c){
-        String description = "Price:" + c.getPrice() + "\n" + c.getDescription();
+    private String getDescription(AbstractCharacterCard c){
+        String description = "Price: " + c.getPrice() + "\n" + c.getDescription();
         return description;
     }
 
@@ -176,6 +180,10 @@ public class CharacterCardController implements SceneController {
             }
         }
         return student;
+    }
+
+    public AbstractCharacterCard getCardChosen() {
+        return cardChosen;
     }
 }
 

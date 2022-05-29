@@ -27,9 +27,9 @@ public class StandardMove implements InternalMoveStrategy, Serializable {
                 Integer oldValue = gameBoard.getEntrance().get(color);
                 Integer newValue;
                 if (oldValue > 0) {
-                    gameBoard.getEntrance().replace(color, oldValue - 1);
                     int studentInDiningRoom = gameBoard.getDiningRoom().get(color);
                     if (studentInDiningRoom < maxStudentInDiningRoom){
+                        gameBoard.getEntrance().replace(color, oldValue - 1);
                         gameBoard.getDiningRoom().replace(color,studentInDiningRoom + 1);
                         newValue=gameBoard.getDiningRoom().get(color);
                         gameBoard.getProfessor().checkProfessor(color, gameBoard.getPlayer());
