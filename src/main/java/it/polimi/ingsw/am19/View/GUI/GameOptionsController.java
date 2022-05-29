@@ -160,7 +160,7 @@ public class GameOptionsController implements SceneController {
     }
 
     /**
-     * sets gui's teference
+     * sets gui's eference
      * @param gui id the gui's reference
      */
     @Override

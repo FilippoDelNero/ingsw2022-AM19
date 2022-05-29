@@ -105,10 +105,10 @@ public class LoginController implements SceneController{
 
                 for (WizardFamily wizardFamily: wizardFamilies)
                         switch (wizardFamily) {
-                                case WARRIOR -> addCardToMenuOptions(warriorImageView);
-                                case WITCH -> addCardToMenuOptions(witchImageView);
-                                case KING -> addCardToMenuOptions(kingImageView);
-                                case SHAMAN -> addCardToMenuOptions(shamanImageView);
+                                case WARRIOR -> addCardToMenuOptions(wizardFamily,warriorImageView);
+                                case WITCH -> addCardToMenuOptions(wizardFamily,witchImageView);
+                                case KING -> addCardToMenuOptions(wizardFamily,kingImageView);
+                                case SHAMAN -> addCardToMenuOptions(wizardFamily,shamanImageView);
                         }
 
                 // create action event
@@ -163,9 +163,9 @@ public class LoginController implements SceneController{
                         sendUserData();
         }
 
-        private void addCardToMenuOptions(ImageView iv){
+        private void addCardToMenuOptions(WizardFamily wizardFamily,ImageView iv){
                 iv.setFitWidth(98.8);
                 iv.setFitHeight(149.8);
-                wizardFamilyField.getItems().add(new MenuItem(iv.toString().toLowerCase(),iv));
+                wizardFamilyField.getItems().add(new MenuItem(wizardFamily.toString().toLowerCase(),iv));
         }
 }
