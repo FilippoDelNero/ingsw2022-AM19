@@ -427,9 +427,9 @@ public class MatchController implements SceneController {
     private void initializeLabel() {
         genericMsgAP.getChildren().get(0).setVisible(false);
         ((Label)genericMsgAP.getChildren().get(1)).setText("");
-        player2Name.setText(cache.getGameBoards().get(1).playerNickname());
+        player2Name.setText(cache.getGameBoards().get(1).playerNickname().toUpperCase());
         if(cache.getGameBoards().size() == 3)
-            player3Name.setText(cache.getGameBoards().get(2).playerNickname());
+            player3Name.setText(cache.getGameBoards().get(2).playerNickname().toUpperCase());
     }
 
     /**
