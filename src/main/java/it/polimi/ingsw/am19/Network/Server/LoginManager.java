@@ -157,6 +157,8 @@ public class LoginManager {
      * @param clientToAdd the clientManager currently served by the LoginManager
      */
     private void addPlayerToNewMatch(ClientManager clientToAdd) {
+        if (numOfPlayers == 2)
+            availableTowerColor.removeIf(color -> color == TowerColor.GREY);
         clientToAdd.sendMessage(new AskLoginInfoMessage(availableTowerColor, availableWizardFamilies));
         waitForReply();
         ReplyLoginInfoMessage msg = (ReplyLoginInfoMessage) answerFromClient;
@@ -198,7 +200,7 @@ public class LoginManager {
         }
 
         String nickname = msg.getNickname();
-        matchController.setClientManager(nickname,clientToAdd); //TODO after implementing persistence make sure the map saved in the previous match was ignored while saving
+        matchController.setClientManager(nickname,clientToAdd);
         lastMatchPlayers.remove(nickname);
         if(lastMatchPlayers.size()==0)
             matchController.inProgress();

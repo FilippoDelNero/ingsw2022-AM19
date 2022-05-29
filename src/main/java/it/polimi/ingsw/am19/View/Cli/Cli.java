@@ -478,7 +478,10 @@ public class Cli implements View {
      */
     private String askEntranceMove(int movesLeft) {
         String input;
-        printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
+        if (movesLeft == 3)
+            printer.println("You need to move " + movesLeft + " students. Which color do you want to move and where? [e.g. RED island 1]");
+        else
+            printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
         input = reader.nextLine();
         return input.toLowerCase();
     }
