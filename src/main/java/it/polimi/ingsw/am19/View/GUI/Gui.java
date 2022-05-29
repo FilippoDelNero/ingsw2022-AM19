@@ -299,10 +299,10 @@ public class Gui extends Application implements View {
      */
     @Override
     public void generic(GenericMessage msg) {
-        /*if (msg.getMessage().equals("waiting for others player to join..."))
+        if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
 
-        Platform.runLater(() -> currController.showGenericMsg(msg));*/
+        Platform.runLater(() -> currController.showGenericMsg(msg));
     }
 
     /**
