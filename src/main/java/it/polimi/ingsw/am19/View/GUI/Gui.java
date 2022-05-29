@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.View.GUI;
 
+import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Client.Client;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
@@ -59,6 +60,8 @@ public class Gui extends Application implements View {
 
     /** the fxml file for the scene where the character cards are shown*/
     private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
+
+    private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
 
     public Cache getCache() {
         return cache;
@@ -240,7 +243,24 @@ public class Gui extends Application implements View {
 
     @Override
     public void askCharacterCardParameters(AskCharacterParameterMessage msg) {
+        boolean color = msg.isRequireColor();
+        boolean island = msg.isRequireIsland();
+        boolean colorList = msg.isRequireColorList();
 
+        if(colorList){
+            //todo
+            }
+        else if(color || island){
+            AbstractCharacterCard card = ((CharacterCardController)currController).getCardChosen();
+
+            changeScene(PARAMETER_1);
+            Platform.runLater(()->{
+                ((AskParameter1Controller)currController).setCard(card);
+                ((AskParameter1Controller)currController).initializeScene();
+            });
+        }
+        else
+            myClient.sendMessage(new ReplyCharacterParameterMessage(nickname,null,null,null));
     }
 
     @Override
@@ -250,10 +270,10 @@ public class Gui extends Application implements View {
 
     @Override
     public void generic(GenericMessage msg) {
-        if (msg.getMessage().equals("waiting for others player to join..."))
+        /*if (msg.getMessage().equals("waiting for others player to join..."))
             changeScene(WAITING);
 
-        Platform.runLater(() -> currController.showGenericMsg(msg));
+        Platform.runLater(() -> currController.showGenericMsg(msg));*/
     }
 
     @Override
