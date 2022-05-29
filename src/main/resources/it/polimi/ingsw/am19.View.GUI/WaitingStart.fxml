@@ -21,6 +21,6 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBar" layoutX="557.5" layoutY="459.0" prefHeight="35.0" prefWidth="325.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutX="557.5" layoutY="459.0" mouseTransparent="true" prefHeight="35.0" prefWidth="325.0" progress="0.0" />
    </children>
 </Pane>

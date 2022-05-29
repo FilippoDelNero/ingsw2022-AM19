@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,15 +15,20 @@
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <Button fx:id="submitButton" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onAction="#sendUserData" prefHeight="39.0" prefWidth="111.0" text="Submit">
+      <Button fx:id="submitButton" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onAction="#sendUserData" prefHeight="39.0" prefWidth="111.0" stylesheets="@Login.css" text="Submit">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <MenuButton fx:id="savedUsernamesField" layoutX="569.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="302.0" text="Username">
+      <MenuButton fx:id="savedUsernamesField" layoutX="569.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="302.0" stylesheets="@Login.css" text="Username">
          <font>
             <Font size="19.0" />
          </font>
       </MenuButton>
+      <Label fx:id="warningLabel" layoutX="575.0" layoutY="317.0" text="Label" textFill="#fffd00">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

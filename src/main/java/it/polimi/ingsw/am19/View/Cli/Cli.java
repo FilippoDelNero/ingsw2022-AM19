@@ -60,6 +60,41 @@ public class Cli implements View {
         this.cache = cache;
     }
 
+    private void startView() {
+        String ipAddress;
+        String portNumberString;
+        int portNumber = 0;
+        boolean isValid;
+
+        do{
+            isValid = true;
+            printer.println("insert an ip address: ");
+            ipAddress = reader.nextLine();
+            if (!ipAddress.matches("^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$"))
+                isValid = false;
+        } while (!isValid);
+
+        do {
+            isValid = true;
+            printer.println("insert a port: ");
+            portNumberString = reader.nextLine();
+            if (!portNumberString.matches("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"))
+                isValid = false;
+            else {
+                try {
+                    portNumber = Integer.parseInt(portNumberString);
+                } catch (NumberFormatException e) {
+                    isValid = false;
+                }
+            }
+        } while(!isValid);
+
+
+        myClient = new Client(ipAddress, portNumber, this);
+        myClient.startPinging();
+        myClient.receiveMessage();
+    }
+
     /**
      * setter for the client parameter
      * @param client the client this view needs to refer to to send messages
@@ -302,37 +337,6 @@ public class Cli implements View {
     }
 
     /**
-     * method called as soon as the application is running,
-     * it asks the user for the address and the port they wants to connect to
-     * after that it creates a client and connects it with the specified parameters
-     */
-    private void startView() {
-        String ipAddress;
-        String portNumberString;
-        int portNumber = 0;
-        boolean isValid;
-
-        printer.println("insert an ip address: ");
-        ipAddress = reader.nextLine();
-
-        do {
-            isValid = true;
-            printer.println("insert a port: ");
-            portNumberString = reader.nextLine();
-            try {
-                portNumber = Integer.parseInt(portNumberString);
-            } catch (NumberFormatException e) {
-                isValid = false;
-            }
-        } while(!isValid);
-
-
-        myClient = new Client(ipAddress, portNumber, this);
-        myClient.startPinging();
-        myClient.receiveMessage();
-    }
-
-    /**
      * method used to ask the player if they want to resume a saved match
      * @return true if the player wants to resume a saved match, false otherwise
      */
@@ -474,7 +478,10 @@ public class Cli implements View {
      */
     private String askEntranceMove(int movesLeft) {
         String input;
-        printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
+        if (movesLeft == 3)
+            printer.println("You need to move " + movesLeft + " students. Which color do you want to move and where? [e.g. RED island 1]");
+        else
+            printer.println("You need to move " + movesLeft + " more students. Which color do you want to move and where? [e.g. RED island 1]");
         input = reader.nextLine();
         return input.toLowerCase();
     }
@@ -655,6 +662,15 @@ public class Cli implements View {
         }
 
         if(cache.getGameBoards() != null) {
+            List<ReducedGameBoard> list = new ArrayList<>();
+
+            for(ReducedGameBoard rgb : cache.getGameBoards()) {
+                if(rgb.playerNickname().equals(nickname))
+                    list.add(0, rgb);
+                else
+                    list.add(rgb);
+            }
+
             printer.println("Each Player's GameBoard: ");
 
             for(ReducedGameBoard rgb : cache.getGameBoards())

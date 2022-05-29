@@ -13,12 +13,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,14 @@ public class MatchController implements SceneController {
     /** Image containing the sprite of a no-entry-tile */
     private final Image noEntryTileImg = new Image("file:src/main/resources/Board/noEntryTile.png");
 
+    private final Image islandGroup2 = new Image("file:src/main/resources/Board/islandGroup2.png");
+    private final Image islandGroup3 = new Image("file:src/main/resources/Board/islandGroup3.png");
+    private final Image islandGroup4 = new Image("file:src/main/resources/Board/islandGroup4.png");
+    private final Image islandGroup5 = new Image("file:src/main/resources/Board/islandGroup5.png");
+    private final Image islandGroup6 = new Image("file:src/main/resources/Board/islandGroup6.png");
+    private final Image islandGroup7 = new Image("file:src/main/resources/Board/islandGroup7.png");
+    private final Image islandGroup8 = new Image("file:src/main/resources/Board/islandGroup8.png");
+
     /** Group containing the anchorPanes, each one containing the gameBoard's components */
     @FXML private Group gameboards;
 
@@ -80,6 +90,14 @@ public class MatchController implements SceneController {
 
     /** AnchorPane containing the cloud #3 components */
     @FXML private AnchorPane cloud3AP;
+
+    @FXML private AnchorPane genericMsgAP;
+
+    @FXML private Label player2Name;
+
+    @FXML private Label player3Name;
+
+    @FXML private Group coinLabels;
 
     /** a reference to the gui class which "controls" this controller */
     private Gui gui;
@@ -107,6 +125,8 @@ public class MatchController implements SceneController {
 
     /** list of the GridPanes of the clouds */
     private List<GridPane> clouds;
+
+    private List<Label> labelsForCoins;
 
     /** attribute used to save the student's color that the user wants to move */
     private PieceColor studentToMove;
@@ -140,6 +160,11 @@ public class MatchController implements SceneController {
         clouds.add(0, (GridPane) cloud1AP.getChildren().get(1));
         clouds.add(1, (GridPane) cloud2AP.getChildren().get(1));
         clouds.add(2, (GridPane) cloud3AP.getChildren().get(1));
+
+        labelsForCoins = new ArrayList<>();
+        for(i = 0; i < 3; i++) {
+            labelsForCoins.add((Label) coinLabels.getChildren().get(i));
+        }
     }
 
     /**
@@ -165,7 +190,7 @@ public class MatchController implements SceneController {
      */
     @Override
     public void showGenericMsg(GenericMessage msg) {
-
+        printGeneric(msg.toString());
     }
 
     /**
@@ -176,6 +201,7 @@ public class MatchController implements SceneController {
         initializeGameBoards();
         initializeArchipelago();
         initializeClouds();
+        initializeLabel();
     }
 
     /**
@@ -184,6 +210,7 @@ public class MatchController implements SceneController {
     public void moveStudentPhase() {
         gameboard1.get(0).setCursor(Cursor.HAND);
         gameboard1.get(0).setOnMouseClicked(this::pickStudentToMove);
+        printGeneric("select a student to move");
     }
 
     /**
@@ -199,6 +226,7 @@ public class MatchController implements SceneController {
             gp.setOnMouseClicked(this::getMotherNatureDestination);
             gp.setCursor(Cursor.HAND);
         }
+        printGeneric("click on the island you want to move mother nature on");
     }
 
     /**
@@ -213,6 +241,7 @@ public class MatchController implements SceneController {
             gp.setOnMouseClicked(this::getChosenCloud);
             gp.setCursor(Cursor.HAND);
         }
+        printGeneric("select a cloud");
     }
 
     /**
@@ -250,6 +279,7 @@ public class MatchController implements SceneController {
                     gp.setCursor(Cursor.HAND);
                 }
             }
+            printGeneric("select where you want to move the student");
         }
     }
 
@@ -331,20 +361,29 @@ public class MatchController implements SceneController {
         List<ReducedGameBoard> list = cache.getGameBoards();
 
         populateEntrance(gameboard1.get(0), list.get(0));
-        populateDiningRoom(gameboard1.get(1), gameboard1.get(2), gameboard1.get(3), gameboard1.get(4), gameboard1.get(5), list.get(0));
+        populateDiningRoom(gameboard1.get(1), gameboard1.get(2), gameboard1.get(3),
+                gameboard1.get(4), gameboard1.get(5), list.get(0));
         populateProfessors(gameboard1.get(6), list.get(0));
         populateTowers(gameboard1.get(7), list.get(0));
+        if(list.get(0).coins() != null)
+            labelsForCoins.get(0).setText("coins: " + list.get(0).coins());
 
         populateEntrance(gameboard2.get(0), list.get(1));
-        populateDiningRoom(gameboard2.get(1), gameboard2.get(2), gameboard2.get(3), gameboard2.get(4), gameboard2.get(5), list.get(1));
+        populateDiningRoom(gameboard2.get(1), gameboard2.get(2), gameboard2.get(3),
+                gameboard2.get(4), gameboard2.get(5), list.get(1));
         populateProfessors(gameboard2.get(6), list.get(1));
         populateTowers(gameboard2.get(7), list.get(1));
+        if(list.get(1).coins() != null)
+            labelsForCoins.get(1).setText("coins: " + list.get(1).coins());
 
         if(cache.getGameBoards().size() == 3) {
             populateEntrance(gameboard3.get(0), list.get(2));
-            populateDiningRoom(gameboard3.get(1), gameboard3.get(2), gameboard3.get(3), gameboard3.get(4), gameboard3.get(5), list.get(2));
+            populateDiningRoom(gameboard3.get(1), gameboard3.get(2), gameboard3.get(3),
+                    gameboard3.get(4), gameboard3.get(5), list.get(2));
             populateProfessors(gameboard3.get(6), list.get(2));
             populateTowers(gameboard3.get(7), list.get(2));
+            if(list.get(2).coins() != null)
+                labelsForCoins.get(2).setText("coins: " + list.get(2).coins());
         }
         else {
             gameboards.getChildren().get(2).setVisible(false);
@@ -355,8 +394,14 @@ public class MatchController implements SceneController {
      * method used to initialize the islands using the data saved in cache
      */
     private void initializeArchipelago() {
+        ReducedIsland reducedIsland;
         for(int i = 0; i < cache.getIslands().size(); i++) {
-            populateIsland(islands.get(i), cache.getIslands().get(i));
+            reducedIsland = cache.getIslands().get(i);
+            populateIsland(islands.get(i), reducedIsland);
+            if(reducedIsland.numOfIslands() > 1) {
+                ((ImageView) islandsAP.get(i).getChildren().get(0))
+                        .setImage(getIslandImage(reducedIsland.numOfIslands()));
+            }
         }
         for(int i = cache.getIslands().size(); i < 12; i++) {
             islandsAP.get(i).setVisible(false);
@@ -377,6 +422,14 @@ public class MatchController implements SceneController {
             cloud3AP.setVisible(false);
             clouds.remove((GridPane)cloud3AP.getChildren().get(1));
         }
+    }
+
+    private void initializeLabel() {
+        genericMsgAP.getChildren().get(0).setVisible(false);
+        ((Label)genericMsgAP.getChildren().get(1)).setText("");
+        player2Name.setText(cache.getGameBoards().get(1).playerNickname());
+        if(cache.getGameBoards().size() == 3)
+            player3Name.setText(cache.getGameBoards().get(2).playerNickname());
     }
 
     /**
@@ -534,6 +587,15 @@ public class MatchController implements SceneController {
             island.add(createTower(reducedIsland.towerColor()), 3, 2);
     }
 
+    private void printGeneric(String stringToPrint) {
+        ImageView image = (ImageView) genericMsgAP.getChildren().get(0);
+        Label label = (Label) genericMsgAP.getChildren().get(1);
+        if(!image.isVisible())
+            image.setVisible(true);
+        label.setText(stringToPrint);
+        label.setTextAlignment(TextAlignment.CENTER);
+    }
+
     /**
      * method to create a circle of radius 10 with the sprite of a student on it
      * @param pieceColor the color of the student
@@ -610,6 +672,19 @@ public class MatchController implements SceneController {
         tower.setStroke(strokeColor);
 
         return tower;
+    }
+
+    private Image getIslandImage(int numOfIsland) {
+        return switch (numOfIsland) {
+            case 2 -> islandGroup2;
+            case 3 -> islandGroup3;
+            case 4 -> islandGroup4;
+            case 5 -> islandGroup5;
+            case 6 -> islandGroup6;
+            case 7 -> islandGroup7;
+            case 8 -> islandGroup8;
+            default -> new Image("file:src/main/resources/Board/island2.png");
+        };
     }
 
     /**
