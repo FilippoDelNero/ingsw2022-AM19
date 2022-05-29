@@ -181,7 +181,7 @@ public class AskParameter1Controller implements SceneController {
 
     public void initializeScene(){
         character.setImage(new Image(getImagePath(card.getId())));
-        description.setText(getDescription(card.getId()));
+        description.setText(getDescription(card));
         setStudentOnCard(card,onCardGrid);
         nameCharacter.setText(card.getId().toString());
         submit.setDisable(true);
@@ -234,7 +234,7 @@ public class AskParameter1Controller implements SceneController {
         return "file:src/main/resources/it/polimi/ingsw/am19.View.GUI/CharacterCard/" + c + ".jpg";
     }
 
-    private String getDescription(Character c){
+    private String getDescription(AbstractCharacterCard c){
         return "Price: " + c.getPrice() + "\n" + c.getDescription();
     }
 
