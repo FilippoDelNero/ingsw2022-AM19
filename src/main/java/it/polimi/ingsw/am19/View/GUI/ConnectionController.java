@@ -74,6 +74,10 @@ public class ConnectionController implements SceneController{
         return ipAddress.getText().matches("^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$");
     }
 
+    private boolean checkPortNumValidity(){
+        return portNumber.getText().matches("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$");
+    }
+
     private void sendConnectionData(){
         if (!checkFieldsFilled()){
             warningLabel.setVisible(true);
@@ -83,7 +87,16 @@ public class ConnectionController implements SceneController{
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("Invalid IP address. Please retry");
+                alert.setContentText("Invalid IP address format. Please retry");
+                Optional<ButtonType> result = alert.showAndWait();
+            });
+        }
+        else if (!checkPortNumValidity()){
+            warningLabel.setVisible(false);
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Invalid port number format. Please retry");
                 Optional<ButtonType> result = alert.showAndWait();
             });
         }

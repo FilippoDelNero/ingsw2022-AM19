@@ -67,18 +67,25 @@ public class Cli implements View {
         boolean isValid;
 
         do{
+            isValid = true;
             printer.println("insert an ip address: ");
             ipAddress = reader.nextLine();
-        } while (!ipAddress.matches("^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$"));
+            if (!ipAddress.matches("^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$"))
+                isValid = false;
+        } while (!isValid);
 
         do {
             isValid = true;
             printer.println("insert a port: ");
             portNumberString = reader.nextLine();
-            try {
-                portNumber = Integer.parseInt(portNumberString);
-            } catch (NumberFormatException e) {
+            if (!portNumberString.matches("^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"))
                 isValid = false;
+            else {
+                try {
+                    portNumber = Integer.parseInt(portNumberString);
+                } catch (NumberFormatException e) {
+                    isValid = false;
+                }
             }
         } while(!isValid);
 

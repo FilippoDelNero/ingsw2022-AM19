@@ -47,11 +47,6 @@ public class MatchController implements Observer{
     private RoundsManager roundsManager;
 
     /**
-     * Is a reference to an InputController
-     */
-    private InputController inputController;
-
-    /**
      * Utility class for updates towards views
      */
     private final Reducer reducer;
@@ -79,7 +74,6 @@ public class MatchController implements Observer{
             this.model = new ExpertMatchDecorator(model.getWrappedMatch());
 
         model.getWrappedMatch().addObserver(this);
-        this.inputController = new InputController(this);
     }
 
     /**
@@ -108,7 +102,6 @@ public class MatchController implements Observer{
         this.model = savedData.getModel();
         roundsManager.setRoundNum(savedData.getRoundNumber());
 
-        inputController = new InputController(this);
         model.getWrappedMatch().addObserver(this);
         model.setAllObservers();
 
@@ -307,13 +300,5 @@ public class MatchController implements Observer{
 
              case END_MATCH -> changeState();
         }
-    }
-
-    /**
-     * Returns a reference to the InputController
-     * @return a reference to the InputController
-     */
-    public InputController getInputController() {
-        return inputController;
     }
 }

@@ -13,7 +13,7 @@ public class AbstractPhase {
     public AbstractPhase(MatchController matchController) {
         this.model = matchController.getModel();
         this.matchController = matchController;
-        this.inputController = matchController.getInputController();
+        this.inputController = new InputController(matchController);
     }
 
 }
