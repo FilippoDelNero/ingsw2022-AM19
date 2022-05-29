@@ -15,7 +15,7 @@
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" style="-fx-background-radius: 15;">
+      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" styleClass="text-field" stylesheets="@Login.css">
          <font>
             <Font size="19.0" />
          </font>
@@ -25,7 +25,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" style="-fx-background-radius: 15;">
+      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" styleClass="text-field" stylesheets="@Login.css">
          <font>
             <Font size="19.0" />
          </font>

@@ -69,7 +69,7 @@ public class Gui extends Application implements View {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
-        //root.getStylesheets().add("@Login.css");
+        root.getStylesheets().add("@Login.css");
         //stage.setFullScreen(true);
         //stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
@@ -147,6 +147,10 @@ public class Gui extends Application implements View {
         return myClient;
     }
 
+    /**
+     * according to msg content, it tells the GameOptionsController controller what to display
+     * @param msg the AskFirstPlayerMessage sent by the server
+     */
     @Override
     public void askLoginFirstPlayer(AskFirstPlayerMessage msg) {
         changeScene(GAME_OPT);
@@ -159,6 +163,11 @@ public class Gui extends Application implements View {
         });
     }
 
+    /**
+     * when resuming a match it tells the UsernameOptionsController the available
+     * nicknames to display, according to the msg content
+     * @param msg the AskNicknameOptionsMessage sent by the server
+     */
     @Override
     public void askNicknameFromResumedMatch(AskNicknameOptionsMessage msg) {
         changeScene(USERNAMES_OPT);
@@ -167,6 +176,11 @@ public class Gui extends Application implements View {
             ((UsernameOptionsController)currController).setAvailableUsernames(msg.getNicknameAvailable()));
     }
 
+    /**
+     * when receiving logging, it tells the LoginController the available
+     * match parameters to display as options
+     * @param msg the AskLoginInfoMessage sent by the server
+     */
     @Override
     public void askLoginInfo(AskLoginInfoMessage msg) {
         changeScene(LOGIN);
@@ -175,6 +189,11 @@ public class Gui extends Application implements View {
                 ((LoginController)currController).setOptions(msg.getTowerColorsAvailable(),msg.getWizardFamiliesAvailable()));
     }
 
+    /**
+     * according to msg content, it tells the HelperCardController the list of available cards
+     * to be displayed
+     * @param msg the message sent by the server containing the availableHelperCards
+     */
     @Override
     public void showHelperOptions(AskHelperCardMessage msg) {
         changeScene(HELPERCARD);
@@ -231,6 +250,11 @@ public class Gui extends Application implements View {
         });
     }
 
+    /**
+     * it tells the CharacterCardController the available character cards options to be displayed,
+     * according to msg content
+     * @param msg the AskPlayCharacterCardMessage sent by server containing the options to present to the user
+     */
     @Override
     public void askPlayCharacter(AskPlayCharacterCardMessage msg) {
         changeScene(ASK_CHARACTER);
@@ -249,6 +273,10 @@ public class Gui extends Application implements View {
 
     }
 
+    /**
+     * it tells the current controller to show the message passed as parameter in the current scene
+     * @param msg the GenericMessage sent by the server
+     */
     @Override
     public void generic(GenericMessage msg) {
         if (msg.getMessage().equals("waiting for others player to join..."))
@@ -257,6 +285,10 @@ public class Gui extends Application implements View {
         Platform.runLater(() -> currController.showGenericMsg(msg));
     }
 
+    /**
+     * it shows an alert containing the error message passed as parameter
+     * @param msg the ErrorMessage sent by the server
+     */
     @Override
     public void error(ErrorMessage msg) {
         Platform.runLater(() -> {
@@ -267,6 +299,10 @@ public class Gui extends Application implements View {
         });
     }
 
+    /**
+     * it changes the current scene, setting the right controller
+     * @param controllerName the path that name od the next scene fxml
+     */
     public void changeScene(String controllerName) {
         Platform.runLater(() -> {
             try {

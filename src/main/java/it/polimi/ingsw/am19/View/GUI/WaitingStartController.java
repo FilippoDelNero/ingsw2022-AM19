@@ -1,13 +1,18 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
-import it.polimi.ingsw.am19.Network.Server.Timer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
+/**
+ * A Class for managing waiting while other clients still connecting
+ */
 public class WaitingStartController implements SceneController {
+    /**
+     * gui's reference
+     */
     private Gui gui;
 
     public void initialize(){
@@ -20,6 +25,10 @@ public class WaitingStartController implements SceneController {
     @FXML
     private ProgressBar progressBar;
 
+    /**
+     * Sets gui's reference
+     * @param gui id the gui's reference
+     */
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
@@ -31,6 +40,7 @@ public class WaitingStartController implements SceneController {
     }
 
     private void loading(){
+        //progression bar fill
         new Thread(() -> {
             for(int i = 0; i <=500; i++) {
                 final int position = i;
