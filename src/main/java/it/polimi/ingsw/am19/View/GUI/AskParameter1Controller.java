@@ -10,6 +10,7 @@ import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyCharacterParameterMessage;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class AskParameter1Controller implements SceneController {
@@ -186,6 +188,21 @@ public class AskParameter1Controller implements SceneController {
         nameCharacter.setText(card.getId().toString());
         submit.setDisable(true);
 
+        Map<PieceColor,Integer> students = card.getStudents();
+        if(students!=null){
+            for(PieceColor p : students.keySet()){
+                if(students.get(p)>0){
+                    colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(getStudentPath(p))));
+                }
+            }
+        }
+        else
+            for(PieceColor p : PieceColor.values())
+                colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(getStudentPath(p))));
+
+        for (MenuItem item: colorMenu.getItems())
+            item.setOnAction(this::setColor);
+
         if(!card.isRequiringIsland()){
             archipelago.setVisible(false);
             archipelago.setDisable(true);
@@ -204,6 +221,16 @@ public class AskParameter1Controller implements SceneController {
         for(int i = cache.getIslands().size(); i < 12; i++) {
             archipelago.getChildren().get(i).setVisible(false);
         }
+    }
+
+    private Image getStudentPath(PieceColor color){
+        return switch (color){
+            case BLUE -> blueStudent;
+            case PINK -> pinkStudent;
+            case RED -> redStudent;
+            case YELLOW -> yellowStudent;
+            case GREEN -> greenStudent;
+        };
     }
 
     private PieceColor getColor (String s){
