@@ -290,7 +290,26 @@ public class Gui extends Application implements View {
 
     @Override
     public void endMatch(EndMatchMessage msg) {
+        if(msg.getWinners() != null)
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("End match");
+                alert.setContentText("Match ended. Winner:" + msg.getWinners().toString());
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> Platform.exit());
+            });
+        else
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("We are sorry, the match will interrupted due to a fatal error occurring\"");
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> Platform.exit());
 
+            });
+        myClient.disconnect();
     }
 
     /**
