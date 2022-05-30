@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
@@ -13,19 +12,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,49 +27,6 @@ import java.util.Objects;
  * it allows to perform the action phase to the user
  */
 public class MatchController implements SceneController {
-    /** Image containing the sprite of the red student */
-    private final Image redStudent = new Image("file:src/main/resources/Board/student_red.png");
-
-    /** Image containing the sprite of the green student */
-    private final Image greenStudent = new Image("file:src/main/resources/Board/student_green.png");
-
-    /** Image containing the sprite of the blue student */
-    private final Image blueStudent = new Image("file:src/main/resources/Board/student_blue.png");
-
-    /** Image containing the sprite of the yellow student */
-    private final Image yellowStudent = new Image("file:src/main/resources/Board/student_yellow.png");
-
-    /** Image containing the sprite of the pink student */
-    private final Image pinkStudent = new Image("file:src/main/resources/Board/student_pink.png");
-
-    /** Image containing the sprite of the red professor */
-    private final Image redProfessor = new Image("file:src/main/resources/Board/teacher_red.png");
-
-    /** Image containing the sprite of the green professor */
-    private final Image greenProfessor = new Image("file:src/main/resources/Board/teacher_green.png");
-
-    /** Image containing the sprite of the blue professor */
-    private final Image blueProfessor = new Image("file:src/main/resources/Board/teacher_blue.png");
-
-    /** Image containing the sprite of the yellow professor */
-    private final Image yellowProfessor = new Image("file:src/main/resources/Board/teacher_yellow.png");
-
-    /** Image containing the sprite of the pink professor */
-    private final Image pinkProfessor = new Image("file:src/main/resources/Board/teacher_pink.png");
-
-    /** Image containing the sprite of mother nature */
-    private final Image motherNatureImg = new Image("file:src/main/resources/Board/mother_nature.png");
-
-    /** Image containing the sprite of a no-entry-tile */
-    private final Image noEntryTileImg = new Image("file:src/main/resources/Board/noEntryTile.png");
-
-    private final Image islandGroup2 = new Image("file:src/main/resources/Board/islandGroup2.png");
-    private final Image islandGroup3 = new Image("file:src/main/resources/Board/islandGroup3.png");
-    private final Image islandGroup4 = new Image("file:src/main/resources/Board/islandGroup4.png");
-    private final Image islandGroup5 = new Image("file:src/main/resources/Board/islandGroup5.png");
-    private final Image islandGroup6 = new Image("file:src/main/resources/Board/islandGroup6.png");
-    private final Image islandGroup7 = new Image("file:src/main/resources/Board/islandGroup7.png");
-    private final Image islandGroup8 = new Image("file:src/main/resources/Board/islandGroup8.png");
 
     /** Group containing the anchorPanes, each one containing the gameBoard's components */
     @FXML private Group gameboards;
@@ -92,14 +43,19 @@ public class MatchController implements SceneController {
     /** AnchorPane containing the cloud #3 components */
     @FXML private AnchorPane cloud3AP;
 
+    /** AnchorPane containing the label to display generic messages */
     @FXML private AnchorPane genericMsgAP;
 
+    /** Label used to display the name of the second player */
     @FXML private Label player2Name;
 
+    /** Label used to display the name of the third player */
     @FXML private Label player3Name;
 
+    /** Group of the labels used to display the number of coins of each player */
     @FXML private Group coinLabels;
 
+    /** Button the user presses to play their helper card */
     @FXML private Button playHelperCard;
 
     /** a reference to the gui class which "controls" this controller */
@@ -129,17 +85,23 @@ public class MatchController implements SceneController {
     /** list of the GridPanes of the clouds */
     private List<GridPane> clouds;
 
+    /** list of the labels used to display each player's coins */
     private List<Label> labelsForCoins;
 
     /** attribute used to save the student's color that the user wants to move */
     private PieceColor studentToMove;
 
+    /** attribute used to save the helperCardMessage sent by the server */
     private AskHelperCardMessage helperCardMessage;
+
+    private Drawer draw;
 
     /**
      * method called automatically it populates the Lists of this class
      */
     public void initialize() {
+        draw = new Drawer();
+
         int i;
         islands = new ArrayList<>();
         islandsAP = new ArrayList<>();
@@ -210,6 +172,10 @@ public class MatchController implements SceneController {
         playHelperCard.setVisible(false);
     }
 
+    /**
+     * method used to let user play a Helper Card by pressing a button
+     * @param msg the AskHelperCardMessage that will be forwarded to HelperCardController when the user presses on a card
+     */
     public void playHelperCard(AskHelperCardMessage msg) {
         helperCardMessage = msg;
         playHelperCard.setVisible(true);
@@ -222,7 +188,7 @@ public class MatchController implements SceneController {
     public void moveStudentPhase() {
         gameboard1.get(0).setCursor(Cursor.HAND);
         gameboard1.get(0).setOnMouseClicked(this::pickStudentToMove);
-        printGeneric("Select a student in your gameboard's entrance to move");
+        printGeneric("Select a student in your game-board's entrance to move");
     }
 
     /**
@@ -258,6 +224,10 @@ public class MatchController implements SceneController {
         printGeneric("Which cloud would you like?");
     }
 
+    /**
+     * This method changes scene allowing the user to play a HelperCard
+     * @param event the click of the user's mouse
+     */
     public void changeSceneAndPlayHelper(MouseEvent event) {
         gui.playHelperCard(helperCardMessage);
     }
@@ -373,6 +343,9 @@ public class MatchController implements SceneController {
         }
     }
 
+    /**
+     * method used to refresh every gameboard in the view
+     */
     public void refreshGameboards() {
         for(int i = 0; i < 8; i++) {
             gameboard1.get(i).getChildren().clear();
@@ -384,6 +357,9 @@ public class MatchController implements SceneController {
         initializeGameBoards();
     }
 
+    /**
+     * method used to refresh every island in the view
+     */
     public void refreshIslands() {
         for (GridPane island : islands) {
             island.getChildren().clear();
@@ -391,6 +367,9 @@ public class MatchController implements SceneController {
         initializeArchipelago();
     }
 
+    /**
+     * method used to refresh every cloud in the view
+     */
     public void refreshClouds() {
         for(GridPane cloud : clouds) {
             cloud.getChildren().clear();
@@ -404,28 +383,28 @@ public class MatchController implements SceneController {
     private void initializeGameBoards() {
         List<ReducedGameBoard> list = cache.getGameBoards();
 
-        populateEntrance(gameboard1.get(0), list.get(0));
-        populateDiningRoom(gameboard1.get(1), gameboard1.get(2), gameboard1.get(3),
+        draw.populateEntrance(gameboard1.get(0), list.get(0));
+        draw.populateDiningRoom(gameboard1.get(1), gameboard1.get(2), gameboard1.get(3),
                 gameboard1.get(4), gameboard1.get(5), list.get(0));
-        populateProfessors(gameboard1.get(6), list.get(0));
-        populateTowers(gameboard1.get(7), list.get(0));
+        draw.populateProfessors(gameboard1.get(6), list.get(0));
+        draw.populateTowers(gameboard1.get(7), list.get(0));
         if(list.get(0).coins() != null)
             labelsForCoins.get(0).setText("Coins: " + list.get(0).coins());
 
-        populateEntrance(gameboard2.get(0), list.get(1));
-        populateDiningRoom(gameboard2.get(1), gameboard2.get(2), gameboard2.get(3),
+        draw.populateEntrance(gameboard2.get(0), list.get(1));
+        draw.populateDiningRoom(gameboard2.get(1), gameboard2.get(2), gameboard2.get(3),
                 gameboard2.get(4), gameboard2.get(5), list.get(1));
-        populateProfessors(gameboard2.get(6), list.get(1));
-        populateTowers(gameboard2.get(7), list.get(1));
+        draw.populateProfessors(gameboard2.get(6), list.get(1));
+        draw.populateTowers(gameboard2.get(7), list.get(1));
         if(list.get(1).coins() != null)
             labelsForCoins.get(1).setText("Coins: " + list.get(1).coins());
 
         if(cache.getGameBoards().size() == 3) {
-            populateEntrance(gameboard3.get(0), list.get(2));
-            populateDiningRoom(gameboard3.get(1), gameboard3.get(2), gameboard3.get(3),
+            draw.populateEntrance(gameboard3.get(0), list.get(2));
+            draw.populateDiningRoom(gameboard3.get(1), gameboard3.get(2), gameboard3.get(3),
                     gameboard3.get(4), gameboard3.get(5), list.get(2));
-            populateProfessors(gameboard3.get(6), list.get(2));
-            populateTowers(gameboard3.get(7), list.get(2));
+            draw.populateProfessors(gameboard3.get(6), list.get(2));
+            draw.populateTowers(gameboard3.get(7), list.get(2));
             if(list.get(2).coins() != null)
                 labelsForCoins.get(2).setText("Coins: " + list.get(2).coins());
         }
@@ -441,10 +420,10 @@ public class MatchController implements SceneController {
         ReducedIsland reducedIsland;
         for(int i = 0; i < cache.getIslands().size(); i++) {
             reducedIsland = cache.getIslands().get(i);
-            populateIsland(islands.get(i), reducedIsland);
+            draw.populateIsland(islands.get(i), reducedIsland);
             if(reducedIsland.numOfIslands() > 1) {
                 ((ImageView) islandsAP.get(i).getChildren().get(0))
-                        .setImage(getIslandImage(reducedIsland.numOfIslands()));
+                        .setImage(draw.getIslandImage(reducedIsland.numOfIslands()));
             }
         }
         for(int i = cache.getIslands().size(); i < 12; i++) {
@@ -457,17 +436,19 @@ public class MatchController implements SceneController {
      * method used to initialize the clouds using the data saved in cache
      */
     private void initializeClouds() {
-        populateCloud(clouds.get(0), cache.getClouds().get(0));
-        populateCloud(clouds.get(1), cache.getClouds().get(1));
-        if(cache.getClouds().size() == 3) {
-            populateCloud(clouds.get(2), cache.getClouds().get(2));
-        }
+        draw.populateCloud(clouds.get(0), cache.getClouds().get(0));
+        draw.populateCloud(clouds.get(1), cache.getClouds().get(1));
+        if(cache.getClouds().size() == 3)
+            draw.populateCloud(clouds.get(2), cache.getClouds().get(2));
         else {
             cloud3AP.setVisible(false);
             clouds.remove((GridPane)cloud3AP.getChildren().get(1));
         }
     }
 
+    /**
+     * method used to initialize each label in the game, excluding the coin's one
+     */
     private void initializeLabel() {
         genericMsgAP.getChildren().get(0).setVisible(false);
         ((Label)genericMsgAP.getChildren().get(1)).setText("");
@@ -477,160 +458,9 @@ public class MatchController implements SceneController {
     }
 
     /**
-     * method used to put player's student in their correct space in the gameBoard's entrance
-     * @param entrance the GridPane where we want to draw the students on
-     * @param gameBoard the gameboard saved in cache corresponding to the one we are drawing on
+     * method used to print a string into the GenericMsg label
+     * @param stringToPrint the string we want to print
      */
-    private void populateEntrance(GridPane entrance, ReducedGameBoard gameBoard) {
-        int i = 0;
-        int j = 0;
-        for(PieceColor color : PieceColor.values()) {
-            for(int k = 0; k < gameBoard.entrance().get(color); k++) {
-                entrance.add(createStudent(color), i, j);
-                i++;
-                if(i == 2) {
-                    i = 0;
-                    j++;
-                }
-            }
-        }
-    }
-
-    /**
-     * method used to put player's student in their correct space in the gameboard
-     * @param redTable the GridPane of the table containing red students
-     * @param greenTable the GridPane of the table containing green students
-     * @param blueTable the GridPane of the table containing blue students
-     * @param yellowTable the GridPane of the table containing yellow students
-     * @param pinkTable the GridPane of the table containing pink students
-     * @param gameBoard the gameboard saved in cache corresponding to the one we are drawing on
-     */
-    private void populateDiningRoom(GridPane redTable, GridPane greenTable, GridPane blueTable, GridPane yellowTable, GridPane pinkTable,ReducedGameBoard gameBoard) {
-        //red table
-        for(int r = 0; r < gameBoard.diningRoom().get(PieceColor.RED); r++) {
-            redTable.add(createStudent(PieceColor.RED), r, 0);
-        }
-        //green table
-        for(int g = 0; g < gameBoard.diningRoom().get(PieceColor.GREEN); g++) {
-            greenTable.add(createStudent(PieceColor.GREEN), g, 0);
-        }
-        //blue table
-        for(int b = 0; b < gameBoard.diningRoom().get(PieceColor.BLUE); b++) {
-            blueTable.add(createStudent(PieceColor.BLUE), b, 0);
-        }
-        //yellow table
-        for(int y = 0; y < gameBoard.diningRoom().get(PieceColor.YELLOW); y++) {
-            yellowTable.add(createStudent(PieceColor.YELLOW), y, 0);
-        }
-        //pink table
-        for(int p = 0; p < gameBoard.diningRoom().get(PieceColor.PINK); p++) {
-            pinkTable.add(createStudent(PieceColor.PINK), p, 0);
-        }
-    }
-
-    /**
-     * method used to put player's professors in their space in the gameboard
-     * @param professorsTable the GridPane where we want to draw professors in
-     * @param gameBoard the gameboard saved in cache corresponding to the one we are drawing on
-     */
-    private void populateProfessors(GridPane professorsTable, ReducedGameBoard gameBoard) {
-        for(int i = 0; i < gameBoard.professors().size(); i++) {
-            switch (gameBoard.professors().get(i)) {
-                case RED -> professorsTable.add(createProfessor(PieceColor.RED), 0, 1);
-                case GREEN -> professorsTable.add(createProfessor(PieceColor.GREEN), 0, 0);
-                case BLUE -> professorsTable.add(createProfessor(PieceColor.BLUE), 0, 4);
-                case YELLOW -> professorsTable.add(createProfessor(PieceColor.YELLOW), 0, 2);
-                case PINK -> professorsTable.add(createProfessor(PieceColor.PINK), 0, 3);
-            }
-        }
-    }
-
-    /**
-     * method used to put player's towers in their space in the gameboard
-     * @param towersField the GridPane where we want to draw the towers in
-     * @param gameBoard the gameboard saved in cache corresponding to the one we are drawing on
-     */
-    private void populateTowers(GridPane towersField, ReducedGameBoard gameBoard) {
-        int i = 0;
-        int j = 0;
-        TowerColor color = gameBoard.TowerColor();
-        for(int k = 0; k < gameBoard.numOfTowers(); k++) {
-            towersField.add(createTower(color), i, j);
-            i++;
-            if(i == 2) {
-                i = 0;
-                j++;
-            }
-        }
-    }
-
-    /**
-     * method used to put student on the cloud
-     * @param cloud the GridPane of the cloud we want to draw students on
-     * @param cloudMap the cloud saved in cache corresponding to the gui's GridPane
-     */
-    private void populateCloud(GridPane cloud, Map<PieceColor, Integer> cloudMap) {
-        int i = 0;
-        int j = 0;
-        for(PieceColor color : cloudMap.keySet()) {
-            for(int k = 0; k < cloudMap.get(color); k++) {
-                cloud.add(createStudent(color), i, j);
-                i++;
-                if(i == 2) {
-                    i = 0;
-                    j++;
-                }
-            }
-        }
-    }
-
-    /**
-     * method used to put student on the island
-     * @param island the GridPane of the island we want to draw students on
-     * @param reducedIsland the island saved in cache corresponding to the gui's GridPane
-     */
-    private void populateIsland(GridPane island, ReducedIsland reducedIsland) {
-        Circle motherNature = new Circle(20);
-        motherNature.setFill(new ImagePattern(motherNatureImg));
-
-        for (PieceColor color : PieceColor.values()) {
-            int num = reducedIsland.numOfStudents().get(color);
-            if(num != 0) {
-                switch (color) {
-                    case RED -> {
-                        island.add(createStudent(PieceColor.RED), 0, 0);
-                        island.add(new Label("x" + num), 1, 0);
-                    }
-                    case GREEN -> {
-                        island.add(createStudent(PieceColor.GREEN), 2, 0);
-                        island.add(new Label("x" + num), 3, 0);
-                    }
-                    case BLUE -> {
-                        island.add(createStudent(PieceColor.BLUE), 0, 1);
-                        island.add(new Label("x" + num), 1, 1);
-                    }
-                    case YELLOW -> {
-                        island.add(createStudent(PieceColor.YELLOW), 2, 1);
-                        island.add(new Label("x" + num), 3, 1);
-                    }
-                    case PINK -> {
-                        island.add(createStudent(PieceColor.PINK), 0, 2);
-                        island.add(new Label("x" + num), 1, 2);
-                    }
-                }
-            }
-        }
-        if(reducedIsland.presenceOfMotherNature())
-            island.add(motherNature, 2,2);
-        if(reducedIsland.noEntryTile()) {
-            Circle noEntryTile = new Circle(15);
-            noEntryTile.setFill(new ImagePattern(noEntryTileImg));
-            island.add(noEntryTile, 2, 2);
-        }
-        if(reducedIsland.towerColor() != null)
-            island.add(createTower(reducedIsland.towerColor()), 3, 2);
-    }
-
     private void printGeneric(String stringToPrint) {
         ImageView image = (ImageView) genericMsgAP.getChildren().get(0);
         Label label = (Label) genericMsgAP.getChildren().get(1);
@@ -638,97 +468,6 @@ public class MatchController implements SceneController {
             image.setVisible(true);
         label.setText(stringToPrint);
         label.setTextAlignment(TextAlignment.CENTER);
-    }
-
-    /**
-     * method to create a circle of radius 10 with the sprite of a student on it
-     * @param pieceColor the color of the student
-     * @return a decorated circle
-     */
-    private Circle createStudent(PieceColor pieceColor) {
-        StudentPiece student = new StudentPiece(10); //create a circle of radius 10
-        student.setColor(pieceColor);
-        switch (pieceColor) {
-            case RED -> {
-                student.setFill(new ImagePattern(redStudent));
-                student.setStroke(Color.DARKRED);
-            }
-            case GREEN -> {
-                student.setFill(new ImagePattern(greenStudent));
-                student.setStroke(Color.LIME);
-            }
-            case BLUE -> {
-                student.setFill(new ImagePattern(blueStudent));
-                student.setStroke(Color.DARKBLUE);
-            }
-            case YELLOW -> {
-                student.setFill(new ImagePattern(yellowStudent));
-                student.setStroke(Color.LEMONCHIFFON);
-            }
-            case PINK -> {
-                student.setFill(new ImagePattern(pinkStudent));
-                student.setStroke(Color.PEACHPUFF);
-            }
-        }
-        return student;
-    }
-
-    /**
-     * method to create a circle of radius 15 with the sprite of a professor on it
-     * @param pieceColor the color of the professor
-     * @return a decorated circle
-     */
-    private Circle createProfessor(PieceColor pieceColor) {
-        Circle professor = new Circle(15); //create a circle of radius 15
-        switch (pieceColor) {
-            case RED -> professor.setFill(new ImagePattern(redProfessor));
-            case GREEN -> professor.setFill(new ImagePattern(greenProfessor));
-            case BLUE -> professor.setFill(new ImagePattern(blueProfessor));
-            case YELLOW -> professor.setFill(new ImagePattern(yellowProfessor));
-            case PINK -> professor.setFill(new ImagePattern(pinkProfessor));
-        }
-        return professor;
-    }
-
-    /**
-     * method to create a circle of radius 10 with the color of a tower
-     * @param towerColor the color of the tower
-     * @return a colored circle
-     */
-    private Circle createTower(TowerColor towerColor) {
-        Color color;
-        Color strokeColor;
-
-        if(towerColor == TowerColor.BLACK) {
-            color = Color.BLACK;
-            strokeColor = Color.DARKGRAY;
-        }
-        else if(towerColor == TowerColor.WHITE) {
-            color = Color.WHITE;
-            strokeColor = Color.LIGHTGRAY;
-        }
-        else {
-            color = Color.GREY;
-            strokeColor = Color.DARKSLATEGREY;
-        }
-
-        Circle tower = new Circle(10, color);
-        tower.setStroke(strokeColor);
-
-        return tower;
-    }
-
-    private Image getIslandImage(int numOfIsland) {
-        return switch (numOfIsland) {
-            case 2 -> islandGroup2;
-            case 3 -> islandGroup3;
-            case 4 -> islandGroup4;
-            case 5 -> islandGroup5;
-            case 6 -> islandGroup6;
-            case 7 -> islandGroup7;
-            case 8 -> islandGroup8;
-            default -> new Image("file:src/main/resources/Board/island2.png");
-        };
     }
 
     /**

@@ -13,25 +13,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CharacterCardController implements SceneController {
     private Gui gui;
+    private Drawer drawer;
     private List<AbstractCharacterCard> characterCards = new ArrayList<>();
     private AbstractCharacterCard cardChosen = null;
-
-    private final static Image redStudent = new Image("file:src/main/resources/Board/student_red.png");
-    private final static Image greenStudent = new Image("file:src/main/resources/Board/student_green.png");
-    private final static Image blueStudent = new Image("file:src/main/resources/Board/student_blue.png");
-    private final static Image yellowStudent = new Image("file:src/main/resources/Board/student_yellow.png");
-    private final static Image pinkStudent = new Image("file:src/main/resources/Board/student_pink.png");
 
     public void setCharacterCards(List<AbstractCharacterCard> characterCards) {
         this.characterCards = characterCards;
@@ -40,6 +31,7 @@ public class CharacterCardController implements SceneController {
 
     @Override
     public void setGui(Gui gui) {
+        drawer = new Drawer();
         this.gui = gui;
     }
 
@@ -132,7 +124,7 @@ public class CharacterCardController implements SceneController {
             int c=0;
             for (PieceColor color : studentOnCard.keySet()){
                 for(int k=0; k<studentOnCard.get(color);k++){
-                    onCardGrid.add(createStudent(color),c,r);
+                    onCardGrid.add(drawer.createStudent(color, 20), c,r);
                     r++;
                     if(r==3){
                         c=2;
@@ -152,34 +144,6 @@ public class CharacterCardController implements SceneController {
     private String getDescription(AbstractCharacterCard c){
         String description = "Price: " + c.getPrice() + "\n" + c.getDescription();
         return description;
-    }
-
-    private Circle createStudent(PieceColor pieceColor) {
-        StudentPiece student = new StudentPiece(20); //create a circle of radius 10
-        student.setColor(pieceColor);
-        switch (pieceColor) {
-            case RED -> {
-                student.setFill(new ImagePattern(redStudent));
-                student.setStroke(Color.DARKRED);
-            }
-            case GREEN -> {
-                student.setFill(new ImagePattern(greenStudent));
-                student.setStroke(Color.LIME);
-            }
-            case BLUE -> {
-                student.setFill(new ImagePattern(blueStudent));
-                student.setStroke(Color.DARKBLUE);
-            }
-            case YELLOW -> {
-                student.setFill(new ImagePattern(yellowStudent));
-                student.setStroke(Color.LEMONCHIFFON);
-            }
-            case PINK -> {
-                student.setFill(new ImagePattern(pinkStudent));
-                student.setStroke(Color.PEACHPUFF);
-            }
-        }
-        return student;
     }
 
     public AbstractCharacterCard getCardChosen() {

@@ -62,14 +62,25 @@ public class Gui extends Application implements View {
     /** the fxml file for the scene where the character cards are shown*/
     private final static String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
+    /** the fxml file for the scene where PieceColor and Island parameters can be asked */
     private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+
+    /** the fxml file for the scene where the list-of-PieceColor parameter can be asked */
     private final String PARAMETER_2 = "/it/polimi/ingsw/am19.View.GUI/Parameter2.fxml";
 
+    /**
+     * getter for the cache attribute
+     * @return a reference to the cache currently in use on this client
+     */
     public Cache getCache() {
         return cache;
     }
 
-    @Override
+    /**
+     * Method to load to first scene when starting the application in gui mode
+     * @param stage the stage created by lunching the application in gui mode
+     * @throws IOException if it can't load the application
+     */
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
@@ -240,6 +251,11 @@ public class Gui extends Application implements View {
                 ((CharacterCardController)currController).setCharacterCards(msg.getAvailableCharacterCards()));
     }
 
+    /**
+     * Method to ask the player to select the parameters for the CharacterCard they want to play
+     * it loads dynamically the correct scene based on how many and the type of parameters request by the Card
+     * @param msg the AskCharacterParameterMessage sent by server containing which parameter the played card will need
+     */
     @Override
     public void askCharacterCardParameters(AskCharacterParameterMessage msg) {
         boolean color = msg.isRequireColor();
@@ -390,13 +406,22 @@ public class Gui extends Application implements View {
         });
     }
 
+    /**
+     * Method to change scene to the playHelperCard one
+     * @param msg
+     */
     public void playHelperCard(AskHelperCardMessage msg) {
         changeScene(HELPERCARD);
 
         Platform.runLater(()->
-                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard()));
+                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard())
+        );
     }
 
+    /**
+     * method to refresh the main scene based on what components have been updated
+     * @param type which component Gameboards, Islands or Clouds have changed
+     */
     public void refreshMainScene(Notification type) {
         changeBackToMain();
         Platform.runLater(() -> {
@@ -410,6 +435,9 @@ public class Gui extends Application implements View {
         });
     }
 
+    /**
+     * method to change scene to the main one, when not already there
+     */
     private void changeBackToMain() {
         if(!(currController instanceof MatchController)) {
             changeScene(MATCH);

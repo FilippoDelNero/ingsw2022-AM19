@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.View;
 
 import it.polimi.ingsw.am19.Network.Client.Cache;
-import it.polimi.ingsw.am19.Network.Client.Client;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
 import it.polimi.ingsw.am19.Network.Message.*;
 
