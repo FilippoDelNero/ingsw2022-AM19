@@ -288,6 +288,12 @@ public class Gui extends Application implements View {
             myClient.sendMessage(new ReplyCharacterParameterMessage(nickname,null,null,null));
     }
 
+    /**
+     * when end match message arrives, it shows an alert containing information about the winners.
+     * If an error occurred an error alert is shown.
+     * In both cases the stage is closed and connection with the client interrupted
+     * @param msg the EndMatchMessage sent by the server
+     */
     @Override
     public void endMatch(EndMatchMessage msg) {
         if(msg.getWinners() != null)
@@ -307,7 +313,6 @@ public class Gui extends Application implements View {
                 alert.showAndWait()
                         .filter(response -> response == ButtonType.OK)
                         .ifPresent(response -> Platform.exit());
-
             });
         myClient.disconnect();
     }
