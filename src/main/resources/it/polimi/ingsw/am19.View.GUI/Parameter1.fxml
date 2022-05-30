@@ -85,7 +85,7 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" text="Select a color">
+                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" stylesheets="@Login.css" text="Select a color">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -374,7 +374,7 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" text="Submit">
+                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" stylesheets="@Login.css" text="Submit">
                                  <HBox.margin>
                                     <Insets left="70.0" top="10.0" />
                                  </HBox.margin>

@@ -62,7 +62,8 @@ public class Gui extends Application implements View {
     /** the fxml file for the scene where the character cards are shown*/
     private final static String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
-    private final static String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+    private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+    private final String PARAMETER_2 = "/it/polimi/ingsw/am19.View.GUI/Parameter2.fxml";
 
     public Cache getCache() {
         return cache;
@@ -246,6 +247,13 @@ public class Gui extends Application implements View {
         boolean colorList = msg.isRequireColorList();
 
         if(colorList){
+            AbstractCharacterCard card = ((CharacterCardController)currController).getCardChosen();
+
+            changeScene(PARAMETER_2);
+            Platform.runLater(()->{
+                ((AskParameter2Controller)currController).setCard(card);
+                ((AskParameter2Controller)currController).initializeScene();
+            });
             //todo
             }
         else if(color || island){
@@ -261,9 +269,33 @@ public class Gui extends Application implements View {
             myClient.sendMessage(new ReplyCharacterParameterMessage(nickname, null, null, null));
     }
 
+    /**
+     * when end match message arrives, it shows an alert containing information about the winners.
+     * If an error occurred an error alert is shown.
+     * In both cases the stage is closed and connection with the client interrupted
+     * @param msg the EndMatchMessage sent by the server
+     */
     @Override
     public void endMatch(EndMatchMessage msg) {
-
+        if(msg.getWinners() != null)
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("End match");
+                alert.setContentText("Match ended. Winner:" + msg.getWinners().toString());
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> Platform.exit());
+            });
+        else
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("We are sorry, the match will interrupted due to a fatal error occurring\"");
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> Platform.exit());
+            });
+        myClient.disconnect();
     }
 
     /**
