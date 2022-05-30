@@ -39,28 +39,28 @@ public class Gui extends Application implements View {
     private Stage stage;
 
     /** the fxml file for the scene where the connection-related parameters are asked */
-    private final static String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
+    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Login/Connection.fxml";
 
     /** the fxml file for the scene where the game options are asked*/
-    private final static String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
+    private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/GameOptions.fxml";
 
     /** the fxml file for the login scene */
-    private final static String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
+    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login/Login.fxml";
 
     /** the fxml file for the scene where the username of a saved match are asked*/
-    private final static String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
+    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/UsernameOptions.fxml";
 
     /** the fxml file for the waiting-for-other-players-to-join scene */
-    private final static String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/Login/WaitingStart.fxml";
 
     /** the fxml file for the scene where the helper cards are shown */
-    private final static String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
+    private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
 
     /** the fxml file for the main scene */
-    private final static String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
+    private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
 
     /** the fxml file for the scene where the character cards are shown*/
-    private final static String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
+    private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
     /** the fxml file for the scene where PieceColor and Island parameters can be asked */
     private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
@@ -85,7 +85,7 @@ public class Gui extends Application implements View {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
-        root.getStylesheets().add("@Login.css");
+        root.getStylesheets().add("file:src/main/resources/Style/eriantys.css");
         //stage.setFullScreen(true);
         //stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
@@ -396,6 +396,7 @@ public class Gui extends Application implements View {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerName));
                 Parent root = fxmlLoader.load();
+                root.getStylesheets().add("file:src/main/resources/Style/eriantys.css");
                 currController = fxmlLoader.getController();
                 currController.setGui(this);
                 stage.getScene().setRoot(root);

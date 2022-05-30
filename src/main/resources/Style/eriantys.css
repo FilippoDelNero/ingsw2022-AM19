@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Berkshire+Swash&family=Inria+Sans:wght@300&family=M+PLUS+Code+Latin:wght@600&family=Overlock&family=Patrick+Hand&family=Sansita&family=Source+Code+Pro&display=swap');
+
+.button, .menu-button, .text-field, .radio-button{
+    -fx-font-family: 'Sansita', sans-serif;
+    -fx-font-size: 20px;
+    -fx-background-radius: 15;
+}
+
+.text, .label{
+    -fx-font-family: 'Sansita', sans-serif;
+}
+
+.text-area{
+    -fx-font-family: 'Sansita', sans-serif;
+}

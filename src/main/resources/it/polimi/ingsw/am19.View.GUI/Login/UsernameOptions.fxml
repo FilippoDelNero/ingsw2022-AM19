@@ -15,12 +15,12 @@
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <Button fx:id="submitButton" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onAction="#sendUserData" prefHeight="39.0" prefWidth="111.0" stylesheets="@Login.css" text="Submit">
+      <Button fx:id="submitButton" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onAction="#sendUserData" prefHeight="39.0" prefWidth="111.0" text="Submit">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <MenuButton fx:id="savedUsernamesField" layoutX="569.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="302.0" stylesheets="@Login.css" text="Username">
+      <MenuButton fx:id="savedUsernamesField" layoutX="569.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="302.0" text="Username">
          <font>
             <Font size="19.0" />
          </font>

@@ -15,17 +15,17 @@
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" styleClass="text-field" stylesheets="@Login.css">
+      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" styleClass="text-field">
          <font>
             <Font size="19.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" stylesheets="@Login.css" text="Submit">
+      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" text="Submit">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" styleClass="text-field" stylesheets="@Login.css">
+      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" styleClass="text-field">
          <font>
             <Font size="19.0" />
          </font>
