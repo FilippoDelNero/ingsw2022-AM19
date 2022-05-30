@@ -62,6 +62,7 @@ public class Gui extends Application implements View {
     private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
     private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+    private final String PARAMETER_2 = "/it/polimi/ingsw/am19.View.GUI/Parameter2.fxml";
 
     public Cache getCache() {
         return cache;
@@ -273,6 +274,13 @@ public class Gui extends Application implements View {
         boolean colorList = msg.isRequireColorList();
 
         if(colorList){
+            AbstractCharacterCard card = ((CharacterCardController)currController).getCardChosen();
+
+            changeScene(PARAMETER_2);
+            Platform.runLater(()->{
+                ((AskParameter2Controller)currController).setCard(card);
+                ((AskParameter2Controller)currController).initializeScene();
+            });
             //todo
             }
         else if(color || island){

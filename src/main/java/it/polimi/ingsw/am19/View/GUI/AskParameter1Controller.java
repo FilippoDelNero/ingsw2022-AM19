@@ -162,8 +162,9 @@ public class AskParameter1Controller implements SceneController {
 
     @FXML
     void setColor(ActionEvent event) {
+        Drawer d = new Drawer();
         colorMenu.setText(((MenuItem)event.getSource()).getText());
-        color = getColor(colorMenu.getText());
+        color = d.getColor(colorMenu.getText());
         setButton();
     }
 
@@ -182,9 +183,11 @@ public class AskParameter1Controller implements SceneController {
     }
 
     public void initializeScene(){
-        character.setImage(new Image(getImagePath(card.getId())));
-        description.setText(getDescription(card));
-        setStudentOnCard(card,onCardGrid);
+        Drawer drawer = new Drawer();
+        character.setImage(new Image(drawer.getCharacterImagePath(card.getId())));
+        description.setText(drawer.getCharacterDescription(card));
+
+        drawer.setStudentOnCard(card,onCardGrid);
         nameCharacter.setText(card.getId().toString());
         submit.setDisable(true);
 
@@ -192,13 +195,13 @@ public class AskParameter1Controller implements SceneController {
         if(students!=null){
             for(PieceColor p : students.keySet()){
                 if(students.get(p)>0){
-                    colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(getStudentPath(p))));
+                    colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(drawer.getStudentPath(p))));
                 }
             }
         }
         else
             for(PieceColor p : PieceColor.values())
-                colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(getStudentPath(p))));
+                colorMenu.getItems().add(new MenuItem(p.toString(), new ImageView(drawer.getStudentPath(p))));
 
         for (MenuItem item: colorMenu.getItems())
             item.setOnAction(this::setColor);
@@ -216,33 +219,13 @@ public class AskParameter1Controller implements SceneController {
 
         this.cache= gui.getCache();
         for(int i = 0; i < cache.getIslands().size(); i++) {
-            populateIsland((GridPane)((AnchorPane) archipelago.getChildren().get(i)).getChildren().get(1), cache.getIslands().get(i));
+            drawer.populateIsland((GridPane)((AnchorPane) archipelago.getChildren().get(i)).getChildren().get(1), cache.getIslands().get(i));
         }
         for(int i = cache.getIslands().size(); i < 12; i++) {
             archipelago.getChildren().get(i).setVisible(false);
         }
     }
 
-    private Image getStudentPath(PieceColor color){
-        return switch (color){
-            case BLUE -> blueStudent;
-            case PINK -> pinkStudent;
-            case RED -> redStudent;
-            case YELLOW -> yellowStudent;
-            case GREEN -> greenStudent;
-        };
-    }
-
-    private PieceColor getColor (String s){
-        return switch (s){
-            case "GREEN"-> PieceColor.GREEN;
-            case "BLUE"-> PieceColor.BLUE;
-            case "PINK"->PieceColor.PINK;
-            case "RED"-> PieceColor.RED;
-            case "YELLOW"-> PieceColor.YELLOW;
-            default -> null;
-        };
-    }
 
     private void setButton(){
         if(checkParameter())
@@ -255,135 +238,6 @@ public class AskParameter1Controller implements SceneController {
         else if(card.isRequiringIsland() && island == null)
             return false;
         return true;
-    }
-
-    private String getImagePath(Character c){
-        return "file:src/main/resources/it/polimi/ingsw/am19.View.GUI/CharacterCard/" + c + ".jpg";
-    }
-
-    private String getDescription(AbstractCharacterCard c){
-        return "Price: " + c.getPrice() + "\n" + c.getDescription();
-    }
-
-    private void setStudentOnCard(AbstractCharacterCard card,GridPane onCardGrid){
-        Map<PieceColor,Integer> studentOnCard = card.getStudents();
-        if(studentOnCard!=null){
-            int r=0;
-            int c=0;
-            for (PieceColor color : studentOnCard.keySet()){
-                for(int k=0; k<studentOnCard.get(color);k++){
-                    onCardGrid.add(createStudent(color,20),c,r);
-                    r++;
-                    if(r==3){
-                        c=2;
-                        r=0;
-                    }
-                }
-            }
-        }
-    }
-
-    private Circle createStudent(PieceColor pieceColor, int radius) {
-        StudentPiece student = new StudentPiece(radius); //create a circle of radius 10
-        student.setColor(pieceColor);
-        switch (pieceColor) {
-            case RED -> {
-                student.setFill(new ImagePattern(redStudent));
-                student.setStroke(Color.DARKRED);
-            }
-            case GREEN -> {
-                student.setFill(new ImagePattern(greenStudent));
-                student.setStroke(Color.LIME);
-            }
-            case BLUE -> {
-                student.setFill(new ImagePattern(blueStudent));
-                student.setStroke(Color.DARKBLUE);
-            }
-            case YELLOW -> {
-                student.setFill(new ImagePattern(yellowStudent));
-                student.setStroke(Color.LEMONCHIFFON);
-            }
-            case PINK -> {
-                student.setFill(new ImagePattern(pinkStudent));
-                student.setStroke(Color.PEACHPUFF);
-            }
-        }
-        return student;
-    }
-
-    /**
-     * method used to put student on the island
-     * @param island the GridPane of the island we want to draw students on
-     * @param reducedIsland the island saved in cache corresponding to the gui's GridPane
-     */
-    private void populateIsland(GridPane island, ReducedIsland reducedIsland) {
-        Circle motherNature = new Circle(20);
-        motherNature.setFill(new ImagePattern(motherNatureImg));
-
-        for (PieceColor color : PieceColor.values()) {
-            int num = reducedIsland.numOfStudents().get(color);
-            if(num != 0) {
-                switch (color) {
-                    case RED -> {
-                        island.add(createStudent(PieceColor.RED,10), 0, 0);
-                        island.add(new Label("x" + num), 1, 0);
-                    }
-                    case GREEN -> {
-                        island.add(createStudent(PieceColor.GREEN,10), 2, 0);
-                        island.add(new Label("x" + num), 3, 0);
-                    }
-                    case BLUE -> {
-                        island.add(createStudent(PieceColor.BLUE,10), 0, 1);
-                        island.add(new Label("x" + num), 1, 1);
-                    }
-                    case YELLOW -> {
-                        island.add(createStudent(PieceColor.YELLOW,10), 2, 1);
-                        island.add(new Label("x" + num), 3, 1);
-                    }
-                    case PINK -> {
-                        island.add(createStudent(PieceColor.PINK,10), 0, 2);
-                        island.add(new Label("x" + num), 1, 2);
-                    }
-                }
-            }
-        }
-        if(reducedIsland.presenceOfMotherNature())
-            island.add(motherNature, 2,2);
-        if(reducedIsland.noEntryTile()) {
-            Circle noEntryTile = new Circle(15);
-            noEntryTile.setFill(new ImagePattern(noEntryTileImg));
-            island.add(noEntryTile, 2, 2);
-        }
-        if(reducedIsland.towerColor() != null)
-            island.add(createTower(reducedIsland.towerColor()), 3, 2);
-    }
-
-    /**
-     * method to create a circle of radius 10 with the color of a tower
-     * @param towerColor the color of the tower
-     * @return a colored circle
-     */
-    private Circle createTower(TowerColor towerColor) {
-        Color color;
-        Color strokeColor;
-
-        if(towerColor == TowerColor.BLACK) {
-            color = Color.BLACK;
-            strokeColor = Color.DARKGRAY;
-        }
-        else if(towerColor == TowerColor.WHITE) {
-            color = Color.WHITE;
-            strokeColor = Color.LIGHTGRAY;
-        }
-        else {
-            color = Color.GREY;
-            strokeColor = Color.DARKSLATEGREY;
-        }
-
-        Circle tower = new Circle(10, color);
-        tower.setStroke(strokeColor);
-
-        return tower;
     }
 }
 
