@@ -22,17 +22,17 @@
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <Button fx:id="newGameButton" layoutX="570.0" layoutY="350.0" mnemonicParsing="false" onAction="#newGameButtonPressed" prefHeight="39.0" prefWidth="302.0" stylesheets="@Login.css" text="New game">
+      <Button fx:id="newGameButton" layoutX="570.0" layoutY="350.0" mnemonicParsing="false" onAction="#newGameButtonPressed" prefHeight="39.0" prefWidth="302.0" text="New game">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="resumeGameButton" layoutX="571.0" layoutY="425.0" mnemonicParsing="false" onAction="#resumeGameButtonPressed" prefHeight="39.0" prefWidth="302.0" stylesheets="@Login.css" text="Resume game">
+      <Button fx:id="resumeGameButton" layoutX="571.0" layoutY="425.0" mnemonicParsing="false" onAction="#resumeGameButtonPressed" prefHeight="39.0" prefWidth="302.0" text="Resume game">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <RadioButton fx:id="easyRadioButton" layoutX="573.0" layoutY="390.0" mnemonicParsing="false" onAction="#difficultyRadioButtonSelected" text="Easy" textFill="WHITE">
+      <RadioButton fx:id="easyRadioButton" layoutX="573.0" layoutY="390.0" mnemonicParsing="false" onAction="#difficultyRadioButtonSelected" scaleShape="false" text="Easy" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -40,12 +40,12 @@
             <ToggleGroup fx:id="difficultyGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="expertRadioButton" layoutX="573.0" layoutY="425.0" mnemonicParsing="false" onAction="#difficultyRadioButtonSelected" text="Expert" textFill="WHITE" toggleGroup="$difficultyGroup">
+      <RadioButton fx:id="expertRadioButton" layoutX="573.0" layoutY="425.0" mnemonicParsing="false" onAction="#difficultyRadioButtonSelected" scaleShape="false" text="Expert" textFill="WHITE" toggleGroup="$difficultyGroup">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="twoPlayersRadioButton" layoutX="573.0" layoutY="520.0" mnemonicParsing="false" onAction="#numPlayerRadioButtonSelected" text="2" textFill="WHITE">
+      <RadioButton fx:id="twoPlayersRadioButton" layoutX="573.0" layoutY="520.0" mnemonicParsing="false" onAction="#numPlayerRadioButtonSelected" scaleShape="false" text="2" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -53,7 +53,7 @@
             <ToggleGroup fx:id="numPlayersGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="threePlayerRadioButton" layoutX="573.0" layoutY="555.0" mnemonicParsing="false" onAction="#numPlayerRadioButtonSelected" text="3" textFill="WHITE" toggleGroup="$numPlayersGroup">
+      <RadioButton fx:id="threePlayerRadioButton" layoutX="573.0" layoutY="555.0" mnemonicParsing="false" onAction="#numPlayerRadioButtonSelected" scaleShape="false" text="3" textFill="WHITE" toggleGroup="$numPlayersGroup">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -68,7 +68,7 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="submitButton" layoutX="571.0" layoutY="600.0" mnemonicParsing="false" onAction="#sendMatchData" prefHeight="39.0" prefWidth="111.0" stylesheets="@Login.css" text="Submit">
+      <Button fx:id="submitButton" layoutX="571.0" layoutY="600.0" mnemonicParsing="false" onAction="#sendMatchData" prefHeight="39.0" prefWidth="111.0" text="Submit">
          <font>
             <Font size="16.0" />
          </font>

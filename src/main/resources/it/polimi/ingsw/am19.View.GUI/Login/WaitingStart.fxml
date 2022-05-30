@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -16,11 +16,18 @@
          </image>
       </ImageView>
       <Text layoutX="656.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Label fx:id="waitingLabel" layoutX="558.0" layoutY="425.0" prefHeight="27.0" prefWidth="325.0" text="Waiting for other players to join..." textFill="WHITE">
+      <Label fx:id="waitingLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="472.0" layoutY="425.0" prefHeight="28.0" prefWidth="496.0" text="Waiting for other players to join..." textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="23.0" />
+            <Font size="33.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBar" layoutX="557.5" layoutY="459.0" mouseTransparent="true" prefHeight="35.0" prefWidth="325.0" progress="0.0" />
+      <ImageView fitHeight="109.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" x="665.5" y="470.0">
+         <image>
+            <Image url="@loading-gif-icon.jpg.gif" />
+         </image>
+         <effect>
+            <Glow />
+         </effect>
+      </ImageView>
    </children>
 </Pane>
