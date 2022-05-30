@@ -6,7 +6,6 @@ import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.application.Application;
 
 public class Main {
-//TODO main class for launch server or client (gui/cli)
     public static void main(String[] args) {
         if(args.length == 0)
             Application.launch(Gui.class);

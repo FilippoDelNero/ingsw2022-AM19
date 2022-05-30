@@ -167,14 +167,14 @@ public class MatchController implements Observer{
      */
     private void init(){
         model.initializeMatch();
-        sendBroadcastMessage(new GenericMessage("The match has started\n"));
+        sendBroadcastMessage(new GenericMessage("The match has started\n", MessageType.GENERIC_MESSAGE));
     }
 
     /**
      * Disconnects all clients
      */
     public void disconnectAll(){
-        sendBroadcastMessage(new GenericMessage("You will be disconnected due to internal errors"));
+        sendBroadcastMessage(new GenericMessage("You will be disconnected due to internal errors", MessageType.GENERIC_MESSAGE));
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
                 while(cm.isClosed()) {

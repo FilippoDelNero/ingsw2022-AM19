@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -99,6 +100,8 @@ public class MatchController implements SceneController {
 
     @FXML private Group coinLabels;
 
+    @FXML private Button playHelperCard;
+
     /** a reference to the gui class which "controls" this controller */
     private Gui gui;
 
@@ -130,6 +133,8 @@ public class MatchController implements SceneController {
 
     /** attribute used to save the student's color that the user wants to move */
     private PieceColor studentToMove;
+
+    private AskHelperCardMessage helperCardMessage;
 
     /**
      * method called automatically it populates the Lists of this class
@@ -202,6 +207,13 @@ public class MatchController implements SceneController {
         initializeArchipelago();
         initializeClouds();
         initializeLabel();
+        playHelperCard.setVisible(false);
+    }
+
+    public void playHelperCard(AskHelperCardMessage msg) {
+        helperCardMessage = msg;
+        playHelperCard.setVisible(true);
+        playHelperCard.setOnMouseClicked(this::changeSceneAndPlayHelper);
     }
 
     /**
@@ -210,7 +222,7 @@ public class MatchController implements SceneController {
     public void moveStudentPhase() {
         gameboard1.get(0).setCursor(Cursor.HAND);
         gameboard1.get(0).setOnMouseClicked(this::pickStudentToMove);
-        printGeneric("select a student to move");
+        printGeneric("Select a student in your gameboard's entrance to move");
     }
 
     /**
@@ -226,22 +238,28 @@ public class MatchController implements SceneController {
             gp.setOnMouseClicked(this::getMotherNatureDestination);
             gp.setCursor(Cursor.HAND);
         }
-        printGeneric("click on the island you want to move mother nature on");
+        printGeneric("On which island do you want to move mother nature on?");
     }
 
     /**
      * method that sets up the view to let the user perform a choose-cloud-sub-phase
      */
-    public void chooseCloudPhase() {
+    public void chooseCloudPhase(List<Integer> list) {
         for(GridPane gp : islands) {
             gp.setOnMouseClicked(null);
             gp.setCursor(Cursor.DEFAULT);
         }
-        for(GridPane gp : clouds) {
-            gp.setOnMouseClicked(this::getChosenCloud);
-            gp.setCursor(Cursor.HAND);
+        for(int i = 0; i < cache.getClouds().size(); i++) {
+            if(list.contains(i)) {
+                clouds.get(i).setOnMouseClicked(this::getChosenCloud);
+                clouds.get(i).setCursor(Cursor.HAND);
+            }
         }
-        printGeneric("select a cloud");
+        printGeneric("Which cloud would you like?");
+    }
+
+    public void changeSceneAndPlayHelper(MouseEvent event) {
+        gui.playHelperCard(helperCardMessage);
     }
 
     /**
@@ -265,8 +283,9 @@ public class MatchController implements SceneController {
                 }
             }
 
-            if(result != null)
+            if(result != null) {
                 studentToMove = ((StudentPiece) result).getColor();
+            }
 
             GridPane table = getTable(studentToMove);
 
@@ -279,7 +298,7 @@ public class MatchController implements SceneController {
                     gp.setCursor(Cursor.HAND);
                 }
             }
-            printGeneric("select where you want to move the student");
+            printGeneric("You selected a " + studentToMove + ", where do you want to move it?");
         }
     }
 
@@ -354,6 +373,31 @@ public class MatchController implements SceneController {
         }
     }
 
+    public void refreshGameboards() {
+        for(int i = 0; i < 8; i++) {
+            gameboard1.get(i).getChildren().clear();
+            gameboard2.get(i).getChildren().clear();
+            if(cache.getGameBoards().size() == 3) {
+                gameboard3.get(i).getChildren().clear();
+            }
+        }
+        initializeGameBoards();
+    }
+
+    public void refreshIslands() {
+        for (GridPane island : islands) {
+            island.getChildren().clear();
+        }
+        initializeArchipelago();
+    }
+
+    public void refreshClouds() {
+        for(GridPane cloud : clouds) {
+            cloud.getChildren().clear();
+        }
+        initializeClouds();
+    }
+
     /**
      * method to initialize the gameBoards using the data saved in cache
      */
@@ -366,7 +410,7 @@ public class MatchController implements SceneController {
         populateProfessors(gameboard1.get(6), list.get(0));
         populateTowers(gameboard1.get(7), list.get(0));
         if(list.get(0).coins() != null)
-            labelsForCoins.get(0).setText("coins: " + list.get(0).coins());
+            labelsForCoins.get(0).setText("Coins: " + list.get(0).coins());
 
         populateEntrance(gameboard2.get(0), list.get(1));
         populateDiningRoom(gameboard2.get(1), gameboard2.get(2), gameboard2.get(3),
@@ -374,7 +418,7 @@ public class MatchController implements SceneController {
         populateProfessors(gameboard2.get(6), list.get(1));
         populateTowers(gameboard2.get(7), list.get(1));
         if(list.get(1).coins() != null)
-            labelsForCoins.get(1).setText("coins: " + list.get(1).coins());
+            labelsForCoins.get(1).setText("Coins: " + list.get(1).coins());
 
         if(cache.getGameBoards().size() == 3) {
             populateEntrance(gameboard3.get(0), list.get(2));
@@ -383,7 +427,7 @@ public class MatchController implements SceneController {
             populateProfessors(gameboard3.get(6), list.get(2));
             populateTowers(gameboard3.get(7), list.get(2));
             if(list.get(2).coins() != null)
-                labelsForCoins.get(2).setText("coins: " + list.get(2).coins());
+                labelsForCoins.get(2).setText("Coins: " + list.get(2).coins());
         }
         else {
             gameboards.getChildren().get(2).setVisible(false);

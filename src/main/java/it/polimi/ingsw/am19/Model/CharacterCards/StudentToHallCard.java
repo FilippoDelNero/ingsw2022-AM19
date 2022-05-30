@@ -6,6 +6,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.Match.AbstractMatch;
 import it.polimi.ingsw.am19.Model.Match.Match;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
+import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.util.HashMap;
 import java.util.List;
@@ -153,6 +154,7 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
 
         removeStudent(color);
         gameboard.getDiningRoom().replace(color,oldValue+1);
+        gameboard.notifyObservers(Notification.UPDATE_GAMEBOARDS);
 
         //add a student only if bag isn't empty
         if(!bag.isEmpty()){

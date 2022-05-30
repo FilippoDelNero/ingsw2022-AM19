@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -685,4 +686,5 @@
       <Label layoutY="250.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
       <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
    </Group>
+   <Button fx:id="playHelperCard" layoutX="767.774" layoutY="840.0" maxHeight="50.0" maxWidth="150.0" minHeight="50.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" stylesheets="@Login.css" text="Play Helper Card" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="767.774" AnchorPane.rightAnchor="522.226" AnchorPane.topAnchor="840.0" />
 </AnchorPane>

@@ -143,8 +143,8 @@ public class ActionPhase extends AbstractPhase implements Phase{
     public void performPhase(String currPlayer) {
         this.cardPlayed = false;
         matchController.setCurrPlayer(currPlayer);
-        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
-        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
+        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n", MessageType.GENERIC_MESSAGE));
+        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n"), MessageType.GENERIC_MESSAGE));
 
         if (model instanceof ExpertMatchDecorator && !cardPlayed)
             sendCharacterRequest();
@@ -159,7 +159,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
     @Override
     public void initPhase() {
         String currPlayer = iterator.next();
-        matchController.sendBroadcastMessage(new GenericMessage("Action phase has started. In this phase we will follow this order:" + playersOrder+ "\n"));
+        matchController.sendBroadcastMessage(new GenericMessage("Action phase has started. In this phase we will follow this order:" + playersOrder+ "\n", MessageType.START_ACTION_MESSAGE));
         performPhase(currPlayer);
     }
 

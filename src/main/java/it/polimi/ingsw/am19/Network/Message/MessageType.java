@@ -48,6 +48,8 @@ public enum MessageType {
     //utility message
     ERROR_MESSAGE,
     GENERIC_MESSAGE,
+    WAIT_MESSAGE,
+    START_ACTION_MESSAGE,
 
     //ping
     PING_MESSAGE,

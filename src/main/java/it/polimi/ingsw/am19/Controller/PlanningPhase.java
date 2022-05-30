@@ -48,7 +48,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
                     return;
                 }
                 matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
-                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n"));
+                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n", MessageType.GENERIC_MESSAGE));
                 if (iterator.hasNext()) {
                     String nextPlayer = iterator.next();
                     matchController.setCurrPlayer(nextPlayer);
@@ -81,11 +81,11 @@ public class PlanningPhase extends AbstractPhase implements Phase{
     @Override
     public void initPhase(){
         matchController.getRoundsManager().incrementPhaseNum();
-        matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n"));
-        matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder));
+        matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n", MessageType.GENERIC_MESSAGE));
+        matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder, MessageType.GENERIC_MESSAGE));
         try {
             model.refillClouds();
-            matchController.sendBroadcastMessage(new GenericMessage("Clouds have been refilled...\n"));
+            matchController.sendBroadcastMessage(new GenericMessage("Clouds have been refilled...\n", MessageType.GENERIC_MESSAGE));
         } catch (TooManyStudentsException e) {
             matchController.sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
             matchController.disconnectAll();
@@ -100,8 +100,8 @@ public class PlanningPhase extends AbstractPhase implements Phase{
     @Override
     public void performPhase(String currPlayer) {
         matchController.setCurrPlayer(currPlayer);
-        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n"));
-        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n")));
+        matchController.sendMessageExcept(currPlayer,new GenericMessage("It's " + currPlayer + "'s turn. Please wait your turn...\n", MessageType.GENERIC_MESSAGE));
+        matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n"), MessageType.GENERIC_MESSAGE));
         matchController.sendMessage(currPlayer, new AskHelperCardMessage(
                 model.getCurrPlayer().getHelperDeck()));
     }

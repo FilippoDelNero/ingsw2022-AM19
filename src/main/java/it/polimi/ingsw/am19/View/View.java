@@ -16,12 +16,6 @@ public interface View {
     void setCache(Cache cache);
 
     /**
-     * setter for the client parameter
-     * @param client the client this view needs to refer to to send messages
-     */
-    void setMyClient(Client client);
-
-    /**
      * setter for the dispatcher parameter
      * @param dispatcher the dispatcher this view needs to refer to
      */
@@ -107,4 +101,29 @@ public interface View {
      * @param msg the ErrorMessage sent by the server
      */
     void error(ErrorMessage msg);
+
+    /**
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
+     */
+    void updateCloud(UpdateCloudsMessage msg);
+
+    /**
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
+     */
+    void updateGameBoards(UpdateGameBoardsMessage msg);
+
+    /**
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
+     */
+    void updateIslands(UpdateIslandsMessage msg);
+
+    //TODO IS IT USED?
+    /**
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
+     */
+    void updateCards(UpdateCardsMessage msg);
 }

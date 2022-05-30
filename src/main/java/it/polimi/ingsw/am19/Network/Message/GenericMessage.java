@@ -7,8 +7,8 @@ package it.polimi.ingsw.am19.Network.Message;
 public class GenericMessage extends Message{
     private final String message;
 
-    public GenericMessage(String message) {
-        super(null, MessageType.GENERIC_MESSAGE);
+    public GenericMessage(String message, MessageType type) {
+        super(null, type);
         this.message = message;
     }
 

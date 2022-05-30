@@ -96,15 +96,6 @@ public class Cli implements View {
     }
 
     /**
-     * setter for the client parameter
-     * @param client the client this view needs to refer to to send messages
-     */
-    @Override
-    public void setMyClient(Client client) {
-        this.myClient = client;
-    }
-
-    /**
      * setter for the dispatcher parameter
      * @param dispatcher the dispatcher this view needs to refer to
      */
@@ -319,6 +310,44 @@ public class Cli implements View {
     public void error(ErrorMessage msg) {
         printer.println("\033[31;1;4m" + msg.toString() + "\033[0m");
         myDispatcher.dispatch(previousMsg);
+    }
+
+
+    /**
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
+     */
+    @Override
+    public void updateCloud(UpdateCloudsMessage msg) {
+        cache.setClouds(msg.getClouds());
+    }
+
+    /**
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
+     */
+    @Override
+    public void updateGameBoards(UpdateGameBoardsMessage msg) {
+        cache.setGameBoards(msg.getList());
+    }
+
+    /**
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
+     */
+    @Override
+    public void updateIslands(UpdateIslandsMessage msg) {
+        cache.setIslands(msg.getList());
+    }
+
+    //TODO IS IT USED?
+    /**
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
+     */
+    @Override
+    public void updateCards(UpdateCardsMessage msg) {
+        cache.setCharacterCards(msg.getCharacterCardList());
     }
 
     /**
@@ -662,15 +691,6 @@ public class Cli implements View {
         }
 
         if(cache.getGameBoards() != null) {
-            List<ReducedGameBoard> list = new ArrayList<>();
-
-            for(ReducedGameBoard rgb : cache.getGameBoards()) {
-                if(rgb.playerNickname().equals(nickname))
-                    list.add(0, rgb);
-                else
-                    list.add(rgb);
-            }
-
             printer.println("Each Player's GameBoard: ");
 
             for(ReducedGameBoard rgb : cache.getGameBoards())

@@ -71,7 +71,7 @@ public class LoginManager {
     public boolean login (ClientManager clientToAdd) {
         //if there is already a match in progress refuse all connection
         if(activePlayers == numOfPlayers){
-            clientToAdd.sendMessage(new GenericMessage("Match already started. Please try later"));
+            clientToAdd.sendMessage(new GenericMessage("Match already started. Please try later", MessageType.GENERIC_MESSAGE));
             clientToAdd.close(false);
             return false;
         }
@@ -121,11 +121,11 @@ public class LoginManager {
             // if we are adding a player to a newly created match
             else if(isExpertMatch){
                 clientToAdd.sendMessage(new GenericMessage("You will be added to a match of " + numOfPlayers +
-                        " players. The match difficulty will be expert..."));
+                        " players. The match difficulty will be expert...", MessageType.GENERIC_MESSAGE));
                 addPlayerToNewMatch(clientToAdd);
             }else{
                 clientToAdd.sendMessage(new GenericMessage("You will be added to a match of " + numOfPlayers +
-                        " players. The match difficulty will be easy..."));
+                        " players. The match difficulty will be easy...", MessageType.GENERIC_MESSAGE));
                 addPlayerToNewMatch(clientToAdd);
             }
             return true;
@@ -224,6 +224,6 @@ public class LoginManager {
      * @param clientToAdd the client currently served by the loginManager
      */
     private void sendMessageOfWait(ClientManager clientToAdd) {
-        clientToAdd.sendMessage(new GenericMessage("waiting for others player to join..."));
+        clientToAdd.sendMessage(new GenericMessage("waiting for others player to join...", MessageType.WAIT_MESSAGE));
     }
 }

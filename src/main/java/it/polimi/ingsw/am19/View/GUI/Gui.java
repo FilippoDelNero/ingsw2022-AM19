@@ -5,6 +5,7 @@ import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Client.Client;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
 import it.polimi.ingsw.am19.Network.Message.*;
+import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.View.View;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,30 +39,30 @@ public class Gui extends Application implements View {
     private Stage stage;
 
     /** the fxml file for the scene where the connection-related parameters are asked */
-    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
+    private final static String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Connection.fxml";
 
     /** the fxml file for the scene where the game options are asked*/
-    private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
+    private final static String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/GameOptions.fxml";
 
     /** the fxml file for the login scene */
-    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
+    private final static String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login.fxml";
 
     /** the fxml file for the scene where the username of a saved match are asked*/
-    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
+    private final static String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/UsernameOptions.fxml";
 
     /** the fxml file for the waiting-for-other-players-to-join scene */
-    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
+    private final static String WAITING = "/it/polimi/ingsw/am19.View.GUI/WaitingStart.fxml";
 
     /** the fxml file for the scene where the helper cards are shown */
-    private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
+    private final static String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
 
     /** the fxml file for the main scene */
-    private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
+    private final static String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
 
     /** the fxml file for the scene where the character cards are shown*/
-    private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
+    private final static String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
-    private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+    private final static String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
 
     public Cache getCache() {
         return cache;
@@ -134,15 +135,6 @@ public class Gui extends Application implements View {
     }
 
     /**
-     * setter for the myClient attribute
-     * @param client the client this view needs to refer to to send messages
-     */
-    @Override
-    public void setMyClient(Client client) {
-        this.myClient = client;
-    }
-
-    /**
      * getter for the myClient attribute
      * @return the client bound to this view
      */
@@ -199,10 +191,7 @@ public class Gui extends Application implements View {
      */
     @Override
     public void showHelperOptions(AskHelperCardMessage msg) {
-        changeScene(HELPERCARD);
-
-        Platform.runLater(()->
-                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard()));
+        Platform.runLater(() -> ((MatchController)currController).playHelperCard(msg));
     }
 
     /**
@@ -212,14 +201,8 @@ public class Gui extends Application implements View {
      */
     @Override
     public void askEntranceMove(AskEntranceMoveMessage msg) {
-        changeScene(MATCH);
-
-        Platform.runLater(() -> {
-            ((MatchController)currController).setCache(cache);
-            ((MatchController)currController).drawScene();
-            ((MatchController)currController).moveStudentPhase();
-        });
-
+        changeBackToMain();
+        Platform.runLater(() -> ((MatchController)currController).moveStudentPhase());
     }
 
     /**
@@ -228,13 +211,8 @@ public class Gui extends Application implements View {
      */
     @Override
     public void askMotherNatureStep() {
-        changeScene(MATCH);
-
-        Platform.runLater(() -> {
-            ((MatchController)currController).setCache(cache);
-            ((MatchController)currController).drawScene();
-            ((MatchController)currController).moveMotherNaturePhase();
-        });
+        changeBackToMain();
+        Platform.runLater(() -> ((MatchController)currController).moveMotherNaturePhase());
     }
 
     /**
@@ -244,13 +222,8 @@ public class Gui extends Application implements View {
      */
     @Override
     public void askCloud(AskCloudMessage msg) {
-        changeScene(MATCH);
-
-        Platform.runLater(() -> {
-            ((MatchController)currController).setCache(cache);
-            ((MatchController)currController).drawScene();
-            ((MatchController)currController).chooseCloudPhase();
-        });
+        changeBackToMain();
+        Platform.runLater(() -> ((MatchController)currController).chooseCloudPhase(msg.getCloudAvailable()));
     }
 
     /**
@@ -285,7 +258,7 @@ public class Gui extends Application implements View {
             });
         }
         else
-            myClient.sendMessage(new ReplyCharacterParameterMessage(nickname,null,null,null));
+            myClient.sendMessage(new ReplyCharacterParameterMessage(nickname, null, null, null));
     }
 
     @Override
@@ -299,8 +272,15 @@ public class Gui extends Application implements View {
      */
     @Override
     public void generic(GenericMessage msg) {
-        if (msg.getMessage().equals("waiting for others player to join..."))
+        if (msg.getMessageType() == MessageType.WAIT_MESSAGE)
             changeScene(WAITING);
+        else if(msg.getMessageType() == MessageType.START_ACTION_MESSAGE) {
+            changeScene(MATCH);
+            Platform.runLater(() -> {
+                ((MatchController)currController).setCache(cache);
+                ((MatchController)currController).drawScene();
+            });
+        }
 
         Platform.runLater(() -> currController.showGenericMsg(msg));
     }
@@ -320,6 +300,46 @@ public class Gui extends Application implements View {
     }
 
     /**
+     * method to update the clouds on the cache
+     * @param msg the UpdateCloudMessage sent by the server
+     */
+    @Override
+    public void updateCloud(UpdateCloudsMessage msg) {
+        cache.setClouds(msg.getClouds());
+        refreshMainScene(Notification.UPDATE_CLOUDS);
+    }
+
+    /**
+     * method to update the gameBoards on the cache
+     * @param msg the UpdateGameBoardsMessage sent by the server
+     */
+    @Override
+    public void updateGameBoards(UpdateGameBoardsMessage msg) {
+        cache.setGameBoards(msg.getList());
+        refreshMainScene(Notification.UPDATE_GAMEBOARDS);
+    }
+
+    /**
+     * method to update the Islands on the cache
+     * @param msg the UpdateIslandsMessage sent by the server
+     */
+    @Override
+    public void updateIslands(UpdateIslandsMessage msg) {
+        cache.setIslands(msg.getList());
+        refreshMainScene(Notification.UPDATE_ISLANDS);
+    }
+
+    //TODO IS IT USED?
+    /**
+     * method to update the Cards, both Helper and Character, on the cache
+     * @param msg the UpdateCardsMessage sent by the server
+     */
+    @Override
+    public void updateCards(UpdateCardsMessage msg) {
+        cache.setCharacterCards(msg.getCharacterCardList());
+    }
+
+    /**
      * it changes the current scene, setting the right controller
      * @param controllerName the path that name od the next scene fxml
      */
@@ -336,5 +356,35 @@ public class Gui extends Application implements View {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void playHelperCard(AskHelperCardMessage msg) {
+        changeScene(HELPERCARD);
+
+        Platform.runLater(()->
+                ((HelperCardController)currController).setHelperCardList(msg.getPlayableHelperCard()));
+    }
+
+    public void refreshMainScene(Notification type) {
+        changeBackToMain();
+        Platform.runLater(() -> {
+            MatchController controller = (MatchController) currController;
+            if(type == Notification.UPDATE_GAMEBOARDS)
+                controller.refreshGameboards();
+            else if(type == Notification.UPDATE_ISLANDS)
+                controller.refreshIslands();
+            else if(type == Notification.UPDATE_CLOUDS)
+                controller.refreshClouds();
+        });
+    }
+
+    private void changeBackToMain() {
+        if(!(currController instanceof MatchController)) {
+            changeScene(MATCH);
+            Platform.runLater(() -> {
+                ((MatchController)currController).setCache(cache);
+                ((MatchController)currController).drawScene();
+            });
+        }
     }
 }

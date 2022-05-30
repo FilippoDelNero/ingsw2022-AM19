@@ -8,17 +8,13 @@ public class Dispatcher {
     /** the view of this client */
     private final View view;
 
-    /** the cache of this client*/
-    private final Cache cache;
-
     /**
      * class constructor
      * @param view the view chosen by the user
      */
     public Dispatcher(View view) {
         this.view = view;
-        this.cache = new Cache();
-        view.setCache(cache);
+        view.setCache(new Cache());
         view.setDispatcher(this);
     }
 
@@ -45,45 +41,12 @@ public class Dispatcher {
             case ASK_CHARACTER_PARAMETER -> view.askCharacterCardParameters((AskCharacterParameterMessage) msg);
 
             case ERROR_MESSAGE -> view.error((ErrorMessage) msg);
-            case GENERIC_MESSAGE -> view.generic((GenericMessage) msg);
+            case GENERIC_MESSAGE, WAIT_MESSAGE, START_ACTION_MESSAGE -> view.generic((GenericMessage) msg);
 
-            case UPDATE_CLOUDS -> updateCloud((UpdateCloudsMessage) msg);
-            case UPDATE_GAMEBOARDS -> updateGameBoards((UpdateGameBoardsMessage) msg);
-            case UPDATE_ISLANDS -> updateIslands((UpdateIslandsMessage) msg);
-            case UPDATE_CARDS -> updateCards((UpdateCardsMessage) msg);
+            case UPDATE_CLOUDS -> view.updateCloud((UpdateCloudsMessage) msg);
+            case UPDATE_GAMEBOARDS -> view.updateGameBoards((UpdateGameBoardsMessage) msg);
+            case UPDATE_ISLANDS -> view.updateIslands((UpdateIslandsMessage) msg);
+            case UPDATE_CARDS -> view.updateCards((UpdateCardsMessage) msg);
         }
-    }
-
-    /**
-     * method to update the clouds on the cache
-     * @param msg the UpdateCloudMessage sent by the server
-     */
-    public void updateCloud(UpdateCloudsMessage msg) {
-        cache.setClouds(msg.getClouds());
-    }
-
-    /**
-     * method to update the gameBoards on the cache
-     * @param msg the UpdateGameBoardsMessage sent by the server
-     */
-    public void updateGameBoards(UpdateGameBoardsMessage msg) {
-        cache.setGameBoards(msg.getList());
-    }
-
-    /**
-     * method to update the Islands on the cache
-     * @param msg the UpdateIslandsMessage sent by the server
-     */
-    public void updateIslands(UpdateIslandsMessage msg) {
-        cache.setIslands(msg.getList());
-    }
-
-    //TODO IS IT USED?
-    /**
-     * method to update the Cards, both Helper and Character, on the cache
-     * @param msg the UpdateCardsMessage sent by the server
-     */
-    public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getCharacterCardList());
     }
 }
