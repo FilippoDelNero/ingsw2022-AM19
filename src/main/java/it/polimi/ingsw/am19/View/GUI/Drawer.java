@@ -22,106 +22,107 @@ import java.util.Map;
 public class Drawer {
     //--Students--
     /** Image containing the sprite of the red student */
-    private final static Image redStudent = new Image("file:src/main/resources/Board/student_red.png");
+    private final Image redStudent = new Image(getClass().getResource("/Board/student_red.png").toExternalForm());
 
     /** Image containing the sprite of the green student */
-    private final static Image greenStudent = new Image("file:src/main/resources/Board/student_green.png");
+    private final Image greenStudent = new Image(getClass().getResource("/Board/student_green.png").toExternalForm());
 
     /** Image containing the sprite of the blue student */
-    private final static Image blueStudent = new Image("file:src/main/resources/Board/student_blue.png");
+    private final Image blueStudent = new Image(getClass().getResource("/Board/student_blue.png").toExternalForm());
 
     /** Image containing the sprite of the yellow student */
-    private final static Image yellowStudent = new Image("file:src/main/resources/Board/student_yellow.png");
+    private final Image yellowStudent = new Image(getClass().getResource("/Board/student_yellow.png").toExternalForm());
 
     /** Image containing the sprite of the pink student */
-    private final static Image pinkStudent = new Image("file:src/main/resources/Board/student_pink.png");
+    private final Image pinkStudent = new Image(getClass().getResource("/Board/student_pink.png").toExternalForm());
 
     //--Professors--
     /** Image containing the sprite of the red professor */
-    private final Image redProfessor = new Image("file:src/main/resources/Board/teacher_red.png");
+    private final Image redProfessor = new Image(getClass().getResource("/Board/teacher_red.png").toExternalForm());
 
     /** Image containing the sprite of the green professor */
-    private final Image greenProfessor = new Image("file:src/main/resources/Board/teacher_green.png");
+    private final Image greenProfessor = new Image(getClass().getResource("/Board/teacher_green.png").toExternalForm());
 
     /** Image containing the sprite of the blue professor */
-    private final Image blueProfessor = new Image("file:src/main/resources/Board/teacher_blue.png");
+    private final Image blueProfessor = new Image(getClass().getResource("/Board/teacher_blue.png").toExternalForm());
 
     /** Image containing the sprite of the yellow professor */
-    private final Image yellowProfessor = new Image("file:src/main/resources/Board/teacher_yellow.png");
+    private final Image yellowProfessor = new Image(getClass().getResource("/Board/teacher_yellow.png").toExternalForm());
 
     /** Image containing the sprite of the pink professor */
-    private final Image pinkProfessor = new Image("file:src/main/resources/Board/teacher_pink.png");
+    private final Image pinkProfessor = new Image(getClass().getResource("/Board/teacher_pink.png").toExternalForm());
 
     //--Various--
     /** Image containing the sprite of mother nature */
-    private final Image motherNatureImg = new Image("file:src/main/resources/Board/mother_nature.png");
+    private final Image motherNatureImg = new Image(getClass().getResource("/Board/mother_nature.png").toExternalForm());
 
     /** Image containing the sprite of a no-entry-tile */
-    private final Image noEntryTileImg = new Image("file:src/main/resources/Board/noEntryTile.png");
+    private final Image noEntryTileImg = new Image(getClass().getResource("/Board/noEntryTile.png").toExternalForm());
 
     //--Islands--
     /** Image containing the sprite of a single type 2 island */
-    private final Image singleIslandType2 = new Image("file:src/main/resources/Board/island2.png");
+    private final Image singleIslandType2 = new Image(getClass().getResource("/Board/island2.png").toExternalForm());
 
     /** Image containing the sprite of group of two islands */
-    private final Image islandGroup2 = new Image("file:src/main/resources/Board/islandGroup2.png");
+    private final Image islandGroup2 = new Image(getClass().getResource("/Board/islandGroup2.png").toExternalForm());
 
     /** Image containing the sprite of group of three islands */
-    private final Image islandGroup3 = new Image("file:src/main/resources/Board/islandGroup3.png");
+    private final Image islandGroup3 = new Image(getClass().getResource("/Board/islandGroup3.png").toExternalForm());
 
     /** Image containing the sprite of group of four islands */
-    private final Image islandGroup4 = new Image("file:src/main/resources/Board/islandGroup4.png");
+    private final Image islandGroup4 = new Image(getClass().getResource("/Board/islandGroup4.png").toExternalForm());
 
     /** Image containing the sprite of group of five islands */
-    private final Image islandGroup5 = new Image("file:src/main/resources/Board/islandGroup5.png");
+    private final Image islandGroup5 = new Image(getClass().getResource("/Board/islandGroup5.png").toExternalForm());
 
     /** Image containing the sprite of group of six islands */
-    private final Image islandGroup6 = new Image("file:src/main/resources/Board/islandGroup6.png");
+    private final Image islandGroup6 = new Image(getClass().getResource("/Board/islandGroup6.png").toExternalForm());
 
     /** Image containing the sprite of group of seven islands */
-    private final Image islandGroup7 = new Image("file:src/main/resources/Board/islandGroup7.png");
+    private final Image islandGroup7 = new Image(getClass().getResource("/Board/islandGroup7.png").toExternalForm());
 
     /** Image containing the sprite of group of eight islands */
-    private final Image islandGroup8 = new Image("file:src/main/resources/Board/islandGroup8.png");
+    private final Image islandGroup8 = new Image(getClass().getResource("/Board/islandGroup8.png").toExternalForm());
 
     //--HelperCards--
     /** Image of the first helper card */
-    private final Image helperCard1 = new Image("file:src/main/resources/HelperCard/helperCard1.png");
+    private final Image helperCard1 = new Image(getClass().getResource("/HelperCard/HelperCard1.png").toExternalForm());
 
     /** Image of the second helper card */
-    private final Image helperCard2 = new Image("file:src/main/resources/HelperCard/helperCard2.png");
+    private final Image helperCard2 = new Image(getClass().getResource("/HelperCard/HelperCard2.png").toExternalForm());
 
     /** Image of the third helper card */
-    private final Image helperCard3 = new Image("file:src/main/resources/HelperCard/helperCard3.png");
+    private final Image helperCard3 = new Image(getClass().getResource("/HelperCard/HelperCard3.png").toExternalForm());
 
     /** Image of the fourth helper card */
-    private final Image helperCard4 = new Image("file:src/main/resources/HelperCard/helperCard4.png");
+    private final Image helperCard4 = new Image(getClass().getResource("/HelperCard/HelperCard4.png").toExternalForm());
 
     /** Image of the five helper card */
-    private final Image helperCard5 = new Image("file:src/main/resources/HelperCard/helperCard5.png");
+    private final Image helperCard5 = new Image(getClass().getResource("/HelperCard/HelperCard5.png").toExternalForm());
 
     /** Image of the six helper card */
-    private final Image helperCard6 = new Image("file:src/main/resources/HelperCard/helperCard6.png");
+    private final Image helperCard6 = new Image(getClass().getResource("/HelperCard/HelperCard6.png").toExternalForm());
 
     /** Image of the seven helper card */
-    private final Image helperCard7 = new Image("file:src/main/resources/HelperCard/helperCard7.png");
+    private final Image helperCard7 = new Image(getClass().getResource("/HelperCard/HelperCard7.png").toExternalForm());
 
     /** Image of the eight helper card */
-    private final Image helperCard8 = new Image("file:src/main/resources/HelperCard/helperCard8.png");
+    private final Image helperCard8 = new Image(getClass().getResource("/HelperCard/HelperCard8.png").toExternalForm());
 
     /** Image of the nine helper card */
-    private final Image helperCard9 = new Image("file:src/main/resources/HelperCard/helperCard9.png");
+    private final Image helperCard9 = new Image(getClass().getResource("/HelperCard/HelperCard9.png").toExternalForm());
 
     /** Image of the tenth helper card */
-    private final Image helperCard10 = new Image("file:src/main/resources/HelperCard/helperCard10.png");
+    private final Image helperCard10 = new Image(getClass().getResource("/HelperCard/HelperCard10.png").toExternalForm());
 
     /**
      * Method to get the path of the image of a CharacterCard
      * @param c the character enum value
      * @return the path of the image of the CharacterCard corresponding to c
+     *
      */
     public String getCharacterImagePath(Character c){
-        return "file:src/main/resources/CharacterCard/" + c + ".jpg";
+        return "/CharacterCard/" + c + ".jpg";
     }
 
     /**

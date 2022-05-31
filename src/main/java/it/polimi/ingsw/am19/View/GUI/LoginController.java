@@ -19,13 +19,13 @@ import java.util.ArrayList;
  * A class for managing login scene
  */
 public class LoginController implements SceneController{
-        private final Image blackTower = new Image("file:src/main/resources/Towers/blackTower.png");
-        private final Image whiteTower = new Image("file:src/main/resources/Towers/whiteTower.png");
-        private final Image greyTower = new Image("file:src/main/resources/Towers/greyTower.png");
-        private final Image king = new Image("file:src/main/resources/HelperCard/king.png");
-        private final Image witch = new Image("file:src/main/resources/HelperCard/witch.png");
-        private final Image warrior = new Image("file:src/main/resources/HelperCard/warrior.png");
-        private final Image shaman = new Image("file:src/main/resources/HelperCard/shaman.png");
+        private final Image blackTower = new Image(getClass().getResource("/Towers/blackTower.png").toExternalForm());
+        private final Image whiteTower = new Image(getClass().getResource("/Towers/whiteTower.png").toExternalForm());
+        private final Image greyTower = new Image(getClass().getResource("/Towers/greyTower.png").toExternalForm());
+        private final Image king = new Image(getClass().getResource("/HelperCard/king.png").toExternalForm());
+        private final Image witch = new Image(getClass().getResource("/HelperCard/witch.png").toExternalForm());
+        private final Image warrior = new Image(getClass().getResource("/HelperCard/warrior.png").toExternalForm());
+        private final Image shaman = new Image(getClass().getResource("/HelperCard/shaman.png").toExternalForm());
 
         private final ImageView blackImageView = new ImageView(blackTower);
         private final ImageView whiteTowerImageView = new ImageView(whiteTower);

@@ -124,13 +124,18 @@ public class CharacterCardController implements SceneController {
     }
 
     private void setLayout(){
-        character1.setImage(new Image(drawer.getCharacterImagePath((characterCards.get(0).getId()))));
+        String imageUrl = drawer.getCharacterImagePath(characterCards.get(0).getId());
+        character1.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description1.setText(drawer.getCharacterDescription(characterCards.get(0)));
         drawer.setStudentOnCard(characterCards.get(0),onCardGrid1);
-        character2.setImage(new Image(drawer.getCharacterImagePath(characterCards.get(1).getId())));
+
+        imageUrl = drawer.getCharacterImagePath(characterCards.get(1).getId());
+        character2.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description2.setText(drawer.getCharacterDescription(characterCards.get(1)));
         drawer.setStudentOnCard(characterCards.get(1),onCardGrid2);
-        character3.setImage(new Image(drawer.getCharacterImagePath(characterCards.get(2).getId())));
+
+        imageUrl = drawer.getCharacterImagePath(characterCards.get(2).getId());
+        character3.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description3.setText(drawer.getCharacterDescription(characterCards.get(2)));
         drawer.setStudentOnCard(characterCards.get(2),onCardGrid3);
         coinLabel.setText("You have:\n" + gui.getCache().getGameBoards().get(0).coins()+ " coins");

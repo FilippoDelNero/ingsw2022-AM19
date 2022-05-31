@@ -299,7 +299,7 @@ public class Gui extends Application implements View {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("End match");
-                Image winImg = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/winningImg.png");
+                Image winImg = new Image(getClass().getResource("/winningImg.png").toExternalForm());
                 ImageView winImageView = new ImageView(winImg);
                 alert.setGraphic(winImageView);
                 if (msg.getWinners().size()>1)
@@ -400,6 +400,7 @@ public class Gui extends Application implements View {
      * @param controllerName the path that name od the next scene fxml
      */
     public void changeScene(String controllerName) {
+        System.out.println(controllerName); //TODO TOGLIERE!
         Platform.runLater(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerName));
