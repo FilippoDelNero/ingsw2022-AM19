@@ -102,7 +102,6 @@ public class Gui extends Application implements View {
 
     @Override
     public void stop() throws Exception {
-        //TODO add confirmation alert
         myClient.disconnect();
     }
 
