@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -293,10 +295,16 @@ public class Gui extends Application implements View {
      */
     @Override
     public void endMatch(EndMatchMessage msg) {
+        //TODO dimensioni coriandoli???
         if(msg.getWinners() != null)
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("End match");
+                //alert.setTitle("End match");
+                Image confetti = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/confetti-28.gif");
+                ImageView confettiImageView = new ImageView(confetti);
+                confettiImageView.setX(100);
+                confettiImageView.setY(80);
+                alert.setGraphic(confettiImageView);
                 alert.setContentText("Match ended. Winner:" + msg.getWinners().toString());
                 alert.showAndWait()
                         .filter(response -> response == ButtonType.OK)

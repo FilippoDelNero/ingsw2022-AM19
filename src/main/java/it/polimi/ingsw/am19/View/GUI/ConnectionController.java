@@ -79,8 +79,16 @@ public class ConnectionController implements SceneController {
     public void showGenericMsg(GenericMessage msg) {
         //TODO fix it
         //System.out.println(msg.getMessage());
-        genericMsgField.setText(msg.getMessage());
-        genericMsgField.setVisible(true);
+        //genericMsgField.setText(msg.getMessage());
+        //genericMsgField.setVisible(true);
+
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            //alert.setTitle("End match");
+            alert.setContentText(msg.getMessage());
+            alert.showAndWait()
+                    .filter(response -> response == ButtonType.OK);
+        });
     }
 
     private boolean checkFieldsFilled() {
