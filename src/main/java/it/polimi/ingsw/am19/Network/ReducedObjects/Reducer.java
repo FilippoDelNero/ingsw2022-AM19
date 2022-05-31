@@ -92,22 +92,10 @@ public class Reducer {
      * @param players the players in the match
      * @return a map correlating the player's nickname and its helperDeck
      */
-    public Map<String, List<HelperCard>> reduceHelperCards(List<Player> players) {
-        Map<String, List<HelperCard>> mapOfDecks = new HashMap<>();
+    public Map<String, HelperCard> reduceHelperCards(List<Player> players) {
+        Map<String, HelperCard> mapOfDecks = new HashMap<>();
         for(Player p : players)
-            mapOfDecks.put(p.getNickname(), p.getHelperDeck());
+            mapOfDecks.put(p.getNickname(), p.getCurrentCard());
         return mapOfDecks;
-    }
-
-    /**
-     * takes all CharacterCards and reduced them into a list of Characters
-     * @param cards the cards in the match
-     * @return a list of Characters
-     */
-    public List<Character> reduceCharacterCards(List<AbstractCharacterCard> cards) {
-        List<Character> characterList = new ArrayList<>();
-        for(AbstractCharacterCard c : cards)
-            characterList.add(c.getId());
-        return characterList;
     }
 }

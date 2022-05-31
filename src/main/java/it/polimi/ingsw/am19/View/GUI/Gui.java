@@ -377,14 +377,14 @@ public class Gui extends Application implements View {
         refreshMainScene(Notification.UPDATE_ISLANDS);
     }
 
-    //TODO IS IT USED?
     /**
      * method to update the Cards, both Helper and Character, on the cache
      * @param msg the UpdateCardsMessage sent by the server
      */
     @Override
     public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getCharacterCardList());
+        cache.setCharacterCards(msg.getHelperCardMap());
+        refreshMainScene(Notification.UPDATE_CARDS);
     }
 
     /**
@@ -433,6 +433,8 @@ public class Gui extends Application implements View {
                 controller.refreshIslands();
             else if(type == Notification.UPDATE_CLOUDS)
                 controller.refreshClouds();
+            else if(type == Notification.UPDATE_CARDS)
+                controller.refreshHelperCards();
         });
     }
 

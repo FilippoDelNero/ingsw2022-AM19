@@ -47,7 +47,7 @@
                      <children>
                         <ImageView fx:id="character" fitHeight="451.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
                            <image>
-                              <Image url="@CharacterCard/CENTAUR.jpg" />
+                              <Image url="@../../../../CharacterCard/CENTAUR.jpg" />
                            </image>
                         </ImageView>
                         <GridPane fx:id="onCardGrid" prefHeight="171.0" prefWidth="298.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="260.0">
@@ -237,7 +237,7 @@
                   </HBox>
                   <HBox prefHeight="71.0" prefWidth="960.0">
                      <children>
-                        <MenuButton fx:id="menuButton1" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton1" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="70.0" />
                            </HBox.margin>
@@ -245,7 +245,7 @@
                               <Font size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="menuButton2" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton2" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="280.0" />
                            </HBox.margin>
@@ -260,7 +260,7 @@
                   </HBox>
                   <HBox prefHeight="71.0" prefWidth="960.0">
                      <children>
-                        <MenuButton fx:id="menuButton3" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton3" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="70.0" />
                            </HBox.margin>
@@ -268,7 +268,7 @@
                               <Font size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="menuButton4" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton4" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="280.0" />
                            </HBox.margin>
@@ -283,7 +283,7 @@
                   </HBox>
                   <HBox fx:id="thirdSwap" prefHeight="71.0" prefWidth="960.0">
                      <children>
-                        <MenuButton fx:id="menuButton5" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton5" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="70.0" />
                            </HBox.margin>
@@ -291,7 +291,7 @@
                               <Font size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="menuButton6" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" stylesheets="@Login.css" text="Select a color">
+                        <MenuButton fx:id="menuButton6" alignment="CENTER" mnemonicParsing="false" prefHeight="71.0" prefWidth="264.0" text="Select a color">
                            <HBox.margin>
                               <Insets left="280.0" />
                            </HBox.margin>
@@ -309,7 +309,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#resetColor" prefHeight="70.0" prefWidth="284.0" stylesheets="@Login.css" text="RESET">
+                        <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#resetColor" prefHeight="70.0" prefWidth="284.0" text="RESET">
                            <font>
                               <Font size="48.0" />
                            </font>
@@ -317,7 +317,7 @@
                               <Insets left="55.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#sendColorList" prefHeight="70.0" prefWidth="284.0" stylesheets="@Login.css" text="SUBMIT">
+                        <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#sendColorList" prefHeight="70.0" prefWidth="284.0" text="SUBMIT">
                            <font>
                               <Font size="48.0" />
                            </font>

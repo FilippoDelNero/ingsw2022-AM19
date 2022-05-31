@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
-   <Group fx:id="gameboards" layoutX="969.0" layoutY="140.0">
+   <Group fx:id="gameboards" layoutX="969.0" layoutY="190.0">
       <AnchorPane layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../../../Board/plancia.png" />
@@ -144,7 +144,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
+      <AnchorPane layoutY="245.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../../../Board/plancia.png" />
          </ImageView>
@@ -274,7 +274,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
+      <AnchorPane layoutY="-10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../../../Board/plancia.png" />
          </ImageView>
@@ -406,7 +406,7 @@
       </AnchorPane>
    </Group>
    <Group fx:id="archipelago">
-      <AnchorPane layoutX="369.09600830078125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="330.273" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -424,7 +424,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="544.0960083007812" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="505.273" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island1.png" />
          </ImageView>
@@ -442,7 +442,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="719.0960083007812" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="641.45" layoutY="187.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -460,7 +460,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="742.7739868164062" layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="665.128" layoutY="362.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island1.png" />
          </ImageView>
@@ -478,7 +478,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="719.0960083007812" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="641.45" layoutY="537.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -496,7 +496,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="544.0960083007812" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="505.273" layoutY="712.006" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -514,7 +514,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="369.09600830078125" layoutY="675.0" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="330.273" layoutY="725.0" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island1.png" />
          </ImageView>
@@ -532,7 +532,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="194.0959930419922" layoutY="662.0059814453125" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="155.273" layoutY="712.006" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -550,7 +550,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="19.09600067138672" layoutY="512.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="19.09600067138672" layoutY="537.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island3.png" />
          </ImageView>
@@ -568,7 +568,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutY="337.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutY="362.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -586,7 +586,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="19.09600067138672" layoutY="162.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="19.09600067138672" layoutY="187.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island2.png" />
          </ImageView>
@@ -604,7 +604,7 @@
             </rowConstraints>
          </GridPane>
       </AnchorPane>
-      <AnchorPane layoutX="194.0959930419922" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
+      <AnchorPane layoutX="155.273" layoutY="12.5" maxHeight="175.0" maxWidth="175.0" minHeight="175.0" minWidth="175.0" prefHeight="175.0" prefWidth="175.0">
          <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Image url="@../../../../Board/island3.png" />
          </ImageView>
@@ -623,7 +623,7 @@
          </GridPane>
       </AnchorPane>
    </Group>
-   <AnchorPane fx:id="cloud1AP" layoutX="341.249" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="45.0">
+   <AnchorPane fx:id="cloud1AP" layoutX="267.773" layoutY="470.25" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="45.0">
       <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
@@ -638,7 +638,7 @@
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="cloud2AP" layoutX="471.943" layoutY="425.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="315.0">
+   <AnchorPane fx:id="cloud2AP" layoutX="467.773" layoutY="470.25" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="315.0">
       <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
@@ -653,7 +653,7 @@
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="cloud3AP" layoutX="402.6" layoutY="325.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="135.0">
+   <AnchorPane fx:id="cloud3AP" layoutX="367.773" layoutY="329.75" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" rotate="135.0">
       <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <Image url="@../../../../Board/cloud_card.png" />
       </ImageView>
@@ -678,13 +678,31 @@
          </font>
       </Label>
    </AnchorPane>
-   <Label fx:id="player2Name" layoutX="1340.0" layoutY="590.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="1330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="590.0" />
-   <Label fx:id="player3Name" layoutX="1340.0" layoutY="340.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="1330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="340.0" />
-   <Label layoutX="979.0" layoutY="615.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="969.0" AnchorPane.rightAnchor="371.0" AnchorPane.topAnchor="615.0" />
-   <Group fx:id="coinLabels" layoutX="1159.5" layoutY="115.0">
-      <Label layoutY="500.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
-      <Label layoutY="250.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
-      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+   <Label fx:id="player2Name" layoutX="979.0" layoutY="410.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+   <Label fx:id="player3Name" layoutX="979.0" layoutY="159.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+   <Label layoutX="979.0" layoutY="665.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" />
+   <Group fx:id="coinLabels" layoutX="1159.5" layoutY="159.5">
+      <children>
+         <Label layoutY="505.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+         <Label layoutY="250.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+         <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+      </children>
    </Group>
-   <Button fx:id="playHelperCard" layoutX="767.774" layoutY="840.0" maxHeight="50.0" maxWidth="150.0" minHeight="50.0" minWidth="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" stylesheets="@Login.css" text="Play Helper Card" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="767.774" AnchorPane.rightAnchor="522.226" AnchorPane.topAnchor="840.0" />
+   <Button fx:id="playHelperCard" layoutX="730.0" layoutY="35.0" maxHeight="50.0" maxWidth="175.0" minHeight="50.0" minWidth="175.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="175.0" text="Play Helper Card" />
+   <Group fx:id="helperCards" layoutX="857.25" layoutY="224.5">
+      <children>
+         <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="505.5" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../HelperCard/HelperCard1.png" />
+            </image></ImageView>
+         <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="250.5" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../HelperCard/HelperCard1.png" />
+            </image></ImageView>
+         <ImageView fitHeight="120.0" fitWidth="81.75" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../HelperCard/HelperCard1.png" />
+            </image></ImageView>
+      </children>
+   </Group>
 </AnchorPane>

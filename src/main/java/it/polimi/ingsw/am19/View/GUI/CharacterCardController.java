@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyPlayCharacterCardMessage;
@@ -105,14 +104,14 @@ public class CharacterCardController implements SceneController {
     }
 
     private void setLayout(){
-        character1.setImage(new Image(getImagePath(characterCards.get(0).getId())));
-        description1.setText(getDescription(characterCards.get(0)));
+        character1.setImage(new Image(drawer.getCharacterImagePath(characterCards.get(0).getId())));
+        description1.setText(drawer.getCharacterDescription(characterCards.get(0)));
         setStudentOnCard(characterCards.get(0),onCardGrid1);
-        character2.setImage(new Image(getImagePath(characterCards.get(1).getId())));
-        description2.setText(getDescription(characterCards.get(1)));
+        character2.setImage(new Image(drawer.getCharacterImagePath(characterCards.get(1).getId())));
+        description2.setText(drawer.getCharacterDescription(characterCards.get(1)));
         setStudentOnCard(characterCards.get(1),onCardGrid2);
-        character3.setImage(new Image(getImagePath(characterCards.get(2).getId())));
-        description3.setText(getDescription(characterCards.get(2)));
+        character3.setImage(new Image(drawer.getCharacterImagePath(characterCards.get(2).getId())));
+        description3.setText(drawer.getCharacterDescription(characterCards.get(2)));
         setStudentOnCard(characterCards.get(2),onCardGrid3);
         coinLabel.setText("You have:\n" + gui.getCache().getGameBoards().get(0).coins()+ " coins");
     }
@@ -134,16 +133,6 @@ public class CharacterCardController implements SceneController {
             }
         }
 
-    }
-
-    private String getImagePath(Character c){
-        String path = "file:src/main/resources/it/polimi/ingsw/am19.View.GUI/CharacterCard/" + c + ".jpg";
-        return path;
-    }
-
-    private String getDescription(AbstractCharacterCard c){
-        String description = "Price: " + c.getPrice() + "\n" + c.getDescription();
-        return description;
     }
 
     public AbstractCharacterCard getCardChosen() {

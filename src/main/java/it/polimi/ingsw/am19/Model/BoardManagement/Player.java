@@ -2,7 +2,6 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.InsufficientCoinException;
 import it.polimi.ingsw.am19.Model.Exceptions.UnavailableCardException;
-import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
@@ -196,6 +195,7 @@ public class Player extends Observable implements Serializable {
      */
     private void setCurrentCard(HelperCard currentCard) {
         this.currentCard = currentCard;
+        notifyObservers(Notification.UPDATE_CARDS);
     }
 
     /**
@@ -247,8 +247,7 @@ public class Player extends Observable implements Serializable {
         setCurrentCard(helperCard);
         this.helperDeck.remove(helperCard);
         if (helperDeck.size() == 0)
-            for (Observer observer: observers)
-                observer.notify(Notification.FINAL_ROUND);
+            notifyObservers(Notification.FINAL_ROUND);
     }
 
     /**
@@ -258,9 +257,8 @@ public class Player extends Observable implements Serializable {
      */
     @Override
     public boolean equals(Object o){
-        if (!(o instanceof Player))
+        if (!(o instanceof Player p))
             return false;
-        Player p = (Player) o;
         return (Objects.equals(nickname, p.nickname));
     }
 }

@@ -34,52 +34,52 @@
                <children>
                   <ImageView fx:id="helperCard1" fitHeight="380.0" fitWidth="356.0" onMouseClicked="#useHelperCard1" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard1.png" />
+                        <Image url="@../../../../HelperCard/HelperCard1.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard2" fitHeight="380.0" fitWidth="356.0" layoutX="24.0" layoutY="10.0" onMouseClicked="#useHelperCard2" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard2.png" />
+                        <Image url="@../../../../HelperCard/HelperCard2.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard3" fitHeight="380.0" fitWidth="356.0" layoutX="298.0" layoutY="10.0" onMouseClicked="#useHelperCard3" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard3.png" />
+                        <Image url="@../../../../HelperCard/HelperCard3.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard4" fitHeight="380.0" fitWidth="356.0" layoutX="601.0" layoutY="10.0" onMouseClicked="#useHelperCard4" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard4.png" />
+                        <Image url="@../../../../HelperCard/HelperCard4.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard5" fitHeight="380.0" fitWidth="356.0" layoutX="874.0" layoutY="10.0" onMouseClicked="#useHelperCard5" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard5.png" />
+                        <Image url="@../../../../HelperCard/HelperCard5.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard6" fitHeight="380.0" fitWidth="356.0" layoutX="24.0" layoutY="10.0" onMouseClicked="#useHelperCard6" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard6.png" />
+                        <Image url="@../../../../HelperCard/HelperCard6.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard7" fitHeight="380.0" fitWidth="356.0" layoutX="312.0" layoutY="10.0" onMouseClicked="#useHelperCard7" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard7.png" />
+                        <Image url="@../../../../HelperCard/HelperCard7.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard8" fitHeight="380.0" fitWidth="356.0" layoutX="601.0" layoutY="10.0" onMouseClicked="#useHelperCard8" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard8.png" />
+                        <Image url="@../../../../HelperCard/HelperCard8.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard9" fitHeight="380.0" fitWidth="356.0" layoutX="874.0" layoutY="10.0" onMouseClicked="#useHelperCard9" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard9.png" />
+                        <Image url="@../../../../HelperCard/HelperCard9.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="helperCard10" fitHeight="380.0" fitWidth="356.0" layoutX="24.0" layoutY="10.0" onMouseClicked="#useHelperCard10" onMouseEntered="#onMouseEnteredEvent" onMouseExited="#onMouseExitedEvent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@HelperCard/HelperCard10.png" />
+                        <Image url="@../../../../HelperCard/HelperCard10.png" />
                      </image>
                   </ImageView>
                </children>

@@ -457,6 +457,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
             case UPDATE_CLOUDS -> notifyObservers(Notification.UPDATE_CLOUDS); //TODO IDEALMENTE VORREI MANDARE UN UNICO MESSAGGIO CON LE TRE NUOVOLE DOPO AVERLE RIEMPITE
             case UPDATE_ISLANDS -> notifyObservers(Notification.UPDATE_ISLANDS);
             case UPDATE_GAMEBOARDS -> notifyObservers(Notification.UPDATE_GAMEBOARDS); //TODO IDEALMENTE VORREI MANDARE UN UNICO MESSAGGIO CON I TRE STUDENTI SPOSATI DALLE NUVOLE
+            case UPDATE_CARDS -> notifyObservers(Notification.UPDATE_CARDS);
         }
     }
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.View.GUI;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
@@ -83,13 +84,44 @@ public class Drawer {
     /** Image containing the sprite of group of eight islands */
     private final Image islandGroup8 = new Image("file:src/main/resources/Board/islandGroup8.png");
 
+    //--HelperCards--
+    /** Image of the first helper card */
+    private final Image helperCard1 = new Image("file:src/main/resources/Board/helperCard1.png");
+
+    /** Image of the second helper card */
+    private final Image helperCard2 = new Image("file:src/main/resources/Board/helperCard2.png");
+
+    /** Image of the third helper card */
+    private final Image helperCard3 = new Image("file:src/main/resources/Board/helperCard3.png");
+
+    /** Image of the fourth helper card */
+    private final Image helperCard4 = new Image("file:src/main/resources/Board/helperCard4.png");
+
+    /** Image of the five helper card */
+    private final Image helperCard5 = new Image("file:src/main/resources/Board/helperCard5.png");
+
+    /** Image of the six helper card */
+    private final Image helperCard6 = new Image("file:src/main/resources/Board/helperCard6.png");
+
+    /** Image of the seven helper card */
+    private final Image helperCard7 = new Image("file:src/main/resources/Board/helperCard7.png");
+
+    /** Image of the eight helper card */
+    private final Image helperCard8 = new Image("file:src/main/resources/Board/helperCard8.png");
+
+    /** Image of the nine helper card */
+    private final Image helperCard9 = new Image("file:src/main/resources/Board/helperCard9.png");
+
+    /** Image of the tenth helper card */
+    private final Image helperCard10 = new Image("file:src/main/resources/Board/helperCard9.png");
+
     /**
      * Method to get the path of the image of a CharacterCard
      * @param c the character enum value
      * @return the path of the image of the CharacterCard corresponding to c
      */
     public String getCharacterImagePath(Character c){
-        return "file:src/main/resources/it/polimi/ingsw/am19.View.GUI/CharacterCard/" + c + ".jpg";
+        return "file:src/main/resources/CharacterCard/" + c + ".jpg";
     }
 
     /**
@@ -99,6 +131,21 @@ public class Drawer {
      */
     public String getCharacterDescription(AbstractCharacterCard c){
         return "Price: " + c.getPrice() + "\n" + c.getDescription();
+    }
+
+    public Image getHelperCard(HelperCard hc) {
+        return switch(hc.getNextRoundOrder()) {
+            case 1 -> helperCard1;
+            case 2 -> helperCard2;
+            case 3 -> helperCard3;
+            case 4 -> helperCard4;
+            case 5 -> helperCard5;
+            case 6 -> helperCard6;
+            case 7 -> helperCard7;
+            case 8 -> helperCard8;
+            case 9 -> helperCard9;
+            default -> helperCard10;
+        };
     }
 
     /**

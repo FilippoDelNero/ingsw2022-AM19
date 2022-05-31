@@ -49,7 +49,7 @@
                            <children>
                               <ImageView fx:id="character" fitHeight="451.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
                                  <image>
-                                    <Image url="@CharacterCard/CENTAUR.jpg" />
+                                    <Image url="@../../../../CharacterCard/CENTAUR.jpg" />
                                  </image>
                               </ImageView>
                               <GridPane fx:id="onCardGrid" prefHeight="171.0" prefWidth="298.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="260.0">
@@ -85,7 +85,7 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" stylesheets="@Login.css" text="Select a color">
+                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" text="Select a color">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -374,7 +374,7 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" stylesheets="@Login.css" text="Submit">
+                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" text="Submit">
                                  <HBox.margin>
                                     <Insets left="70.0" top="10.0" />
                                  </HBox.margin>
