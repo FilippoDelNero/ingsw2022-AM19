@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
+import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyPlayCharacterCardMessage;
@@ -140,7 +141,7 @@ public class CharacterCardController implements SceneController {
     }
 
     private boolean checkMinistrel(){
-        if(cardChosen.getId()==Character.MINSTREL){
+        if(cardChosen.getId()== Character.MINSTREL){
             Map<PieceColor,Integer> dining = gui.getCache().getGameBoards().get(0).diningRoom();
             for(PieceColor color: dining.keySet())
                 if(dining.get(color)>0)

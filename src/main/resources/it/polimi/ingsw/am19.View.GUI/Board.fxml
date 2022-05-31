@@ -682,27 +682,17 @@
    <Label fx:id="player3Name" layoutX="979.0" layoutY="159.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
    <Label layoutX="979.0" layoutY="665.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" />
    <Group fx:id="coinLabels" layoutX="1159.5" layoutY="159.5">
-      <children>
-         <Label layoutY="505.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
-         <Label layoutY="250.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
-         <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
-      </children>
+      <Label layoutY="505.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
+             prefWidth="100.0" textAlignment="RIGHT"/>
+      <Label layoutY="250.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
+             prefWidth="100.0" textAlignment="RIGHT"/>
+      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0"
+             textAlignment="RIGHT"/>
    </Group>
    <Button fx:id="playHelperCard" layoutX="730.0" layoutY="35.0" maxHeight="50.0" maxWidth="175.0" minHeight="50.0" minWidth="175.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="175.0" text="Play Helper Card" />
    <Group fx:id="helperCards" layoutX="857.25" layoutY="224.5">
-      <children>
-         <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="505.5" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../../../HelperCard/HelperCard1.png" />
-            </image></ImageView>
-         <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="250.5" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../../../HelperCard/HelperCard1.png" />
-            </image></ImageView>
-         <ImageView fitHeight="120.0" fitWidth="81.75" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../../../HelperCard/HelperCard1.png" />
-            </image></ImageView>
-      </children>
+      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="505.5" pickOnBounds="true" preserveRatio="true"/>
+      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="250.5" pickOnBounds="true" preserveRatio="true"/>
+      <ImageView fitHeight="120.0" fitWidth="81.75" pickOnBounds="true" preserveRatio="true"/>
    </Group>
 </AnchorPane>
