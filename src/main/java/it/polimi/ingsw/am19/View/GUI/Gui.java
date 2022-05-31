@@ -100,6 +100,11 @@ public class Gui extends Application implements View {
         stage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        myClient.disconnect();
+    }
+
     /**
      * method used to create a client and connect it to the specified parameters
      * @param ip the ip address of the server the user wants to connect to
@@ -113,7 +118,7 @@ public class Gui extends Application implements View {
 
     @Override
     public void setDispatcher(Dispatcher dispatcher) {
-
+        
     }
 
     @Override
@@ -298,14 +303,19 @@ public class Gui extends Application implements View {
         if(msg.getWinners() != null)
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.initOwner(this.getStage());
                 alert.setTitle("End match");
                 Image winImg = new Image(getClass().getResource("/winningImg.png").toExternalForm());
                 ImageView winImageView = new ImageView(winImg);
                 alert.setGraphic(winImageView);
-                if (msg.getWinners().size()>1)
-                    alert.setContentText("Match ended in a draw. Winners:" + msg.getWinners().toString());
-                else if (msg.getWinners().size() == 1)
-                    alert.setContentText("Match ended. Winner:" + msg.getWinners().get(0));
+                if (msg.getWinners().size()>1){
+                    alert.setHeaderText("Match ended in a draw!");
+                    alert.setContentText("Winners: " + msg.getWinners().toString());
+                }
+                else if (msg.getWinners().size() == 1) {
+                    alert.setHeaderText("Match ended!");
+                    alert.setContentText("Winner: " + msg.getWinners().get(0));
+                }
                 alert.showAndWait()
                         .filter(response -> response == ButtonType.OK)
                         .ifPresent(response -> Platform.exit());
@@ -313,6 +323,7 @@ public class Gui extends Application implements View {
         else
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(this.getStage());
                 alert.setTitle("Error");
                 alert.setContentText("We are sorry, the match will interrupted due to a fatal error occurring\"");
                 alert.showAndWait()
@@ -349,6 +360,7 @@ public class Gui extends Application implements View {
     public void error(ErrorMessage msg) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(this.getStage());
             alert.setTitle("Error");
             alert.setContentText(msg.getError());
             Optional<ButtonType> result = alert.showAndWait();
@@ -458,5 +470,9 @@ public class Gui extends Application implements View {
                 ((MatchController)currController).drawScene();
             });
         }
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

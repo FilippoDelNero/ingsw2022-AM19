@@ -84,10 +84,10 @@ public class ConnectionController implements SceneController {
 
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            //alert.setTitle("End match");
+            alert.setTitle("Info");
+            alert.initOwner(gui.getStage());
             alert.setContentText(msg.getMessage());
-            alert.showAndWait()
-                    .filter(response -> response == ButtonType.OK);
+            alert.showAndWait();
         });
     }
 
@@ -114,6 +114,7 @@ public class ConnectionController implements SceneController {
             warningLabel.setVisible(false);
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(gui.getStage());
                 alert.setTitle("Error");
                 alert.setContentText("Invalid IP address format. Please retry");
                 Optional<ButtonType> result = alert.showAndWait();
@@ -123,6 +124,7 @@ public class ConnectionController implements SceneController {
             warningLabel.setVisible(false);
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(gui.getStage());
                 alert.setTitle("Error");
                 alert.setContentText("Invalid port number format. Please retry");
                 Optional<ButtonType> result = alert.showAndWait();
