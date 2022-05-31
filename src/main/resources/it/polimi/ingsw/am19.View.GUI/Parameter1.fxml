@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -85,7 +86,7 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" stylesheets="@Login.css" text="Select a color">
+                              <MenuButton fx:id="colorMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="92.0" prefWidth="410.0" text="Select a color">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
@@ -99,7 +100,7 @@
                            <children>
                               <Group fx:id="archipelago">
                                  <children>
-                                    <AnchorPane layoutX="50.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="380.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" focusTraversable="true" onMouseClicked="#selectIsland1" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -121,7 +122,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="275.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="570.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland2" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -143,7 +144,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="500.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="742.0" layoutY="50.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland3" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -165,7 +166,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="725.0" onMouseClicked="#selectIsland4" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="742.0" layoutY="210.0" onMouseClicked="#selectIsland4" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -187,7 +188,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="50.0" layoutY="225.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="742.0" layoutY="380.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -209,7 +210,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="275.0" layoutY="225.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="575.0" layoutY="440.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland6" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -231,7 +232,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="500.0" layoutY="225.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="375.0" layoutY="440.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland7" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -253,7 +254,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="725.0" layoutY="225.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="180.0" layoutY="430.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland8" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -275,7 +276,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="50.0" layoutY="450.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="10.0" layoutY="380.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland9" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -297,7 +298,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="275.0" layoutY="450.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="10.0" layoutY="210.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland10" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -319,7 +320,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="500.0" layoutY="450.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="20.0" layoutY="50.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland11" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -341,7 +342,7 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="725.0" layoutY="450.0" prefHeight="175.0" prefWidth="175.0">
+                                    <AnchorPane layoutX="180.0" prefHeight="175.0" prefWidth="175.0">
                                        <children>
                                           <ImageView fitHeight="175.0" fitWidth="175.0" onMouseClicked="#selectIsland12" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -374,13 +375,16 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" stylesheets="@Login.css" text="Submit">
+                              <Button fx:id="submit" mnemonicParsing="false" onMouseClicked="#sendReply" prefHeight="66.0" prefWidth="139.0" text="Submit">
                                  <HBox.margin>
                                     <Insets left="70.0" top="10.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font size="30.0" />
                                  </font>
+                                 <stylesheets>
+                                    <URL value="@../../../../Style/eriantys.css" />
+                                 </stylesheets>
                               </Button>
                            </children>
                         </HBox>
