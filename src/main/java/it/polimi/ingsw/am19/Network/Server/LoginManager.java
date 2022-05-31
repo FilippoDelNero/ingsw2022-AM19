@@ -101,7 +101,7 @@ public class LoginManager {
 
                     matchController.resumeMatch();
                     lastMatchPlayers = new ArrayList<>(matchController.getNicknamesFromResumedMatch());
-
+                    numOfPlayers = matchController.getNicknamesFromResumedMatch().size();
                     addPlayerToResumingMatch(clientToAdd);
                     sendMessageOfWait(clientToAdd);
                     activePlayers++;
@@ -115,8 +115,10 @@ public class LoginManager {
             //if we are adding a player to a match previously interrupted
             if(isResumingMatch) {
                 addPlayerToResumingMatch(clientToAdd);
-                sendMessageOfWait(clientToAdd);
                 activePlayers++;
+                if (activePlayers < numOfPlayers)
+                    sendMessageOfWait(clientToAdd);
+
             }
             // if we are adding a player to a newly created match
             else if(isExpertMatch){

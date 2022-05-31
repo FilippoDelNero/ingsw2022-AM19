@@ -22,6 +22,9 @@ public class UsernameOptionsController implements SceneController{
      */
     private Gui gui;
 
+    /** the fxml file for the waiting-for-other-players-to-join scene */
+    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/Login/WaitingStart.fxml";
+
     public void initialize(){
         warningLabel.setVisible(false);
         savedUsernamesField.setOnKeyPressed(e -> {
@@ -89,6 +92,7 @@ public class UsernameOptionsController implements SceneController{
         else {
             gui.setNickname(savedUsernamesField.getText());
             gui.getMyClient().sendMessage(new ReplyLoginInfoMessage(savedUsernamesField.getText(), null, null));
+            gui.changeScene(WAITING);
         }
     }
 }
