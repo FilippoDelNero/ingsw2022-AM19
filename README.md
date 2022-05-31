@@ -22,7 +22,7 @@
 | Basic rules            | 🟢 |
 | Complete rules         | 🟢 |
 | Communication Protocol | 🟢 |
-| GUI                    | 🟡 |
+| GUI                    | 🟢 |
 | CLI                    | 🟢 |
 | AF 1: Character cards  | 🟢 |
 | AF 2: Persistence      | 🟢 |

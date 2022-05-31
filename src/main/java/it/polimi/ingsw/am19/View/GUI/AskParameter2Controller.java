@@ -153,7 +153,8 @@ public class AskParameter2Controller implements SceneController {
     }
 
     private void updateCard(){
-        character.setImage(new Image(drawer.getCharacterImagePath(card.getId())));
+        String imageUrl = drawer.getCharacterImagePath(card.getId());
+        character.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description.setText(drawer.getCharacterDescription(card));
         drawer.setStudentOnCard(card,onCardGrid);
         nameCharacter.setText(card.getId().toString());

@@ -5,5 +5,6 @@ public enum Notification {
     FINAL_ROUND,
     UPDATE_CLOUDS,
     UPDATE_GAMEBOARDS,
-    UPDATE_ISLANDS
+    UPDATE_ISLANDS,
+    UPDATE_CARDS
 }

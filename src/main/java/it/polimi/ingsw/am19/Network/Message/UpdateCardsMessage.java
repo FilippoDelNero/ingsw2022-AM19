@@ -1,8 +1,10 @@
 package it.polimi.ingsw.am19.Network.Message;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -11,16 +13,16 @@ import java.util.List;
 public class UpdateCardsMessage extends Message{
 
     /** a list of the Character cards present */
-    private final List<Character> characterCardList;
+    private final Map<String, HelperCard> helperCardMap;
 
     /**
-     * constructor used when both Helpers and Characters cards are presents
-     * @param listCharacters the CharacterCards present in the match
+     * constructor
+     * @param map the CharacterCards present in the match
      */
-    public UpdateCardsMessage(List<Character> listCharacters) {
+    public UpdateCardsMessage(Map<String, HelperCard> map) {
         super("server", MessageType.UPDATE_CARDS);
 
-        this.characterCardList = listCharacters;
+        this.helperCardMap = map;
     }
 
 
@@ -28,7 +30,7 @@ public class UpdateCardsMessage extends Message{
      * getter for the CharacterCards list
      * @return the list of character cards
      */
-    public List<Character> getCharacterCardList() {
-        return characterCardList;
+    public Map<String, HelperCard> getHelperCardMap() {
+        return helperCardMap;
     }
 }

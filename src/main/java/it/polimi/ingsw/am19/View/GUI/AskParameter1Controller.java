@@ -32,17 +32,7 @@ public class AskParameter1Controller implements SceneController {
     private PieceColor color=null;
     private Integer island = null;
     private AbstractCharacterCard card;
-    private final static Image redStudent = new Image("file:src/main/resources/Board/student_red.png");
-    private final static Image greenStudent = new Image("file:src/main/resources/Board/student_green.png");
-    private final static Image blueStudent = new Image("file:src/main/resources/Board/student_blue.png");
-    private final static Image yellowStudent = new Image("file:src/main/resources/Board/student_yellow.png");
-    private final static Image pinkStudent = new Image("file:src/main/resources/Board/student_pink.png");
 
-    /** Image containing the sprite of mother nature */
-    private final Image motherNatureImg = new Image("file:src/main/resources/Board/mother_nature.png");
-
-    /** Image containing the sprite of a no-entry-tile */
-    private final Image noEntryTileImg = new Image("file:src/main/resources/Board/noEntryTile.png");
     /** reference to the cache of this client*/
     private Cache cache;
 
@@ -184,7 +174,8 @@ public class AskParameter1Controller implements SceneController {
 
     public void initializeScene(){
         Drawer drawer = new Drawer();
-        character.setImage(new Image(drawer.getCharacterImagePath(card.getId())));
+        String imageUrl = drawer.getCharacterImagePath(card.getId());
+        character.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description.setText(drawer.getCharacterDescription(card));
 
         drawer.setStudentOnCard(card,onCardGrid);

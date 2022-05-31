@@ -58,6 +58,9 @@ public class MatchController implements SceneController {
     /** Button the user presses to play their helper card */
     @FXML private Button playHelperCard;
 
+    /** Group of the imageView used to display the HelperCards played by the player */
+    @FXML private Group helperCards;
+
     /** a reference to the gui class which "controls" this controller */
     private Gui gui;
 
@@ -88,12 +91,16 @@ public class MatchController implements SceneController {
     /** list of the labels used to display each player's coins */
     private List<Label> labelsForCoins;
 
+    /** list of imageViews used to display HelperCards */
+    private List<ImageView> helperCardImages;
+
     /** attribute used to save the student's color that the user wants to move */
     private PieceColor studentToMove;
 
     /** attribute used to save the helperCardMessage sent by the server */
     private AskHelperCardMessage helperCardMessage;
 
+    /** object used to draw components on the view */
     private Drawer draw;
 
     /**
@@ -111,8 +118,13 @@ public class MatchController implements SceneController {
         }
 
         List<AnchorPane> gameboardsAP = new ArrayList<>();
-        for(i = 0; i < 3; i++)
+        labelsForCoins = new ArrayList<>();
+        helperCardImages = new ArrayList<>();
+        for(i = 0; i < 3; i++) {
             gameboardsAP.add((AnchorPane) gameboards.getChildren().get(i));
+            labelsForCoins.add((Label) coinLabels.getChildren().get(i));
+            helperCardImages.add((ImageView) helperCards.getChildren().get(i));
+        }
 
         gameboard2 = new ArrayList<>();
         gameboard1 = new ArrayList<>();
@@ -127,11 +139,6 @@ public class MatchController implements SceneController {
         clouds.add(0, (GridPane) cloud1AP.getChildren().get(1));
         clouds.add(1, (GridPane) cloud2AP.getChildren().get(1));
         clouds.add(2, (GridPane) cloud3AP.getChildren().get(1));
-
-        labelsForCoins = new ArrayList<>();
-        for(i = 0; i < 3; i++) {
-            labelsForCoins.add((Label) coinLabels.getChildren().get(i));
-        }
     }
 
     /**
@@ -169,6 +176,7 @@ public class MatchController implements SceneController {
         initializeArchipelago();
         initializeClouds();
         initializeLabel();
+        initializeHelperCards();
         playHelperCard.setVisible(false);
     }
 
@@ -375,6 +383,29 @@ public class MatchController implements SceneController {
             cloud.getChildren().clear();
         }
         initializeClouds();
+    }
+
+    public void refreshHelperCards() {
+        initializeHelperCards();
+    }
+
+    private void initializeHelperCards() {
+        if(cache.getHelperCards() != null) {
+            if(cache.getHelperCards().size() >= 1 && cache.getHelperCards().get(0) != null)
+                helperCardImages.get(0).setImage(draw.getHelperCard(cache.getHelperCards().get(0)));
+            else
+                helperCardImages.get(0).setVisible(false);
+
+            if(cache.getHelperCards().size() >= 2 && cache.getHelperCards().get(1) != null)
+                helperCardImages.get(1).setImage(draw.getHelperCard(cache.getHelperCards().get(1)));
+            else
+                helperCardImages.get(1).setVisible(false);
+
+            if(cache.getHelperCards().size() == 3 && cache.getHelperCards().get(2) != null)
+                helperCardImages.get(2).setImage(draw.getHelperCard(cache.getHelperCards().get(2)));
+            else
+                helperCardImages.get(2).setVisible(false);
+        }
     }
 
     /**

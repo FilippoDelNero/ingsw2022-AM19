@@ -50,7 +50,7 @@
                            <children>
                               <ImageView fx:id="character" fitHeight="451.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
                                  <image>
-                                    <Image url="@CharacterCard/CENTAUR.jpg" />
+                                    <Image url="@../../../../CharacterCard/CENTAUR.jpg" />
                                  </image>
                               </ImageView>
                               <GridPane fx:id="onCardGrid" prefHeight="171.0" prefWidth="298.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="260.0">

@@ -347,7 +347,7 @@ public class Cli implements View {
      */
     @Override
     public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getCharacterCardList());
+        cache.setCharacterCards(msg.getHelperCardMap());
     }
 
     /**
@@ -666,16 +666,6 @@ public class Cli implements View {
      */
     private void printView() {
         printer.flush(); //TODO NON FUNZIONA
-
-        if(cache.getCharacterCards() != null) {
-            String s = "";
-            printer.println("Character cards: ");
-            for(Character c : cache.getCharacterCards()) {
-                s = s.concat(c.toString());
-                s = s.concat("  ");
-            }
-            printer.println(s + '\n');
-        }
 
         if(cache.getClouds() != null) {
             printer.println("The Clouds: ");

@@ -1,11 +1,12 @@
 package it.polimi.ingsw.am19.Network.Client;
 
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
+import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +23,8 @@ public class Cache {
     /** a list of "islands" */
     private List<ReducedIsland> islands;
 
-    /** a list, if present, of "characterCards" */
-    private List<Character> characterCards;
+    /** a list of "helperCards" */
+    private List<HelperCard> helperCards;
 
     /** the nickname of the player owning this cache */
     private String nickname;
@@ -97,15 +98,18 @@ public class Cache {
      * getter for the CharacterCards attribute
      * @return a list of Character
      */
-    public List<Character> getCharacterCards() {
-        return characterCards;
+    public List<HelperCard> getHelperCards() {
+        return helperCards;
     }
 
     /**
      * setter for the CharacterCard attribute
-     * @param characterCards a list of Character
+     * @param cards a map Nickname-HelperCard
      */
-    public void setCharacterCards(List<Character> characterCards) {
-        this.characterCards = characterCards;
+    public void setCharacterCards(Map<String, HelperCard> cards) {
+        helperCards = new ArrayList<>();
+        for(ReducedGameBoard rgb : gameBoards) {
+            helperCards.add(cards.get(rgb.playerNickname()));
+        }
     }
 }

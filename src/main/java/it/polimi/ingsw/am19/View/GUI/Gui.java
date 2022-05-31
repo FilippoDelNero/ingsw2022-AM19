@@ -102,7 +102,6 @@ public class Gui extends Application implements View {
 
     @Override
     public void stop() throws Exception {
-        //TODO add confirmation alert
         myClient.disconnect();
     }
 
@@ -306,7 +305,7 @@ public class Gui extends Application implements View {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.initOwner(this.getStage());
                 alert.setTitle("End match");
-                Image winImg = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/winningImg.png");
+                Image winImg = new Image(getClass().getResource("/winningImg.png").toExternalForm());
                 ImageView winImageView = new ImageView(winImg);
                 alert.setGraphic(winImageView);
                 if (msg.getWinners().size()>1){
@@ -398,14 +397,14 @@ public class Gui extends Application implements View {
         refreshMainScene(Notification.UPDATE_ISLANDS);
     }
 
-    //TODO IS IT USED?
     /**
      * method to update the Cards, both Helper and Character, on the cache
      * @param msg the UpdateCardsMessage sent by the server
      */
     @Override
     public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getCharacterCardList());
+        cache.setCharacterCards(msg.getHelperCardMap());
+        refreshMainScene(Notification.UPDATE_CARDS);
     }
 
     /**
@@ -413,6 +412,7 @@ public class Gui extends Application implements View {
      * @param controllerName the path that name od the next scene fxml
      */
     public void changeScene(String controllerName) {
+        System.out.println(controllerName); //TODO TOGLIERE!
         Platform.runLater(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerName));
@@ -454,6 +454,8 @@ public class Gui extends Application implements View {
                 controller.refreshIslands();
             else if(type == Notification.UPDATE_CLOUDS)
                 controller.refreshClouds();
+            else if(type == Notification.UPDATE_CARDS)
+                controller.refreshHelperCards();
         });
     }
 
