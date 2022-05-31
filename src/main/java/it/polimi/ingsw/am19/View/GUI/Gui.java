@@ -347,24 +347,11 @@ public class Gui extends Application implements View {
      */
     @Override
     public void error(ErrorMessage msg) {
-        /*
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText(msg.getError());
             Optional<ButtonType> result = alert.showAndWait();
-        });
-         */
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            //alert.setTitle("End match");
-            Image winImg = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/winningImg.png");
-            ImageView winImageView = new ImageView(winImg);
-            alert.setGraphic(winImageView);
-            alert.setContentText("Match ended. Winner:" );
-            alert.showAndWait()
-                    .filter(response -> response == ButtonType.OK)
-                    .ifPresent(response -> Platform.exit());
         });
     }
 
