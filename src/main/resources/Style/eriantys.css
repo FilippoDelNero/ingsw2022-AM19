@@ -6,10 +6,6 @@
     -fx-background-radius: 15;
 }
 
-.text, .label{
-    -fx-font-family: 'Sansita', sans-serif;
-}
-
-.text-area{
+.text, .label,.text-area{
     -fx-font-family: 'Sansita', sans-serif;
 }

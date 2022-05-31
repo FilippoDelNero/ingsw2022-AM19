@@ -295,17 +295,17 @@ public class Gui extends Application implements View {
      */
     @Override
     public void endMatch(EndMatchMessage msg) {
-        //TODO dimensioni coriandoli???
         if(msg.getWinners() != null)
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                //alert.setTitle("End match");
-                Image confetti = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/confetti-28.gif");
-                ImageView confettiImageView = new ImageView(confetti);
-                confettiImageView.setX(100);
-                confettiImageView.setY(80);
-                alert.setGraphic(confettiImageView);
-                alert.setContentText("Match ended. Winner:" + msg.getWinners().toString());
+                alert.setTitle("End match");
+                Image winImg = new Image("file:src/main/resources/it/polimi/ingsw/am19.View.GUI/winningImg.png");
+                ImageView winImageView = new ImageView(winImg);
+                alert.setGraphic(winImageView);
+                if (msg.getWinners().size()>1)
+                    alert.setContentText("Match ended in a draw. Winners:" + msg.getWinners().toString());
+                else if (msg.getWinners().size() == 1)
+                    alert.setContentText("Match ended. Winner:" + msg.getWinners().get(0));
                 alert.showAndWait()
                         .filter(response -> response == ButtonType.OK)
                         .ifPresent(response -> Platform.exit());
