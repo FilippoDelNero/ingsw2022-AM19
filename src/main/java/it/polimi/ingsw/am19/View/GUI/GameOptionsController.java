@@ -26,12 +26,16 @@ public class GameOptionsController implements SceneController {
     int numPlayers;
 
     /**
-     * id hui's reference
+     * it's gui's reference
      */
     private Gui gui;
 
+    /**
+     * makes all labels and buttons (except for newGameButton) hidden.
+     * Defines some values for buttons of difficultyGroup and numPlayersGroup
+     */
     public void initialize(){
-        //makes all buttons and labels (except for the newGameButton) hidden
+
         difficultyLabel.setVisible(false);
         numPlayerLabel.setVisible(false);
         twoPlayersRadioButton.setVisible(false);
@@ -42,9 +46,9 @@ public class GameOptionsController implements SceneController {
         newGameButton.setVisible(false);
         submitButton.setVisible(false);
 
-        //associates some values to buttons of difficultyGroup and numPlayersGroup
         twoPlayersRadioButton.setUserData(2);
         threePlayerRadioButton.setUserData(3);
+
         easyRadioButton.setUserData(false);
         expertRadioButton.setUserData(true);
     }
@@ -72,9 +76,6 @@ public class GameOptionsController implements SceneController {
 
     @FXML
     private Button resumeGameButton;
-
-    @FXML
-    private MenuButton savedUsernameField;
 
     @FXML
     private Button submitButton;
@@ -106,7 +107,7 @@ public class GameOptionsController implements SceneController {
     }
 
     /**
-     * when pressing the newGameButton, it hides it (together with resumeGameButton)
+     * when pressing the newGameButton, it hides it (together with resumeGameButton, if displayed)
      * and makes visible all remaining labels and buttons
      * to let the user select match options
      * @param event event triggered by selecting the newGameButton
@@ -152,7 +153,7 @@ public class GameOptionsController implements SceneController {
     }
 
     /**
-     * it sets visible both newGameButton and resumeButton
+     * it sets visible both the newGameButton and the resumeButton
      */
     public void askResume(){
         newGameButton.setVisible(true);
