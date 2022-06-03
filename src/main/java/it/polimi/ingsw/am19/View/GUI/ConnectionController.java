@@ -19,10 +19,14 @@ public class ConnectionController implements SceneController {
      */
     private Gui gui;
 
+    /**
+     * Sets warning label hidden and sets its text property.
+     * It also set event listeners for pressing enter button on keyboard events.
+     * The handler acts like submit button was pressed
+     */
     public void initialize(){
         warningLabel.setVisible(false);
         warningLabel.setText("Please fill out all fields");
-        genericMsgField.setVisible(false);
 
         ipAddress.setOnKeyPressed( e -> {
             if( e.getCode() == KeyCode.ENTER )
@@ -36,9 +40,6 @@ public class ConnectionController implements SceneController {
     }
 
     @FXML
-    private Pane pane;
-
-    @FXML
     private TextField ipAddress;
 
     @FXML
@@ -49,9 +50,6 @@ public class ConnectionController implements SceneController {
 
     @FXML
     private Label warningLabel;
-
-    @FXML
-    private Label genericMsgField;
 
     /**
      * after pressing submit button, it manages fields' content
@@ -72,15 +70,12 @@ public class ConnectionController implements SceneController {
     }
 
     /**
-     * makes genericMsgField visible
+     * makes an alert appear display info for the user.
+     * The alert si blocking
      * @param msg the message that wraps what needs to be displayed
      */
     @Override
     public void showGenericMsg(GenericMessage msg) {
-        //TODO fix it
-        //System.out.println(msg.getMessage());
-        //genericMsgField.setText(msg.getMessage());
-        //genericMsgField.setVisible(true);
 
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -110,26 +105,28 @@ public class ConnectionController implements SceneController {
         if (!checkFieldsFilled()){
             warningLabel.setVisible(true);
         }
-        else if (!checkIpValidity()){
-            warningLabel.setVisible(false);
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.initOwner(gui.getStage());
-                alert.setTitle("Error");
-                alert.setContentText("Invalid IP address format. Please retry");
-                Optional<ButtonType> result = alert.showAndWait();
-            });
-        }
-        else if (!checkPortNumValidity()){
-            warningLabel.setVisible(false);
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.initOwner(gui.getStage());
-                alert.setTitle("Error");
-                alert.setContentText("Invalid port number format. Please retry");
-                Optional<ButtonType> result = alert.showAndWait();
-            });
-        }
+        //if fields' content is present, a check is also made on syntax
+            else if (!checkIpValidity()){
+                warningLabel.setVisible(false);
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(gui.getStage());
+                    alert.setTitle("Error");
+                    alert.setContentText("Invalid IP address format. Please retry");
+                    Optional<ButtonType> result = alert.showAndWait();
+                });
+            }
+            else if (!checkPortNumValidity()){
+                warningLabel.setVisible(false);
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(gui.getStage());
+                    alert.setTitle("Error");
+                    alert.setContentText("Invalid port number format. Please retry");
+                    Optional<ButtonType> result = alert.showAndWait();
+                });
+            }
+        //
         else //only if fields are not empty/null and inputs are well formed
             gui.startView(ipAddress.getText(), Integer.parseInt(portNumber.getText()));
     }

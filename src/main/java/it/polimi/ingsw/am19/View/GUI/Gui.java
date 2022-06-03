@@ -308,6 +308,7 @@ public class Gui extends Application implements View {
                 Image winImg = new Image(getClass().getResource("/winningImg.png").toExternalForm());
                 ImageView winImageView = new ImageView(winImg);
                 alert.setGraphic(winImageView);
+
                 if (msg.getWinners().size()>1){
                     alert.setHeaderText("Match ended in a draw!");
                     alert.setContentText("Winners: " + msg.getWinners().toString());
@@ -363,7 +364,7 @@ public class Gui extends Application implements View {
             alert.initOwner(this.getStage());
             alert.setTitle("Error");
             alert.setContentText(msg.getError());
-            Optional<ButtonType> result = alert.showAndWait();
+            alert.showAndWait();
         });
     }
 
@@ -472,6 +473,10 @@ public class Gui extends Application implements View {
         }
     }
 
+    /**
+     * returns stage reference
+     * @return returns stage reference
+     */
     public Stage getStage() {
         return stage;
     }

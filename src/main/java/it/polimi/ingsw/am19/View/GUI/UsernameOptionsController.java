@@ -25,11 +25,15 @@ public class UsernameOptionsController implements SceneController{
     /** the fxml file for the waiting-for-other-players-to-join scene */
     private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/Login/WaitingStart.fxml";
 
+    /**
+     * Hides warning label and adds an event listener for keyboard events
+     * that acts like the submit button was pressed
+     */
     public void initialize(){
         warningLabel.setVisible(false);
         savedUsernamesField.setOnKeyPressed(e -> {
-            if ( e.getCode() == KeyCode.ENTER )
-            sendUserData();
+            if (e.getCode() == KeyCode.ENTER)
+                sendUserData();
         });
     }
 
@@ -56,16 +60,21 @@ public class UsernameOptionsController implements SceneController{
      * @param availableUsernames the list of username to display as options
      */
     public void setAvailableUsernames(List<String> availableUsernames) {
+        //if there's only an available username, make it displayed as already selected
+        if (availableUsernames.size() == 1)
+            savedUsernamesField.setText(availableUsernames.get(0));
+
         for (String username: availableUsernames){
             savedUsernamesField.getItems().add(new MenuItem(username));
         }
 
+        //event listener for clicking-on-MenuButton event
         EventHandler<ActionEvent> clickOnUsernamesMenuItem = (e) ->
                 savedUsernamesField.setText(((MenuItem)e.getSource()).getText());
 
+        //event listener for clicking-on-MenuItem event
         for (MenuItem item: savedUsernamesField.getItems())
             item.setOnAction(clickOnUsernamesMenuItem);
-
     }
 
     /**
@@ -84,7 +93,8 @@ public class UsernameOptionsController implements SceneController{
 
     /**
      * if a username was selected, it sends a reply message to server
-     * communicating it the chosen username
+     * communicating it the chosen username.
+     * It switches to the waiting scene
      */
     private void sendUserData(){
         if (savedUsernamesField.getText().equals("Username"))
