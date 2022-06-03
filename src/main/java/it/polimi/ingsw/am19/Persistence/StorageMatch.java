@@ -13,7 +13,7 @@ public class StorageMatch implements Serializable {
         SavedData savedData = new SavedData(model,roundNUmber);
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("shade/savedMatch.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream("savedMatch.txt");
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(savedData);
@@ -29,7 +29,7 @@ public class StorageMatch implements Serializable {
     public SavedData restore(){
         SavedData savedData;
         try {
-            FileInputStream fileInputStream = new FileInputStream("shade/savedMatch.txt");
+            FileInputStream fileInputStream = new FileInputStream("savedMatch.txt");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             savedData = (SavedData) objectInputStream.readObject();
             savedData.getModel().getIslandManager().setIterator();
@@ -42,7 +42,7 @@ public class StorageMatch implements Serializable {
 
     public void delete(){
         boolean isEliminated;
-        File file =new File("shade/savedMatch.txt");
+        File file =new File("savedMatch.txt");
         do{
             isEliminated=file.delete();
         } while(!isEliminated);
