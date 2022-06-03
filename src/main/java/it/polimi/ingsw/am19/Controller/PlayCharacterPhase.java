@@ -32,15 +32,9 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
             switch (msg.getMessageType()){
-                case PLAY_CHARACTER_CARD -> {
-                    ReplyPlayCharacterCardMessage message = (ReplyPlayCharacterCardMessage) msg;
-                    playCharacterCard(message);
-                }
+                case PLAY_CHARACTER_CARD -> playCharacterCard((ReplyPlayCharacterCardMessage) msg);
 
-                case REPLY_CHARACTER_PARAMETER -> {
-                    ReplyCharacterParameterMessage message = (ReplyCharacterParameterMessage) msg;
-                    activateCardEffect(message);
-                }
+                case REPLY_CHARACTER_PARAMETER -> activateCardEffect((ReplyCharacterParameterMessage) msg);
             }
         }
     }

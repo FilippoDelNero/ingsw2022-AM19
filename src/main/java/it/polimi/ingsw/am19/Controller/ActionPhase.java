@@ -73,24 +73,13 @@ public class ActionPhase extends AbstractPhase implements Phase{
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
             switch (msg.getMessageType()) {
-                case ENTRANCE_TO_DINING_ROOM -> {
-                    ReplyEntranceToDiningRoomMessage message = (ReplyEntranceToDiningRoomMessage) msg;
-                    entranceToDiningRoom(message);
-                }
+                case ENTRANCE_TO_DINING_ROOM -> entranceToDiningRoom((ReplyEntranceToDiningRoomMessage) msg);
 
-                case ENTRANCE_TO_ISLAND -> {
-                    ReplyEntranceToIslandMessage message = (ReplyEntranceToIslandMessage) msg;
-                    entranceToIsland(message);
-                }
-                case MN_STEP -> {
-                    ReplyMotherNatureStepMessage message = (ReplyMotherNatureStepMessage) msg;
-                    motherNatureSteps(message);
-                }
+                case ENTRANCE_TO_ISLAND -> entranceToIsland((ReplyEntranceToIslandMessage) msg);
 
-                case CHOSEN_CLOUD -> {
-                    ReplyCloudMessage message = (ReplyCloudMessage) msg;
-                    takeCloud(message);
-                }
+                case MN_STEP -> motherNatureSteps((ReplyMotherNatureStepMessage) msg);
+
+                case CHOSEN_CLOUD -> takeCloud((ReplyCloudMessage) msg);
             }
         }
     }
