@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.am19.Utilities.Notification.END_MATCH;
-import static it.polimi.ingsw.am19.Utilities.Notification.FINAL_ROUND;
 
 /**
  * Abstract Class that implements all methods shared by different kinds of Matches
@@ -473,32 +472,62 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
     }
 
     private void computeWinners(){
-        //num out of number of towers range
-        int minNumTowers = 9;
+        //maps a number of towers to a list of players that own that same number of towers
+        Map<Integer,List<Player>> playersPerTowerNum = new HashMap<>();
 
-        //check who has min number of towers in the game board
-        for(Player player: getGameBoards().keySet()) {
-            int numTowers = getGameBoards().get(player).getNumOfTowers();
-            if (numTowers < minNumTowers){
-                minNumTowers = numTowers;
-                winners = new ArrayList<>();
-                winners.add(player);
-            }
-            //in case of more player with same number of towers
-            else if(numTowers == minNumTowers){
-                for (Player winner: List.copyOf(winners)){
-                    int winnerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(winner);
-                    int playerNumProfessors = getProfessorManager().getNumProfessorsByPlayer(player);
+        //maps a number of professors to a list of players that own that same number of professors
+        Map<Integer,List<Player>> playersPerProfsNum = new HashMap<>();
 
-                    if (playerNumProfessors > winnerNumProfessors){
-                        winners = new ArrayList<>();
-                        winners.add(player);
-                    }
-                    //in case of more player with same number of professors, the number of winners is multiple
-                    else if (playerNumProfessors == winnerNumProfessors)
-                        winners.add(player);
-                }
+        for (Player player : getGameBoards().keySet()){
+            int myTowersNum = getGameBoards().get(player).getNumOfTowers();
+
+            //if nobody owns this towers' number, add it to the map
+            if (playersPerTowerNum.containsKey(myTowersNum))
+                playersPerTowerNum.get(myTowersNum).add(player);
+            else { //otherwise add this player to the list of those who share his same number of towers
+                List<Player> p = new ArrayList<>();
+                p.add(player);
+                playersPerTowerNum.put(myTowersNum,p);
             }
+
+            int myProfsNum = getProfessorManager().getNumProfessorsByPlayer(player);
+
+            //if nobody owns this profs' number, add it to the map
+            if (playersPerProfsNum.containsKey(myProfsNum))
+                 playersPerProfsNum.get(myProfsNum).add(player);
+            else {//otherwise add this player to the list of those who share his same number of professors
+                List<Player> p = new ArrayList<>();
+                p.add(player);
+                playersPerProfsNum.put(myProfsNum,p);
+            }
+        }
+
+        //the minimum number of towers registered among players
+        final Integer minTowersNum = playersPerTowerNum.keySet()
+                .stream()
+                .min(Comparator.naturalOrder())
+                .orElse(-1); //can never happen
+
+        //the list of players with the overall minimum number fo towers
+        List<Player> winners = playersPerTowerNum.get(minTowersNum);
+        int maxProfsNum = 0;
+        int myProfsNum;
+
+
+        if (winners.size() == 1)
+            this.winners = winners;
+        else {
+            //in case of multiple players sharing the same number of towers
+            // find the maximum number of profs among all players
+            for (Player winner : winners){
+                myProfsNum = getProfessorManager().getNumProfessorsByPlayer(winner);
+                if (myProfsNum > maxProfsNum)
+                    maxProfsNum = myProfsNum;
+            }
+
+            //the player with the maximum number of profs wins.
+            //In case multiple players have the same number of professors, they all win
+            this.winners = playersPerProfsNum.get(maxProfsNum);
         }
     }
 
@@ -516,6 +545,10 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
         return null; //if it happens it's a bug
     }
 
+    /**
+     * Returns all non-empty clouds
+     * @return all non-empty clouds
+     */
     @Override
     public List<Integer> getNonEmptyClouds(){
         List<Integer> cloudIndexes = new ArrayList<>();

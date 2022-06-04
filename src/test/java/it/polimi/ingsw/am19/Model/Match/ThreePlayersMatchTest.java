@@ -6,6 +6,8 @@ import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 import java.util.ListIterator;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -341,5 +343,24 @@ public class ThreePlayersMatchTest {
 
         assertEquals(1,m.getWinner().size());
         assertEquals(p2,m.getWinner().get(0));
+    }
+
+    /**
+     * Tests the end match when all players have the same number of towers and professors
+     */
+    @Test
+    public void testAllWin(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        List<Player> winners = m.getWinner();
+        assertEquals(3, winners.size());
+        assertTrue(winners.containsAll(m.getPlanningPhaseOrder()));
     }
 }

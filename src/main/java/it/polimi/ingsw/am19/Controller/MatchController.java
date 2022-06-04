@@ -106,7 +106,6 @@ public class MatchController implements Observer{
         model.setAllObservers();
 
         currState = StateType.IN_PROGRESS;
-        // faccio nuova planning phase e faccio l'initView
     }
 
     /**
@@ -129,8 +128,8 @@ public class MatchController implements Observer{
     }
 
     /**
-     * Returns an ArrayList of nicknames, saved in the stored match
-     * @return an ArrayList of nicknames, saved in the stored match
+     * Returns a List of nicknames, saved in the stored match
+     * @return a List of nicknames, saved in the stored match
      */
     public List<String> getNicknamesFromResumedMatch(){
         return model.getPlanningPhaseOrder().stream()
