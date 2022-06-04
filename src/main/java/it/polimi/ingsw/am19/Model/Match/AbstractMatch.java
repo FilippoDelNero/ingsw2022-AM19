@@ -508,7 +508,7 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 .min(Comparator.naturalOrder())
                 .orElse(-1); //can never happen
 
-        //the list of players with the overall minimum number fo towers
+        //the list of players with the overall minimum number of towers
         List<Player> winners = playersPerTowerNum.get(minTowersNum);
         int maxProfsNum = 0;
         int myProfsNum;
