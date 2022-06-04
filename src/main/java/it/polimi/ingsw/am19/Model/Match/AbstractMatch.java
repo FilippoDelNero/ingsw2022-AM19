@@ -489,17 +489,6 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 p.add(player);
                 playersPerTowerNum.put(myTowersNum,p);
             }
-
-            int myProfsNum = getProfessorManager().getNumProfessorsByPlayer(player);
-
-            //if nobody owns this profs' number, add it to the map
-            if (playersPerProfsNum.containsKey(myProfsNum))
-                 playersPerProfsNum.get(myProfsNum).add(player);
-            else {//otherwise add this player to the list of those who share his same number of professors
-                List<Player> p = new ArrayList<>();
-                p.add(player);
-                playersPerProfsNum.put(myProfsNum,p);
-            }
         }
 
         //the minimum number of towers registered among players
@@ -508,22 +497,31 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 .min(Comparator.naturalOrder())
                 .orElse(-1); //can never happen
 
-        //the list of players with the overall minimum number of towers
+        //the list of potential winners (with the overall minimum number of towers)
         List<Player> winners = playersPerTowerNum.get(minTowersNum);
-        int maxProfsNum = 0;
-        int myProfsNum;
-
 
         if (winners.size() == 1)
             this.winners = winners;
         else {
             //in case of multiple players sharing the same number of towers
-            // find the maximum number of profs among all players
+            // find the maximum number of profs among all potential winners
             for (Player winner : winners){
-                myProfsNum = getProfessorManager().getNumProfessorsByPlayer(winner);
-                if (myProfsNum > maxProfsNum)
-                    maxProfsNum = myProfsNum;
+                int myProfsNum = getProfessorManager().getNumProfessorsByPlayer(winner);
+
+                //if nobody owns this profs' number, add it to the map
+                if (playersPerProfsNum.containsKey(myProfsNum))
+                    playersPerProfsNum.get(myProfsNum).add(winner);
+                else {//otherwise add this player to the list of those who share his same number of professors
+                    List<Player> p = new ArrayList<>();
+                    p.add(winner);
+                    playersPerProfsNum.put(myProfsNum,p);
+                }
             }
+
+            final Integer maxProfsNum = playersPerProfsNum.keySet()
+                    .stream()
+                    .max(Comparator.naturalOrder())
+                    .orElse(-1); //can never happen
 
             //the player with the maximum number of profs wins.
             //In case multiple players have the same number of professors, they all win

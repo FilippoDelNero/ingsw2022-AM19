@@ -320,7 +320,6 @@ public class ThreePlayersMatchTest {
 
     /**
      * Tests the winning of a Player. The winner share the same number of towers with another Player, but has a greater number of professors
-     * This time the order of evaluation of parameters is different, so the getWinner() method follows another path
      */
     @Test
     public void testEndMatchWithProfNum(){
@@ -362,5 +361,38 @@ public class ThreePlayersMatchTest {
         List<Player> winners = m.getWinner();
         assertEquals(3, winners.size());
         assertTrue(winners.containsAll(m.getPlanningPhaseOrder()));
+    }
+
+    /**
+     * Tests the case in which:
+     * - player 1 has 6 towers and 2 professors
+     * - player 2 has 5 towers and 1 professor
+     * - player 3 has 5 towers and no professors
+     *
+     * According to game rules, player 2 should win because he has less towers than player 1
+     * and more professors than player 3
+     */
+    @Test
+    public void testWinner(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        m.getProfessorManager().getProfessors().put(PieceColor.RED,p1);
+        m.getProfessorManager().getProfessors().put(PieceColor.BLUE,p1);
+
+        m.getProfessorManager().getProfessors().put(PieceColor.YELLOW,p2);
+        m.getGameBoards().get(p2).removeTower();
+
+        m.getGameBoards().get(p3).removeTower();
+
+        List<Player> winners = m.getWinner();
+        assertEquals(1, winners.size());
+        assertEquals(p2,winners.get(0));
     }
 }
