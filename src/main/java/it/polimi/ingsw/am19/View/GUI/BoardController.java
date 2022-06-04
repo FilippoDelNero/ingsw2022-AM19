@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +27,7 @@ import java.util.Objects;
  * Controller for the main scene of the match
  * it allows to perform the action phase to the user
  */
-public class MatchController implements SceneController {
+public class BoardController implements SceneController {
 
     /** Group containing the anchorPanes, each one containing the gameBoard's components */
     @FXML private Group gameboards;
@@ -70,6 +71,9 @@ public class MatchController implements SceneController {
     /** reference to the cache of this client*/
     private Cache cache;
 
+    /** object used to draw components on the view */
+    private Drawer draw;
+
     /** list of the AnchorPanes of the islands */
     private List<AnchorPane> islandsAP;
 
@@ -100,15 +104,10 @@ public class MatchController implements SceneController {
     /** attribute used to save the helperCardMessage sent by the server */
     private AskHelperCardMessage helperCardMessage;
 
-    /** object used to draw components on the view */
-    private Drawer draw;
-
     /**
      * method called automatically it populates the Lists of this class
      */
     public void initialize() {
-        draw = new Drawer();
-
         int i;
         islands = new ArrayList<>();
         islandsAP = new ArrayList<>();
@@ -156,6 +155,14 @@ public class MatchController implements SceneController {
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    /**
+     * setter for the drawer attribute
+     * @param drawer the drawer created by the Gui class
+     */
+    public void setDrawer(Drawer drawer) {
+        this.draw = drawer;
     }
 
     /**
@@ -255,13 +262,14 @@ public class MatchController implements SceneController {
             ObservableList<Node> children = gameboard1.get(0).getChildren();
 
             for (Node node : children) {
+                ((StudentPiece) node).setRadius(10);
                 if(Objects.equals(GridPane.getRowIndex(node), rowIndex) && Objects.equals(GridPane.getColumnIndex(node), colIndex)) {
                     result = node;
-                    break;
                 }
             }
 
             if(result != null) {
+                ((StudentPiece) result).setRadius(12);
                 studentToMove = ((StudentPiece) result).getColor();
             }
 
@@ -295,14 +303,16 @@ public class MatchController implements SceneController {
      * @param event the click of the user's mouse
      */
     public void getDestinationIsland(MouseEvent event) {
-        GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
-        int islandIndex;
-        for(islandIndex = 0; islandIndex < islands.size(); islandIndex++) {
-            if(islands.get(islandIndex) == clickedIsland)
-                break;
-        }
+        try {
+            GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
+            int islandIndex;
+            for(islandIndex = 0; islandIndex < islands.size(); islandIndex++) {
+                if(islands.get(islandIndex) == clickedIsland)
+                    break;
+            }
 
-        gui.getMyClient().sendMessage(new ReplyEntranceToIslandMessage(nickname, islandIndex, studentToMove));
+            gui.getMyClient().sendMessage(new ReplyEntranceToIslandMessage(nickname, islandIndex, studentToMove));
+        } catch (ClassCastException ignored) {}
     }
 
     /**
@@ -311,23 +321,25 @@ public class MatchController implements SceneController {
      * @param event the click of the user's mouse
      */
     public void getMotherNatureDestination(MouseEvent event) {
-        GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
-        int step;
-        int MNDestIndex;
-        int MNDepIndex;
-        int numOfIslands = cache.getIslands().size();
+        try {
+            GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
+            int step;
+            int MNDestIndex;
+            int MNDepIndex;
+            int numOfIslands = cache.getIslands().size();
 
-        for(MNDepIndex = 0; MNDepIndex < numOfIslands; MNDepIndex++) {
-            if(cache.getIslands().get(MNDepIndex).presenceOfMotherNature())
-                break;
-        }
+            for(MNDepIndex = 0; MNDepIndex < numOfIslands; MNDepIndex++) {
+                if(cache.getIslands().get(MNDepIndex).presenceOfMotherNature())
+                    break;
+            }
 
-        for(step = 0; step < numOfIslands; step++) {
-            MNDestIndex = (MNDepIndex + step)%numOfIslands;
-            if(islands.get(MNDestIndex) == clickedIsland)
-                break;
-        }
-        gui.getMyClient().sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
+            for(step = 0; step < numOfIslands; step++) {
+                MNDestIndex = (MNDepIndex + step)%numOfIslands;
+                if(islands.get(MNDestIndex) == clickedIsland)
+                    break;
+            }
+            gui.getMyClient().sendMessage(new ReplyMotherNatureStepMessage(nickname, step));
+        } catch (ClassCastException ignored) {}
     }
 
     /**
@@ -335,20 +347,22 @@ public class MatchController implements SceneController {
      * @param event the click of the user's mouse
      */
     public void getChosenCloud(MouseEvent event) {
-        GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
-        int numOfClouds = cache.getClouds().size();
-        int chosenCloudIndex;
-        for(chosenCloudIndex = 0; chosenCloudIndex < numOfClouds; chosenCloudIndex++) {
-            if(clickedIsland == clouds.get(chosenCloudIndex))
-                break;
-        }
+        try {
+            GridPane clickedIsland = (GridPane) event.getPickResult().getIntersectedNode();
+            int numOfClouds = cache.getClouds().size();
+            int chosenCloudIndex;
+            for(chosenCloudIndex = 0; chosenCloudIndex < numOfClouds; chosenCloudIndex++) {
+                if(clickedIsland == clouds.get(chosenCloudIndex))
+                    break;
+            }
 
-        gui.getMyClient().sendMessage(new ReplyCloudMessage(nickname, chosenCloudIndex));
+            gui.getMyClient().sendMessage(new ReplyCloudMessage(nickname, chosenCloudIndex));
 
-        for(GridPane gp : clouds) {
-            gp.setOnMouseClicked(null);
-            gp.setCursor(Cursor.DEFAULT);
-        }
+            for(GridPane gp : clouds) {
+                gp.setOnMouseClicked(null);
+                gp.setCursor(Cursor.DEFAULT);
+            }
+        } catch(ClassCastException ignored) {}
     }
 
     /**

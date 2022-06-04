@@ -19,7 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
 
 public class Gui extends Application implements View {
     /** the client of this user, used to send messages to the server */
@@ -31,6 +30,9 @@ public class Gui extends Application implements View {
     /** cache used to store objects to be displayed on the view */
     private Cache cache;
 
+    /** drawer class used to draw objects on the view */
+    private Drawer drawer;
+
     /** the controller of the current scene */
     private SceneController currController;
 
@@ -41,34 +43,34 @@ public class Gui extends Application implements View {
     private Stage stage;
 
     /** the fxml file for the scene where the connection-related parameters are asked */
-    private final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Login/Connection.fxml";
+    private static final String CONNECTION = "/it/polimi/ingsw/am19.View.GUI/Login/Connection.fxml";
 
     /** the fxml file for the scene where the game options are asked*/
-    private final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/GameOptions.fxml";
+    private static final String GAME_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/GameOptions.fxml";
 
     /** the fxml file for the login scene */
-    private final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login/Login.fxml";
+    private static final String LOGIN = "/it/polimi/ingsw/am19.View.GUI/Login/Login.fxml";
 
     /** the fxml file for the scene where the username of a saved match are asked*/
-    private final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/UsernameOptions.fxml";
+    private static final String USERNAMES_OPT = "/it/polimi/ingsw/am19.View.GUI/Login/UsernameOptions.fxml";
 
     /** the fxml file for the waiting-for-other-players-to-join scene */
-    private final String WAITING = "/it/polimi/ingsw/am19.View.GUI/Login/WaitingStart.fxml";
+    private static final String WAITING = "/it/polimi/ingsw/am19.View.GUI/Login/WaitingStart.fxml";
 
     /** the fxml file for the scene where the helper cards are shown */
-    private final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
+    private static final String HELPERCARD = "/it/polimi/ingsw/am19.View.GUI/HelperCard.fxml";
 
     /** the fxml file for the main scene */
-    private final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
+    private static final String MATCH = "/it/polimi/ingsw/am19.View.GUI/Board.fxml";
 
     /** the fxml file for the scene where the character cards are shown*/
-    private final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
+    private static final String ASK_CHARACTER = "/it/polimi/ingsw/am19.View.GUI/askCharacter.fxml";
 
     /** the fxml file for the scene where PieceColor and Island parameters can be asked */
-    private final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
+    private static final String PARAMETER_1 = "/it/polimi/ingsw/am19.View.GUI/Parameter1.fxml";
 
     /** the fxml file for the scene where the list-of-PieceColor parameter can be asked */
-    private final String PARAMETER_2 = "/it/polimi/ingsw/am19.View.GUI/Parameter2.fxml";
+    private static final String PARAMETER_2 = "/it/polimi/ingsw/am19.View.GUI/Parameter2.fxml";
 
     /**
      * getter for the cache attribute
@@ -87,7 +89,7 @@ public class Gui extends Application implements View {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
-        root.getStylesheets().add("file:src/main/resources/Style/eriantys.css");
+        root.getStylesheets().add(getClass().getResource("/Style/eriantys.css").toExternalForm());
         //stage.setFullScreen(true);
         //stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
@@ -101,16 +103,19 @@ public class Gui extends Application implements View {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         myClient.disconnect();
     }
 
     /**
      * method used to create a client and connect it to the specified parameters
+     * it also initialize the Cache and the Drawer that will be used by this class
      * @param ip the ip address of the server the user wants to connect to
      * @param port the port of the sever the user wants to connect to
      */
     public void startView(String ip, int port) {
+        cache = new Cache();
+        drawer = new Drawer();
         myClient = new Client(ip, port, this);
         myClient.startPinging();
         myClient.receiveMessage();
@@ -124,15 +129,6 @@ public class Gui extends Application implements View {
     @Override
     public void setPreviousMsg(Message msg) {
 
-    }
-
-    /**
-     * setter for the cache attribute
-     * @param cache the cache this view will pull data from
-     */
-    @Override
-    public void setCache(Cache cache) {
-        this.cache = cache;
     }
 
     /**
@@ -210,7 +206,7 @@ public class Gui extends Application implements View {
      */
     @Override
     public void showHelperOptions(AskHelperCardMessage msg) {
-        Platform.runLater(() -> ((MatchController)currController).playHelperCard(msg));
+        Platform.runLater(() -> ((BoardController)currController).playHelperCard(msg));
     }
 
     /**
@@ -221,7 +217,7 @@ public class Gui extends Application implements View {
     @Override
     public void askEntranceMove(AskEntranceMoveMessage msg) {
         changeBackToMain();
-        Platform.runLater(() -> ((MatchController)currController).moveStudentPhase());
+        Platform.runLater(() -> ((BoardController)currController).moveStudentPhase());
     }
 
     /**
@@ -231,7 +227,7 @@ public class Gui extends Application implements View {
     @Override
     public void askMotherNatureStep() {
         changeBackToMain();
-        Platform.runLater(() -> ((MatchController)currController).moveMotherNaturePhase());
+        Platform.runLater(() -> ((BoardController)currController).moveMotherNaturePhase());
     }
 
     /**
@@ -242,7 +238,7 @@ public class Gui extends Application implements View {
     @Override
     public void askCloud(AskCloudMessage msg) {
         changeBackToMain();
-        Platform.runLater(() -> ((MatchController)currController).chooseCloudPhase(msg.getCloudAvailable()));
+        Platform.runLater(() -> ((BoardController)currController).chooseCloudPhase(msg.getCloudAvailable()));
     }
 
     /**
@@ -254,8 +250,10 @@ public class Gui extends Application implements View {
     public void askPlayCharacter(AskPlayCharacterCardMessage msg) {
         changeScene(ASK_CHARACTER);
 
-        Platform.runLater(()->
-                ((CharacterCardController)currController).setCharacterCards(msg.getAvailableCharacterCards()));
+        Platform.runLater(()-> {
+            ((CharacterCardController)currController).setDrawer(drawer);
+            ((CharacterCardController)currController).setCharacterCards(msg.getAvailableCharacterCards());
+        });
     }
 
     /**
@@ -274,6 +272,7 @@ public class Gui extends Application implements View {
 
             changeScene(PARAMETER_2);
             Platform.runLater(()->{
+                ((AskParameter2Controller)currController).setDrawer(drawer);
                 ((AskParameter2Controller)currController).setCard(card);
                 ((AskParameter2Controller)currController).initializeScene();
             });
@@ -284,6 +283,7 @@ public class Gui extends Application implements View {
 
             changeScene(PARAMETER_1);
             Platform.runLater(()->{
+                ((AskParameter1Controller)currController).setDrawer(drawer);
                 ((AskParameter1Controller)currController).setCard(card);
                 ((AskParameter1Controller)currController).initializeScene();
             });
@@ -345,8 +345,9 @@ public class Gui extends Application implements View {
         else if(msg.getMessageType() == MessageType.START_ACTION_MESSAGE) {
             changeScene(MATCH);
             Platform.runLater(() -> {
-                ((MatchController)currController).setCache(cache);
-                ((MatchController)currController).drawScene();
+                ((BoardController)currController).setCache(cache);
+                ((BoardController)currController).setDrawer(drawer);
+                ((BoardController)currController).drawScene();
             });
         }
 
@@ -413,12 +414,11 @@ public class Gui extends Application implements View {
      * @param controllerName the path that name od the next scene fxml
      */
     public void changeScene(String controllerName) {
-        System.out.println(controllerName); //TODO TOGLIERE!
         Platform.runLater(() -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerName));
                 Parent root = fxmlLoader.load();
-                root.getStylesheets().add("file:src/main/resources/Style/eriantys.css");
+                root.getStylesheets().add(getClass().getResource("/Style/eriantys.css").toExternalForm());
                 currController = fxmlLoader.getController();
                 currController.setGui(this);
                 stage.getScene().setRoot(root);
@@ -431,7 +431,7 @@ public class Gui extends Application implements View {
 
     /**
      * Method to change scene to the playHelperCard one
-     * @param msg
+     * @param msg the AskHelperCardMessage sent by the server
      */
     public void playHelperCard(AskHelperCardMessage msg) {
         changeScene(HELPERCARD);
@@ -448,7 +448,7 @@ public class Gui extends Application implements View {
     public void refreshMainScene(Notification type) {
         changeBackToMain();
         Platform.runLater(() -> {
-            MatchController controller = (MatchController) currController;
+            BoardController controller = (BoardController) currController;
             if(type == Notification.UPDATE_GAMEBOARDS)
                 controller.refreshGameboards();
             else if(type == Notification.UPDATE_ISLANDS)
@@ -464,11 +464,12 @@ public class Gui extends Application implements View {
      * method to change scene to the main one, when not already there
      */
     private void changeBackToMain() {
-        if(!(currController instanceof MatchController)) {
+        if(!(currController instanceof BoardController)) {
             changeScene(MATCH);
             Platform.runLater(() -> {
-                ((MatchController)currController).setCache(cache);
-                ((MatchController)currController).drawScene();
+                ((BoardController)currController).setCache(cache);
+                ((BoardController)currController).setDrawer(drawer);
+                ((BoardController)currController).drawScene();
             });
         }
     }

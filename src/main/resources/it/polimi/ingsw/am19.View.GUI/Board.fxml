@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.MatchController">
+<AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: D7FFE1;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.BoardController">
    <Group fx:id="gameboards" layoutX="969.0" layoutY="190.0">
       <AnchorPane layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="461.0">
          <ImageView fitHeight="200.0" fitWidth="461.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
@@ -668,11 +668,11 @@
          </rowConstraints>
       </GridPane>
    </AnchorPane>
-   <AnchorPane fx:id="genericMsgAP" layoutX="979.0" layoutY="10.0" maxHeight="100.0" maxWidth="461.0" minHeight="100.0" minWidth="461.0" prefHeight="100.0" prefWidth="461.0" AnchorPane.bottomAnchor="790.0" AnchorPane.leftAnchor="979.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+   <AnchorPane fx:id="genericMsgAP" layoutX="979.0" layoutY="10.0" maxHeight="100.0" maxWidth="461.0" minHeight="100.0" minWidth="461.0" prefHeight="100.0" prefWidth="461.0">
       <ImageView fitHeight="100.0" fitWidth="461.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <Image url="@../../../../Board/genericMsgBox.png" />
       </ImageView>
-      <Label textAlignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="0.0">
+      <Label layoutX="25.0" maxHeight="50.0" maxWidth="350.0" minHeight="50.0" minWidth="350.0" prefHeight="50.0" prefWidth="350.0" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -682,17 +682,14 @@
    <Label fx:id="player3Name" layoutX="979.0" layoutY="159.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
    <Label layoutX="979.0" layoutY="665.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" text="YOU" />
    <Group fx:id="coinLabels" layoutX="1159.5" layoutY="159.5">
-      <Label layoutY="505.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
-             prefWidth="100.0" textAlignment="RIGHT"/>
-      <Label layoutY="250.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0"
-             prefWidth="100.0" textAlignment="RIGHT"/>
-      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0"
-             textAlignment="RIGHT"/>
+      <Label layoutY="505.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+      <Label layoutY="250.5" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
+      <Label maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" prefHeight="25.0" prefWidth="100.0" textAlignment="RIGHT" />
    </Group>
    <Button fx:id="playHelperCard" layoutX="730.0" layoutY="35.0" maxHeight="50.0" maxWidth="175.0" minHeight="50.0" minWidth="175.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="175.0" text="Play Helper Card" />
    <Group fx:id="helperCards" layoutX="857.25" layoutY="224.5">
-      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="505.5" pickOnBounds="true" preserveRatio="true"/>
-      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="250.5" pickOnBounds="true" preserveRatio="true"/>
-      <ImageView fitHeight="120.0" fitWidth="81.75" pickOnBounds="true" preserveRatio="true"/>
+      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="505.5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="120.0" fitWidth="81.75" layoutY="250.5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="120.0" fitWidth="81.75" pickOnBounds="true" preserveRatio="true" />
    </Group>
 </AnchorPane>

@@ -27,7 +27,7 @@ public class Cli implements View {
     private final Scanner reader;
 
     /** cache used to store objects to be displayed on the view */
-    private Cache cache;
+    private final Cache cache;
 
     /** the nickname of the player */
     private String nickname;
@@ -45,6 +45,7 @@ public class Cli implements View {
      * class constructor
      */
     public Cli() {
+        cache = new Cache();
         printer = System.out;
         reader = new Scanner(System.in);
         initView();
@@ -52,14 +53,9 @@ public class Cli implements View {
     }
 
     /**
-     * setter for the cache attribute
-     * @param cache the cache this view will pull data from
+     * method that allows the user to choose the ip address and port of the server they want to connect to
+     * after that it creates a client and connects it to the specified address and port
      */
-    @Override
-    public void setCache(Cache cache) {
-        this.cache = cache;
-    }
-
     private void startView() {
         String ipAddress;
         String portNumberString;
@@ -340,7 +336,6 @@ public class Cli implements View {
         cache.setIslands(msg.getList());
     }
 
-    //TODO IS IT USED?
     /**
      * method to update the Cards, both Helper and Character, on the cache
      * @param msg the UpdateCardsMessage sent by the server
@@ -354,15 +349,14 @@ public class Cli implements View {
      * method to display an introductory splash screen
      */
     private void initView() {
-        printer.println("######## ########    ####      ###    ##    ## ######## ##    ##   ######  ");
-        printer.println("##       ##     ##    ##      ## ##   ###   ##    ##     ##  ##   ##    ## ");
-        printer.println("##       ##     ##    ##     ##   ##  ####  ##    ##       ##    ##        ");
-        printer.println("######   ########     ##    ##     ## ## ## ##    ##       ##     ######   ");
-        printer.println("##       ##   ##      ##    ######### ##  ####    ##       ##           ## ");
-        printer.println("##       ##    ##     ##    ##     ## ##   ###    ##       ##    ##    ##  ");
-        printer.println("######## ##     ##   ####   ##     ## ##    ##    ##       ##     ######   ");
-        printer.println("\n");
-        printer.println("Welcome!\n");
+        printer.println(" ▄▄▄▄▄▄▄ ▄▄▄▄▄▄   ▄▄▄ ▄▄▄▄▄▄ ▄▄    ▄ ▄▄▄▄▄▄▄ ▄▄   ▄▄ ▄▄▄▄▄▄▄ ");
+        printer.println("█       █   ▄  █ █   █      █  █  █ █       █  █ █  █       █");
+        printer.println("█    ▄▄▄█  █ █ █ █   █  ▄   █   █▄█ █▄     ▄█  █▄█  █  ▄▄▄▄▄█");
+        printer.println("█   █▄▄▄█   █▄▄█▄█   █ █▄█  █       █ █   █ █       █ █▄▄▄▄▄ ");
+        printer.println("█    ▄▄▄█    ▄▄  █   █      █  ▄    █ █   █ █▄     ▄█▄▄▄▄▄  █");
+        printer.println("█   █▄▄▄█   █  █ █   █  ▄   █ █ █   █ █   █   █   █  ▄▄▄▄▄█ █");
+        printer.println("█▄▄▄▄▄▄▄█▄▄▄█  █▄█▄▄▄█▄█ █▄▄█▄█  █▄▄█ █▄▄▄█   █▄▄▄█ █▄▄▄▄▄▄▄█");
+        printer.println("WELCOME!\n");
     }
 
     /**

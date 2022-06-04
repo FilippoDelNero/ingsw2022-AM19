@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am19.View;
 
-import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
 import it.polimi.ingsw.am19.Network.Message.*;
 
@@ -8,12 +7,6 @@ import it.polimi.ingsw.am19.Network.Message.*;
  * Interface to allow the ClientSideController to use indifferently a gui or a cli
  */
 public interface View {
-    /**
-     * setter for the cache attribute
-     * @param cache the cache this view will pull data from
-     */
-    void setCache(Cache cache);
-
     /**
      * setter for the dispatcher parameter
      * @param dispatcher the dispatcher this view needs to refer to
