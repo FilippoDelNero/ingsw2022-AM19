@@ -1,12 +1,14 @@
 package it.polimi.ingsw.am19.Model.Match;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
+import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import static org.junit.jupiter.api.Assertions.*;
@@ -394,5 +396,81 @@ public class ThreePlayersMatchTest {
         List<Player> winners = m.getWinner();
         assertEquals(1, winners.size());
         assertEquals(p2,winners.get(0));
+    }
+
+    /**
+     * Tests each player using the same helper card, when having no other option in their deck
+     */
+    @Test
+    public void testChoosingSameHelperCard(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        HelperCard helperCard1 = new HelperCard(WizardFamily.SHAMAN,1,1);
+        HelperCard helperCard2 = new HelperCard(WizardFamily.KING,1,1);
+        HelperCard helperCard3 = new HelperCard(WizardFamily.WARRIOR,1,1);
+
+        for (Player player : m.getPlanningPhaseOrder()){
+            player.setHelperDeck(new ArrayList<>());
+        }
+
+        p1.getHelperDeck().add(helperCard1);
+        p2.getHelperDeck().add(helperCard2);
+        p3.getHelperDeck().add(helperCard3);
+
+        m.setCurrPlayer(p1);
+        assertDoesNotThrow(() -> m.useHelperCard(helperCard1));
+
+        m.setCurrPlayer(p2);
+        assertDoesNotThrow(() -> m.useHelperCard(helperCard2));
+
+        m.setCurrPlayer(p3);
+        assertDoesNotThrow(() -> m.useHelperCard(helperCard3));
+    }
+
+    /**
+     * Tests throwing IllegalCardOptionException when a player wants to play a card that other players
+     * already played, but he had other options in his deck and could have chosen between them
+     */
+    @Test
+    public void testChoosingHelperCard(){
+        AbstractMatch m = new ThreePlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        Player p3 = new Player("Dennis", TowerColor.GREY, WizardFamily.WARRIOR);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.addPlayer(p3);
+        m.initializeMatch();
+
+        HelperCard helperCard1 = new HelperCard(WizardFamily.SHAMAN,1,1);
+        HelperCard helperCard2 = new HelperCard(WizardFamily.KING,1,1);
+        HelperCard helperCard3 = new HelperCard(WizardFamily.WARRIOR,1,1);
+        HelperCard helperCard3Bis = new HelperCard(WizardFamily.WARRIOR,2,1);
+
+        for (Player player : m.getPlanningPhaseOrder()){
+            player.setHelperDeck(new ArrayList<>());
+        }
+
+        p1.getHelperDeck().add(helperCard1);
+        p2.getHelperDeck().add(helperCard2);
+        p3.getHelperDeck().add(helperCard3);
+        p3.getHelperDeck().add(helperCard3Bis);
+
+        m.setCurrPlayer(p1);
+        assertDoesNotThrow(() -> m.useHelperCard(helperCard1));
+
+        m.setCurrPlayer(p2);
+        assertDoesNotThrow(() -> m.useHelperCard(helperCard2));
+
+        m.setCurrPlayer(p3);
+        assertThrows(IllegalCardOptionException.class,
+                () -> m.useHelperCard(helperCard3));
     }
 }
