@@ -35,8 +35,11 @@ public class CharacterCardController implements SceneController {
 
     @Override
     public void setGui(Gui gui) {
-        drawer = new Drawer();
         this.gui = gui;
+    }
+
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
     }
 
     @Override

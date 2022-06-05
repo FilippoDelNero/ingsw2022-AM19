@@ -23,7 +23,7 @@ import java.util.Map;
 public class AskParameter2Controller implements SceneController {
 
     private Gui gui;
-    private Drawer drawer = new Drawer();
+    private Drawer drawer;
     private AbstractCharacterCard card;
     private PieceColor color1 = null;
     private PieceColor color2= null;
@@ -87,6 +87,10 @@ public class AskParameter2Controller implements SceneController {
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
+    }
+
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
     }
 
     @Override

@@ -1,16 +1,12 @@
 package it.polimi.ingsw.am19.View.GUI;
 
 import it.polimi.ingsw.am19.Model.CharacterCards.AbstractCharacterCard;
-import it.polimi.ingsw.am19.Model.CharacterCards.Character;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 
 import it.polimi.ingsw.am19.Network.Message.ReplyCharacterParameterMessage;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -20,11 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AskParameter1Controller implements SceneController {
@@ -32,9 +24,7 @@ public class AskParameter1Controller implements SceneController {
     private PieceColor color=null;
     private Integer island = null;
     private AbstractCharacterCard card;
-
-    /** reference to the cache of this client*/
-    private Cache cache;
+    private Drawer drawer;
 
     public void setCard(AbstractCharacterCard card) {
         this.card = card;
@@ -43,6 +33,10 @@ public class AskParameter1Controller implements SceneController {
     @Override
     public void setGui(Gui gui) {
         this.gui=gui;
+    }
+
+    public void setDrawer(Drawer drawer) {
+        this.drawer = drawer;
     }
 
     @Override
@@ -152,9 +146,8 @@ public class AskParameter1Controller implements SceneController {
 
     @FXML
     void setColor(ActionEvent event) {
-        Drawer d = new Drawer();
         colorMenu.setText(((MenuItem)event.getSource()).getText());
-        color = d.getColor(colorMenu.getText());
+        color = drawer.getColor(colorMenu.getText());
         setButton();
     }
 
@@ -173,7 +166,7 @@ public class AskParameter1Controller implements SceneController {
     }
 
     public void initializeScene(){
-        Drawer drawer = new Drawer();
+        Cache cache = gui.getCache();
         String imageUrl = drawer.getCharacterImagePath(card.getId());
         character.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
         description.setText(drawer.getCharacterDescription(card));
@@ -207,8 +200,6 @@ public class AskParameter1Controller implements SceneController {
             askColor.setDisable(true);
         }
 
-
-        this.cache= gui.getCache();
         for(int i = 0; i < cache.getIslands().size(); i++) {
             drawer.populateIsland((GridPane)((AnchorPane) archipelago.getChildren().get(i)).getChildren().get(1), cache.getIslands().get(i));
         }

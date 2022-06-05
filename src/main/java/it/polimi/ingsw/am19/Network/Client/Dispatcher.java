@@ -14,7 +14,6 @@ public class Dispatcher {
      */
     public Dispatcher(View view) {
         this.view = view;
-        view.setCache(new Cache());
         view.setDispatcher(this);
     }
 
