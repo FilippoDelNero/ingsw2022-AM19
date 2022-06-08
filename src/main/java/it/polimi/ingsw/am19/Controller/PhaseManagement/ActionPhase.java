@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Model.BoardManagement.Cloud;
 import it.polimi.ingsw.am19.Model.BoardManagement.GameBoard;
 import it.polimi.ingsw.am19.Model.BoardManagement.MoveStudent;
@@ -18,7 +19,7 @@ import java.util.ListIterator;
 /**
  * A Class for managing action phase lifecycle
  */
-public class ActionPhase extends AbstractPhase implements Phase{
+public class ActionPhase extends AbstractPhase implements Phase {
     /**
      * Is the list of player's nicknames ordered according the action phase order
      */
@@ -55,7 +56,7 @@ public class ActionPhase extends AbstractPhase implements Phase{
      */
     private boolean cardPlayed;
 
-    public ActionPhase(List<String> playersOrder,MatchController matchController) {
+    public ActionPhase(List<String> playersOrder, MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator = playersOrder.listIterator();

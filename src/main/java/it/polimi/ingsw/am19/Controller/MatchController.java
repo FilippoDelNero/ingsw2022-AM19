@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Controller.PhaseManagement.PlanningPhase;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
@@ -302,5 +303,21 @@ public class MatchController implements Observer{
 
              case END_MATCH -> changeState();
         }
+    }
+
+    /**
+     * Returns the current match state
+     * @return the current match state
+     */
+    public StateType getCurrState() {
+        return currState;
+    }
+
+    /**
+     * Sets model reference
+     * @param model an instance of MatchDecorator
+     */
+    public void setModel(MatchDecorator model) {
+        this.model = model;
     }
 }

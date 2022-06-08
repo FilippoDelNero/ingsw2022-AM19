@@ -1,5 +1,9 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.AbstractPhase;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.ActionPhase;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.Phase;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
@@ -13,7 +17,7 @@ import java.util.ListIterator;
 /**
  * A Class for managing planning phase lifecycle
  */
-public class PlanningPhase extends AbstractPhase implements Phase{
+public class PlanningPhase extends AbstractPhase implements Phase {
     /**
      * It contains all players' nicknames, in the order in which they will perform this phase
      */
@@ -24,7 +28,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
      */
     private final ListIterator<String> iterator;
 
-    public PlanningPhase(List<String> playersOrder,MatchController matchController) {
+    public PlanningPhase(List<String> playersOrder, MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
         this.iterator =  playersOrder.listIterator();
@@ -80,7 +84,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
      */
     @Override
     public void initPhase(){
-        matchController.getRoundsManager().incrementPhaseNum();
+        matchController.getRoundsManager().incrementRoundsNum();
         matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n", MessageType.GENERIC_MESSAGE));
         matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder, MessageType.GENERIC_MESSAGE));
         try {

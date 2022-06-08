@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Controller.PhaseManagement.Phase;
+
 /**
  * Class for managing match's rounds
  */
@@ -52,7 +54,7 @@ public class RoundsManager {
     /**
      * Increments by one the current round number
      */
-    public void incrementPhaseNum(){
+    public void incrementRoundsNum(){
         roundNum++;
     }
 
@@ -64,10 +66,8 @@ public class RoundsManager {
         return currPhase;
     }
 
-    /**
-     * Returns the current round number
-     * @return the current round number
-     */
+    /** Returns the current round number
+     * * @return the current round number*/
     public int getRoundNum() {
         return roundNum;
     }

@@ -1,5 +1,9 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.AbstractPhase;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.ActionPhase;
+import it.polimi.ingsw.am19.Controller.PhaseManagement.Phase;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.CharacterCards.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
@@ -15,7 +19,7 @@ import java.util.List;
 /**
  * A Class that manages playing a character card into an expert match
  */
-public class PlayCharacterPhase extends AbstractPhase implements Phase{
+public class PlayCharacterPhase extends AbstractPhase implements Phase {
     private final String currPlayer;
     private AbstractCharacterCard  card;
     public PlayCharacterPhase(MatchController matchController) {
