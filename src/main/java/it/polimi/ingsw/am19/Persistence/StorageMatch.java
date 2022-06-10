@@ -8,7 +8,11 @@ import java.io.*;
  * This class store and restore a SavedData from a txt file
  */
 public class StorageMatch implements Serializable {
-
+    /**
+     * This method store a match
+     * @param model the model to store
+     * @param roundNUmber the number of the last round played in all
+     */
     public void store(MatchDecorator model, int roundNUmber){
         SavedData savedData = new SavedData(model,roundNUmber);
 
@@ -26,6 +30,10 @@ public class StorageMatch implements Serializable {
         }
     }
 
+    /**
+     * This method restore a SavedMatch
+     * @return a SavedData class
+     */
     public SavedData restore(){
         SavedData savedData;
         try {
@@ -40,11 +48,24 @@ public class StorageMatch implements Serializable {
         return null;
     }
 
+    /**
+     * This method delete the previous match saved
+     * It's called when a match is ended
+     */
     public void delete(){
         boolean isEliminated;
         File file =new File("savedMatch.txt");
         do{
             isEliminated=file.delete();
         } while(!isEliminated);
+    }
+
+    /**
+     * Returns true if a previous match's storage data exists, false otherwise
+     * @return true if a previous match's storage data exists, false otherwise
+     */
+    public boolean checkOldMatches(){
+        File file = new File("savedMatch.txt");
+        return file.exists();
     }
 }

@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Scene to give the third parameter of a Character Cards (the PieceColor list)
+ */
 public class AskParameter2Controller implements SceneController {
 
     private Gui gui;
@@ -32,6 +34,10 @@ public class AskParameter2Controller implements SceneController {
     private PieceColor color5 = null;
     private PieceColor color6 = null;
 
+    /**
+     * Set the card choose in the previous scene
+     * @param card the card to use
+     */
     public void setCard(AbstractCharacterCard card) {
         this.card = card;
     }
@@ -73,9 +79,6 @@ public class AskParameter2Controller implements SceneController {
     private GridPane onCardGrid;
 
     @FXML
-    private Button resetButton;
-
-    @FXML
     private Button submitButton;
 
     @FXML
@@ -99,8 +102,9 @@ public class AskParameter2Controller implements SceneController {
     }
 
 
+    /**Method invoked by the reset Button. Reset all color previous chosen**/
     @FXML
-    void resetColor(MouseEvent event) {
+    void resetColor() {
         String s = "Select a color";
         menuButton1.setText(s);
         menuButton2.setText(s);
@@ -117,8 +121,11 @@ public class AskParameter2Controller implements SceneController {
         submitButton.setDisable(true);
     }
 
+    /**
+     * Method to send the character parameter
+     */
     @FXML
-    void sendColorList(MouseEvent event) {
+    void sendColorList() {
         List<PieceColor> colorList = new ArrayList<>();
         //first swap
         if(color1!=null){
@@ -138,6 +145,9 @@ public class AskParameter2Controller implements SceneController {
         gui.getMyClient().sendMessage(new ReplyCharacterParameterMessage(gui.getNickname(), null,null,colorList));
     }
 
+    /**
+     * Method to initialize the scene
+     */
     public void initializeScene(){
         updateCard();
         submitButton.setDisable(true);
@@ -146,6 +156,9 @@ public class AskParameter2Controller implements SceneController {
         populateGameboard();
     }
 
+    /**
+     * Method to populate the gameboard
+     */
     private void populateGameboard(){
         ReducedGameBoard reduced = gui.getCache().getGameBoards().get(0);
         drawer.populateEntrance((GridPane) gameboard.getChildren().get(1), reduced);
@@ -156,6 +169,9 @@ public class AskParameter2Controller implements SceneController {
         drawer.populateTowers((GridPane) gameboard.getChildren().get(8), reduced);
     }
 
+    /**
+     * Update card image, description, the student on it and enabled/disabled third swap
+     */
     private void updateCard(){
         String imageUrl = drawer.getCharacterImagePath(card.getId());
         character.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
@@ -170,6 +186,9 @@ public class AskParameter2Controller implements SceneController {
 
     }
 
+    /**
+     * Populate the MenuButton and the label on it, based on the card chosen
+     */
     private void updateButton(){
         Map<PieceColor,Integer> entrance = gui.getCache().getGameBoards().get(0).entrance();
         if(card.getId()==Character.MINSTREL){
@@ -208,6 +227,9 @@ public class AskParameter2Controller implements SceneController {
         }
     }
 
+    /**
+     * Setting the action on the menu Buttons
+     */
     private void initializeButtons(){
         for(MenuItem i : menuButton1.getItems())
             i.setOnAction(this::setColor1);
@@ -223,6 +245,7 @@ public class AskParameter2Controller implements SceneController {
             i.setOnAction(this::setColor6);
     }
 
+    /**Method invoked by the MenuButton1 to set the color**/
     @FXML
     void setColor1(ActionEvent event) {
         menuButton1.setText(((MenuItem)event.getSource()).getText());
@@ -230,6 +253,7 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Method invoked by the MenuButton2 to set the color**/
     @FXML
     void setColor2(ActionEvent event) {
         menuButton2.setText(((MenuItem)event.getSource()).getText());
@@ -237,6 +261,7 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Method invoked by the MenuButton3 to set the color**/
     @FXML
     void setColor3(ActionEvent event) {
         menuButton3.setText(((MenuItem)event.getSource()).getText());
@@ -244,6 +269,7 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Method invoked by the MenuButton4 to set the color**/
     @FXML
     void setColor4(ActionEvent event) {
         menuButton4.setText(((MenuItem)event.getSource()).getText());
@@ -251,6 +277,7 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Method invoked by the MenuButton5 to set the color**/
     @FXML
     void setColor5(ActionEvent event) {
         menuButton5.setText(((MenuItem)event.getSource()).getText());
@@ -258,6 +285,7 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Method invoked by the MenuButton6 to set the color**/
     @FXML
     void setColor6(ActionEvent event) {
         menuButton6.setText(((MenuItem)event.getSource()).getText());
@@ -265,10 +293,15 @@ public class AskParameter2Controller implements SceneController {
         checkDisableSubmit();
     }
 
+    /**Set the submitButton disable/enabled, according to the checkColor()**/
     private void checkDisableSubmit(){
         submitButton.setDisable(!checkColor());
     }
 
+    /**
+     * Boolean to check that the colors were chosen in pairs, from the first to the third (in order)
+     * @return if the pairs are chosen correctly
+     */
     private boolean checkColor(){
         String s = "Select a color";
         if(color1== null || color2 == null)
