@@ -86,27 +86,11 @@ public class ActionPhase extends AbstractPhase implements Phase {
     }
 
     /**
-     * Gets the players order for this phase
-     * @return the players order for this phase
-     */
-    public List<String> getPlayersOrder() {
-        return this.playersOrder;
-    }
-
-    /**
      * Updates the cardPlayed attribute according to the boolean passed as parameter
      * @param cardPlayed true if the card has been played, false otherwise
      */
     public void setCardPlayed(boolean cardPlayed) {
         this.cardPlayed = cardPlayed;
-    }
-
-    /**
-     * Returns the previous step
-     * @return the previous step
-     */
-    public ActionPhaseSteps getPrevStep() {
-        return prevStep;
     }
 
     /**
@@ -149,7 +133,8 @@ public class ActionPhase extends AbstractPhase implements Phase {
     @Override
     public void initPhase() {
         String currPlayer = iterator.next();
-        matchController.sendBroadcastMessage(new GenericMessage("Action phase has started. In this phase we will follow this order:" + playersOrder+ "\n", MessageType.START_ACTION_MESSAGE));
+        String msgContent = "Action phase has started. In this phase we will follow this order:" + playersOrder+ "\n";
+        matchController.sendBroadcastMessage(new GenericMessage(msgContent, MessageType.START_ACTION_MESSAGE));
         performPhase(currPlayer);
     }
 
@@ -159,7 +144,8 @@ public class ActionPhase extends AbstractPhase implements Phase {
             model.moveStudentToDiningRoom(color);
         } catch (NoSuchColorException | TooManyStudentsException e) {
             matchController.sendMessage(matchController.getCurrPlayer(),
-                    new ErrorMessage("server","You can't move a " + color + " student to your dining room. Please retry\n"));
+                    new ErrorMessage("server","You can't move a "
+                            + color + " student to your dining room. Please retry\n"));
             return;
         }
         incrementStudNum();
@@ -181,6 +167,7 @@ public class ActionPhase extends AbstractPhase implements Phase {
         MoveStudent entrance = model.getGameBoards().get(
                 model.getPlayerByNickname(matchController.getCurrPlayer()));
         MoveStudent island = model.getIslandManager().getIslands().get(islandIndex);
+
         if (inputController.checkIsInArchipelago(islandIndex)){
             try {
                 model.moveStudent(color, entrance, island);
@@ -189,7 +176,9 @@ public class ActionPhase extends AbstractPhase implements Phase {
                         new ErrorMessage("server","You can't move a " + color + " student to island "+ (islandIndex+1)+ ". Please retry\n"));
                 return;
             }
-            incrementStudNum();
+
+            numOfMovedStudents++;
+
             if (!allStudMoved())
                 matchController.sendMessage(matchController.getCurrPlayer(),
                         new AskEntranceMoveMessage(MAX_NUM_STUDENTS - numOfMovedStudents));

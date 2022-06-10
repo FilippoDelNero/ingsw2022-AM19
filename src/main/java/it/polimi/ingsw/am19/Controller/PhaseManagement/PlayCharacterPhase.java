@@ -63,7 +63,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase {
             requireListColor = true;
         matchController.sendMessage(currPlayer,
                 new AskCharacterParameterMessage(requireColor,requireIsland, requireListColor));
-        System.out.println("parameters sent");
     }
 
 
@@ -79,6 +78,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase {
     private void goBackToPrevPhase(){
         Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
         matchController.getRoundsManager().changePhase(prevPhase);
+
         switch (((ActionPhase)prevPhase).getCurrStep()){
             case MOVE_STUD ->
                 matchController.sendMessage(currPlayer,new AskEntranceMoveMessage(((ActionPhase)prevPhase).getMAX_NUM_STUDENTS()));
@@ -109,7 +109,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase {
         PieceColor color = message.getColor();
         Integer islandIndex = message.getIsland();
         Island island = null;
-        if (islandIndex!=null)
+        if (islandIndex != null)
             island = model.getIslandManager().getIslands().get(islandIndex);
         List<PieceColor> colorList = message.getColorList();
 

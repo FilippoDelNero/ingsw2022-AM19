@@ -79,5 +79,4 @@ public class RoundsManagerTest {
 
         assertTrue(roundsManager.hasNextRound());
     }
-
 }
