@@ -11,12 +11,17 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller to performing the planning phase
+ */
 public class HelperCardController implements SceneController{
     private Gui gui;
-    private List<HelperCard> helperCardList;
 
+    /**
+     * Setter for enable only the card available to use for the player
+     * @param helperCardList helper card not yet used by the player
+     */
     public void setHelperCardList(List<HelperCard> helperCardList) {
-        this.helperCardList = helperCardList;
         List<Integer> availableCard = new ArrayList<>();
         for(HelperCard hc: helperCardList)
             availableCard.add(hc.getNextRoundOrder());
@@ -61,52 +66,52 @@ public class HelperCardController implements SceneController{
     }
 
     @FXML
-    void useHelperCard1(MouseEvent event) {
+    void useHelperCard1() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,1,1)));
     }
 
     @FXML
-    void useHelperCard10(MouseEvent event) {
+    void useHelperCard10() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,10,5)));
     }
 
     @FXML
-    void useHelperCard2(MouseEvent event) {
+    void useHelperCard2() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,2,1)));
     }
 
     @FXML
-    void useHelperCard3(MouseEvent event) {
+    void useHelperCard3() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,3,2)));
     }
 
     @FXML
-    void useHelperCard4(MouseEvent event) {
+    void useHelperCard4() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,4,2)));
     }
 
     @FXML
-    void useHelperCard5(MouseEvent event) {
+    void useHelperCard5() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,5,3)));
     }
 
     @FXML
-    void useHelperCard6(MouseEvent event) {
+    void useHelperCard6() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,6,3)));
     }
 
     @FXML
-    void useHelperCard7(MouseEvent event) {
+    void useHelperCard7() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,7,4)));
     }
 
     @FXML
-    void useHelperCard8(MouseEvent event) {
+    void useHelperCard8() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,8,4)));
     }
 
     @FXML
-    void useHelperCard9(MouseEvent event) {
+    void useHelperCard9() {
         gui.getMyClient().sendMessage(new ReplyHelperCardMessage(gui.getNickname(),new HelperCard(null,9,5)));
     }
 
@@ -116,10 +121,15 @@ public class HelperCardController implements SceneController{
     }
 
     @FXML
-    void onMouseExitedEvent(MouseEvent event) {
+    void onMouseExitedEvent() {
 
     }
 
+    /**
+     * Method to get the Image View of a card
+     * @param maxRoundOrder the maxRoundOrder of the card
+     * @return the Image View requested
+     */
     private ImageView getImage (int maxRoundOrder){
         switch (maxRoundOrder){
             case 1 -> {
@@ -156,6 +166,10 @@ public class HelperCardController implements SceneController{
         return helperCard1;
     }
 
+    /**
+     * Method to reduce visibility of a card and disable its effect
+     * @param image the ImageView to modify
+     */
     public void setInvisible(ImageView image){
         image.setOpacity(0.50);
         image.setDisable(true);

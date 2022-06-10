@@ -6,7 +6,6 @@ import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyPlayCharacterCardMessage;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -14,20 +13,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+/**
+ * Controller to show the Character Cards of an expert match
+ */
 public class CharacterCardController implements SceneController {
     private Gui gui;
     private Drawer drawer;
     private List<AbstractCharacterCard> characterCards = new ArrayList<>();
     private AbstractCharacterCard cardChosen = null;
 
-
+    /**
+     * Method to set the character Cards available
+     * @param characterCards the characters drawn
+     */
     public void setCharacterCards(List<AbstractCharacterCard> characterCards) {
         this.characterCards = characterCards;
         setLayout();
@@ -77,9 +80,11 @@ public class CharacterCardController implements SceneController {
     @FXML
     private GridPane onCardGrid3;
 
-
+    /**
+     * Methos called after the press of "NO" button
+     */
     @FXML
-    void negativeReplyMessage(MouseEvent event) {
+    void negativeReplyMessage() {
         gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),null));
     }
 
@@ -89,12 +94,15 @@ public class CharacterCardController implements SceneController {
     }
 
     @FXML
-    void onMouseExitedEvent(MouseEvent event) {
+    void onMouseExitedEvent() {
 
     }
 
+    /**
+     * Method to use the first character from the left
+     */
     @FXML
-    void useCharacter1(MouseEvent event) {
+    void useCharacter1() {
         cardChosen = characterCards.get(0);
         if(checkMinistrel())
             gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(0).getId()));
@@ -104,8 +112,11 @@ public class CharacterCardController implements SceneController {
         }
     }
 
+    /**
+     * Method to use the second character from the left
+     */
     @FXML
-    void useCharacter2(MouseEvent event) {
+    void useCharacter2() {
         cardChosen = characterCards.get(1);
         if(checkMinistrel())
             gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(1).getId()));
@@ -115,8 +126,11 @@ public class CharacterCardController implements SceneController {
         }
     }
 
+    /**
+     * Method to use the third character from the left
+     */
     @FXML
-    void useCharacter3(MouseEvent event) {
+    void useCharacter3() {
         cardChosen = characterCards.get(2);
         if(checkMinistrel())
             gui.getMyClient().sendMessage(new ReplyPlayCharacterCardMessage(gui.getNickname(),characterCards.get(2).getId()));
@@ -126,6 +140,10 @@ public class CharacterCardController implements SceneController {
         }
     }
 
+    /**
+     * Method to initialize the scene
+     * It set all the image, description and the student on th card (if present)
+     */
     private void setLayout(){
         String imageUrl = drawer.getCharacterImagePath(characterCards.get(0).getId());
         character1.setImage(new Image(getClass().getResource(imageUrl).toExternalForm()));
@@ -148,6 +166,10 @@ public class CharacterCardController implements SceneController {
         return cardChosen;
     }
 
+    /**
+     * Method to check if the player how want to use the "MINISTREL" card have at least a student on the dining
+     * @return false if the dining is empty
+     */
     private boolean checkMinistrel(){
         if(cardChosen.getId()== Character.MINSTREL){
             Map<PieceColor,Integer> dining = gui.getCache().getGameBoards().get(0).diningRoom();
@@ -159,12 +181,15 @@ public class CharacterCardController implements SceneController {
         return true;
     }
 
+    /**
+     * Method to show an alert if the player want to use the "MINISTREL" card with an empty dining room
+     */
     private void ministrelError(){
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("You can't use MINISTREL. You must have at least one student in your dining room");
-
+            alert.initOwner(gui.getStage());
             alert.showAndWait();
         });
     }

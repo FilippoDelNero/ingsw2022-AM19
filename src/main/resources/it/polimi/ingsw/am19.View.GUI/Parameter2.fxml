@@ -309,7 +309,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#resetColor" prefHeight="70.0" prefWidth="284.0" text="RESET">
+                        <Button mnemonicParsing="false" onMouseClicked="#resetColor" prefHeight="70.0" prefWidth="284.0" text="RESET">
                            <font>
                               <Font size="48.0" />
                            </font>
