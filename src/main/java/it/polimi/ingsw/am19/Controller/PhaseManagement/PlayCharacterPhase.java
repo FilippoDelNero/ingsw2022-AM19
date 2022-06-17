@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.AbstractPhase;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.ActionPhase;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.Phase;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.CharacterCards.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
@@ -115,7 +112,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase {
 
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
-                ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setCardPlayed(true);
+                ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setHasPlayedCard(true);
                 goBackToPrevPhase();
             } catch (InsufficientCoinException e) {
                 Phase prevPhase = matchController.getRoundsManager().getPrevPhase();

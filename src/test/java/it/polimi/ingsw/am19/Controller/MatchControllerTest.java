@@ -4,11 +4,11 @@ import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchControllerTest {
     @Test
@@ -77,6 +77,33 @@ public class MatchControllerTest {
     public void initialState(){
         MatchController controller = new MatchController();
         assertEquals(StateType.LOGIN, controller.getCurrState());
+    }
+
+    /**
+     * Tests if the current player is the same between model and controller
+     */
+    @Test
+    public void getCurrPlayer(){
+        MatchController controller = new MatchController();
+        controller.createNewMatch(2,false);
+
+        controller.addPlayer("Phil", TowerColor.BLACK,WizardFamily.KING);
+        controller.addPlayer("Laura", TowerColor.WHITE,WizardFamily.SHAMAN);
+
+        controller.setCurrPlayer("Phil");
+
+        assertEquals(controller.getModel().getCurrPlayer().getNickname(),
+                controller.getCurrPlayer());
+    }
+
+    /**
+     * Tests if RoundManager is already set after building MatchController
+     */
+    @Test
+    public void getRoundManager(){
+        MatchController controller = new MatchController();
+
+        assertNotNull(controller.getRoundsManager());
     }
 
     //TODO test match save

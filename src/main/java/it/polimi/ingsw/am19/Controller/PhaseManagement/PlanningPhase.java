@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
 import it.polimi.ingsw.am19.Controller.MatchController;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.AbstractPhase;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.ActionPhase;
-import it.polimi.ingsw.am19.Controller.PhaseManagement.Phase;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
@@ -24,14 +21,14 @@ public class PlanningPhase extends AbstractPhase implements Phase {
     private final List<String> playersOrder;
 
     /**
-     * An iterator for iterating players' nicknames
+     * An playersIterator for iterating players' nicknames
      */
-    private final ListIterator<String> iterator;
+    private final ListIterator<String> playersIterator;
 
     public PlanningPhase(List<String> playersOrder, MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
-        this.iterator =  playersOrder.listIterator();
+        this.playersIterator =  playersOrder.listIterator();
     }
 
     /**
@@ -51,13 +48,13 @@ public class PlanningPhase extends AbstractPhase implements Phase {
                 try {
                     model.useHelperCard(helperCard);
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
-                    matchController.sendMessage(nickname, new ErrorMessage(nickname, "Invalid card choice. Please retry\n"));
+                    matchController.sendMessage(nickname, new ErrorMessage("server", "Invalid card choice. Please retry\n"));
                     return;
                 }
 
-                updatedOtherPlayers(helperCard);
+                updateOtherPlayers(helperCard);
 
-                if (iterator.hasNext()) //if other players need to perform planning phase
+                if (playersIterator.hasNext()) //if other players need to perform planning phase
                     pickNextPlayer();
                 else
                     setUpNextPhase();
@@ -83,7 +80,7 @@ public class PlanningPhase extends AbstractPhase implements Phase {
             matchController.sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
             matchController.disconnectAll();
         }
-        performPhase(iterator.next());
+        performPhase(playersIterator.next());
     }
 
     /**
@@ -99,18 +96,19 @@ public class PlanningPhase extends AbstractPhase implements Phase {
                 model.getCurrPlayer().getHelperDeck()));
     }
 
-    private void updatedOtherPlayers(HelperCard helperCard){
-        String msgContent = matchController.getCurrPlayer()
+    private void updateOtherPlayers(HelperCard helperCard){
+        String currPlayer = matchController.getCurrPlayer();
+        String msgContent = currPlayer
                 + " played card number: " + helperCard.getNextRoundOrder()
                 + ", mother nature steps : " + helperCard.getMaxNumOfSteps()
                 + "\n";
 
-        matchController.sendMessageExcept(matchController.getCurrPlayer(),
+        matchController.sendMessageExcept(currPlayer,
                 new GenericMessage(msgContent,MessageType.GENERIC_MESSAGE));
     }
 
     private void pickNextPlayer(){
-        String nextPlayer = iterator.next();
+        String nextPlayer = playersIterator.next();
         matchController.setCurrPlayer(nextPlayer);
         performPhase(nextPlayer);
     }
