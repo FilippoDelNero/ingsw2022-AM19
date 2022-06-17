@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A Class for testing ActionPhase state
+ */
 public class ActionPhaseTest {
     @BeforeEach
     void removeAllFromBag(){

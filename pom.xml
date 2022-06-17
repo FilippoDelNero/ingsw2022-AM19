@@ -19,7 +19,6 @@
         <sonar.exclusions>**/Network/**/*</sonar.exclusions>
         <sonar.exclusions>**/Utilities/**/*</sonar.exclusions>
         <sonar.exclusions>**/View/**/*</sonar.exclusions>
-        <sonar.exclusions>**/Controller/**/*</sonar.exclusions>
     </properties>
 
     <dependencies>

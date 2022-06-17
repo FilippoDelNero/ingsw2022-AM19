@@ -1,16 +1,29 @@
 package it.polimi.ingsw.am19.Controller;
 
+import it.polimi.ingsw.am19.Model.BoardManagement.Bag;
 import it.polimi.ingsw.am19.Model.Match.ExpertMatchDecorator;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A Class for testing MatchController
+ */
 public class MatchControllerTest {
+    @BeforeEach
+    void removeAllFromBag(){
+        Bag bag = Bag.getBagInstance();
+        bag.removeAll();
+    }
+
+    /**
+     * Tests model not being an instance of an expert match, when an easy match of two players was requested
+     */
     @Test
     public void twoPlayersNoExpert(){
         MatchController c = new MatchController();
@@ -19,6 +32,9 @@ public class MatchControllerTest {
         assertFalse(c.getModel() instanceof ExpertMatchDecorator);
     }
 
+    /**
+     * Tests model not being an instance of an expert match, when an easy match of three players was requested
+     */
     @Test
     public void threePlayersNoExpert(){
         MatchController c = new MatchController();
@@ -27,6 +43,9 @@ public class MatchControllerTest {
         assertFalse(c.getModel() instanceof ExpertMatchDecorator);
     }
 
+    /**
+     * Tests model being an instance of an expert match, when an expert match of two players was requested
+     */
     @Test
     public void twoPlayersExpert(){
         MatchController c = new MatchController();
@@ -35,6 +54,9 @@ public class MatchControllerTest {
         assertTrue(c.getModel() instanceof ExpertMatchDecorator);
     }
 
+    /**
+     * Tests model being an instance of an expert match, when an expert match of three players was requested
+     */
     @Test
     public void threePlayersExpert(){
         MatchController c = new MatchController();
@@ -43,6 +65,9 @@ public class MatchControllerTest {
         assertTrue(c.getModel() instanceof ExpertMatchDecorator);
     }
 
+    /**
+     * Tests adding a player from the MatchController perspective. The addition made should also be visible in model state
+     */
     @Test
     public void addPlayer(){
         MatchController c = new MatchController();
