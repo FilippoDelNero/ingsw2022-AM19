@@ -124,7 +124,7 @@ public class ClientManager implements Runnable {
                 }
                 else {
                     System.out.println("errore in invio");
-                    myServer.removeAllClients();
+                    myServer.removeAllClients(this);
                 }
             }
             tryAgain = true;
@@ -152,10 +152,10 @@ public class ClientManager implements Runnable {
                        tryAgain = false;
                    else {
                        System.out.println("errore in ricezione");
-                       myServer.removeAllClients();
+                       myServer.removeAllClients(this);
                    }
                 } catch (ClassNotFoundException e) {
-                    myServer.removeAllClients();
+                    myServer.removeAllClients(this);
                 }
             }
         }
@@ -165,7 +165,7 @@ public class ClientManager implements Runnable {
      * method to stop the timer, close the connection and remove this Manager from the server's list
      */
     public void close(boolean fatal) {
-        while(!isClosed()) {
+        if(!isClosed()) {
             while(myTimer.isOff())
                 myTimer.off();
             while(!myClient.isClosed()) {
@@ -175,10 +175,9 @@ public class ClientManager implements Runnable {
                     e.printStackTrace();
                 }
             }
+            System.out.println("client disconnected");
             myServer.removeFromList(this);
         }
-        if(isClosed())
-            System.out.println("client disconnected");
     }
 
     public boolean isClosed() {

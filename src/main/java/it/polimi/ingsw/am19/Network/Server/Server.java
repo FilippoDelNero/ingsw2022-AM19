@@ -19,7 +19,7 @@ public class Server implements Runnable {
     private final ServerSocket serverSocket;
 
     /** a thread pool, each new connection is assigned to a different thread */
-    private final ExecutorService pool;
+    private ExecutorService pool;
 
     /** an object used to handle the "login" phase of each player*/
     private LoginManager loginManager;
@@ -82,20 +82,23 @@ public class Server implements Runnable {
 
     /**
      * method to disconnect all clients and prepare the server to create a new match
+     * @param manager the manager that called this method, they will not receive the message
      */
-    public void removeAllClients() {
-        while(!managers.isEmpty()) {
-            ClientManager cm = managers.get(0);
-            cm.sendMessage(new EndMatchMessage(null));
+    public void removeAllClients(ClientManager manager) {
+        int len = managers.size();
+        for(int i = len - 1; i >= 0; i--) {
+            ClientManager cm = managers.get(i);
+            if(cm.getId() != manager.getId()) {
+                cm.sendMessage(new EndMatchMessage(null));
+            }
             cm.close(false);
         }
+        prepareForANewMatch();
     }
 
     public void removeFromList(ClientManager cm) {
         synchronized (managersLock) {
             managers.remove(cm);
-            if(managers.size() == 0)
-                prepareForANewMatch();
         }
     }
 
@@ -103,6 +106,8 @@ public class Server implements Runnable {
      * method to prepare the server to instantiate a new match
      */
     public void prepareForANewMatch() {
+        pool.shutdownNow();
+        pool = Executors.newCachedThreadPool();
         synchronized (managersLock) {
             managers = new ArrayList<>();
         }

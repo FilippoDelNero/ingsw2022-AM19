@@ -47,8 +47,10 @@ public class Timer extends Thread {
 
             synchronized (this) {
                 elapsed += rate;
-                if (elapsed > duration)
+                System.out.println("client " + myClientManager.getId() + "timer: " + elapsed);
+                if (elapsed > duration) {
                     timeout();
+                }
             }
         }
     }
@@ -58,7 +60,8 @@ public class Timer extends Thread {
      */
     public void timeout() {
         if(!isOff()) {
-            myClientManager.getServer().removeAllClients();
+            off();
+            myClientManager.getServer().removeAllClients(myClientManager);
         }
     }
 
