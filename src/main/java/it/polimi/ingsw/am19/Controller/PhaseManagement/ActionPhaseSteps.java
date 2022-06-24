@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
 /**
  * An enum for dividing Action phases into different steps

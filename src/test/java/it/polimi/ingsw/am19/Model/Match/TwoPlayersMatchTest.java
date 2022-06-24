@@ -636,4 +636,19 @@ class TwoPlayersMatchTest {
         assertEquals(1,m.getWinner().size());
         assertEquals(p1,m.getWinner().get(0));
     }
+
+    @Test
+    public void testAllWin(){
+        AbstractMatch m = new TwoPlayersMatch();
+        Player p1 = new Player("Phil", TowerColor.BLACK,WizardFamily.SHAMAN);
+        Player p2 = new Player("Laura", TowerColor.WHITE, WizardFamily.KING);
+        m.addPlayer(p1);
+        m.addPlayer(p2);
+        m.initializeMatch();
+
+        List<Player> players = m.getPlanningPhaseOrder();
+
+        assertEquals(2,m.getWinner().size());
+        assertTrue(m.getWinner().containsAll(players));
+    }
 }

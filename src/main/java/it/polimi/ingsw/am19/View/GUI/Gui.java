@@ -326,7 +326,7 @@ public class Gui extends Application implements View {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(this.getStage());
                 alert.setTitle("Error");
-                alert.setContentText("We are sorry, the match will interrupted due to a fatal error occurring\"");
+                alert.setContentText("We are sorry, the match will interrupted due to a fatal error occurring");
                 alert.showAndWait()
                         .filter(response -> response == ButtonType.OK)
                         .ifPresent(response -> Platform.exit());

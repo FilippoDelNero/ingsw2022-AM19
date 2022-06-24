@@ -155,6 +155,9 @@ public class Bag extends Observable implements Serializable {
             numOfStudents.replace(color,newValue);
     }
 
+    /**
+     * Removes all students from Bag
+     */
     public void removeAll() {
         while(!isEmpty())
             bagInstance.drawStudent();

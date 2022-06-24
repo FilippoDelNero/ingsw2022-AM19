@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.BoardManagement.Player;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalCardOptionException;
@@ -13,21 +14,21 @@ import java.util.ListIterator;
 /**
  * A Class for managing planning phase lifecycle
  */
-public class PlanningPhase extends AbstractPhase implements Phase{
+public class PlanningPhase extends AbstractPhase implements Phase {
     /**
      * It contains all players' nicknames, in the order in which they will perform this phase
      */
     private final List<String> playersOrder;
 
     /**
-     * An iterator for iterating players' nicknames
+     * An playersIterator for iterating players' nicknames
      */
-    private final ListIterator<String> iterator;
+    private final ListIterator<String> playersIterator;
 
-    public PlanningPhase(List<String> playersOrder,MatchController matchController) {
+    public PlanningPhase(List<String> playersOrder, MatchController matchController) {
         super(matchController);
         this.playersOrder = playersOrder;
-        this.iterator =  playersOrder.listIterator();
+        this.playersIterator =  playersOrder.listIterator();
     }
 
     /**
@@ -37,39 +38,28 @@ public class PlanningPhase extends AbstractPhase implements Phase{
      */
     @Override
     public void inspectMessage(Message msg) {
+
         if (inputController.checkSender(msg)) {
+
             if (msg.getMessageType() == MessageType.PLAY_HELPER_CARD) {
-                ReplyHelperCardMessage message = (ReplyHelperCardMessage) msg;
-                HelperCard helperCard = message.getHelperCard();
+                HelperCard helperCard = ((ReplyHelperCardMessage) msg).getHelperCard();
+                String nickname = msg.getNickname();
+
                 try {
                     model.useHelperCard(helperCard);
                 } catch (UnavailableCardException | IllegalCardOptionException e) {
-                    matchController.sendMessage(message.getNickname(), new ErrorMessage(message.getNickname(), "Invalid card choice. Please retry\n"));
+                    matchController.sendMessage(nickname, new ErrorMessage("server", "Invalid card choice. Please retry\n"));
                     return;
                 }
-                matchController.sendMessageExcept(matchController.getCurrPlayer(), new GenericMessage(matchController.getCurrPlayer() + " played card number: " +
-                        helperCard.getNextRoundOrder() + ", mother nature steps : " + helperCard.getMaxNumOfSteps() + "\n", MessageType.GENERIC_MESSAGE));
-                if (iterator.hasNext()) {
-                    String nextPlayer = iterator.next();
-                    matchController.setCurrPlayer(nextPlayer);
-                    performPhase(nextPlayer);
-                } else {
-                    List<String> actionPhaseOrder = model.getActionPhaseOrder().stream()
-                            .map(Player::getNickname)
-                            .toList();
-                    matchController.getRoundsManager().changePhase(new ActionPhase(actionPhaseOrder, matchController));
-                    matchController.getRoundsManager().getCurrPhase().initPhase();
-                }
+
+                updateOtherPlayers(helperCard);
+
+                if (playersIterator.hasNext()) //if other players need to perform planning phase
+                    pickNextPlayer();
+                else
+                    setUpNextPhase();
             }
         }
-    }
-
-    /**
-     * Returns the players' order for this phase
-     * @return the players' order for this phase
-     */
-    public List<String> getPlayersOrder() {
-        return playersOrder;
     }
 
     /**
@@ -80,7 +70,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
      */
     @Override
     public void initPhase(){
-        matchController.getRoundsManager().incrementPhaseNum();
+        matchController.getRoundsManager().incrementRoundsNum();
         matchController.sendBroadcastMessage(new GenericMessage("Round " + matchController.getRoundsManager().getRoundNum() + "\n", MessageType.GENERIC_MESSAGE));
         matchController.sendBroadcastMessage(new GenericMessage("Planning phase has started. In this phase we will follow this order: " + playersOrder, MessageType.GENERIC_MESSAGE));
         try {
@@ -90,7 +80,7 @@ public class PlanningPhase extends AbstractPhase implements Phase{
             matchController.sendBroadcastMessage(new ErrorMessage("server", "Internal error"));
             matchController.disconnectAll();
         }
-        performPhase(iterator.next());
+        performPhase(playersIterator.next());
     }
 
     /**
@@ -104,5 +94,34 @@ public class PlanningPhase extends AbstractPhase implements Phase{
         matchController.sendMessage(currPlayer,new GenericMessage((currPlayer + " it's your turn!\n"), MessageType.GENERIC_MESSAGE));
         matchController.sendMessage(currPlayer, new AskHelperCardMessage(
                 model.getCurrPlayer().getHelperDeck()));
+    }
+
+    private void updateOtherPlayers(HelperCard helperCard){
+        String currPlayer = matchController.getCurrPlayer();
+        String msgContent = currPlayer
+                + " played card number: " + helperCard.getNextRoundOrder()
+                + ", mother nature steps : " + helperCard.getMaxNumOfSteps()
+                + "\n";
+
+        matchController.sendMessageExcept(currPlayer,
+                new GenericMessage(msgContent,MessageType.GENERIC_MESSAGE));
+    }
+
+    private void pickNextPlayer(){
+        String nextPlayer = playersIterator.next();
+        matchController.setCurrPlayer(nextPlayer);
+        performPhase(nextPlayer);
+    }
+
+    private List<String> sortActionPhaseOrder(){
+        return model.getActionPhaseOrder().stream()
+                .map(Player::getNickname)
+                .toList();
+    }
+
+    private void setUpNextPhase(){
+        List<String> actionPhaseOrder = sortActionPhaseOrder();
+        matchController.getRoundsManager().changePhase(new ActionPhase(actionPhaseOrder, matchController));
+        matchController.getRoundsManager().getCurrPhase().initPhase();
     }
 }

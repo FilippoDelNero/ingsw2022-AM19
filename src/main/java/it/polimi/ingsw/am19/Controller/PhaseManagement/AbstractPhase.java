@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Model.Match.MatchDecorator;
 
 /**

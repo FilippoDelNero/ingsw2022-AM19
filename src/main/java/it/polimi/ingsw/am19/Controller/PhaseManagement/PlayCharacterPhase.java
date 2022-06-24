@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
+import it.polimi.ingsw.am19.Controller.MatchController;
 import it.polimi.ingsw.am19.Model.BoardManagement.Island;
 import it.polimi.ingsw.am19.Model.CharacterCards.*;
 import it.polimi.ingsw.am19.Model.CharacterCards.Character;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * A Class that manages playing a character card into an expert match
  */
-public class PlayCharacterPhase extends AbstractPhase implements Phase{
+public class PlayCharacterPhase extends AbstractPhase implements Phase {
     private final String currPlayer;
     private AbstractCharacterCard  card;
     public PlayCharacterPhase(MatchController matchController) {
@@ -32,15 +33,9 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
     public void inspectMessage(Message msg) {
         if (inputController.checkSender(msg)) {
             switch (msg.getMessageType()){
-                case PLAY_CHARACTER_CARD -> {
-                    ReplyPlayCharacterCardMessage message = (ReplyPlayCharacterCardMessage) msg;
-                    playCharacterCard(message);
-                }
+                case PLAY_CHARACTER_CARD -> playCharacterCard((ReplyPlayCharacterCardMessage) msg);
 
-                case REPLY_CHARACTER_PARAMETER -> {
-                    ReplyCharacterParameterMessage message = (ReplyCharacterParameterMessage) msg;
-                    activateCardEffect(message);
-                }
+                case REPLY_CHARACTER_PARAMETER -> activateCardEffect((ReplyCharacterParameterMessage) msg);
             }
         }
     }
@@ -65,7 +60,6 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
             requireListColor = true;
         matchController.sendMessage(currPlayer,
                 new AskCharacterParameterMessage(requireColor,requireIsland, requireListColor));
-        System.out.println("parameters sent");
     }
 
 
@@ -81,6 +75,7 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
     private void goBackToPrevPhase(){
         Phase prevPhase = matchController.getRoundsManager().getPrevPhase();
         matchController.getRoundsManager().changePhase(prevPhase);
+
         switch (((ActionPhase)prevPhase).getCurrStep()){
             case MOVE_STUD ->
                 matchController.sendMessage(currPlayer,new AskEntranceMoveMessage(((ActionPhase)prevPhase).getMAX_NUM_STUDENTS()));
@@ -111,13 +106,13 @@ public class PlayCharacterPhase extends AbstractPhase implements Phase{
         PieceColor color = message.getColor();
         Integer islandIndex = message.getIsland();
         Island island = null;
-        if (islandIndex!=null)
+        if (islandIndex != null)
             island = model.getIslandManager().getIslands().get(islandIndex);
         List<PieceColor> colorList = message.getColorList();
 
             try {
                 ((ExpertMatchDecorator)model).playCard(card,color,island,colorList);
-                ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setCardPlayed(true);
+                ((ActionPhase)matchController.getRoundsManager().getPrevPhase()).setHasPlayedCard(true);
                 goBackToPrevPhase();
             } catch (InsufficientCoinException e) {
                 Phase prevPhase = matchController.getRoundsManager().getPrevPhase();

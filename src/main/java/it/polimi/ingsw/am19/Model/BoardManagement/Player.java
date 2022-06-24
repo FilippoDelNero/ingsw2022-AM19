@@ -261,4 +261,8 @@ public class Player extends Observable implements Serializable {
             return false;
         return (Objects.equals(nickname, p.nickname));
     }
+
+    public void setHelperDeck(List<HelperCard> helperDeck) {
+        this.helperDeck = helperDeck;
+    }
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.Controller;
+package it.polimi.ingsw.am19.Controller.PhaseManagement;
 
 import it.polimi.ingsw.am19.Network.Message.Message;
 
