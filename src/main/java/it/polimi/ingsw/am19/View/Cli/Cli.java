@@ -662,15 +662,16 @@ public class Cli implements View {
         printer.flush(); //TODO NON FUNZIONA
 
         if(cache.getClouds() != null) {
+            int i=1;
             printer.println("The Clouds: ");
             for(Map<PieceColor, Integer> m : cache.getClouds()) {
-                int index = cache.getClouds().lastIndexOf(m) + 1;
-                String s = "cloud #" + index + ": ";
+                String s = "cloud #" + i + ": ";
                 for(PieceColor p : PieceColor.values()) {
                     if(m.get(p) != 0)
                         s = s.concat(pieceColorToANSI(p) + p + "x" + m.get(p) + "\u001B[0m ");
                 }
                 printer.println(s + '\n');
+                i++;
             }
         }
 
