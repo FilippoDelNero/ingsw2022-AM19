@@ -179,6 +179,8 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 }
             }
         }
+        if(bag.isEmpty())
+            notifyObservers(Notification.UPDATE_CLOUDS);
     }
 
     /**
@@ -453,9 +455,9 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
                 computeWinners();
             }
             case FINAL_ROUND -> finalRound = true;
-            case UPDATE_CLOUDS -> notifyObservers(Notification.UPDATE_CLOUDS); //TODO IDEALMENTE VORREI MANDARE UN UNICO MESSAGGIO CON LE TRE NUOVOLE DOPO AVERLE RIEMPITE
+            case UPDATE_CLOUDS -> notifyObservers(Notification.UPDATE_CLOUDS);
             case UPDATE_ISLANDS -> notifyObservers(Notification.UPDATE_ISLANDS);
-            case UPDATE_GAMEBOARDS -> notifyObservers(Notification.UPDATE_GAMEBOARDS); //TODO IDEALMENTE VORREI MANDARE UN UNICO MESSAGGIO CON I TRE STUDENTI SPOSATI DALLE NUVOLE
+            case UPDATE_GAMEBOARDS -> notifyObservers(Notification.UPDATE_GAMEBOARDS);
             case UPDATE_CARDS -> notifyObservers(Notification.UPDATE_CARDS);
         }
     }

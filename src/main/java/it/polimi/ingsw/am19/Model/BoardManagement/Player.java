@@ -262,6 +262,10 @@ public class Player extends Observable implements Serializable {
         return (Objects.equals(nickname, p.nickname));
     }
 
+    /**
+     * Replaces the current helperDeck with the one passed as argument
+     * @param helperDeck is an helper deck
+     */
     public void setHelperDeck(List<HelperCard> helperDeck) {
         this.helperDeck = helperDeck;
     }
