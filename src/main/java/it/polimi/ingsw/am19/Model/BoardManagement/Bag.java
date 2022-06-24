@@ -62,6 +62,10 @@ public class Bag extends Observable implements Serializable {
         }
     }
 
+    /**
+     * Returns the total number of students currently in Bag
+     * @return the total number of students currently in Bag
+     */
     public int getTotNumOfStudents(){
         int tot = 0;
         for (PieceColor color: numOfStudents.keySet()){

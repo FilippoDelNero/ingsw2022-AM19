@@ -27,6 +27,7 @@ public class ThreePlayersMatch extends AbstractMatch {
     public void initializeMatch() {
         Bag bag = getBag();
 
+        bag.removeAll();
         refillBag(bag, 2);
 
         //initialize the islands and put students on them
