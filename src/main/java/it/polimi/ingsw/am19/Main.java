@@ -18,12 +18,15 @@ public class Main {
         else if(args.length == 2) {
             if(args[0].equals("-s")) {
                 Server server = new Server(Integer.parseInt(args[1]));
-                while(true) {
-                    server.connect(); //TODO IL SERVER DEVE IMPLEMENTARE RUNNABLE
-                }
+                Thread thread = new Thread(server, "server");
+                thread.start();
             }
             else
                 System.out.println("write -server and the port address");
+        }
+        else {
+            System.out.println("write -s and the port address to start a server");
+            System.out.println("write -cli to start a client in CLI mode or nothing to start a client in GUI mode");
         }
     }
 }

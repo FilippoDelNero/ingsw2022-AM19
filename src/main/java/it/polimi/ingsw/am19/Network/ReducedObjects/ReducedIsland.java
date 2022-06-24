@@ -21,6 +21,16 @@ public record ReducedIsland(
         int numOfIslands,
         boolean noEntryTile) implements Serializable {
 
+    private String pieceColorToANSI(PieceColor color) {
+        return switch (color) {
+            case RED -> "\u001B[31m";
+            case GREEN -> "\u001B[32m";
+            case BLUE -> "\u001B[34m";
+            case YELLOW -> "\u001B[33m";
+            case PINK -> "\033[38;5;206m ";
+        };
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,7 +57,7 @@ public record ReducedIsland(
         string = string.concat("] ");
         for(PieceColor p : PieceColor.values()) {
             if(numOfStudents.get(p) != 0)
-                string = string.concat(p + "x" + numOfStudents.get(p) + " ");
+                string = string.concat(pieceColorToANSI(p) + p + "x" + numOfStudents.get(p) + "\u001B[0m ");
         }
         if(towerColor != null)
             string = string.concat("-- " + towerColor);

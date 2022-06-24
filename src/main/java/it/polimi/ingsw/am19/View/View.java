@@ -112,7 +112,6 @@ public interface View {
      */
     void updateIslands(UpdateIslandsMessage msg);
 
-    //TODO IS IT USED?
     /**
      * method to update the Cards, both Helper and Character, on the cache
      * @param msg the UpdateCardsMessage sent by the server

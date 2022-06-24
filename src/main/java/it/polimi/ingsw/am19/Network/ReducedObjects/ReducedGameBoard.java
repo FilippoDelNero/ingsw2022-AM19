@@ -24,6 +24,16 @@ public record ReducedGameBoard(String playerNickname,
                                TowerColor TowerColor,
                                Integer coins) implements Serializable {
 
+    private String pieceColorToANSI(PieceColor color) {
+       return switch (color) {
+           case RED -> "\u001B[31m";
+           case GREEN -> "\u001B[32m";
+           case BLUE -> "\u001B[34m";
+           case YELLOW -> "\u001B[33m";
+           case PINK -> "\033[38;5;206m ";
+       };
+    }
+
     @Override
     public String toString() {
         String returnString;
@@ -31,16 +41,19 @@ public record ReducedGameBoard(String playerNickname,
         String entranceString = "Entrance: ";
         for(PieceColor p : PieceColor.values()) {
             if(entrance.get(p) != 0)
-                entranceString = entranceString.concat(p + "x" + entrance.get(p) + " ");
+                entranceString = entranceString.concat(pieceColorToANSI(p) + p + "x" + entrance.get(p) + "\u001B[0m ");
         }
 
         String diningString = "Dining Room: ";
+
         for(PieceColor p : PieceColor.values()) {
             if(diningRoom.get(p) != 0)
-                diningString = diningString.concat(p + "x" + diningRoom.get(p) + " ");
+                diningString = diningString.concat(pieceColorToANSI(p) + p + "x" + diningRoom.get(p) + " ");
             if(professors.contains(p))
                 diningString = diningString.concat("*prof* ");
+            diningString = diningString.concat("\u001B[0m");
         }
+
         if(diningString.equals("Dining Room: "))
             diningString = diningString.concat("empty");
 

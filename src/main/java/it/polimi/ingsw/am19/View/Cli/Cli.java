@@ -668,7 +668,7 @@ public class Cli implements View {
                 String s = "cloud #" + index + ": ";
                 for(PieceColor p : PieceColor.values()) {
                     if(m.get(p) != 0)
-                        s = s.concat(p + "x" + m.get(p) + " ");
+                        s = s.concat(pieceColorToANSI(p) + p + "x" + m.get(p) + "\u001B[0m ");
                 }
                 printer.println(s + '\n');
             }
@@ -705,5 +705,15 @@ public class Cli implements View {
             default -> color = null;
         }
         return color;
+    }
+
+    private String pieceColorToANSI(PieceColor color) {
+        return switch (color) {
+            case RED -> "\u001B[31m";
+            case GREEN -> "\u001B[32m";
+            case BLUE -> "\u001B[34m";
+            case YELLOW -> "\u001B[33m";
+            case PINK -> "\033[38;5;206m ";
+        };
     }
 }

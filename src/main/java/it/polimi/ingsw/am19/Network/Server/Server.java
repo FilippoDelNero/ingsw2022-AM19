@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 /**
  * Server class, handles incoming connections
  */
-public class Server {
+public class Server implements Runnable {
     /** the socket the server opens*/
     private final ServerSocket serverSocket;
 
@@ -48,6 +48,13 @@ public class Server {
         managersLock = new Object();
         managers = new ArrayList<>();
         pool = Executors.newCachedThreadPool();
+        System.out.println("Server on");
+    }
+
+    public void run() {
+        while(!Thread.interrupted()) {
+            connect();
+        }
     }
 
     /**
