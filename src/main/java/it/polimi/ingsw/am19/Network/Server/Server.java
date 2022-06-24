@@ -61,10 +61,14 @@ public class Server implements Runnable {
      * method used to accept an incoming connection, it creates a new ClientManager and passes it to the LoginManager
      */
     public void connect() {
-        ClientManager clientManager;
-        pool.execute(clientManager = new ClientManager(managers.size(),this, serverSocket, this.matchController));
-        if(loginManager.login(clientManager))
-            managers.add(clientManager);
+        try {
+            ClientManager clientManager = new ClientManager(managers.size(),this, serverSocket, this.matchController);
+            pool.execute(clientManager);
+            if(loginManager.login(clientManager))
+                managers.add(clientManager);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -77,40 +81,31 @@ public class Server implements Runnable {
     }
 
     /**
-     * method to remove a clientManager from the server's list
-     * @param clientManager the clientManager that is no longer in use
-     */
-    public void removeClient(ClientManager clientManager, boolean fatal) {
-        synchronized (managersLock) {
-            if(fatal)
-                removeAllClients();
-            else {
-                managers.remove(clientManager);
-                if(managers.isEmpty())
-                    prepareForANewMatch();
-            }
-        }
-    }
-
-    /**
      * method to disconnect all clients and prepare the server to create a new match
      */
     public void removeAllClients() {
-        if(!managers.isEmpty()) {
-            managers.get(0).sendMessage(new EndMatchMessage(null));
-            managers.get(0).close(false);
-            managers.remove(0);
-            removeAllClients();
+        while(!managers.isEmpty()) {
+            ClientManager cm = managers.get(0);
+            cm.sendMessage(new EndMatchMessage(null));
+            cm.close(false);
         }
-        else
-           prepareForANewMatch();
+    }
+
+    public void removeFromList(ClientManager cm) {
+        synchronized (managersLock) {
+            managers.remove(cm);
+            if(managers.size() == 0)
+                prepareForANewMatch();
+        }
     }
 
     /**
      * method to prepare the server to instantiate a new match
      */
     public void prepareForANewMatch() {
-        managers = new ArrayList<>();
+        synchronized (managersLock) {
+            managers = new ArrayList<>();
+        }
         matchController = new MatchController();
         loginManager = new LoginManager(matchController);
     }

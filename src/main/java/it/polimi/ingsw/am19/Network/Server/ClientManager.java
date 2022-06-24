@@ -25,13 +25,13 @@ public class ClientManager implements Runnable {
     private final Server myServer;
 
     /** the client's socket*/
-    private Socket myClient;
+    private final Socket myClient;
 
     /** channel used to receive incoming messages*/
-    private ObjectInputStream input;
+    private final ObjectInputStream input;
 
     /** channel used to send messages*/
-    private ObjectOutputStream output;
+    private final ObjectOutputStream output;
 
     /**
      * lock object used to synchronized on the inputStream
@@ -63,7 +63,7 @@ public class ClientManager implements Runnable {
      * @param socket the socket that the server is listening on
      * @param matchController the MatchController whose reference needs to be stored
      */
-    public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) {
+    public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) throws IOException {
         this.tryAgain = true;
         this.id = id;
         this.matchController = matchController;
@@ -74,14 +74,10 @@ public class ClientManager implements Runnable {
         lockToReceive = new Object();
         lockToSend = new Object();
 
-        try {
-            myClient = socket.accept(); //accepts the connection
-            output = new ObjectOutputStream(myClient.getOutputStream());
-            output.flush();
-            input = new ObjectInputStream(myClient.getInputStream());
-        } catch (IOException e) {
-            server.removeClient(this, false);
-        }
+        myClient = socket.accept(); //accepts the connection
+        output = new ObjectOutputStream(myClient.getOutputStream());
+        output.flush();
+        input = new ObjectInputStream(myClient.getInputStream());
 
         myTimer.start();
         System.out.println("nuovo client connesso");
@@ -93,6 +89,14 @@ public class ClientManager implements Runnable {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * getter for the server
+     * @return the server that created this clientManager
+     */
+    public Server getServer() {
+        return myServer;
     }
 
     /**
@@ -114,13 +118,14 @@ public class ClientManager implements Runnable {
                 System.out.println("----" + msg.getMessageType() + "--->");
                 output.reset();
             } catch (IOException e) {
-                System.out.println("errore in invio");
                 if(tryAgain) {
                     tryAgain = false;
                     sendMessage(msg);
                 }
-                else
-                    close(true);
+                else {
+                    System.out.println("errore in invio");
+                    myServer.removeAllClients();
+                }
             }
             tryAgain = true;
         }
@@ -143,13 +148,14 @@ public class ClientManager implements Runnable {
                         default -> matchController.inspectMessage(msg);
                     }
                 } catch (IOException e) {
-                    System.out.println("errore in ricezione");
                    if(tryAgain)
                        tryAgain = false;
-                   else
-                    close(true);
+                   else {
+                       System.out.println("errore in ricezione");
+                       myServer.removeAllClients();
+                   }
                 } catch (ClassNotFoundException e) {
-                    close(true);
+                    myServer.removeAllClients();
                 }
             }
         }
@@ -159,23 +165,20 @@ public class ClientManager implements Runnable {
      * method to stop the timer, close the connection and remove this Manager from the server's list
      */
     public void close(boolean fatal) {
-        while(!Thread.currentThread().isInterrupted()) {
-            Thread.currentThread().interrupt();
-
-            while(!myTimer.isInterrupted())
-                myTimer.interrupt();
-
+        while(!isClosed()) {
+            while(myTimer.isOff())
+                myTimer.off();
             while(!myClient.isClosed()) {
                 try {
                     myClient.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                myServer.removeClient(this, fatal);
             }
-
-            System.out.println("client disconnesso");
+            myServer.removeFromList(this);
         }
+        if(isClosed())
+            System.out.println("client disconnected");
     }
 
     public boolean isClosed() {

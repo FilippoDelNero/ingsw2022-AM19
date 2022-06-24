@@ -57,9 +57,16 @@ public class Timer extends Thread {
      * method called when the timer goes off, it closes the timer and the connection held by the client manager
      */
     public void timeout() {
-        if(!Thread.currentThread().isInterrupted()) {
-            Thread.currentThread().interrupt();
-            myClientManager.close(true);
+        if(!isOff()) {
+            myClientManager.getServer().removeAllClients();
         }
+    }
+
+    public boolean isOff() {
+        return Thread.currentThread().isInterrupted();
+    }
+
+    public void off() {
+        Thread.currentThread().interrupt();
     }
 }
