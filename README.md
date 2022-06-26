@@ -34,7 +34,6 @@
 🟡 Work in progress
 
 ## Test coverage
-Line coverage of the main packages is the following:
 
 | Package     | Class coverage | Method coverage | Line Coverage |
 |:------------|:--------------:|:---------------:|:-------------:|
