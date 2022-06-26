@@ -152,6 +152,10 @@ public class StudentToHallCard extends AbstractCharacterCard implements MoveStud
         if(oldValue==10)
             throw new TooManyStudentsException("You cannot add a " + color + "student. You already have 10 " + color + " students in your hall");
 
+        if(oldValue%3 ==2){
+            if(gameboard.getPlayer().getCoins()!=null)
+                gameboard.getPlayer().addCoins(1);
+        }
         removeStudent(color);
         gameboard.getDiningRoom().replace(color,oldValue+1);
         gameboard.notifyObservers(Notification.UPDATE_GAMEBOARDS);
