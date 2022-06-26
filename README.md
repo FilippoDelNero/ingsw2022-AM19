@@ -66,6 +66,6 @@ The application supports complete rules on both CLI e GUI. It also supports two 
 
 
 Regarding persistence, the functionality was implemented to save game state at the end of every round. It means that the first saving happens only once the login phase has ended and all players played their first round.
-When a complete match is finished, the stored match is automatically deleted.
+When a match is completed, the stored match is automatically deleted.
 
 
