@@ -47,7 +47,6 @@ public class Timer extends Thread {
 
             synchronized (this) {
                 elapsed += rate;
-                System.out.println("client " + myClientManager.getId() + "timer: " + elapsed);
                 if (elapsed > duration) {
                     timeout();
                 }

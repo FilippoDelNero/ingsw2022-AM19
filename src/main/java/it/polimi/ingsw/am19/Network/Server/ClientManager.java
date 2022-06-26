@@ -164,7 +164,7 @@ public class ClientManager implements Runnable {
     /**
      * method to stop the timer, close the connection and remove this Manager from the server's list
      */
-    public void close(boolean fatal) {
+    public void close() {
         if(!isClosed()) {
             while(myTimer.isOff())
                 myTimer.off();

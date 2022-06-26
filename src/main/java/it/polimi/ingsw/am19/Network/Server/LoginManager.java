@@ -72,7 +72,7 @@ public class LoginManager {
         //if there is already a match in progress refuse all connection
         if(activePlayers == numOfPlayers){
             clientToAdd.sendMessage(new GenericMessage("Match already started. Please try later", MessageType.GENERIC_MESSAGE));
-            clientToAdd.close(false);
+            clientToAdd.close();
             return false;
         }
 

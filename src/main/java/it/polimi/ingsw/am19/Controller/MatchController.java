@@ -16,7 +16,6 @@ import it.polimi.ingsw.am19.Persistence.SavedData;
 import it.polimi.ingsw.am19.Persistence.StorageMatch;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -178,7 +177,7 @@ public class MatchController implements Observer{
         for (String nickname: clientManagerMap.keySet()) {
             ClientManager cm = clientManagerMap.get(nickname);
                 while(cm.isClosed()) {
-                    cm.close(false);
+                    cm.close();
                 }
         }
     }

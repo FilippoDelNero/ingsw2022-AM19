@@ -91,7 +91,7 @@ public class Server implements Runnable {
             if(cm.getId() != manager.getId()) {
                 cm.sendMessage(new EndMatchMessage(null));
             }
-            cm.close(false);
+            cm.close();
         }
         prepareForANewMatch();
     }
