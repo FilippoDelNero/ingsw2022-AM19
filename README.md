@@ -35,7 +35,7 @@
 
 ## Test coverage
 
-| Package     | Class coverage | Method coverage | Line Coverage |
+| Package     | Class coverage | Method coverage | Line coverage |
 |:------------|:--------------:|:---------------:|:-------------:|
 | Model       |      100%      |       85%       |      88%      |
 | Controller* |      75%       |       41%       |      20%      |
