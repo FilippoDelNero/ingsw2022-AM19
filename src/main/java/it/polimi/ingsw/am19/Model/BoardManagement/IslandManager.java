@@ -218,8 +218,11 @@ public class IslandManager extends Observable implements Observer, Serializable 
         }
         else strategy = stdInfluenceStrategy;
 
+        //set motherNature presence
+        boolean isPresent = island1.isMotherNaturePresent() || island2.isMotherNaturePresent();
+
         //creates a new island
-        Island newIsland = new Island(map, towerColor, true, strategy, numOfIslands);
+        Island newIsland = new Island(map, towerColor, isPresent, strategy, numOfIslands);
         newIsland.addObserver(this);
 
         //adds the new island and deletes the old ones
