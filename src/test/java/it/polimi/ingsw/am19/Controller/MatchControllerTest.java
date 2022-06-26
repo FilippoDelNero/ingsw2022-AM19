@@ -130,8 +130,6 @@ public class MatchControllerTest {
 
         assertNotNull(controller.getRoundsManager());
     }
-
-    //TODO test match save
 }
 
 
