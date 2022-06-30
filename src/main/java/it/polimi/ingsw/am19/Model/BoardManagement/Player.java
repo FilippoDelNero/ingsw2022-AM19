@@ -217,7 +217,7 @@ public class Player extends Observable implements Serializable {
      * Adds the specified amount of coins to the Player
      * @param amount is the amount of coins to add
      */
-    public void addCoins(int amount){ //TODO OBSERVER -> NOTIFY -> UH NEW COIN, DRAW IT
+    public void addCoins(int amount){
         if(coinManager.receiveCoins(amount))
             this.coins += amount;
     }
@@ -227,7 +227,7 @@ public class Player extends Observable implements Serializable {
      * @param amount the amount of coins to subtract
      * @throws InsufficientCoinException when trying to remove more coins than the available ones
      */
-    public void removeCoins(int amount) throws InsufficientCoinException { //TODO OBSERVER -> NOTIFY -> UH LESS COIN, DELETE THEM
+    public void removeCoins(int amount) throws InsufficientCoinException {
         int newValue = this.coins - amount;
         if(newValue < 0)
             throw new InsufficientCoinException("You haven't enough coins");

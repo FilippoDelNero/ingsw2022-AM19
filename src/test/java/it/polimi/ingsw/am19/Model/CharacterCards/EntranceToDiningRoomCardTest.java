@@ -169,7 +169,6 @@ public class EntranceToDiningRoomCardTest {
 
         card.activateEffect(null, null, list);
 
-        //TODO controllare che l'ultimo scambio non sia avvenuto (assert equal prima e dopo effetto)
         assertEquals(3, gameBoard.getDiningRoomNumOfStud());
         assertTrue(gameBoard.getDiningRoom().get(finalColor4) > 0);
         assertTrue(gameBoard.getDiningRoom().get(finalColor5) > 0);

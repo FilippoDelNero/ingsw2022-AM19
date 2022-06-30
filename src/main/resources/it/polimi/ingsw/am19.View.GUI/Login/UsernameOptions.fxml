@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="1655.0" fitWidth="1887.0" layoutX="-128.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@eriantys.png" />
+            <Image url="@../../../../../LoginImages/eriantys.png" />
          </image>
       </ImageView>
       <Button fx:id="submitButton" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onAction="#sendUserData" prefHeight="39.0" prefWidth="111.0" text="Submit">

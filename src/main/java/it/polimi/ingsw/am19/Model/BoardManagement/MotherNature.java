@@ -41,9 +41,8 @@ public class MotherNature extends Observable implements Serializable {
     private MovementStrategy currMovementStrategy;
 
     /**
-     *
+     * Builds a new instance of mother nature, setting its initial movement strategy as the default one
      */
-    //TODO per via del meccanismo di istanziazione previsto per i singleton, non posso passare parametri al costruttore, devo ricordami di richiamare il setter di islandManager e di position in Match
     private MotherNature() {
         this.defaultMovement = new StandardMovement();
         this.currMovementStrategy = this.defaultMovement;

@@ -41,6 +41,8 @@ public class Cli implements View {
     /** a field where the last received message is stored, it is used to recover from errors */
     private Message previousMsg;
 
+    private boolean print;
+
     /**
      * class constructor
      */
@@ -174,6 +176,7 @@ public class Cli implements View {
         printView();
         helperCard = askHelperCard(cardOptions);
         myClient.sendMessage(new ReplyHelperCardMessage(nickname,helperCard));
+        print = true;
     }
 
     /**
@@ -182,6 +185,7 @@ public class Cli implements View {
      */
     @Override
     public void askEntranceMove(AskEntranceMoveMessage msg) {
+        print = false;
         String input;
         int islandNum;
         PieceColor color = null;
@@ -244,6 +248,7 @@ public class Cli implements View {
         printView();
         cloudChosen= askCloud(msg.getCloudAvailable());
         myClient.sendMessage(new ReplyCloudMessage(nickname, cloudChosen));
+        print = true;
     }
 
     /**
@@ -316,6 +321,8 @@ public class Cli implements View {
     @Override
     public void updateCloud(UpdateCloudsMessage msg) {
         cache.setClouds(msg.getClouds());
+        if(print)
+            printView();
     }
 
     /**
@@ -325,6 +332,8 @@ public class Cli implements View {
     @Override
     public void updateGameBoards(UpdateGameBoardsMessage msg) {
         cache.setGameBoards(msg.getList());
+        if(print)
+            printView();
     }
 
     /**
@@ -334,6 +343,8 @@ public class Cli implements View {
     @Override
     public void updateIslands(UpdateIslandsMessage msg) {
         cache.setIslands(msg.getList());
+        if(print)
+            printView();
     }
 
     /**
@@ -342,7 +353,9 @@ public class Cli implements View {
      */
     @Override
     public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getHelperCardMap());
+        cache.setHelperCards(msg.getHelperCardMap());
+        if(print)
+            printView();
     }
 
     /**
@@ -659,8 +672,6 @@ public class Cli implements View {
      * method used to print the entire game view
      */
     private void printView() {
-        printer.flush(); //TODO NON FUNZIONA
-
         if(cache.getClouds() != null) {
             int i=1;
             printer.println("The Clouds: ");

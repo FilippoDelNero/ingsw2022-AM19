@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="1655.0" fitWidth="1887.0" layoutX="-128.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@eriantys.png" />
+            <Image url="@../../../../../LoginImages/eriantys.png" />
          </image>
       </ImageView>
       <Text layoutX="656.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -23,7 +23,7 @@
       </Label>
       <ImageView fitHeight="109.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" x="665.5" y="470.0">
          <image>
-            <Image url="@loading-gif-icon.jpg.gif" />
+            <Image url="@../../../../../LoginImages/loading-gif-icon.jpg.gif" />
          </image>
          <effect>
             <Glow />

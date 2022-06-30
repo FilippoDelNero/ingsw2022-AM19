@@ -90,8 +90,8 @@ public class Gui extends Application implements View {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CONNECTION));
         Parent root = fxmlLoader.load();
         root.getStylesheets().add(getClass().getResource("/Style/eriantys.css").toExternalForm());
-        //stage.setFullScreen(true);
-        //stage.setResizable(false);
+        stage.setFullScreen(true);
+        stage.setResizable(false);
         Scene scene = new Scene(root, 1440, 900);
         currScene = scene;
         ConnectionController controller = fxmlLoader.getController();
@@ -305,7 +305,7 @@ public class Gui extends Application implements View {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.initOwner(this.getStage());
                 alert.setTitle("End match");
-                Image winImg = new Image(getClass().getResource("/winningImg.png").toExternalForm());
+                Image winImg = new Image(getClass().getResource("/WinningImages/winningImg.png").toExternalForm());
                 ImageView winImageView = new ImageView(winImg);
                 alert.setGraphic(winImageView);
 
@@ -405,7 +405,7 @@ public class Gui extends Application implements View {
      */
     @Override
     public void updateCards(UpdateCardsMessage msg) {
-        cache.setCharacterCards(msg.getHelperCardMap());
+        cache.setHelperCards(msg.getHelperCardMap());
         refreshMainScene(Notification.UPDATE_CARDS);
     }
 

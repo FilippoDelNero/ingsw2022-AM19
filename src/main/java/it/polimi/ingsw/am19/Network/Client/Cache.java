@@ -6,7 +6,6 @@ import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +105,7 @@ public class Cache {
      * setter for the CharacterCard attribute
      * @param cards a map Nickname-HelperCard
      */
-    public void setCharacterCards(Map<String, HelperCard> cards) {
+    public void setHelperCards(Map<String, HelperCard> cards) {
         helperCards = new ArrayList<>();
         for(ReducedGameBoard rgb : gameBoards) {
             helperCards.add(cards.get(rgb.playerNickname()));

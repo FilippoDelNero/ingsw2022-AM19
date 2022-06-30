@@ -126,7 +126,6 @@ public abstract class AbstractMatch extends Observable implements Match, Observe
      */
     @Override
     public void addPlayer(Player player) {
-        //TODO THE CONTROLLER SHOULD CHECK THE NICKNAMES TO AVOID DOUBLES
         if(planningPhaseOrder.size() < numOfPlayers) {
             planningPhaseOrder.add(player);
         }
