@@ -8,11 +8,23 @@
   Gruppo AM19
 </h4>
 
-### Members:
-* #### 10705522     Laura Colazzo ([@lauracolazzo](https://github.com/lauracolazzo)) <br>laura.colazzo@mail.polimi.it
-* #### 10705035     Dennis De Maria ([@dennydemaria](https://github.com/dennydemaria)) <br>dennis.demaria@mail.polimi.it
-* #### 10662783     Filippo Del Nero ([@FilippoDelNero](https://github.com/FilippoDelNero)) <br>filippogiovanni.delnero@mail.polimi.it
-<br>
+
+
+## Description
+The project was part of the final evaluation of "Computer Science Engineering" degree course at Politecnico di Milano.
+
+The specifications required to develop a Java application to simulate an existing board game by Cranio Creations called "Eriantys".
+
+## Application design
+The application supports complete rules on both CLI e GUI. It also supports two advanced functionalities, that are all 12 character cards implementation and persistence.
+
+
+Regarding persistence, the functionality was implemented to save game state at the end of every round. It means that the first saving happens only once the login phase has ended and all players played their first round.
+Information about an in progress match are stored in the same directory as the .jar file. When a match is completed, the stored match is automatically deleted.
+
+In case a game is interrupted due tue fatal errors occurring, server needs to be restarted before resuming the previous match or before starting a new one.
+
+
 
 ### Progress:
 
@@ -60,12 +72,3 @@ To run the application as client in GUI mode you can double click on the .jar fi
 ```
 java -jar AM19.jar
 ```
-
-### Application design
-The application supports complete rules on both CLI e GUI. It also supports two advanced functionalities, that are all 12 character cards implementation and persistence.
-
-
-Regarding persistence, the functionality was implemented to save game state at the end of every round. It means that the first saving happens only once the login phase has ended and all players played their first round.
-When a match is completed, the stored match is automatically deleted.
-
-
