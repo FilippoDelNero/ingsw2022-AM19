@@ -672,6 +672,7 @@ public class Cli implements View {
      * method used to print the entire game view
      */
     private void printView() {
+        printer.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         if(cache.getClouds() != null) {
             int i=1;
             printer.println("The Clouds: ");
@@ -725,7 +726,7 @@ public class Cli implements View {
             case GREEN -> "\u001B[32m";
             case BLUE -> "\u001B[34m";
             case YELLOW -> "\u001B[33m";
-            case PINK -> "\033[38;5;206m ";
+            case PINK -> "\033[38;5;206m";
         };
     }
 }
