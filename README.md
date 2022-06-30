@@ -8,7 +8,11 @@
   Gruppo AM19
 </h4>
 
-
+### Members:
+* #### 10705522     Laura Colazzo ([@lauracolazzo](https://github.com/lauracolazzo)) <br>laura.colazzo@mail.polimi.it
+* #### 10705035     Dennis De Maria ([@dennydemaria](https://github.com/dennydemaria)) <br>dennis.demaria@mail.polimi.it
+* #### 10662783     Filippo Del Nero ([@FilippoDelNero](https://github.com/FilippoDelNero)) <br>filippogiovanni.delnero@mail.polimi.it
+<br>
 
 ## Description
 The project was part of the final evaluation of "Computer Science Engineering" degree course at Politecnico di Milano.
@@ -24,9 +28,7 @@ Information about an in progress match are stored in the same directory as the .
 
 In case a game is interrupted due tue fatal errors occurring, server needs to be restarted before resuming the previous match or before starting a new one.
 
-
-
-### Progress:
+## Progress:
 
 
 | Functionality          |State                                        |
