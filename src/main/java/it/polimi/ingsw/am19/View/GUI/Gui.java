@@ -6,6 +6,8 @@ import it.polimi.ingsw.am19.Network.Client.Client;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
 import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.Utilities.Notification;
+import it.polimi.ingsw.am19.View.GUI.Controllers.*;
+import it.polimi.ingsw.am19.View.GUI.Utilities.Drawer;
 import it.polimi.ingsw.am19.View.View;
 import javafx.application.Application;
 import javafx.application.Platform;

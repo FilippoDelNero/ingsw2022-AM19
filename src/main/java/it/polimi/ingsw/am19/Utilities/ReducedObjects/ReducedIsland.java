@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.Network.ReducedObjects;
+package it.polimi.ingsw.am19.Utilities.ReducedObjects;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;

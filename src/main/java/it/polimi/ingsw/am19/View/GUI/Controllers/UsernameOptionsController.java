@@ -1,7 +1,9 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
+import it.polimi.ingsw.am19.View.GUI.Controllers.SceneController;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * A Class for managing username choice scene, when resuming a match
  */
-public class UsernameOptionsController implements SceneController{
+public class UsernameOptionsController implements SceneController {
     /**
      * gui's reference
      */

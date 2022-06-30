@@ -18,7 +18,7 @@ module it.polimi.ingsw.am19 {
     opens it.polimi.ingsw.am19.Network.Server to javafx.fxml;
 
     exports it.polimi.ingsw.am19.Network.Message;
-    exports it.polimi.ingsw.am19.Network.ReducedObjects;
+    exports it.polimi.ingsw.am19.Utilities.ReducedObjects;
     exports it.polimi.ingsw.am19.Model.BoardManagement;
     exports it.polimi.ingsw.am19.Model.Utilities;
     exports it.polimi.ingsw.am19.Model.CharacterCards;
@@ -26,4 +26,8 @@ module it.polimi.ingsw.am19 {
     exports it.polimi.ingsw.am19.Model.Exceptions;
     exports it.polimi.ingsw.am19.View.GUI;
     opens it.polimi.ingsw.am19.View.GUI to javafx.fxml;
+    exports it.polimi.ingsw.am19.View.GUI.Utilities;
+    opens it.polimi.ingsw.am19.View.GUI.Utilities to javafx.fxml;
+    exports it.polimi.ingsw.am19.View.GUI.Controllers;
+    opens it.polimi.ingsw.am19.View.GUI.Controllers to javafx.fxml;
 }

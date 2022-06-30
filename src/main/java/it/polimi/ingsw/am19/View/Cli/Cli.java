@@ -10,7 +10,7 @@ import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Client.Client;
 import it.polimi.ingsw.am19.Network.Client.Dispatcher;
 import it.polimi.ingsw.am19.Network.Message.*;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedGameBoard;
 import it.polimi.ingsw.am19.View.View;
 
 import java.io.PrintStream;

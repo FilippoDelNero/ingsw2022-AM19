@@ -1,6 +1,7 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 
 public interface SceneController {
     /**

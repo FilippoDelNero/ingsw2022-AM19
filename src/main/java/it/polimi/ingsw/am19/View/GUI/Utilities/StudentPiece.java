@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Utilities;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import javafx.scene.shape.Circle;

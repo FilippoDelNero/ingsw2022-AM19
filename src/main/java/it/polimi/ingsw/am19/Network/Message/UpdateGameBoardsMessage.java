@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am19.Network.Message;
 
 
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedGameBoard;
 
 import java.util.ArrayList;
 import java.util.List;

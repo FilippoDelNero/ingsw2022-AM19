@@ -1,10 +1,13 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Network.Client.Cache;
 import it.polimi.ingsw.am19.Network.Message.*;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedIsland;
+import it.polimi.ingsw.am19.View.GUI.Gui;
+import it.polimi.ingsw.am19.View.GUI.Utilities.Drawer;
+import it.polimi.ingsw.am19.View.GUI.Utilities.StudentPiece;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -12,7 +15,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;

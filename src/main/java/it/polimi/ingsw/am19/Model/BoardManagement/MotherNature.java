@@ -4,7 +4,7 @@ import it.polimi.ingsw.am19.Model.Exceptions.IllegalIslandException;
 import it.polimi.ingsw.am19.Model.Exceptions.IllegalNumOfStepsException;
 import it.polimi.ingsw.am19.Model.MovementStrategies.MovementStrategy;
 import it.polimi.ingsw.am19.Model.MovementStrategies.StandardMovement;
-import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Observable;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.io.Serializable;

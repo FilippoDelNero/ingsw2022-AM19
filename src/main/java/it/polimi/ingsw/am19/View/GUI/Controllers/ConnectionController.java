@@ -1,12 +1,12 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 
 import java.util.Optional;
 

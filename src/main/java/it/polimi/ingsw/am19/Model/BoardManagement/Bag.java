@@ -1,10 +1,10 @@
 package it.polimi.ingsw.am19.Model.BoardManagement;
 
 import it.polimi.ingsw.am19.Model.Exceptions.ExceedingStudentsPerColorException;
-import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Utilities.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Observable;
 
 import java.io.Serializable;
 import java.util.HashMap;

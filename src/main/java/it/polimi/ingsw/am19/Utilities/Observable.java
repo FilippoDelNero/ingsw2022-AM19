@@ -1,8 +1,5 @@
-package it.polimi.ingsw.am19;
+package it.polimi.ingsw.am19.Utilities;
 
-import it.polimi.ingsw.am19.Utilities.Notification;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
