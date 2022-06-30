@@ -68,7 +68,7 @@ public class IslandManager extends Observable implements Observer, Serializable 
 
     /**
      * getter for the islands attribute
-     * @return a List<Island> which contains a copy of the IslandList islands attribute
+     * @return a List of Islands which contains a copy of the IslandList islands attribute
      */
     public List<Island> getIslands() {
         return islands.copy();

@@ -78,6 +78,10 @@ public abstract class AbstractCharacterCard implements Serializable {
         return price;
     }
 
+    /**
+     * getter for the id attribute
+     * @return the id of the card
+     */
     public Character getId() {
         return id;
     }
@@ -162,6 +166,8 @@ public abstract class AbstractCharacterCard implements Serializable {
      * @param island references of an Island where we can change something (can be null)
      * @param color a PieceColor to use in the effect (can be null)
      * @param pieceColorList a list containing students
+     * @throws NoSuchColorException exception thrown if the chosen color is not present
+     * @throws TooManyStudentsException exception thrown if too many students are present
      */
     public void activateEffect (Island island, PieceColor color, List<PieceColor> pieceColorList) throws NoSuchColorException, TooManyStudentsException {
         if (!wasUsed)

@@ -68,7 +68,7 @@ public interface Match {
     /**
      * Moves Mother Nature
      * @param steps the numbers of step you want to move Mother Nature of
-     * @throws IllegalNumOfStepsException the number of steps in either < 0 or > than what allowed by the card
+     * @throws IllegalNumOfStepsException the number of steps in either less than 0 or more than than what allowed by the card
      */
     void moveMotherNature(int steps) throws IllegalNumOfStepsException;
 
