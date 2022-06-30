@@ -2,7 +2,7 @@ package it.polimi.ingsw.am19.Model.BoardManagement;
 import it.polimi.ingsw.am19.Model.InfluenceStrategies.InfluenceStrategy;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
-import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Observable;
 import it.polimi.ingsw.am19.Utilities.Notification;
 
 import java.io.Serializable;

@@ -2,11 +2,10 @@ package it.polimi.ingsw.am19.Network.Client;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedGameBoard;
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedGameBoard;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedIsland;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

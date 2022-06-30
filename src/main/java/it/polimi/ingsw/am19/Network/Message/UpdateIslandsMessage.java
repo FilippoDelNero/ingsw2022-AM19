@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am19.Network.Message;
 
 
-import it.polimi.ingsw.am19.Network.ReducedObjects.ReducedIsland;
+import it.polimi.ingsw.am19.Utilities.ReducedObjects.ReducedIsland;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,10 +4,9 @@ import it.polimi.ingsw.am19.Model.Exceptions.NoSuchColorException;
 import it.polimi.ingsw.am19.Model.Exceptions.TooManyStudentsException;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.InternalMoveStrategy;
 import it.polimi.ingsw.am19.Model.InternalMoveStrategy.StandardMove;
-import it.polimi.ingsw.am19.Observer;
 import it.polimi.ingsw.am19.Utilities.Notification;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
-import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Observable;
 
 import java.io.Serializable;
 import java.util.HashMap;

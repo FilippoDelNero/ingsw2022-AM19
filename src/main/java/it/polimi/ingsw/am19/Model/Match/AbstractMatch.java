@@ -2,11 +2,11 @@ package it.polimi.ingsw.am19.Model.Match;
 import it.polimi.ingsw.am19.Model.BoardManagement.*;
 import it.polimi.ingsw.am19.Model.Exceptions.*;
 import it.polimi.ingsw.am19.Utilities.Notification;
-import it.polimi.ingsw.am19.Observable;
+import it.polimi.ingsw.am19.Utilities.Observable;
 import it.polimi.ingsw.am19.Model.Utilities.PieceColor;
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
-import it.polimi.ingsw.am19.Observer;
+import it.polimi.ingsw.am19.Utilities.Observer;
 
 import java.io.Serializable;
 import java.util.*;

@@ -1,6 +1,8 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
+import it.polimi.ingsw.am19.View.GUI.Controllers.SceneController;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

@@ -8,24 +8,24 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.ConnectionController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am19.View.GUI.Controllers.ConnectionController">
    <children>
       <ImageView fitHeight="1655.0" fitWidth="1887.0" layoutX="-128.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@eriantys.png" />
          </image>
       </ImageView>
-      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" styleClass="text-field">
+      <TextField fx:id="ipAddress" layoutX="570.0" layoutY="350.0" prefHeight="40.0" prefWidth="300.0" promptText="IP Address" styleClass="text-field" text="127.0.0.1">
          <font>
             <Font size="19.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" text="Submit">
+      <Button fx:id="submitButton" layoutX="759.0" layoutY="509.0" mnemonicParsing="false" onAction="#sendConnectionData" prefHeight="39.0" prefWidth="111.0" text="Connect">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" styleClass="text-field">
+      <TextField fx:id="portNumber" layoutX="570.0" layoutY="430.0" prefHeight="40.0" prefWidth="300.0" promptText="Port number" styleClass="text-field" text="1234">
          <font>
             <Font size="19.0" />
          </font>

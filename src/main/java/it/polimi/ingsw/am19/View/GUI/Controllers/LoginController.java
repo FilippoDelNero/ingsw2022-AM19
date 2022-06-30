@@ -1,9 +1,10 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Model.Utilities.TowerColor;
 import it.polimi.ingsw.am19.Model.Utilities.WizardFamily;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyLoginInfoMessage;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,14 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
 /**
  * A class for managing login scene
  */
-public class LoginController implements SceneController{
+public class LoginController implements SceneController {
         /**black tower Image**/
         private final Image blackTower = new Image(getClass().getResource("/Towers/blackTower.png").toExternalForm());
         /**white tower Image**/

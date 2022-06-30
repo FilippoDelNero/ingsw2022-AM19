@@ -1,8 +1,9 @@
-package it.polimi.ingsw.am19.View.GUI;
+package it.polimi.ingsw.am19.View.GUI.Controllers;
 
 import it.polimi.ingsw.am19.Model.BoardManagement.HelperCard;
 import it.polimi.ingsw.am19.Network.Message.GenericMessage;
 import it.polimi.ingsw.am19.Network.Message.ReplyHelperCardMessage;
+import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.image.ImageView;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Controller to performing the planning phase
  */
-public class HelperCardController implements SceneController{
+public class HelperCardController implements SceneController {
     private Gui gui;
 
     /**
