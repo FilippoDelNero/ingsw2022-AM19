@@ -26,7 +26,7 @@ The application supports complete rules on both CLI e GUI. It also supports two 
 Regarding persistence, the functionality was implemented to save game state at the end of every round. It means that the first saving happens only once the login phase has ended and all players played their first round.
 Information about an in progress match are stored in the same directory as the .jar file. When a match is completed, the stored match is automatically deleted.
 
-In case a game is interrupted due tue fatal errors occurring, server needs to be restarted before resuming the previous match or before starting a new one.
+In case a game is interrupted due to fatal errors occurring, server needs to be restarted before resuming the previous match or before starting a new one.
 
 ## Progress:
 
