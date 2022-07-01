@@ -134,6 +134,11 @@ public class Drawer {
         return "Price: " + c.getPrice() + "\n" + c.getDescription();
     }
 
+    /**
+     * method that, given an helper card returns the corresponding image
+     * @param hc the helper card
+     * @return the image showing the helper card passed as a parameter
+     */
     public Image getHelperCard(HelperCard hc) {
         return switch(hc.getNextRoundOrder()) {
             case 1 -> helperCard1;

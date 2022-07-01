@@ -3,6 +3,9 @@ package it.polimi.ingsw.am19.Network.Client;
 import it.polimi.ingsw.am19.Network.Message.*;
 import it.polimi.ingsw.am19.View.View;
 
+/**
+ * class used to dispatch incoming messages
+ */
 public class Dispatcher {
 
     /** the view of this client */

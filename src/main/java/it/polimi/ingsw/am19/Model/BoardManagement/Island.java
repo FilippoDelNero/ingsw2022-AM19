@@ -113,6 +113,7 @@ public class Island extends Observable implements MoveStudent, Serializable {
 
     /**
      * calculate the influence of each player on this island according to the strategy set
+     * @param manager the match's professorManager will be used to check player's influence on the island
      * @return true if there where updates to make, false otherwise
      */
     public boolean calculateInfluence(ProfessorManager manager){

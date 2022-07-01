@@ -190,9 +190,21 @@ public interface Match {
      */
     List<Player> getWinner();
 
+    /**
+     * getter for a player with a specified nickname
+     * @param nickname the nickname of the wanted player
+     * @return the player with the specified nickname
+     */
     Player getPlayerByNickname(String nickname);
 
+    /**
+     * getter for the cloud that still have students on them which means that are still able to be selected by a player
+     * @return the indexes of the clouds with students still presents
+     */
     List<Integer> getNonEmptyClouds();
 
+    /**
+     * method used to set all the observer in the model after resuming a match
+     */
     void setAllObservers();
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am19.Utilities;
 
-import it.polimi.ingsw.am19.Utilities.Notification;
-
 public interface Observer {
+    /**
+     * method called when a notification comes in
+     * @param notification the notification sent by an observable class
+     */
     void notify(Notification notification);
 }

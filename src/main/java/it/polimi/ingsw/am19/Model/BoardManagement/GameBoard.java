@@ -64,6 +64,7 @@ public class GameBoard extends Observable implements MoveStudent, Serializable {
      * @param player the player owner of this GameBoard
      * @param maxNumOfTowers set the max numOfTowers for this player (6 or 8)
      * @param professor references to Professor Manager to change the owner of the various Professor when needed
+     * @param maxEntranceStudent the maximum number of students the board can host
      */
     public GameBoard(Player player, int maxNumOfTowers, ProfessorManager professor, int maxEntranceStudent) {
         this.player = player;

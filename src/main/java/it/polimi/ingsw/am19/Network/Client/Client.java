@@ -52,6 +52,7 @@ public class Client {
      * class constructor
      * @param hostName the ip address of the server
      * @param portNumber the port number at which the client should connect to
+     * @param view the view chosen by the user owning this client
      */
     public Client(String hostName, int portNumber, View view) {
         tryAgain = true;

@@ -22,6 +22,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * GUI class
+ */
 public class Gui extends Application implements View {
     /** the client of this user, used to send messages to the server */
     private Client myClient;

@@ -48,6 +48,7 @@ public class LoginManager {
      * class constructor, sets the number of active players to 0 and number of player to 10,
      * this last value will be overwritten by the first player
      * new lists containing all possible wizardFamilies and towerColors are created
+     * @param matchController the matchController that will be used during this match
      */
     public LoginManager(MatchController matchController) {
         this.matchController = matchController;

@@ -5,7 +5,14 @@ import it.polimi.ingsw.am19.View.Cli.Cli;
 import it.polimi.ingsw.am19.View.GUI.Gui;
 import javafx.application.Application;
 
+/**
+ * main class
+ */
 public class Main {
+    /**
+     * main method, called at the start of the application
+     * @param args the arguments passed to the program
+     */
     public static void main(String[] args) {
         if(args.length == 0)
             Application.launch(Gui.class);

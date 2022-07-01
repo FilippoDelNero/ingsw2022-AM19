@@ -431,7 +431,7 @@ public class Cli implements View {
     private String askNicknameFromList(List<String> nicknameAvailable) {
         String input;
         do{
-            printer.println("Who are you?" + nicknameAvailable + '\n');
+            printer.println("Who are you?" + nicknameAvailable);
             input= reader.nextLine();
         } while (!nicknameAvailable.contains(input));
         return input;

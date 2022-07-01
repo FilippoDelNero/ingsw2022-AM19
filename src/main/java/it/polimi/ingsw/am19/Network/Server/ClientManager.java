@@ -62,6 +62,7 @@ public class ClientManager implements Runnable {
      * @param server the server that created this clientManager
      * @param socket the socket that the server is listening on
      * @param matchController the MatchController whose reference needs to be stored
+     * @throws IOException exception thrown if the client manager fail to be instantiated
      */
     public ClientManager(int id, Server server, ServerSocket socket, MatchController  matchController) throws IOException {
         this.tryAgain = true;
@@ -180,6 +181,10 @@ public class ClientManager implements Runnable {
         }
     }
 
+    /**
+     * method that return the status of the clientManager
+     * @return true if the thread has been already interrupted
+     */
     public boolean isClosed() {
         return Thread.currentThread().isInterrupted();
     }
