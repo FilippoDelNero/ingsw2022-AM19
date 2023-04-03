@@ -9,9 +9,9 @@
 </h4>
 
 ### Members:
-* #### 10705522     Laura Colazzo ([@lauracolazzo](https://github.com/lauracolazzo)) <br>laura.colazzo@mail.polimi.it
-* #### 10705035     Dennis De Maria ([@dennydemaria](https://github.com/dennydemaria)) <br>dennis.demaria@mail.polimi.it
-* #### 10662783     Filippo Del Nero ([@FilippoDelNero](https://github.com/FilippoDelNero)) <br>filippogiovanni.delnero@mail.polimi.it
+* #### Laura Colazzo ([@lauracolazzo](https://github.com/lauracolazzo)) <br>laura.colazzo@mail.polimi.it
+* #### Dennis De Maria ([@dennydemaria](https://github.com/dennydemaria)) <br>dennis.demaria@mail.polimi.it
+* #### Filippo Del Nero ([@FilippoDelNero](https://github.com/FilippoDelNero)) <br>filippogiovanni.delnero@mail.polimi.it
 <br>
 
 ## Description
